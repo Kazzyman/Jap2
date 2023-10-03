@@ -1,0 +1,122 @@
+main
+for {
+    pick a field
+    use that field to begin
+}
+
+begin 
+    for {
+        prompt and get input
+        if DetectedDirective {
+            respond_to_UserSuppliedDirective(in)
+            continue // re-prompt with the same prompt_fieldOfCard
+        } else {
+            evaluateUsersGuess(in, prompt_fieldOfCard) 
+            break  // back to main
+        }
+    }
+
+evaluateUsersGuess
+    rightOrOops(prompt_fieldOfCard) // one of three ... if Right we do stuff 
+    prompt and get input
+    DetectedDirective := false
+    DetectedDirective = testForDirective(in)
+    if DetectedDirective {
+        respond_to_UserSuppliedDirective(in)
+        // Recursively ...
+        // ... after responding to a Directive, do rightOrOops() from the same/original prompt_fieldOfCard
+        evaluateUsersGuess(in, prompt_fieldOfCard, true) 
+    }
+    // else, go back to main for a random card etc.
+    
+second_evaluateUsersGuess()
+    // rightOrOops(prompt_fieldOfCard) // one of three ... if Right we do stuff 
+    pick a field
+    prompt and get input
+        DetectedDirective := false
+        DetectedDirective = testForDirective(in)
+        if DetectedDirective {
+            respond_to_UserSuppliedDirective(in)
+            // Recursively ...
+            // ... after responding to a Directive, do rightOrOops() from the same/original prompt_fieldOfCard
+            evaluateUsersGuess(in, prompt_fieldOfCard, true) 
+        }
+    evaluateUsersGuess(in, prompt_fieldOfCard, true) // Must handle up to two additional guesses
+    
+rightOrOops(prompt_fieldOfCard)
+    if Right
+        second_evaluateUsersGuess
+    if wrong
+        print Try again!
+        call tryAgain()
+        
+tryAgain()
+    if Right
+        second_evaluateUsersGuess
+    if wrong
+        print Last chance, Try again!
+        call lastTry()
+        
+lastTry()
+    if Right
+        second_evaluateUsersGuess
+    if wrong
+        print hints
+        main
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+func main() {
+    for {
+        obtain and assign aCard.x
+        Semi-randomly selects between Hira, Kata, or Romaji promptings [promptType]
+        promptUser(promptType)
+    }
+}
+
+func promptUser(promptType string) [Hira, Kata, or Romaji prompt] {
+    for {
+        prompt [scan]
+        if Detected_Directive {
+            respond_to_UserSuppliedDirective() 
+            continue // after Directive handling
+        } else {
+            Call evaluateUsersGuess(UsersInput, aCard.x) // Must handle up to two additional guesses 
+            break
+        }
+    } // next randomly-selected aCard.x and type of prompt 
+}
+
+func evaluateUsersGuess(UsersInput, aCard.x string [aCard.Hira or aCard.Kata or aCard.Romaji]) {
+    compare UsersInput to aCard.x 
+        // Allow for three guesses, third failed guess gives hints 
+            after each guess call promptUser(promptType) 
+}
+
+func respond_to_UserSuppliedDirective() {
+    // Simple
+}
+
+cyclicArray_remember_UserInputs [Right, Oops, Hira]
+
+userGotItWrong_Map [remember recent Oops cases, be they Hira or Romaji]
+userGotItRight_Map [remember recent Right cases, be they Hira or Romaji]

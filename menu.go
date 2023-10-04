@@ -1,11 +1,7 @@
 package main
 
-// **do-this** menu
-
 import (
 	"fmt"
-	"os"
-	"time"
 	// "math/rand"
 )
 
@@ -26,49 +22,6 @@ func display_Listing_of_Directives_allExercisesHave_inCommon() { // (unique)    
 	fmt.Println("        Enter 'exit' or 'quit' to terminate the app")
 	//goland:noinspection ALL
 	fmt.Println("\n")
-}
-
-func mm_list() {
-	fmt.Printf("  Main Menu: \n\n" +
-		"  Enter '1' to practice recognizing Romaji: and typing Hiragana (simple, quite useful)\n" +
-		"  Enter '2' for recognizing Romaji-Katakana pairs: typing Hiragana (somewhat easy, useful)\n" +
-		"  Enter '3' to practice recognizing Katakana, type either Hiragana or Romaji (very versatile)\n" +
-		"  Enter '5' to practice typing drill lines\n" +
-		"  Enter '6' mixed Hira and Kata prompts: answer with Romaji\n" +
-		"  Enter '7' to practice the Most-Difficult kata, type either Hiragana or Romaji\n" +
-		"  Enter '8' to practice Sequential Kata, type either Hiragana or Romaji\n" +
-		"  Enter '9' to practice Sequential Hira, type either Hiragana or Romaji\n" +
-		"  Enter '10' to practice recognizing Difficult Romaji: and typing Difficult Hiragana\n" +
-		"  Enter 'exit' to quit\n\n\n")
-}
-
-//goland:noinspection ALL
-func body_of_Romaji_instructions() { //                                                       - -
-	fmt.Println("\n\n\n")
-	fmt.Println("Practicing touch-typing (TT) Hiragana in response to Romaji prompts:\n")
-	fmt.Println("Using Hiragana-input-mode on your sys, Type the Hiragana corresponding to the Romaji prompt\n")
-	display_Listing_of_Directives_allExercisesHave_inCommon()
-	fmt.Println("Using Hiragana-input-mode, Type the Hiragana corresponding to the Romaji prompt: \n")
-}
-
-//goland:noinspection ALL
-func body_of_Romaji_plus_Kata_instructions() { //                                             - -
-	fmt.Println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
-	fmt.Println("Exercise 2")
-	fmt.Println("Practicing touch-typing (TT) Hiragana in response to Romaji-Katakana prompts:\n")
-	fmt.Println("Using Hiragana-input-mode on your sys, Type a Hiragana corresponding to the Romaji-Kata prompt\n")
-	display_Listing_of_Directives_allExercisesHave_inCommon() // The func is located at the end of this file
-	fmt.Println("Using Hiragana-input-mode, Type a Hiragana corresponding to the Romaji-Katakana prompt: \n")
-}
-
-//goland:noinspection ALL
-func body_of_KataExerciseInstructions() { //                                                  - -
-	fmt.Println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
-	fmt.Println("Practicing recognizing Katakana chars: Using Hiragana-input-mode on your system ...")
-	fmt.Println("... enter the Hiragana chars that correspond to the Katakana.\n")
-	fmt.Println("Or, alternatively, type the Romaji that corresponds to the Katakana\n")
-	display_Listing_of_Directives_allExercisesHave_inCommon()
-	fmt.Println("Type either a Hiragana or Romaji that corresponds to the Katakana prompt: \n")
 }
 
 //goland:noinspection ALL
@@ -119,30 +72,4 @@ func body_of_instructions_for_Romaji_responces_only() {
 	fmt.Println("Type the Romaji corresponding to the prompt\n")
 	display_Listing_of_Directives_allExercisesHave_inCommon()
 	fmt.Println("Type the Romaji corresponding to the prompt: \n")
-}
-
-//goland:noinspection ALL
-func body_of_Difficult_instructions() { //                                                        - -
-	fmt.Println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
-	fmt.Println("Exercise 7")
-	fmt.Println("Practicing recognizing Katakana chars: Using Hiragana-input-mode on your system ...")
-	fmt.Println("... enter the Hiragana chars that correspond to the Katakana.\n")
-	fmt.Println("Or, alternatively, type the Romaji that corresponds to the Katakana\n")
-	display_Listing_of_Directives_allExercisesHave_inCommon() // The func is located at the end of this file
-	fmt.Println("Type either the Hiragana or Romaji that corresponds to the Katakana prompt: \n")
-}
-
-// This func is executed each time 'menu' is given as a Directive by the user during any Exercise
-// Things to do after an Exercise, and before beginning another Exercise
-func do_betweenMainMenuSelectionsTTE() {
-	currentTime := time.Now()
-
-	fileHandleBig, err := os.OpenFile("Jap2Log.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
-	check(err)
-	_, err2 := fmt.Fprintf(fileHandleBig,
-		"\nJap2 handled a trans, occured at: %s \n",
-		currentTime.Format("15:04:05 on Monday 01-02-2006"))
-	check(err2)
-	_ = fileHandleBig.Close()
-
 }

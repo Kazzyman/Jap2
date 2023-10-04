@@ -9,28 +9,28 @@ begin
         prompt and get input
         if DetectedDirective {
             respond_to_UserSuppliedDirective(in)
-            continue // re-prompt with the same prompt_fieldOfCard
+            continue // re-prompt with the same promptField
         } else {
-            evaluateUsersGuess(in, prompt_fieldOfCard) 
+            evaluateUsersGuess(in, promptField) 
             break  // back to main
         }
     }
 
 evaluateUsersGuess
-    rightOrOops(prompt_fieldOfCard) // one of three ... if Right we do stuff 
+    rightOrOops(promptField) // one of three ... if Right we do stuff 
     prompt and get input
     DetectedDirective := false
     DetectedDirective = testForDirective(in)
     if DetectedDirective {
         respond_to_UserSuppliedDirective(in)
         // Recursively ...
-        // ... after responding to a Directive, do rightOrOops() from the same/original prompt_fieldOfCard
-        evaluateUsersGuess(in, prompt_fieldOfCard, true) 
+        // ... after responding to a Directive, do rightOrOops() from the same/original promptField
+        evaluateUsersGuess(in, promptField, true) 
     }
     // else, go back to main for a random card etc.
     
 second_evaluateUsersGuess()
-    // rightOrOops(prompt_fieldOfCard) // one of three ... if Right we do stuff 
+    // rightOrOops(promptField) // one of three ... if Right we do stuff 
     pick a field
     prompt and get input
         DetectedDirective := false
@@ -38,12 +38,12 @@ second_evaluateUsersGuess()
         if DetectedDirective {
             respond_to_UserSuppliedDirective(in)
             // Recursively ...
-            // ... after responding to a Directive, do rightOrOops() from the same/original prompt_fieldOfCard
-            evaluateUsersGuess(in, prompt_fieldOfCard, true) 
+            // ... after responding to a Directive, do rightOrOops() from the same/original promptField
+            evaluateUsersGuess(in, promptField, true) 
         }
-    evaluateUsersGuess(in, prompt_fieldOfCard, true) // Must handle up to two additional guesses
+    evaluateUsersGuess(in, promptField, true) // Must handle up to two additional guesses
     
-rightOrOops(prompt_fieldOfCard)
+rightOrOops(promptField)
     if Right
         second_evaluateUsersGuess
     if wrong

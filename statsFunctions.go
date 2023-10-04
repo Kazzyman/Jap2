@@ -3,22 +3,8 @@ package main
 // **do-this**
 import (
 	"fmt"
-	"os"
-	"regexp"
 	"strings"
-	"time"
 )
-
-func if_it_is_a_Directive(in string) (isAlphanumeric bool) {
-	findAlphasIn := regexp.MustCompile(`[a-zA-Z]`)
-	switch true {
-	case findAlphasIn.MatchString(in): // <-- 'in'
-		isAlphanumeric = true
-	default:
-		isAlphanumeric = false
-	}
-	return isAlphanumeric
-}
 
 // LOGGERS:
 func log_right(prompt_it_was string) {
@@ -42,7 +28,6 @@ func logReinforceThisPrompt_inThe_frequencyMapOf_need_workOn(promptToWorkMoreOn 
 }
 
 // Universal hits logger|Inserter:
-// Used in exercises 1, 2, 3, '4', 6, 7
 func logHits_in_cyclicArrayHits(RightOrOops, JChar string) {
 	cyclicArrayHits.InsertRightOrOops(RightOrOops)
 	cyclicArrayHits.InsertChar(JChar)
@@ -51,7 +36,6 @@ func logHits_in_cyclicArrayHits(RightOrOops, JChar string) {
 //
 // A special Universal logger|Inserter: so we can drill the user more on chars he has missed
 //
-// Used in exercises 1, 2, 3, '4', 6, 7
 func logJcharsGottenWrong_in_cyclicArrayOfTheJcharsGottenWrong(Jchar string) {
 	cyclicArrayOfTheJcharsGottenWrong.InsertCharsWrong(Jchar)
 }
@@ -150,67 +134,4 @@ func hits() {
 		}
 	}
 	fmt.Println("")
-}
-
-func log_to_JapLog_file_inception_time(selectedExercise string) {
-	currentTime := time.Now()
-	if selectedExercise == "Romaji_Prompt" { // 1
-		fileHandleBig, err := os.OpenFile("JapLog.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600) // append to file
-		check(err)                                                                                 // ... gets a file handle to JapLog.txt
-		_, err2 := fmt.Fprintf(fileHandleBig, "\nInception of e xercise 1 'Romaji_Prompt' occured at: %s \n",
-			currentTime.Format("15:04:05 on Monday 01-02-2006"))
-		check(err2)
-		_ = fileHandleBig.Close()
-	} else if selectedExercise == "Romaji_w_Kata_Prompt" { // 2
-		fileHandleBig, err := os.OpenFile("JapLog.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600) // append to file
-		check(err)                                                                                 // ... gets a file handle to JapLog.txt
-		_, err2 := fmt.Fprintf(fileHandleBig, "\nInception of e xercise 2 'Romaji+Kata_Prompt' occured at: %s \n",
-			currentTime.Format("15:04:05 on Monday 01-02-2006"))
-		check(err2)
-		_ = fileHandleBig.Close()
-	} else if selectedExercise == "Respond_w_Hira_or_Romaji_to_kataPrompt_3" { // 3, '4'
-		fileHandleBig, err := os.OpenFile("JapLog.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600) // append to file
-		check(err)                                                                                 // ... gets a file handle to JapLog.txt
-		_, err2 := fmt.Fprintf(fileHandleBig, "\nInception of e xercise 3 or 4 'Kata_Prompt-Respond-w-Hira|Romaji' occured at: %s \n",
-			currentTime.Format("15:04:05 on Monday 01-02-2006"))
-		check(err2)
-		_ = fileHandleBig.Close()
-	} else if selectedExercise == "drillLines" { // 5
-		fileHandleBig, err := os.OpenFile("JapLog.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600) // append to file
-		check(err)                                                                                 // ... gets a file handle to JapLog.txt
-		_, err2 := fmt.Fprintf(fileHandleBig, "\nInception of e xercise 5 'Drill Lines' occured at: %s \n",
-			currentTime.Format("01-02-2006 15:04:05 Monday"))
-		check(err2)
-		_ = fileHandleBig.Close()
-	} else if selectedExercise == "Mixed_prompts" { // 6
-		fileHandleBig, err := os.OpenFile("JapLog.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600) // append to file
-		check(err)                                                                                 // ... gets a file handle to JapLog.txt
-		_, err2 := fmt.Fprintf(fileHandleBig, "\nInception of e xercise 6 'Hira_prompt' occurred at: %s \n",
-			currentTime.Format("15:04:05 on Monday 01-02-2006"))
-		check(err2)
-		_ = fileHandleBig.Close()
-	} else if selectedExercise == "Most_Difficult" { // 7
-		fileHandleBig, err := os.OpenFile("JapLog.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600) // append to file
-		check(err)                                                                                 // ... gets a file handle to JapLog.txt
-		_, err2 := fmt.Fprintf(fileHandleBig, "\nInception of e xercise 7 'Most_Difficult' occurred at: %s \n",
-			currentTime.Format("15:04:05 on Monday 01-02-2006"))
-		check(err2)
-		_ = fileHandleBig.Close()
-		//
-		//
-	} else if selectedExercise == "Sequential_Kata" { // 8
-		fileHandleBig, err := os.OpenFile("JapLog.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600) // append to file
-		check(err)                                                                                 // ... gets a file handle to JapLog.txt
-		_, err2 := fmt.Fprintf(fileHandleBig, "\nInception of e xercise 8 'Sequential_Kata' occurred at: %s \n",
-			currentTime.Format("15:04:05 on Monday 01-02-2006"))
-		check(err2)
-		_ = fileHandleBig.Close()
-	} else if selectedExercise == "Sequential_Hira" { // 9
-		fileHandleBig, err := os.OpenFile("JapLog.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600) // append to file
-		check(err)                                                                                 // ... gets a file handle to JapLog.txt
-		_, err2 := fmt.Fprintf(fileHandleBig, "\nInception of e xercise 9 'Sequential_Hira' occurred at: %s \n",
-			currentTime.Format("15:04:05 on Monday 01-02-2006"))
-		check(err2)
-		_ = fileHandleBig.Close()
-	}
 }

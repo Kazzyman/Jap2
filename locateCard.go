@@ -116,7 +116,7 @@ func practice_this_card(aCard_reset_request_as_Romaji string) {
 			// v v v if we find a 'card' in the range of 'fileOfCards',
 			// ... we set the foundElement global var, which is used in reSet_aCard_andThereBy_reSet_thePromptString()
 			foundElement = &card // foundElement is a global var and contains all the fields of a card or element
-			aCardA = *foundElement
+			aCard = *foundElement
 			break
 		}
 	}

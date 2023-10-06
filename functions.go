@@ -5,6 +5,7 @@ import (
 	"math/rand"
 	"os"
 	"regexp"
+	"time"
 )
 
 // DIRECTIVES : --------------------------------------------------------------------------------------------
@@ -90,15 +91,84 @@ func testForDirective(in string) (result bool) {
 		in == "exit" ||
 		in == "stats" ||
 		in == "rm" ||
-		in == "stack" {
+		in == "stack" ||
+		in == "gameon" ||
+		in == "gameoff" ||
+		in == "gamed" {
 		// Then:
 		result = true
 	}
 	return result
 }
 
+var game string
+var gameOn bool
+var startBeforeCall = time.Now()
+var TimeOfStartFromTop = time.Now()
+
+func game_on() (game string) { // - -
+	game = "on"
+	gameOn = true
+	fmt.Println("The game is on")
+
+	startBeforeCall = time.Now()
+	currentTime := time.Now()
+	TimeOfStartFromTop = time.Now()
+
+	fileHandle, err := os.OpenFile("Jap2Log.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
+	check(err)
+
+	_, err1 := fmt.Fprintf(fileHandle,
+		"\n The game began at: %s \n",
+		currentTime.Format("15:04:05 on Monday 01-02-2006"))
+	check(err1)
+	return game
+}
+func game_off() (game string) { // - -
+	game = "off"
+	gameOn = false
+	game_duration = 1000
+
+	fileHandle, err := os.OpenFile("Jap2Log.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
+	check(err)
+
+	currentTime := time.Now()
+
+	// calculate elapsed time
+	t_s2 := time.Now()
+	elapsed := t_s2.Sub(TimeOfStartFromTop)
+
+	// cast time durations to a String type for Fprintf "formatted print"
+	TotalRun := elapsed.String()
+
+	fmt.Printf("Run time was: %s, gameOn is: %t", TotalRun, gameOn)
+
+	// End timer and report elapsed time
+	_, err1 := fmt.Fprintf(fileHandle,
+		"\n The game ended at: %s  Total prompts was: %d \n",
+		currentTime.Format("15:04:05 on Monday 01-02-2006"), total_prompts)
+	check(err1)
+	_, err2 := fmt.Fprintf(fileHandle,
+		"\n Elapsed time of game was: %s \n",
+		TotalRun)
+	check(err2)
+	return game
+}
+
+var game_loop_counter int
+
 func respond_to_UserSuppliedDirective(in string) {
+	var count int
 	switch in {
+	case "gamed":
+		fmt.Println("Enter a number for how many prompts there will be in the game")
+		_, _ = fmt.Scan(&count)
+		game_duration = count
+	case "gameon":
+		// game_loop_counter ++
+		game_on()
+	case "gameoff":
+		game_off()
 	case "reset":
 		// Flush (clear) the old stats and hits arrays
 		cyclicArrayOfTheJcharsGottenWrong = CyclicArrayOfTheJcharsGottenWrong{}
@@ -106,6 +176,7 @@ func respond_to_UserSuppliedDirective(in string) {
 		// Also, flush (clear) the maps
 		frequencyMapOf_IsFineOnChars = make(map[string]int)
 		frequencyMapOf_need_workOn = make(map[string]int)
+		total_prompts = 0
 		//
 		//goland:noinspection ALL
 		fmt.Println("\nArrays and maps flushed:\n")

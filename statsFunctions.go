@@ -39,6 +39,8 @@ func logJcharsGottenWrong_in_cyclicArrayOfTheJcharsGottenWrong(Jchar string) { /
 	cyclicArrayOfTheJcharsGottenWrong.InsertCharsWrong(Jchar)
 }
 
+var total_prompts int
+
 // Directives:
 func hits() { // - -
 	// Create maps to store the frequency of each relevant string for that map
@@ -67,23 +69,25 @@ func hits() { // - -
 	}
 
 	// -- PRINT -- the 'Right' and 'Oops' and their frequencies (Right or Oops) (top of printout)
-	for str, freq := range frequencyMapRightOrOops {
-		if str == "Right" {
+	for str, freq := range frequencyMapRightOrOops { // The map has only one entry for Right, & one for Oops
+		if str == "Right" { // Finds the one potential entry for Right
 			fmt.Printf(colorGreen)
 			fmt.Printf(" %s ", str)
 			fmt.Printf(colorCyan)
 			fmt.Printf("Frequency:")
 			fmt.Printf(colorGreen)
-			fmt.Printf(" %d\n", freq)
+			fmt.Printf(" %d\n", freq) // Frequency of Right, per the map
 			fmt.Printf(colorReset)
-		} else if str == "Oops" { // it is Oops
+			total_prompts = freq
+		} else if str == "Oops" { // Finds the one potential entry for Oops
 			fmt.Printf(colorRed)
 			fmt.Printf(" %s ", str)
 			fmt.Printf(colorCyan)
 			fmt.Printf("Frequency:")
 			fmt.Printf(colorRed)
-			fmt.Printf(" %d\n", freq)
+			fmt.Printf(" %d\n", freq) // Frequency of Oops, per the map
 			fmt.Printf(colorReset)
+			total_prompts = total_prompts + freq
 		} else if str == "" {
 			// else, it is an 'empty' position in the map due to empty uninitialized positions in the cyclic array
 		}
@@ -105,6 +109,11 @@ func hits() { // - -
 	fmt.Printf("Number of unique chars: ")
 	fmt.Printf(colorPurple)
 	fmt.Printf("%d \n\n", numberOfUniqueCharsHit)
+	fmt.Printf(colorReset)
+
+	fmt.Printf("Total prompts:")
+	fmt.Printf(colorRed)
+	fmt.Printf(" %d\n", total_prompts)
 	fmt.Printf(colorReset)
 
 	// Print the ones gotten wrong  (continuing the printout above)

@@ -1,17 +1,16 @@
 package main
 
-// **do-this**
 import (
 	"fmt"
 	"strings"
 )
 
 // LOGGERS:
-func log_right(prompt_it_was string) {
+func log_right(prompt_it_was string) { // - -
 	logSkipThisPrompt_inThe_frequencyMapOf_IsFineOnChars(prompt_it_was)
 	logHits_in_cyclicArrayHits("Right", prompt_it_was)
 }
-func log_oops(prompt_it_was, field_it_was, guess string) {
+func log_oops(prompt_it_was, field_it_was, guess string) { // - -
 	logReinforceThisPrompt_inThe_frequencyMapOf_need_workOn(prompt_it_was)
 	logHits_in_cyclicArrayHits("Oops", prompt_it_was)
 	logJcharsGottenWrong_in_cyclicArrayOfTheJcharsGottenWrong(prompt_it_was +
@@ -20,15 +19,15 @@ func log_oops(prompt_it_was, field_it_was, guess string) {
 
 //
 // 'Reinforce-or-Skip' loggers|Inserters:
-func logSkipThisPrompt_inThe_frequencyMapOf_IsFineOnChars(promptToSkip string) {
+func logSkipThisPrompt_inThe_frequencyMapOf_IsFineOnChars(promptToSkip string) { // - -
 	frequencyMapOf_IsFineOnChars[promptToSkip]++
 }
-func logReinforceThisPrompt_inThe_frequencyMapOf_need_workOn(promptToWorkMoreOn string) {
+func logReinforceThisPrompt_inThe_frequencyMapOf_need_workOn(promptToWorkMoreOn string) { // - -
 	frequencyMapOf_need_workOn[promptToWorkMoreOn]++
 }
 
 // Universal hits logger|Inserter:
-func logHits_in_cyclicArrayHits(RightOrOops, JChar string) {
+func logHits_in_cyclicArrayHits(RightOrOops, JChar string) { // - -
 	cyclicArrayHits.InsertRightOrOops(RightOrOops)
 	cyclicArrayHits.InsertChar(JChar)
 }
@@ -36,12 +35,12 @@ func logHits_in_cyclicArrayHits(RightOrOops, JChar string) {
 //
 // A special Universal logger|Inserter: so we can drill the user more on chars he has missed
 //
-func logJcharsGottenWrong_in_cyclicArrayOfTheJcharsGottenWrong(Jchar string) {
+func logJcharsGottenWrong_in_cyclicArrayOfTheJcharsGottenWrong(Jchar string) { // - -
 	cyclicArrayOfTheJcharsGottenWrong.InsertCharsWrong(Jchar)
 }
 
 // Directives:
-func hits() {
+func hits() { // - -
 	// Create maps to store the frequency of each relevant string for that map
 	frequencyMapRightOrOops := make(map[string]int)
 	frequencyMapChar := make(map[string]int) // These, apparently, create a map to associate a unique string with an int

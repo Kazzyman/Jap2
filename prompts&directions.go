@@ -22,7 +22,7 @@ func promptForHira(promptField string) (usersGuessOrOptionDirective string) { //
 	return usersGuessOrOptionDirective
 }
 
-func promptForHiraWithDir(prompt string) (usersGuessOrOptionDirective string) { //               - -
+func promptForHiraWithDir(prompt string) (usersGuessOrOptionDirective string) { // - -
 	fmt.Printf("%s", prompt)
 	fmt.Printf("%s", colorCyan)
 	fmt.Printf(" Hiragana input-mode expected, or '?' for help with: %s \n", prompt)
@@ -32,7 +32,7 @@ func promptForHiraWithDir(prompt string) (usersGuessOrOptionDirective string) { 
 	_, _ = fmt.Scan(&usersGuessOrOptionDirective)
 	return usersGuessOrOptionDirective
 }
-func promptForRomajiWithDir(prompt string) (usersGuessOrOptionDirective string) { //             - -
+func promptForRomajiWithDir(prompt string) (usersGuessOrOptionDirective string) { // - -
 	fmt.Printf("%s", prompt)
 	fmt.Printf("%s", colorCyan)
 	fmt.Printf(" Romaji input-mode expected, or '?' for help with: %s \n", prompt)
@@ -47,13 +47,15 @@ func promptForRomajiWithDir(prompt string) (usersGuessOrOptionDirective string) 
 func display_Listing_of_Directives() { // (unique)     - -
 	frequencyMapRightOrOops := make(map[string]int)
 	for i := 0; i < len(cyclicArrayHits.RightOrOops); i++ {
-		str := cyclicArrayHits.RightOrOops[i]
+		str := cyclicArrayHits.RightOrOops[i] // Parse the cyclicArray
 		// Apparently; this loads a string into, and increments the frequency of, that particular string, in the map
+		// ... one such entry per unique string
 		frequencyMapRightOrOops[str]++ // Specifically, the '++' must increment the int value associated with str
 	}
+	// Then, parse the map which was created, and loaded, above
 	for str, freq := range frequencyMapRightOrOops { // The map has only one entry for Right, & one for Oops
 		if str == "Right" { // Finds the one potential entry for Right
-			total_prompts = freq
+			total_prompts = freq // Obviously, total_prompts has been declared as a global, elsewhere
 		} else if str == "Oops" { // Finds the one potential entry for Oops
 			total_prompts = total_prompts + freq
 		}
@@ -71,6 +73,7 @@ func display_Listing_of_Directives() { // (unique)     - -
 	fmt.Println("        Enter 'stats' or 'st' for statistics re what you have done")
 	fmt.Println("        Enter 'reset' to reset (flush or clear) all stats logs etc.")
 	fmt.Println("        Enter 'rm' to Read the current contents of the Maps")
+	fmt.Println("        Enter 'about' for trivia about this app")
 	// fmt.Println("        Enter 'stack' to prime or stack the frequencyMapOf_IsFineOnChars map")
 	fmt.Println("        Enter 'exit' or 'quit', 'ex' or 'q', to terminate this app")
 	//goland:noinspection ALL

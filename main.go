@@ -25,9 +25,9 @@ func main() {
 	}
 }
 
-var game_duration = 1000 // for testing this will be 10, but in future it should be 800
-func begin(promptField, objective, objective_kind string) { // May be a Hira, Kata, or Romaji prompt  - -
+var game_duration = 998
 
+func begin(promptField, objective, objective_kind string) { // May be a Hira, Kata, or Romaji prompt  - -
 	if game_loop_counter > game_duration {
 		game_off()
 	}
@@ -119,7 +119,7 @@ func evaluateUsersGuess(in, promptField, objective, objective_kind string, recur
 	}
 }
 
-func rightOrOops(in, promptField, objective, objective_kind string, skipOops bool) {
+func rightOrOops(in, promptField, objective, objective_kind string, skipOops bool) { // - -
 	var thisCaseOfAnInHasAlreadyBeenProcessedAbove = false
 	if objective == "zu" {
 		thisCaseOfAnInHasAlreadyBeenProcessedAbove = true
@@ -197,7 +197,7 @@ func rightOrOops(in, promptField, objective, objective_kind string, skipOops boo
 	}
 }
 
-func tryAgain(promptField, objective, objective_kind string) {
+func tryAgain(promptField, objective, objective_kind string) { // - -
 	fmt.Printf("Try again \n")
 	var in string // var declaration needed as a ":=" would not work within the conditional because "in" not in signature
 	// **** Now that we are trying again, after a failed guess, prompts do not solicit Directives:(currently inoperative)

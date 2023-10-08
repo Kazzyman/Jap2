@@ -33,14 +33,14 @@ type CyclicArrayHits struct { // Declare a new type, in this case a struct, to b
 }
 
 // Create a method for adding elements to the foregoing memory allocation such that it implements the behavior of a cyclic array
-func (ca *CyclicArrayHits) InsertRightOrOops(RightOrOops string) { // Please refer also to the lengthy discussion below: //
+func (ca *CyclicArrayHits) InsertRightOrOops(RightOrOops string) { // Please refer also to the lengthy discussion below: // - -
 	ca.RightOrOops[ca.index] = RightOrOops          // Assign the passed string value 'RightOrOops' to the 'data' array at position 'ca.index'
 	ca.index = (ca.index + 1) % len(ca.RightOrOops) // Increment 'index' (an integer indexing element) such that it loops-back to ...
 	// ... the first position of the 'RightOrOops' array -- having determined its length using: len(ca.RightOrOops).
 }
 
 // Create another method for adding elements to the foregoing file of cards such that it implements the behavior of a cyclic array
-func (ca *CyclicArrayHits) InsertChar(jchar string) { // Please refer also to the lengthy discussion below: //
+func (ca *CyclicArrayHits) InsertChar(jchar string) { // Please refer also to the lengthy discussion below: // - -
 	ca.jchar[ca.index] = jchar                // Assign the passed string 'value' to the 'data' array at position 'ca.index'
 	ca.index = (ca.index + 1) % len(ca.jchar) // Increment 'index' (an integer indexing element) such that it loops-back to ...
 	// ... the first position of the 'jchar' array -- having determined its length using: len(ca.jchar).
@@ -54,12 +54,12 @@ func (ca *CyclicArrayHits) InsertChar(jchar string) { // Please refer also to th
 // ... while the finer-details of the syntax follow below
 var cyclicArrayOfTheJcharsGottenWrong CyclicArrayOfTheJcharsGottenWrong
 
-type CyclicArrayOfTheJcharsGottenWrong struct {
+type CyclicArrayOfTheJcharsGottenWrong struct { // - -
 	jchar [700]string
 	index int
 }
 
-func (ca *CyclicArrayOfTheJcharsGottenWrong) InsertCharsWrong(Jchar string) {
+func (ca *CyclicArrayOfTheJcharsGottenWrong) InsertCharsWrong(Jchar string) { // - -
 	ca.jchar[ca.index] = Jchar
 	ca.index = (ca.index + 1) % len(ca.jchar)
 }

@@ -10,7 +10,7 @@ import (
 
 // DIRECTIVES : --------------------------------------------------------------------------------------------
 //
-func handle_doubleQuestMark_directive(objective_kind string) { //                 - -
+func handle_doubleQuestMark_directive(objective_kind string) { //        - -
 	var Hira_or_Romaji_input_sameAsPrompt_toFindHelpOn string
 	//
 	fmt.Printf("\n  -- Type either a Hiragana or Romaji prompt you need help with:> ")
@@ -21,7 +21,7 @@ func handle_doubleQuestMark_directive(objective_kind string) { //               
 }
 
 // Handles the Directive 'set'
-func reSet_aCard_andThereBy_reSet_thePromptString() (prompt, objective, objective_kind string) { //     - -
+func reSet_aCard_andThereBy_reSet_thePromptString() (prompt, objective, objective_kind string) { //  - -
 	var theHiraganaOfCardToSilentlyLocate string
 	var isAlphanumeric bool
 
@@ -72,13 +72,13 @@ func reSet_aCard_andThereBy_reSet_thePromptString() (prompt, objective, objectiv
 // end of DIRECTIVES -----------------------------------------------------------------------------------
 
 // Creates a func named check_error which takes one parameter "e" of type error
-func check_error(e error) { //      - -
+func check_error(e error) { //    - -
 	if e != nil {
 		panic(e) // use panic() to display error code
 	}
 }
 
-func testForDirective(in string) (result bool) {
+func testForDirective(in string) (result bool) { // - -
 	if in == "set" ||
 		in == "?" || // <-- If it IS a directive
 		in == "??" ||
@@ -96,6 +96,7 @@ func testForDirective(in string) (result bool) {
 		in == "rm" ||
 		in == "gameon" ||
 		in == "gameoff" ||
+		in == "about" ||
 		in == "gamed" {
 		// Then:
 		result = true
@@ -129,7 +130,7 @@ func game_on() (game string) { // - -
 func game_off() (game string) { // - -
 	game = "off"
 	gameOn = false
-	game_duration = 1000
+	game_duration = 998
 
 	fileHandle, err := os.OpenFile("Jap2Log.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
 	check_error(err)
@@ -159,9 +160,22 @@ func game_off() (game string) { // - -
 
 var game_loop_counter int
 
-func respond_to_UserSuppliedDirective(in, objective_kind string) (prompt, objective, kind string) {
+func respond_to_UserSuppliedDirective(in, objective_kind string) (prompt, objective, kind string) { // - -
 	var count int
 	switch in {
+	case "about":
+		fmt.Printf("\n" +
+			"This app consists of the following files and lines of code:\n\n" +
+			"1701 constants.go ~ 35\n" +
+			"343 functions.go ~ 300\n" +
+			"157 locateCard.go ~ 80\n" +
+			"357 main.go ~ 320\n" +
+			"127 memoryFunctions.go ~ 45\n" +
+			"133 objectsAndMethods.go ~ 40\n" +
+			"82 prompts&directions.go ~ 75\n" +
+			"145 statsFunctions.go ~ 125 \n\n" +
+			"3045 lines of code (SOC) \n" +
+			"or, about 1,020 functional lines of code \n\n")
 	case "gamed":
 		fmt.Println("Enter a number for how many prompts there will be in the game")
 		_, _ = fmt.Scan(&count)

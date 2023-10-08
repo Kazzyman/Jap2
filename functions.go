@@ -231,7 +231,7 @@ func respond_to_UserSuppliedDirective(in, objective_kind string) (prompt, object
 		fmt.Println("゜is called \"handakuten\" 半濁点 translates to \"half-voicing mark\" or \"semi-voiced mark\"\n" +
 			"゛is called \"dakuten\" 濁点 meaning 'voiced mark' or 'voicing mark'")
 	case "dir": // reDisplay the DIRECTORY OF DIRECTIVES (and instructions):
-		display_Listing_of_Directives()
+		re_display_List_of_Directives()
 	case "rm":
 		read_map_of_fineOn()
 		read_map_of_needWorkOn()

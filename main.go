@@ -10,7 +10,7 @@ func main() {
 	rand.Seed(time.Now().UnixNano())
 	gameOn = false
 	game = "off"
-	display_Listing_of_Directives()
+	display_List_of_Directives()
 	for {
 		if gameOn {
 			// game_loop_counter++

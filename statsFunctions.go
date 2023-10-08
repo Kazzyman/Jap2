@@ -43,6 +43,9 @@ var total_prompts int
 
 // Directives:
 func hits() { // - -
+	fmt.Printf(colorPurple)
+	fmt.Printf("\n Here are your stats:\n")
+	fmt.Printf(colorReset)
 	// Create maps to store the frequency of each relevant string for that map
 	frequencyMapRightOrOops := make(map[string]int)
 	frequencyMapChar := make(map[string]int) // These, apparently, create a map to associate a unique string with an int
@@ -108,7 +111,7 @@ func hits() { // - -
 	}
 	fmt.Printf("Number of unique chars: ")
 	fmt.Printf(colorPurple)
-	fmt.Printf("%d \n\n", numberOfUniqueCharsHit)
+	fmt.Printf("%d \n", numberOfUniqueCharsHit)
 	fmt.Printf(colorReset)
 
 	fmt.Printf("Total prompts:")

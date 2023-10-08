@@ -6,25 +6,21 @@ import (
 	"time"
 )
 
-// Occasionally we want to get a card that has been missed before, instead of the random one
-// i.e., now & then we will consider working on a char the user has had trouble with, rather than a random char
-var isThis_a_cardWeNeedMoreWorkOn int
-
 func main() {
 	rand.Seed(time.Now().UnixNano())
 	gameOn = false
+	game = "off"
+	display_Listing_of_Directives()
 	for {
 		if gameOn {
-			game_loop_counter++
+			// game_loop_counter++
 		} else {
 			game_loop_counter = 0
 		}
 		if game_loop_counter > game_duration {
 			game_off()
 		}
-
 		new_prompt, objective, objective_kind := pick_RandomCard_Assign_fields() // This line is done after each ^^Right!
-		// After each: pick_RandomCard_Assign_fields() [except this ^ ^ one] we will do a checkMemory()
 		begin(new_prompt, objective, objective_kind)
 	}
 }
@@ -40,12 +36,16 @@ func begin(promptField, objective, objective_kind string) { // May be a Hira, Ka
 		if objective_kind == "Romaji" {
 			in = promptForRomajiWithDir(promptField) // Get user's input, from a randomly selected prompt
 		} else if objective_kind == "Hira" {
-			in = promptForHiraWithDir(promptField) // Get user's input, from a randomly selected prompt
+			in = promptForHiraWithDir(promptField)
 		}
 		DetectedDirective := false
 		DetectedDirective = testForDirective(in) // Sets DetectedDirective true if a "Directive" was detected
 		if DetectedDirective {
-			respond_to_UserSuppliedDirective(in)
+			if in == "set" { // respond_to_UserSuppliedDirective(in, new_objective_kind) will want to return values is "set" is switched on
+				promptField, objective, objective_kind = respond_to_UserSuppliedDirective(in, objective_kind)
+			} else {
+				respond_to_UserSuppliedDirective(in, objective_kind)
+			}
 			continue // ... After "Directive" handling, re-prompt with the same/original promptField
 		} else {
 			// Passing recursion false [or recall true], means do rightOrOops()
@@ -92,12 +92,16 @@ func evaluateUsersGuess(in, promptField, objective, objective_kind string, recur
 	if objective_kind == "Romaji" {
 		in = promptForRomajiWithDir(promptField) // Get user's input, from a randomly selected prompt
 	} else if objective_kind == "Hira" {
-		in = promptForHiraWithDir(promptField) // Get user's input, from a randomly selected prompt
+		in = promptForHiraWithDir(promptField)
 	}
 	DetectedDirective := false
 	DetectedDirective = testForDirective(in)
 	if DetectedDirective {
-		respond_to_UserSuppliedDirective(in)
+		if in == "set" { // See prior comments
+			promptField, objective, objective_kind = respond_to_UserSuppliedDirective(in, objective_kind)
+		} else {
+			respond_to_UserSuppliedDirective(in, objective_kind)
+		}
 		/*
 			Recursively ...
 			after responding to a Directive, prompt via recursion, from the same/original promptField
@@ -125,20 +129,22 @@ func rightOrOops(in, promptField, objective, objective_kind string, skipOops boo
 			fmt.Printf("        ^^Right! ")
 			fmt.Printf("%s", colorReset)
 			fmt.Printf("It could have been either ず or づ as they are the same sound: zu\n")
-			new_prompt, new_objective, new_objective_kind := pick_RandomCard_Assign_fields() // Gets a new card and extract the new prompt field
-			if game == "off" {
-				promptField, objective, objective_kind = checkMemory(new_prompt, new_objective, new_objective_kind)
-			}
+			// Since this was "^^Right!", next we obtain new values in-preparation of "returning" to caller
+			new_prompt, new_objective, new_objective_kind := pick_RandomCard_Assign_fields()
 			if new_objective_kind == "Romaji" {
 				in = promptForRomajiWithDir(new_prompt) // Gets a new in, having prompted with the new field
 			} else if new_objective_kind == "Hira" {
-				in = promptForHiraWithDir(new_prompt) // Gets a new in, having prompted with the new field
+				in = promptForHiraWithDir(new_prompt)
 			}
-			// Refer to the previous comments about the following:
+			// Refer to the previous comments re the following mirrored section:
 			DetectedDirective := false
 			DetectedDirective = testForDirective(in)
 			if DetectedDirective {
-				respond_to_UserSuppliedDirective(in)
+				if in == "set" {
+					new_prompt, new_objective, new_objective_kind = respond_to_UserSuppliedDirective(in, new_objective_kind)
+				} else {
+					respond_to_UserSuppliedDirective(in, new_objective_kind)
+				}
 				evaluateUsersGuess(in, new_prompt, new_objective, new_objective_kind, true, false, true)
 			} else {
 				evaluateUsersGuess(in, new_prompt, new_objective, new_objective_kind, true, true, false)
@@ -158,25 +164,27 @@ func rightOrOops(in, promptField, objective, objective_kind string, skipOops boo
 			fmt.Printf("%s", colorGreen)
 			fmt.Printf("      　^^Right! \n")
 			fmt.Printf("%s", colorReset)
+			// Since this was "^^Right!", next we obtain new values in-preparation of "returning" to caller
 			new_prompt, new_objective, new_objective_kind := pick_RandomCard_Assign_fields() // Gets a new card and extract the new prompt field
-			if game == "off" {
-				promptField, objective, objective_kind = checkMemory(new_prompt, new_objective, new_objective_kind)
-			}
 			if new_objective_kind == "Romaji" {
 				in = promptForRomajiWithDir(new_prompt) // Gets a new in, having prompted with the new field
 			} else if new_objective_kind == "Hira" {
-				in = promptForHiraWithDir(new_prompt) // Gets a new in, having prompted with the new field
+				in = promptForHiraWithDir(new_prompt)
 			}
-			// Refer to the previous comments about the following:
+			// Refer to the previous comments re the following mirrored section:
 			DetectedDirective := false
 			DetectedDirective = testForDirective(in)
 			if DetectedDirective {
-				respond_to_UserSuppliedDirective(in)
+				if in == "set" {
+					new_prompt, new_objective, new_objective_kind = respond_to_UserSuppliedDirective(in, new_objective_kind)
+				} else {
+					respond_to_UserSuppliedDirective(in, new_objective_kind)
+				}
 				evaluateUsersGuess(in, new_prompt, new_objective, new_objective_kind, true, false, true)
 			} else {
 				evaluateUsersGuess(in, new_prompt, new_objective, new_objective_kind, true, true, false)
 			}
-		} else {
+		} else { // it is not a Right, and is therefor an Oops, no new aCard has been fetched etc. Not even checkMemory has been run
 			if skipOops {
 				// Then do nothing
 			} else {
@@ -184,7 +192,7 @@ func rightOrOops(in, promptField, objective, objective_kind string, skipOops boo
 				fmt.Printf("%s", colorRed)
 				fmt.Printf("      　^^Oops! ")
 			}
-			tryAgain(promptField, objective, objective_kind)
+			tryAgain(promptField, objective, objective_kind) // passing the old original values
 		}
 	}
 }
@@ -192,12 +200,15 @@ func rightOrOops(in, promptField, objective, objective_kind string, skipOops boo
 func tryAgain(promptField, objective, objective_kind string) {
 	fmt.Printf("Try again \n")
 	var in string // var declaration needed as a ":=" would not work within the conditional because "in" not in signature
+	// **** Now that we are trying again, after a failed guess, prompts do not solicit Directives:(currently inoperative)
 	if objective_kind == "Romaji" {
 		in = promptForRomaji(promptField) // Gets a new in, having prompted with the new field
 	} else if objective_kind == "Hira" {
-		in = promptForHira(promptField) // Gets a new in, having prompted with the new field
-	}
-
+		in = promptForHira(promptField)
+	} // **** Note here ^ ^ ^ the missing "WithDir" suffix to "promptForHira" as Directives are currently inoperative
+	// ...
+	// Note the lack of a Directive handling section which normally follows prompting, ergo currently inoperative
+	//
 	var thisCaseOfAnInHasAlreadyBeenProcessedAbove = false
 	if objective == "zu" {
 		thisCaseOfAnInHasAlreadyBeenProcessedAbove = true
@@ -207,20 +218,21 @@ func tryAgain(promptField, objective, objective_kind string) {
 			fmt.Printf("        ^^Right! ")
 			fmt.Printf("%s", colorReset)
 			fmt.Printf("It could have been either ず or づ as they are the same sound: zu\n")
-			new_prompt, new_objective, new_objective_kind := pick_RandomCard_Assign_fields() // Gets a new card and extract the new prompt field
-			if game == "off" {
-				promptField, objective, objective_kind = checkMemory(new_prompt, new_objective, new_objective_kind)
-			}
+			new_prompt, new_objective, new_objective_kind := pick_RandomCard_Assign_fields()
 			if new_objective_kind == "Romaji" {
 				in = promptForRomajiWithDir(new_prompt) // Gets a new in, having prompted with the new field
 			} else if new_objective_kind == "Hira" {
-				in = promptForHiraWithDir(new_prompt) // Gets a new in, having prompted with the new field
+				in = promptForHiraWithDir(new_prompt)
 			}
-			// Refer to the previous comments about the following:
+			// Refer to the previous comments re the following mirrored section:
 			DetectedDirective := false
 			DetectedDirective = testForDirective(in)
 			if DetectedDirective {
-				respond_to_UserSuppliedDirective(in)
+				if in == "set" {
+					new_prompt, new_objective, new_objective_kind = respond_to_UserSuppliedDirective(in, new_objective_kind)
+				} else {
+					respond_to_UserSuppliedDirective(in, new_objective_kind)
+				}
 				evaluateUsersGuess(in, new_prompt, new_objective, new_objective_kind, true, false, true)
 			} else {
 				evaluateUsersGuess(in, new_prompt, new_objective, new_objective_kind, true, true, false)
@@ -236,20 +248,21 @@ func tryAgain(promptField, objective, objective_kind string) {
 			fmt.Printf("%s", colorGreen)
 			fmt.Printf("      　^^Right! \n")
 			fmt.Printf("%s", colorReset)
-			new_prompt, new_objective, new_objective_kind := pick_RandomCard_Assign_fields() // Gets a new card and extract the new prompt field
-			if game == "off" {
-				promptField, objective, objective_kind = checkMemory(new_prompt, new_objective, new_objective_kind)
-			}
+			new_prompt, new_objective, new_objective_kind := pick_RandomCard_Assign_fields()
 			if new_objective_kind == "Romaji" {
 				in = promptForRomajiWithDir(new_prompt) // Gets a new in, having prompted with the new field
 			} else if new_objective_kind == "Hira" {
-				in = promptForHiraWithDir(new_prompt) // Gets a new in, having prompted with the new field
+				in = promptForHiraWithDir(new_prompt)
 			}
-			// Refer to the previous comments about the following:
+			// Refer to the previous comments re the following mirrored section:
 			DetectedDirective := false
 			DetectedDirective = testForDirective(in)
 			if DetectedDirective {
-				respond_to_UserSuppliedDirective(in)
+				if in == "set" {
+					new_prompt, new_objective, new_objective_kind = respond_to_UserSuppliedDirective(in, new_objective_kind)
+				} else {
+					respond_to_UserSuppliedDirective(in, new_objective_kind)
+				}
 				evaluateUsersGuess(in, new_prompt, new_objective, new_objective_kind, true, false, true)
 			} else {
 				evaluateUsersGuess(in, new_prompt, new_objective, new_objective_kind, true, true, false)
@@ -265,12 +278,16 @@ func tryAgain(promptField, objective, objective_kind string) {
 
 func lastTry(promptField, objective, objective_kind string) { // - -
 	fmt.Printf("Last Try! \n")
-	var in string // var declaration needed as a ":=" would not work within the conditional because "in" not in signature
+	var in string // var declaration needed as a ":=" would not work within the conditional ~ "in" not in signature
+	// **** Now that we are trying again, after a failed guess, prompts do not solicit Directives:(currently inoperative)
 	if objective_kind == "Romaji" {
 		in = promptForRomaji(promptField) // Get user's input, from a randomly selected prompt
 	} else if objective_kind == "Hira" {
-		in = promptForHira(promptField) // Get user's input, from a randomly selected prompt
-	}
+		in = promptForHira(promptField)
+	} // **** Note here ^ ^ ^ the missing "WithDir" suffix to "promptForHira" as Directives are currently inoperative
+	// ...
+	// Note the lack of a Directive handling section which normally follows prompting, ergo currently inoperative
+	//
 	var thisCaseOfAnInHasAlreadyBeenProcessedAbove bool
 	thisCaseOfAnInHasAlreadyBeenProcessedAbove = false
 	if objective == "zu" {
@@ -281,21 +298,24 @@ func lastTry(promptField, objective, objective_kind string) { // - -
 			fmt.Printf("        ^^Right! ")
 			fmt.Printf("%s", colorReset)
 			fmt.Printf("It could have been either ず or づ as they are the same sound: zu\n")
-			new_prompt, new_objective, new_objective_kind := pick_RandomCard_Assign_fields() // Gets a new card and extract the new prompt field
-			if game == "off" {
-				promptField, objective, objective_kind = checkMemory(new_prompt, new_objective, new_objective_kind)
-			}
+			new_prompt, new_objective, new_objective_kind := pick_RandomCard_Assign_fields()
 			if new_objective_kind == "Romaji" {
 				in = promptForRomajiWithDir(new_prompt) // Gets a new in, having prompted with the new field
 			} else if new_objective_kind == "Hira" {
-				in = promptForHiraWithDir(new_prompt) // Gets a new in, having prompted with the new field
+				in = promptForHiraWithDir(new_prompt)
 			}
+			// Refer to the previous comments re the following mirrored section:
 			DetectedDirective := false
 			DetectedDirective = testForDirective(in)
 			if DetectedDirective {
-				respond_to_UserSuppliedDirective(in)
+				if in == "set" {
+					new_prompt, new_objective, new_objective_kind = respond_to_UserSuppliedDirective(in, new_objective_kind)
+				} else {
+					respond_to_UserSuppliedDirective(in, new_objective_kind)
+				}
 				evaluateUsersGuess(in, new_prompt, new_objective, new_objective_kind, true, false, true)
 			} else {
+
 				evaluateUsersGuess(in, new_prompt, new_objective, new_objective_kind, true, true, false)
 			}
 		} else {
@@ -309,19 +329,21 @@ func lastTry(promptField, objective, objective_kind string) { // - -
 			fmt.Printf("%s", colorGreen)
 			fmt.Printf("      　^^Right! \n")
 			fmt.Printf("%s", colorReset)
-			new_prompt, new_objective, new_objective_kind := pick_RandomCard_Assign_fields() // Gets a new card and extract the new prompt field
-			if game == "off" {
-				promptField, objective, objective_kind = checkMemory(new_prompt, new_objective, new_objective_kind)
-			}
+			new_prompt, new_objective, new_objective_kind := pick_RandomCard_Assign_fields()
 			if new_objective_kind == "Romaji" {
 				in = promptForRomajiWithDir(new_prompt) // Gets a new in, having prompted with the new field
 			} else if new_objective_kind == "Hira" {
-				in = promptForHiraWithDir(new_prompt) // Gets a new in, having prompted with the new field
+				in = promptForHiraWithDir(new_prompt)
 			}
+			// Refer to the previous comments re the following mirrored section:
 			DetectedDirective := false
 			DetectedDirective = testForDirective(in)
 			if DetectedDirective {
-				respond_to_UserSuppliedDirective(in)
+				if in == "set" {
+					new_prompt, new_objective, new_objective_kind = respond_to_UserSuppliedDirective(in, new_objective_kind)
+				} else {
+					respond_to_UserSuppliedDirective(in, new_objective_kind)
+				}
 				evaluateUsersGuess(in, new_prompt, new_objective, new_objective_kind, true, false, true)
 			} else {
 				evaluateUsersGuess(in, new_prompt, new_objective, new_objective_kind, true, true, false)

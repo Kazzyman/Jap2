@@ -33,7 +33,7 @@ func logHits_in_cyclicArrayHits(RightOrOops, JChar string) { // - -
 }
 
 //
-// A special Universal logger|Inserter: so we can drill the user more on chars he has missed
+// A special Universal logger|Inserter: so we could drill the user more on chars he has missed
 //
 func logJcharsGottenWrong_in_cyclicArrayOfTheJcharsGottenWrong(Jchar string) { // - -
 	cyclicArrayOfTheJcharsGottenWrong.InsertCharsWrong(Jchar)

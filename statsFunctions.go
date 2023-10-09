@@ -114,10 +114,11 @@ func hits() { // - -
 	fmt.Printf("%d \n", numberOfUniqueCharsHit)
 	fmt.Printf(colorReset)
 
+	fmt.Printf(colorPurple)
 	fmt.Printf("Total prompts:")
-	fmt.Printf(colorRed)
-	fmt.Printf(" %d\n", total_prompts)
 	fmt.Printf(colorReset)
+	fmt.Printf(" %d\n", total_prompts)
+	// fmt.Printf(colorReset)
 
 	// Print the ones gotten wrong  (continuing the printout above)
 	for str, freq := range frequencyMapWrongs {

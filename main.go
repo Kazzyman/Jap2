@@ -25,19 +25,21 @@ func main() {
 	}
 }
 
-var game_duration = 998
-
 func begin(promptField, objective, objective_kind string) { // May be a Hira, Kata, or Romaji prompt  - -
 	if game_loop_counter > game_duration {
 		game_off()
 	}
 	var in string // var declaration needed as a ":=" would not work within the conditional because "in" not in signature
 	for {
+		// These prompts, deployed by objective_kind, take promptField (rather than the new_prompt variant)
 		if objective_kind == "Romaji" {
 			in = promptForRomajiWithDir(promptField) // Get user's input, from a randomly selected prompt
+		} else if objective_kind == "Extended_Romaji" {
+			in = promptForRomajiWithDirE(promptField) // A special prompt for Extended Kata, if|when deployed
 		} else if objective_kind == "Hira" {
 			in = promptForHiraWithDir(promptField)
 		}
+
 		DetectedDirective := false
 		DetectedDirective = testForDirective(in) // Sets DetectedDirective true if a "Directive" was detected
 		if DetectedDirective {
@@ -88,12 +90,15 @@ func evaluateUsersGuess(in, promptField, objective, objective_kind string, recur
 		// If recall is false, then do nothing
 	}
 	// ^ ^ ^ If evaluateUsersGuess() has been called after handling a "Directive" then rightOrOops() is omitted entirely
-
+	// These prompts, deployed by objective_kind, take promptField (rather than the new_prompt variant)
 	if objective_kind == "Romaji" {
 		in = promptForRomajiWithDir(promptField) // Get user's input, from a randomly selected prompt
+	} else if objective_kind == "Extended_Romaji" {
+		in = promptForRomajiWithDirE(promptField) // A special prompt for Extended Kata, if|when deployed
 	} else if objective_kind == "Hira" {
 		in = promptForHiraWithDir(promptField)
 	}
+
 	DetectedDirective := false
 	DetectedDirective = testForDirective(in)
 	if DetectedDirective {
@@ -131,11 +136,15 @@ func rightOrOops(in, promptField, objective, objective_kind string, skipOops boo
 			fmt.Printf("It could have been either ず or づ as they are the same sound: zu\n")
 			// Since this was "^^Right!", next we obtain new values in-preparation of "returning" to caller
 			new_prompt, new_objective, new_objective_kind := pick_RandomCard_Assign_fields()
+			// These prompts, deployed by new_objective_kind, take new_prompt
 			if new_objective_kind == "Romaji" {
-				in = promptForRomajiWithDir(new_prompt) // Gets a new in, having prompted with the new field
+				in = promptForRomajiWithDir(new_prompt) // Get user's input, from a randomly selected prompt
+			} else if new_objective_kind == "Extended_Romaji" {
+				in = promptForRomajiWithDirE(new_prompt) // A special prompt for Extended Kata, if|when deployed
 			} else if new_objective_kind == "Hira" {
 				in = promptForHiraWithDir(new_prompt)
 			}
+
 			// Refer to the previous comments re the following mirrored section:
 			DetectedDirective := false
 			DetectedDirective = testForDirective(in)
@@ -166,11 +175,15 @@ func rightOrOops(in, promptField, objective, objective_kind string, skipOops boo
 			fmt.Printf("%s", colorReset)
 			// Since this was "^^Right!", next we obtain new values in-preparation of "returning" to caller
 			new_prompt, new_objective, new_objective_kind := pick_RandomCard_Assign_fields() // Gets a new card and extract the new prompt field
+			// These prompts, deployed by new_objective_kind, take new_prompt
 			if new_objective_kind == "Romaji" {
-				in = promptForRomajiWithDir(new_prompt) // Gets a new in, having prompted with the new field
+				in = promptForRomajiWithDir(new_prompt) // Get user's input, from a randomly selected prompt
+			} else if new_objective_kind == "Extended_Romaji" {
+				in = promptForRomajiWithDirE(new_prompt) // A special prompt for Extended Kata, if|when deployed
 			} else if new_objective_kind == "Hira" {
 				in = promptForHiraWithDir(new_prompt)
 			}
+
 			// Refer to the previous comments re the following mirrored section:
 			DetectedDirective := false
 			DetectedDirective = testForDirective(in)
@@ -201,11 +214,16 @@ func tryAgain(promptField, objective, objective_kind string) { // - -
 	fmt.Printf("Try again \n")
 	var in string // var declaration needed as a ":=" would not work within the conditional because "in" not in signature
 	// **** Now that we are trying again, after a failed guess, prompts do not solicit Directives:(currently inoperative)
+	// ... so, these prompts, deployed by objective_kind, take promptField (rather than the new_prompt variant)
 	if objective_kind == "Romaji" {
-		in = promptForRomaji(promptField) // Gets a new in, having prompted with the new field
+		in = promptForRomaji(promptField) // Get user's input, from a randomly selected prompt
+	} else if objective_kind == "Extended_Romaji" {
+		in = promptForRomajiE(promptField) // A special prompt for Extended Kata, if|when deployed
 	} else if objective_kind == "Hira" {
 		in = promptForHira(promptField)
-	} // **** Note here ^ ^ ^ the missing "WithDir" suffix to "promptForHira" as Directives are currently inoperative
+	}
+	// **** Note here ^ ^ ^ the missing "WithDir" suffix to "promptForHira" as Directives are currently inoperative
+
 	// ...
 	// Note the lack of a Directive handling section which normally follows prompting, ergo currently inoperative
 	//
@@ -219,11 +237,15 @@ func tryAgain(promptField, objective, objective_kind string) { // - -
 			fmt.Printf("%s", colorReset)
 			fmt.Printf("It could have been either ず or づ as they are the same sound: zu\n")
 			new_prompt, new_objective, new_objective_kind := pick_RandomCard_Assign_fields()
+			// These prompts, deployed by new_objective_kind, take new_prompt
 			if new_objective_kind == "Romaji" {
-				in = promptForRomajiWithDir(new_prompt) // Gets a new in, having prompted with the new field
+				in = promptForRomajiWithDir(new_prompt) // Get user's input, from a randomly selected prompt
+			} else if new_objective_kind == "Extended_Romaji" {
+				in = promptForRomajiWithDirE(new_prompt) // A special prompt for Extended Kata, if|when deployed
 			} else if new_objective_kind == "Hira" {
 				in = promptForHiraWithDir(new_prompt)
 			}
+
 			// Refer to the previous comments re the following mirrored section:
 			DetectedDirective := false
 			DetectedDirective = testForDirective(in)
@@ -249,11 +271,15 @@ func tryAgain(promptField, objective, objective_kind string) { // - -
 			fmt.Printf("      　^^Right! \n")
 			fmt.Printf("%s", colorReset)
 			new_prompt, new_objective, new_objective_kind := pick_RandomCard_Assign_fields()
+			// These prompts, deployed by new_objective_kind, take new_prompt
 			if new_objective_kind == "Romaji" {
-				in = promptForRomajiWithDir(new_prompt) // Gets a new in, having prompted with the new field
+				in = promptForRomajiWithDir(new_prompt) // Get user's input, from a randomly selected prompt
+			} else if new_objective_kind == "Extended_Romaji" {
+				in = promptForRomajiWithDirE(new_prompt) // A special prompt for Extended Kata, if|when deployed
 			} else if new_objective_kind == "Hira" {
 				in = promptForHiraWithDir(new_prompt)
 			}
+
 			// Refer to the previous comments re the following mirrored section:
 			DetectedDirective := false
 			DetectedDirective = testForDirective(in)
@@ -280,11 +306,17 @@ func lastTry(promptField, objective, objective_kind string) { // - -
 	fmt.Printf("Last Try! \n")
 	var in string // var declaration needed as a ":=" would not work within the conditional ~ "in" not in signature
 	// **** Now that we are trying again, after a failed guess, prompts do not solicit Directives:(currently inoperative)
+	// ... so, these prompts, deployed by objective_kind, take promptField (rather than the new_prompt variant)
 	if objective_kind == "Romaji" {
 		in = promptForRomaji(promptField) // Get user's input, from a randomly selected prompt
+	} else if objective_kind == "Extended_Romaji" {
+		in = promptForRomajiE(promptField) // A special prompt for Extended Kata, if|when deployed
 	} else if objective_kind == "Hira" {
 		in = promptForHira(promptField)
-	} // **** Note here ^ ^ ^ the missing "WithDir" suffix to "promptForHira" as Directives are currently inoperative
+	}
+
+	// **** Note here ^ ^ ^ the missing "WithDir" suffix to "promptForHira" as Directives are currently inoperative
+
 	// ...
 	// Note the lack of a Directive handling section which normally follows prompting, ergo currently inoperative
 	//
@@ -299,11 +331,15 @@ func lastTry(promptField, objective, objective_kind string) { // - -
 			fmt.Printf("%s", colorReset)
 			fmt.Printf("It could have been either ず or づ as they are the same sound: zu\n")
 			new_prompt, new_objective, new_objective_kind := pick_RandomCard_Assign_fields()
+			// These prompts, deployed by new_objective_kind, take new_prompt
 			if new_objective_kind == "Romaji" {
-				in = promptForRomajiWithDir(new_prompt) // Gets a new in, having prompted with the new field
+				in = promptForRomajiWithDir(new_prompt) // Get user's input, from a randomly selected prompt
+			} else if new_objective_kind == "Extended_Romaji" {
+				in = promptForRomajiWithDirE(new_prompt) // A special prompt for Extended Kata, if|when deployed
 			} else if new_objective_kind == "Hira" {
 				in = promptForHiraWithDir(new_prompt)
 			}
+
 			// Refer to the previous comments re the following mirrored section:
 			DetectedDirective := false
 			DetectedDirective = testForDirective(in)
@@ -330,11 +366,15 @@ func lastTry(promptField, objective, objective_kind string) { // - -
 			fmt.Printf("      　^^Right! \n")
 			fmt.Printf("%s", colorReset)
 			new_prompt, new_objective, new_objective_kind := pick_RandomCard_Assign_fields()
+			// These prompts, deployed by new_objective_kind, take new_prompt
 			if new_objective_kind == "Romaji" {
-				in = promptForRomajiWithDir(new_prompt) // Gets a new in, having prompted with the new field
+				in = promptForRomajiWithDir(new_prompt) // Get user's input, from a randomly selected prompt
+			} else if new_objective_kind == "Extended_Romaji" {
+				in = promptForRomajiWithDirE(new_prompt) // A special prompt for Extended Kata, if|when deployed
 			} else if new_objective_kind == "Hira" {
 				in = promptForHiraWithDir(new_prompt)
 			}
+
 			// Refer to the previous comments re the following mirrored section:
 			DetectedDirective := false
 			DetectedDirective = testForDirective(in)

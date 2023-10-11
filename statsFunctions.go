@@ -39,13 +39,8 @@ func logJcharsGottenWrong_in_cyclicArrayOfTheJcharsGottenWrong(Jchar string) { /
 	cyclicArrayOfTheJcharsGottenWrong.InsertCharsWrong(Jchar)
 }
 
-var total_prompts int
-
 // Directives:
 func hits() { // - -
-	fmt.Printf(colorPurple)
-	fmt.Printf("\n Here are your stats:\n")
-	fmt.Printf(colorReset)
 	// Create maps to store the frequency of each relevant string for that map
 	frequencyMapRightOrOops := make(map[string]int)
 	frequencyMapChar := make(map[string]int) // These, apparently, create a map to associate a unique string with an int
@@ -111,14 +106,13 @@ func hits() { // - -
 	}
 	fmt.Printf("Number of unique chars: ")
 	fmt.Printf(colorPurple)
-	fmt.Printf("%d \n", numberOfUniqueCharsHit)
+	fmt.Printf("%d \n\n", numberOfUniqueCharsHit)
 	fmt.Printf(colorReset)
 
-	fmt.Printf(colorPurple)
 	fmt.Printf("Total prompts:")
-	fmt.Printf(colorReset)
+	fmt.Printf(colorRed)
 	fmt.Printf(" %d\n", total_prompts)
-	// fmt.Printf(colorReset)
+	fmt.Printf(colorReset)
 
 	// Print the ones gotten wrong  (continuing the printout above)
 	for str, freq := range frequencyMapWrongs {

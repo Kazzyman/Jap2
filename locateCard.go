@@ -5,9 +5,6 @@ import (
 	"regexp"
 )
 
-// Convenience global, used in two functions here, and in the calling func
-var foundElement *charSetStruct
-
 // Used only in handle_doubleQuestMark_directive()  '(a Directive)'
 // (temporarily deprecated) ********************* v v v v v
 func locateCardAndDisplayHelpFieldsContainedInIt_deprecated(Hira_or_Romaji_input_sameAsPrompt_toFindHelpOn, objective_kind string) {

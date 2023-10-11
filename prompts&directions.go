@@ -4,6 +4,7 @@ import (
 	"fmt"
 )
 
+// Special prompts for use when soliciting second, or final, guesses
 func promptForRomaji(promptField string) (usersGuessOrOptionDirective string) { //  - -
 	fmt.Printf("%s", promptField)
 	fmt.Printf("%s", colorCyan)
@@ -12,7 +13,6 @@ func promptForRomaji(promptField string) (usersGuessOrOptionDirective string) { 
 	_, _ = fmt.Scan(&usersGuessOrOptionDirective)
 	return usersGuessOrOptionDirective
 }
-
 func promptForHira(promptField string) (usersGuessOrOptionDirective string) { //  - -
 	fmt.Printf("%s", promptField)
 	fmt.Printf("%s", colorCyan)
@@ -22,6 +22,7 @@ func promptForHira(promptField string) (usersGuessOrOptionDirective string) { //
 	return usersGuessOrOptionDirective
 }
 
+// Standard prompts for use when NOT soliciting second, or final, guesses
 func promptForHiraWithDir(prompt string) (usersGuessOrOptionDirective string) { // - -
 	fmt.Printf("%s", prompt)
 	fmt.Printf("%s", colorCyan)
@@ -42,6 +43,29 @@ func promptForRomajiWithDir(prompt string) (usersGuessOrOptionDirective string) 
 	_, _ = fmt.Scan(&usersGuessOrOptionDirective)
 	return usersGuessOrOptionDirective
 }
+
+// Special prompts for Extended Kata, if|when deployed **********************
+// ... Standard: used when NOT soliciting second, or final, guesses ***
+func promptForRomajiWithDirE(prompt string) (usersGuessOrOptionDirective string) { // - -
+	fmt.Printf("%s", prompt)
+	fmt.Printf("%s", colorCyan)
+	fmt.Printf(" E-Romaji input-mode expected, or '?' for help with: %s \n", prompt)
+	fmt.Printf(" or, type '??' for help with something else ... \n")
+	fmt.Printf(" Here:> ")
+	fmt.Printf("%s", colorReset)
+	_, _ = fmt.Scan(&usersGuessOrOptionDirective)
+	return usersGuessOrOptionDirective
+}
+
+// ... Special: used when soliciting second, or final, guesses ***
+func promptForRomajiE(prompt string) (usersGuessOrOptionDirective string) { // - -
+	fmt.Printf("%s", prompt)
+	fmt.Printf("%s", colorCyan)
+	fmt.Printf(" E-Romaji input-mode expected, or '?' for help with: %s \n Here:> ", prompt)
+	fmt.Printf("%s", colorReset)
+	_, _ = fmt.Scan(&usersGuessOrOptionDirective)
+	return usersGuessOrOptionDirective
+} // ***********************************************************************
 
 // 'Directive Menu' ; displays only at inception
 func display_List_of_Directives() { // (unique)     - -
@@ -75,12 +99,15 @@ func display_List_of_Directives() { // (unique)     - -
 	fmt.Println("        Enter 'reset' to reset (flush or clear) all stats logs etc.")
 	fmt.Println("        Enter 'rm' to Read the current contents of the Maps")
 	fmt.Println("        Enter 'about' for trivia about this app")
+	fmt.Println("        Enter 'extended' to load the deck of Extended Kata")
+	fmt.Println("        Enter 'extended_off' to un-load the deck of Extended Kata")
 	// fmt.Println("        Enter 'stack' to prime or stack the frequencyMapOf_IsFineOnChars map")
 	fmt.Println("        Enter 'exit' or 'quit', 'ex' or 'q', to terminate this app")
 	//goland:noinspection ALL
 	fmt.Println("\n")
 	fmt.Printf("Game counter: %d, Game Duration: %d \n", game_loop_counter, game_duration+2)
-	fmt.Printf("Current Prompt Count Total: %d \n\n", total_prompts)
+	fmt.Printf("Current Prompt Count Total: %d \n", total_prompts)
+	fmt.Printf("Extended Kata deck is loaded: %t \n\n", include_Extended_kata_deck)
 }
 
 // 'Directive Menu' ; displays only in response to "Dir" Directive
@@ -115,9 +142,12 @@ func re_display_List_of_Directives() { // (unique)     - -
 	fmt.Println("        Enter 'reset' to reset (flush or clear) all stats logs etc.")
 	fmt.Println("        Enter 'rm' to Read the current contents of the Maps")
 	fmt.Println("        Enter 'about' for trivia about this app")
+	fmt.Println("        Enter 'extended' to load the deck of Extended Kata")
+	fmt.Println("        Enter 'extended_off' to un-load the deck of Extended Kata")
 	// fmt.Println("        Enter 'stack' to prime or stack the frequencyMapOf_IsFineOnChars map")
 	fmt.Println("        Enter 'exit' or 'quit', 'ex' or 'q', to terminate this app")
 	//goland:noinspection ALL
 	fmt.Printf("Game counter: %d, Game Duration: %d \n", game_loop_counter, game_duration+2)
-	fmt.Printf("Current Prompt Count Total: %d \n\n", total_prompts)
+	fmt.Printf("Current Prompt Count Total: %d \n", total_prompts)
+	fmt.Printf("Extended Kata deck is loaded: %t \n\n", include_Extended_kata_deck)
 }

@@ -97,17 +97,14 @@ func testForDirective(in string) (result bool) { // - -
 		in == "gameon" ||
 		in == "gameoff" ||
 		in == "about" ||
-		in == "gamed" {
+		in == "gamed" ||
+		in == "extended" ||
+		in == "extended_off" {
 		// Then:
 		result = true
 	}
 	return result
 }
-
-var game string
-var gameOn bool
-var startBeforeCall = time.Now()
-var TimeOfStartFromTop = time.Now()
 
 func game_on() (game string) { // - -
 	game = "on"
@@ -157,8 +154,6 @@ func game_off() (game string) { // - -
 	check_error(err2)
 	return game
 }
-
-var game_loop_counter int
 
 func respond_to_UserSuppliedDirective(in, objective_kind string) (prompt, objective, kind string) { // - -
 	var count int
@@ -235,17 +230,36 @@ func respond_to_UserSuppliedDirective(in, objective_kind string) (prompt, object
 	case "rm":
 		read_map_of_fineOn()
 		read_map_of_needWorkOn()
+	case "extended":
+		include_Extended_kata_deck = true
+		fmt.Println("Extended Kata deck has been loaded")
+	case "extended_off":
+		include_Extended_kata_deck = false
+		fmt.Println("Extended Kata deck has been un-loaded")
 	default:
 		// fmt.Println("Directive not found") // Does not work because only existent cases are passed to the switch
 	}
 	return prompt, objective, kind
 }
 
-var whichDeck int
+/*
+// This func, sans "_Extended" at the end of its name, becomes a testing version of pick_RandomCard_Assign_fields()
+// ... for fileOfCardsE : the deck of Extended Kata
+func pick_RandomCard_Assign_fields_Extended() (promptField, objective, objective_kind string) { // - -
+	randIndexE := rand.Intn(len(fileOfCardsE))
+	aCard = fileOfCardsE[randIndexE] // Randomly pick a 'card' from a 'deck' and store it in a global var
+	promptField = aCard.Kata
+	objective = aCard.Romaji
+	objective_kind = "Extended_Romaji" // Used to set a special prompt for Extended Kata
+	whichDeck = 4
+	return promptField, objective, objective_kind
+}
+*/
 
-func pick_RandomCard_Assign_fieldsT() (promptField, objective, objective_kind string) { // - -
+/*
+// Drop "_Test", at the end of its name, & this func becomes a short testing version of pick_RandomCard_Assign_fields()
+func pick_RandomCard_Assign_fields_Test() (promptField, objective, objective_kind string) { // - -
 	randIndex := rand.Intn(len(fileOfCardsMostDifficult))
-
 	aCard = fileOfCardsMostDifficult[randIndex] // Randomly pick a 'card' from a 'deck' and store it in a global var
 	promptField = aCard.Hira
 	objective = aCard.Romaji
@@ -253,13 +267,19 @@ func pick_RandomCard_Assign_fieldsT() (promptField, objective, objective_kind st
 	whichDeck = 3
 	return promptField, objective, objective_kind
 }
+*/
 
 func pick_RandomCard_Assign_fields() (promptField, objective, objective_kind string) { // - -
 	randIndex := rand.Intn(len(fileOfCards))
 	randIndexS := rand.Intn(len(fileOfCardsS))
 	randIndexD := rand.Intn(len(fileOfCardsMostDifficult))
+	randIndexE := rand.Intn(len(fileOfCardsE))
 
-	randomFileOfCards := rand.Intn(12)
+	if include_Extended_kata_deck {
+		randomFileOfCards = rand.Intn(13)
+	} else {
+		randomFileOfCards = rand.Intn(12)
+	}
 
 	// Hira prompting, Romaji objective:
 	if randomFileOfCards == 0 {
@@ -284,7 +304,17 @@ func pick_RandomCard_Assign_fields() (promptField, objective, objective_kind str
 		whichDeck = 3
 	}
 
-	// Kata prompting, Romaji objective:
+	// Kata prompting, Romaji objective: (plus an option for including Extended Kata)
+	if include_Extended_kata_deck { //              ^ ^                 v v v ^ ^ ^
+		if randomFileOfCards == 12 {
+			aCard = fileOfCardsE[randIndexE] // Randomly pick a 'card' from a 'deck' and store it in a global var
+			promptField = aCard.Kata
+			objective = aCard.Romaji
+			objective_kind = "Extended_Romaji" // Used to set a special prompt for Extended Kata
+			whichDeck = 4
+		}
+	}
+
 	if randomFileOfCards == 3 {
 		aCard = fileOfCards[randIndex] // Randomly pick a 'card' from a 'deck' and store it in a global var
 		promptField = aCard.Kata

@@ -4,10 +4,6 @@ import (
 	"fmt"
 )
 
-// Global Maps:
-var frequencyMapOf_IsFineOnChars = make(map[string]int) // create the map, dir 'read_map_of_fineOn' reads it - -
-var frequencyMapOf_need_workOn = make(map[string]int)   // - -
-
 func read_map_of_fineOn() { //     - -
 	if len(frequencyMapOf_IsFineOnChars) == 0 {
 		fmt.Printf(colorRed)
@@ -48,7 +44,7 @@ func read_map_of_needWorkOn() { //     - -
 	fmt.Println("")
 }
 
-// WAS Only used in check_it_for_needing_more_practice()
+// Only used in check_it_for_needing_more_practice() // ... abandoned
 func find_this_card_to_practice(promptField_found_in_map, currently_known_typeOf_objective string) { // - -
 	if whichDeck == 1 {
 		if currently_known_typeOf_objective == "Hira" {

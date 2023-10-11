@@ -1,15 +1,150 @@
 package main
 
-// There are three files (or decks) of cards in this file: constants.go
-// Firstly, we have fileOfCardsS (aCardS)
-// Then, there is fileOfCardsMostDifficult (aCardD)
-// Lastly, comes fileOfCards (aCardA)
-//
-// The last two decks will be read randomly
-// The first of the three decks will be read sequentially
-//
-var aCard = charSetStruct{} // This will be from our randomly chosen deck
-var aCardS = charSetStruct{}
+/*
+There are four files (or decks) of cards in this file: constants.go
+	fileOfCardsE
+	fileOfCardsS
+	fileOfCardsMostDifficult
+	fileOfCards
+*/
+// All decks will draw cards per this aCard var
+var aCard = charSetStruct{}
+
+var fileOfCardsE = []charSetStruct{
+
+	{"イィ", "やぃ", "yi",
+		" やぃ",
+		" イィ (yi)",
+		" ",
+		" "},
+	{"イェ", "やェ", "ye",
+		" やェ",
+		" イェ (ye)",
+		" ",
+		" "},
+
+	{"ウァ", "うわ", "wa",
+		" うぃ",
+		" ウァ (wa)",
+		" ",
+		" "},
+	{"ウィ", "うぃ", "wi",
+		" ",
+		" ウィ (wi)",
+		" ",
+		" "},
+	{"ウゥ", "うぅ", "wu",
+		" うぅ",
+		" ウゥ (wu)",
+		" ",
+		" "},
+	{"ウェ", "うぇ", "we",
+		" うぇ",
+		" ウェ (we)",
+		" ",
+		" "},
+	{"ウォ", "うぉ", "wo",
+		" うぉ",
+		" ウォ (wo)",
+		" ",
+		" "},
+
+	{"ヴァ", "ゔぁ", "va",
+		" ゔぁ",
+		" ヴァ (va)",
+		" ",
+		" "},
+	{"ヴィ", "ゔぃ", "",
+		" ゔぃ",
+		" ヴィ (vi)",
+		" ",
+		" "},
+	{"ヴ", "ゔ", "vu",
+		" ゔ",
+		" ヴ (vu)",
+		" ",
+		" "},
+	{"ヴェ", "ゔぇ", "ve",
+		" ゔぇ",
+		" ヴェ (ve)",
+		" ",
+		" "},
+	{"ヴォ", "ゔぉ", "vo",
+		" ゔぉ",
+		" ヴォ (vo)",
+		" ",
+		" "},
+	{"ヴィェ", "ゔぃぇ", "vye",
+		" ゔぃぇ",
+		" ヴィェ (vye)",
+		" ",
+		" "},
+}
+
+/*
+			{"", "", "",
+				" ",
+				" ",
+				" ",
+				" "},
+
+	キェ (kye)
+	ギェ (gye)
+
+	クァ (kwa)
+	クィ(kwi)
+	クェ (kwe)
+	クォ (kwo)
+
+	to get closer to the pronunciation of foreign words, a list of not so common extended katakana is used:
+
+	グァ (gwa)
+	グィ (gwi)
+	グェ (gwe)
+	グォ (gwo)
+
+	シェ (she)
+	ジェ (je)
+
+	スィ (si)
+	ズィ (zi)
+
+	チェ (che)
+
+	ツァ (tsa)
+	ツィ (tsi)
+	ツェ (tse)
+	ツォ (tso)
+
+	ティ (ti)
+	テゥ (tu)
+	ディ (di)
+	デゥ (du)
+
+	ニェ (nye)
+	ヒェ (hye)
+	ビェ (bye)
+	ピェ (pye)
+
+	ファ (fa)
+	フィ (fi)
+	フェ (fe)
+	フォ (fo)
+
+	フィェ (fye)
+
+	ホゥ (hu)
+
+	ミェ (mye)
+
+	リェ (rye)
+
+	ラ゜(la)
+	リ゜(li)
+	ル゜(lu)
+	レ゜(le)
+	ロ゜(lo)
+*/
 
 var fileOfCardsS = []charSetStruct{
 
@@ -449,7 +584,7 @@ var fileOfCardsS = []charSetStruct{
 . 7 Most difficult Kata:  type Romaji or Hira
 . 10 Most difficult: Romaji: type Hira:  /nu, /ne, /na, /me, /ri, /ra, /a, /u, /o
 */
-var aCardD = charSetStruct{}
+// var aCardD = charSetStruct{}
 
 var fileOfCardsMostDifficult = []charSetStruct{
 	{"ヌ", "ぬ", "nu",

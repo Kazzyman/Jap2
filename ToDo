@@ -1,0 +1,30 @@
+fix total_prompts logging and reporting ??? 
+enable the un-decking and decking of the other 3 decks 
+
+type charSetStructY struct {
+	Kanji   string
+	Meaning string
+	Onyomi  string
+	Kunyomi string
+	Vocab   string
+}
+type charSetStructK struct {
+	Kata   string
+	Hira   string
+	Romaji string
+
+	HiraHint string
+	KataHint string
+}
+
+var fileOfCardsK = []charSetStructK{
+	{"店", "Shop", "ten", "mise", "喫茶店 (coffee shop)"},
+	{"駅", "Station", "eki", "-", "駅前 (in front of the station)"},
+	{"道", "Street-path-way", "dou", "michi", "道具 (tool)"},
+	{"社", "Shrine-society", "sha", "yashiro", "社長 (president of a company)"},
+	{"国", "Country", "koku", "kuni", "外国人 (foreigner)"},
+	{"外", "Outside", "gai-ge", "soto-hazu(reru)-hoka", "外国 (foreign country)"},
+	{"学", "School-learning", "gaku", "mana(bu)", "大学 (university)"},
+}
+
+var aCard = charSetStructK{}

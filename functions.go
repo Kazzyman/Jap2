@@ -82,7 +82,6 @@ func testForDirective(in string) (result bool) { // - -
 	if in == "set" ||
 		in == "?" || // <-- If it IS a directive
 		in == "??" ||
-		in == "menu" ||
 		in == "reset" ||
 		in == "stat" ||
 		in == "st" ||

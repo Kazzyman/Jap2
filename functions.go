@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"math/rand"
 	"os"
 	"regexp"
 	"time"
@@ -83,7 +82,6 @@ func testForDirective(in string) (result bool) { // - -
 		in == "?" || // <-- If it IS a directive
 		in == "??" ||
 		in == "reset" ||
-		in == "stat" ||
 		in == "st" ||
 		in == "dir" ||
 		in == "notes" ||
@@ -91,7 +89,6 @@ func testForDirective(in string) (result bool) { // - -
 		in == "q" ||
 		in == "exit" ||
 		in == "ex" ||
-		in == "stats" ||
 		in == "rm" ||
 		in == "gameon" ||
 		in == "gameoff" ||
@@ -154,6 +151,44 @@ func game_off() (game string) { // - -
 	return game
 }
 
+func read_pulledButNotUsedMap() {
+	if len(pulledButNotUsedMap) == 0 {
+		fmt.Printf(colorRed)
+		fmt.Printf("\nThe seenMap is empty\n")
+		fmt.Printf(colorReset)
+	}
+	for s, f := range pulledButNotUsedMap {
+		if s != "" {
+			if s != "primedK0" {
+				if f > 1 {
+					fmt.Printf(" --- From pulledButNotUsedMap: string is:")
+					fmt.Printf(colorCyan)
+					fmt.Printf("%s", s)
+					fmt.Printf(colorReset)
+					fmt.Printf(", freq is:")
+					fmt.Printf(colorRed)
+					fmt.Printf("%d", f)
+					fmt.Printf(colorReset)
+					fmt.Printf("\n")
+				}
+			}
+		}
+	}
+	fmt.Println("")
+	/*
+		var indexIntoArray int
+		for indexIntoArray < len(cyclicArrayPulls.pulls) {
+			if cyclicArrayPulls.pulls[indexIntoArray] != "" {
+				if cyclicArrayPulls.pulls[indexIntoArray] != "primedK0" {
+					fmt.Printf("Char stored in cyclicArrayPulls: %s \n", cyclicArrayPulls.pulls[indexIntoArray])
+				}
+			}
+			indexIntoArray++
+		}
+
+	*/
+}
+
 func respond_to_UserSuppliedDirective(in, objective_kind string) (prompt, objective, kind string) { // - -
 	var count int
 	switch in {
@@ -208,12 +243,8 @@ func respond_to_UserSuppliedDirective(in, objective_kind string) (prompt, object
 		fmt.Printf("\n%s\n%s\n%s\n\n", aCard.HiraHint, aCard.KataHint, aCard.TT_Hint)
 	case "set":
 		prompt, objective, kind = reSet_aCard_andThereBy_reSet_thePromptString()
-	case "stat":
-		hits()
 	case "st":
-		hits()
-	case "stats":
-		hits()
+		newHits()
 	case "notes":
 		//goland:noinspection ALL  **do-this**
 		fmt.Println("\nIn the traditional Hepburn romanization system, the sound じ in hiragana is romanized as \"ji\" \n" +
@@ -224,11 +255,22 @@ func respond_to_UserSuppliedDirective(in, objective_kind string) (prompt, object
 		//goland:noinspection ALL  **do-this**
 		fmt.Println("゜is called \"handakuten\" 半濁点 translates to \"half-voicing mark\" or \"semi-voiced mark\"\n" +
 			"゛is called \"dakuten\" 濁点 meaning 'voiced mark' or 'voicing mark'")
+		fmt.Println("\"digraphs\" is the word that refers to what I have called conjunctions, like ひゅ, for example ")
 	case "dir": // reDisplay the DIRECTORY OF DIRECTIVES (and instructions):
 		re_display_List_of_Directives()
 	case "rm":
 		read_map_of_fineOn()
 		read_map_of_needWorkOn()
+		read_pulledButNotUsedMap()
+		for i, lastPull := range cyclicArrayPulls.pulls {
+			if i < len(cyclicArrayPulls.pulls) {
+				if lastPull != "" {
+					fmt.Printf("array: %s\n", lastPull)
+				}
+			} else {
+				break
+			}
+		}
 	case "extended":
 		include_Extended_kata_deck = true
 		fmt.Println("Extended Kata deck has been loaded")
@@ -267,120 +309,3 @@ func pick_RandomCard_Assign_fields_Test() (promptField, objective, objective_kin
 	return promptField, objective, objective_kind
 }
 */
-
-func pick_RandomCard_Assign_fields() (promptField, objective, objective_kind string) { // - -
-	randIndex := rand.Intn(len(fileOfCards))
-	randIndexS := rand.Intn(len(fileOfCardsS))
-	randIndexD := rand.Intn(len(fileOfCardsMostDifficult))
-	randIndexE := rand.Intn(len(fileOfCardsE))
-
-	if include_Extended_kata_deck {
-		randomFileOfCards = rand.Intn(13)
-	} else {
-		randomFileOfCards = rand.Intn(12)
-	}
-
-	// Hira prompting, Romaji objective:
-	if randomFileOfCards == 0 {
-		aCard = fileOfCards[randIndex] // Randomly pick a 'card' from a 'deck' and store it in a global var
-		promptField = aCard.Hira
-		objective = aCard.Romaji
-		objective_kind = "Romaji"
-		whichDeck = 1
-	}
-	if randomFileOfCards == 1 {
-		aCard = fileOfCardsS[randIndexS] // Randomly pick a 'card' from a 'deck' and store it in a global var
-		promptField = aCard.Hira
-		objective = aCard.Romaji
-		objective_kind = "Romaji"
-		whichDeck = 2
-	}
-	if randomFileOfCards == 2 {
-		aCard = fileOfCardsMostDifficult[randIndexD] // Randomly pick a 'card' from a 'deck' and store it in a global var
-		promptField = aCard.Hira
-		objective = aCard.Romaji
-		objective_kind = "Romaji"
-		whichDeck = 3
-	}
-
-	// Kata prompting, Romaji objective: (plus an option for including Extended Kata)
-	if include_Extended_kata_deck { //              ^ ^                 v v v ^ ^ ^
-		if randomFileOfCards == 12 {
-			aCard = fileOfCardsE[randIndexE] // Randomly pick a 'card' from a 'deck' and store it in a global var
-			promptField = aCard.Kata
-			objective = aCard.Romaji
-			objective_kind = "Extended_Romaji" // Used to set a special prompt for Extended Kata
-			whichDeck = 4
-		}
-	}
-
-	if randomFileOfCards == 3 {
-		aCard = fileOfCards[randIndex] // Randomly pick a 'card' from a 'deck' and store it in a global var
-		promptField = aCard.Kata
-		objective = aCard.Romaji
-		objective_kind = "Romaji"
-		whichDeck = 1
-	}
-	if randomFileOfCards == 4 {
-		aCard = fileOfCardsS[randIndexS] // Randomly pick a 'card' from a 'deck' and store it in a global var
-		promptField = aCard.Kata
-		objective = aCard.Romaji
-		objective_kind = "Romaji"
-		whichDeck = 2
-	}
-	if randomFileOfCards == 5 {
-		aCard = fileOfCardsMostDifficult[randIndexD] // Randomly pick a 'card' from a 'deck' and store it in a global var
-		promptField = aCard.Kata
-		objective = aCard.Romaji
-		objective_kind = "Romaji"
-		whichDeck = 3
-	}
-
-	// Romaji prompting, Hira objective:
-	if randomFileOfCards == 6 {
-		aCard = fileOfCards[randIndex] // Randomly pick a 'card' from a 'deck' and store it in a global var
-		promptField = aCard.Romaji
-		objective = aCard.Hira
-		objective_kind = "Hira"
-		whichDeck = 1
-
-	}
-	if randomFileOfCards == 7 {
-		aCard = fileOfCardsS[randIndexS] // Randomly pick a 'card' from a 'deck' and store it in a global var
-		promptField = aCard.Romaji
-		objective = aCard.Hira
-		objective_kind = "Hira"
-		whichDeck = 2
-	}
-	if randomFileOfCards == 8 {
-		aCard = fileOfCardsMostDifficult[randIndexD] // Randomly pick a 'card' from a 'deck' and store it in a global var
-		promptField = aCard.Romaji
-		objective = aCard.Hira
-		objective_kind = "Hira"
-		whichDeck = 3
-	}
-
-	// Kata prompting, Hira objective:
-	if randomFileOfCards == 9 {
-		aCard = fileOfCards[randIndex] // Randomly pick a 'card' from a 'deck' and store it in a global var
-		promptField = aCard.Kata
-		objective = aCard.Hira
-		objective_kind = "Hira"
-		whichDeck = 1
-	}
-	if randomFileOfCards == 10 {
-		aCard = fileOfCardsS[randIndexS] // Randomly pick a 'card' from a 'deck' and store it in a global var
-		promptField = aCard.Kata
-		objective = aCard.Hira
-		objective_kind = "Hira"
-		whichDeck = 2
-	}
-	if randomFileOfCards == 11 {
-		aCard = fileOfCardsMostDifficult[randIndexD] // Randomly pick a 'card' from a 'deck' and store it in a global var
-		promptField = aCard.Kata
-		objective = aCard.Hira
-		objective_kind = "Hira"
-		whichDeck = 3
-	}
-	return promptField, objective, objective_kind
-}

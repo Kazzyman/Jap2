@@ -129,7 +129,7 @@ func rightOrOops(in, promptField, objective, objective_kind string, skipOops boo
 	if objective == "zu" {
 		thisCaseOfAnInHasAlreadyBeenProcessedAbove = true
 		if in == "zu" {
-			log_right(promptField)
+			log_right(promptField, in)
 			fmt.Printf("%s", colorGreen)
 			fmt.Printf("        ^^Right! ")
 			fmt.Printf("%s", colorReset)
@@ -169,7 +169,7 @@ func rightOrOops(in, promptField, objective, objective_kind string, skipOops boo
 		}
 	} else if thisCaseOfAnInHasAlreadyBeenProcessedAbove != true {
 		if in == objective {
-			log_right(promptField)
+			log_right(promptField, in)
 			fmt.Printf("%s", colorGreen)
 			fmt.Printf("      　^^Right! \n")
 			fmt.Printf("%s", colorReset)
@@ -231,7 +231,7 @@ func tryAgain(promptField, objective, objective_kind string) { // - -
 	if objective == "zu" {
 		thisCaseOfAnInHasAlreadyBeenProcessedAbove = true
 		if in == "zu" {
-			log_right(promptField)
+			log_right(promptField, in)
 			fmt.Printf("%s", colorGreen)
 			fmt.Printf("        ^^Right! ")
 			fmt.Printf("%s", colorReset)
@@ -266,7 +266,7 @@ func tryAgain(promptField, objective, objective_kind string) { // - -
 		}
 	} else if thisCaseOfAnInHasAlreadyBeenProcessedAbove != true {
 		if in == objective {
-			log_right(promptField)
+			log_right(promptField, in)
 			fmt.Printf("%s", colorGreen)
 			fmt.Printf("      　^^Right! \n")
 			fmt.Printf("%s", colorReset)
@@ -325,7 +325,7 @@ func lastTry(promptField, objective, objective_kind string) { // - -
 	if objective == "zu" {
 		thisCaseOfAnInHasAlreadyBeenProcessedAbove = true
 		if in == "zu" {
-			log_right(promptField)
+			log_right(promptField, in)
 			fmt.Printf("%s", colorGreen)
 			fmt.Printf("        ^^Right! ")
 			fmt.Printf("%s", colorReset)
@@ -361,7 +361,7 @@ func lastTry(promptField, objective, objective_kind string) { // - -
 		}
 	} else if thisCaseOfAnInHasAlreadyBeenProcessedAbove != true {
 		if in == objective {
-			log_right(promptField)
+			log_right(promptField, in)
 			fmt.Printf("%s", colorGreen)
 			fmt.Printf("      　^^Right! \n")
 			fmt.Printf("%s", colorReset)

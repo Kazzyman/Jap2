@@ -5,10 +5,28 @@ import "time"
 // All global vars NOT located in the constants.go file :
 // ... Or/and, NOT located in the objectsAndMethods.go file ::
 
+// Create a kanjiHitMap map. A map of keys (kanji chars) and/to their associated history data, i.e., the struct: CardInfo
+var hiraHitMap = make(map[string]CardInfo)
+
+// The above is a map of the things below, which is keyed by a kanji char string
+
+// The type of card which will be included in the above map
+type CardInfo struct {
+	UsersGuess            []string
+	FirstMeaningOnRecord  string
+	SecondMeaningOnRecord string
+	CorrectGuessCount     int
+}
+
+const colorYellow = "\033[33m"
+
 var include_Extended_kata_deck = false
 
 var randomFileOfCards int
 
+var returning_from_a_wrong_guess = false
+var current_deck string
+var current_deckA string
 var total_prompts int
 
 var game string

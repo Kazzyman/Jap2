@@ -1,6 +1,18 @@
 package main
 
-// **do-this**
+var cyclicArrayPulls CyclicArrayPulls
+
+type CyclicArrayPulls struct {
+	pulls [180]string // Depth of memory for already seen chars
+	index int
+}
+
+func (ca *CyclicArrayPulls) InsertKChar(pulls string) { // Please refer also to the lengthy discussion below: // - -
+	ca.pulls[ca.index] = pulls                // Assign the passed string 'value' to the 'data' array at position 'ca.index'
+	ca.index = (ca.index + 1) % len(ca.pulls) // Increment 'index' (an integer indexing element) such that it loops-back to ...
+	// ... the first position of the 'jchar' array -- having determined its length using: len(ca.jchar).
+}
+
 /*
 In the first of the following statements, cyclicArrayHits is a variable that can store a CyclicArrayHits instance.
 The statement does not initialized that var to refer to a specific CyclicArrayHits object/instance.

@@ -7,6 +7,13 @@ import (
 	"time"
 )
 
+// Creates a func named check_error which takes one parameter "e" of type error
+func check_error(e error) { //    - -
+	if e != nil {
+		panic(e) // use panic() to display error code
+	}
+}
+
 // DIRECTIVES : --------------------------------------------------------------------------------------------
 //
 func handle_doubleQuestMark_directive(objective_kind string) { //        - -
@@ -19,7 +26,7 @@ func handle_doubleQuestMark_directive(objective_kind string) { //        - -
 	fmt.Println("")
 }
 
-// Handles the Directive 'set'
+// Handles the Directive 'stc'
 func reSet_aCard_andThereBy_reSet_thePromptString() (prompt, objective, objective_kind string) { //  - -
 	var theHiraganaOfCardToSilentlyLocate string
 	var isAlphanumeric bool
@@ -68,34 +75,37 @@ func reSet_aCard_andThereBy_reSet_thePromptString() (prompt, objective, objectiv
 	return prompt, objective, objective_kind
 }
 
-// end of DIRECTIVES -----------------------------------------------------------------------------------
-
-// Creates a func named check_error which takes one parameter "e" of type error
-func check_error(e error) { //    - -
-	if e != nil {
-		panic(e) // use panic() to display error code
-	}
-}
-
 func testForDirective(in string) (result bool) { // - -
-	if in == "set" ||
+	/*
+	 'nts' for some background on Romaji conventions
+	 'dir' redisplay this menu of available Directives
+	 'gdc' set the Duration Counter for a Game session
+	 'bgs' or 'goff' Begin or end a Game Session
+	 '?' context-sensitive help on the current character
+	 '??' for help on a particular Hiragana character
+	 'st' Statistics
+	 'abt' for trivia about this app
+	 'rs' to reset (flush or clear) all stats logs etc.
+	 'rm' Read the current contents of the Maps
+	 'stc' (Set-Card) force the use of a specific card
+	 'exko' load the Extended Kata deck
+	 'exkf' un-load the Extended Kata deck
+	*/
+	if in == "stc" ||
 		in == "?" || // <-- If it IS a directive
 		in == "??" ||
-		in == "reset" ||
+		in == "rs" ||
 		in == "st" ||
 		in == "dir" ||
-		in == "notes" ||
-		in == "quit" ||
+		in == "nts" ||
 		in == "q" ||
-		in == "exit" ||
-		in == "ex" ||
 		in == "rm" ||
-		in == "gameon" ||
-		in == "gameoff" ||
-		in == "about" ||
-		in == "gamed" ||
-		in == "extended" ||
-		in == "extended_off" {
+		in == "bgs" ||
+		in == "goff" ||
+		in == "abt" ||
+		in == "gdc" ||
+		in == "exko" ||
+		in == "exkf" {
 		// Then:
 		result = true
 	}
@@ -176,105 +186,139 @@ func read_pulledButNotUsedMap() {
 	}
 	fmt.Println("")
 	/*
-		var indexIntoArray int
-		for indexIntoArray < len(cyclicArrayPulls.pulls) {
-			if cyclicArrayPulls.pulls[indexIntoArray] != "" {
-				if cyclicArrayPulls.pulls[indexIntoArray] != "primedK0" {
-					fmt.Printf("Char stored in cyclicArrayPulls: %s \n", cyclicArrayPulls.pulls[indexIntoArray])
+			var indexIntoArray int
+			for indexIntoArray < len(cyclicArrayPulls.pulls) {
+				if cyclicArrayPulls.pulls[indexIntoArray] != "" {
+					if cyclicArrayPulls.pulls[indexIntoArray] != "primedK0" {
+						fmt.Printf("Char stored in cyclicArrayPulls: %s \n", cyclicArrayPulls.pulls[indexIntoArray])
+					}
 				}
+				indexIntoArray++
 			}
-			indexIntoArray++
-		}
+		//
+			//
+			//
 
 	*/
 }
-
+func read_pulls_not_used_array() {
+	for i, lastPull := range cyclicArrayPulls.pulls {
+		if i < len(cyclicArrayPulls.pulls) {
+			if lastPull != "" {
+				fmt.Printf("array: %s\n", lastPull)
+			}
+		} else {
+			break
+		}
+	}
+}
+func about_app() {
+	fmt.Printf("\n" +
+		"This app consists of the following files and lines of code:\n\n" +
+		"1701 constants.go ~ 35\n" +
+		"343 functions.go ~ 300\n" +
+		"157 locateCard.go ~ 80\n" +
+		"357 main.go ~ 320\n" +
+		"127 memoryFunctions.go ~ 45\n" +
+		"133 objectsAndMethods.go ~ 40\n" +
+		"82 prompts&directions.go ~ 75\n" +
+		"145 statsFunctions.go ~ 125 \n\n" +
+		"3045 lines of code (SOC) \n" +
+		"or, about 1,020 functional lines of code \n\n")
+}
+func reset_all_data() {
+	// Flush (clear) the old stats and hits arrays
+	cyclicArrayOfTheJcharsGottenWrong = CyclicArrayOfTheJcharsGottenWrong{}
+	cyclicArrayHits = CyclicArrayHits{}
+	cyclicArrayPulls = CyclicArrayPulls{}
+	// Also, flush (clear) the maps
+	hiraHitMap = make(map[string]CardInfo)
+	frequencyMapOf_IsFineOnChars = make(map[string]int)
+	frequencyMapOf_need_workOn = make(map[string]int)
+	pulledButNotUsedMap = make(map[string]int)
+	total_prompts = 0
+	game = "off"
+	gameOn = false
+	game_duration = 998
+	game_loop_counter = 0
+	total_prompts = 0
+	//
+	//goland:noinspection ALL
+	fmt.Println("\nArrays and maps flushed:\n")
+	fmt.Println("    cyclicArrayOfTheJcharsGottenWrong")
+	fmt.Println("    cyclicArrayHits")
+	fmt.Println("    cyclicArrayPulls and hiraHitMap and pulledButNotUsedMap")
+	fmt.Println("    frequencyMapOf_IsFineOnChars")
+	//goland:noinspection ALL
+	fmt.Println("    frequencyMapOf_need_workOn\n")
+	fmt.Println("  And, all Game values have also been reset")
+}
+func notes_on_kana() {
+	//goland:noinspection ALL  **do-this**
+	fmt.Println("\nIn the traditional Hepburn romanization system, the sound じ in hiragana is romanized as \"ji\" \n" +
+		"and the katakana ジ is also romanized as \"ji\" \n\n" +
+		"However, in some other romanization systems like the Nihon-shiki and Kunrei-shiki, the sound じ is romanized as\n" +
+		" \"zi\" instead of \"ji\"\n\n" +
+		"The sound gi:ぎ in hiragana is romanized as \"gi\" and the katakana ギ is also romanized as \"gi\"\n")
+	//goland:noinspection ALL  **do-this**
+	fmt.Println("゜is called \"handakuten\" 半濁点 translates to \"half-voicing mark\" or \"semi-voiced mark\"\n" +
+		"゛is called \"dakuten\" 濁点 meaning 'voiced mark' or 'voicing mark'")
+	fmt.Println("\"digraphs\" is the word that refers to what I have called conjunctions, like ひゅ, for example ")
+}
 func respond_to_UserSuppliedDirective(in, objective_kind string) (prompt, objective, kind string) { // - -
+	/*
+	 'nts' for some background on Romaji conventions
+	 'dir' redisplay this menu of available Directives
+	 'gdc' set the Duration Counter for a Game session
+	 'bgs' or 'goff' Begin or end a Game Session
+	 '?' context-sensitive help on the current character
+	 '??' for help on a particular Hiragana character
+	 'st' Statistics
+	 'abt' for trivia about this app
+	 'rs' to reset (flush or clear) all stats logs etc.
+	 'rm' Read the current contents of the Maps
+	 'stc' (Set-Card) force the use of a specific card
+	 'exko' load the Extended Kata deck
+	 'exkf' un-load the Extended Kata deck
+	*/
 	var count int
 	switch in {
-	case "about":
-		fmt.Printf("\n" +
-			"This app consists of the following files and lines of code:\n\n" +
-			"1701 constants.go ~ 35\n" +
-			"343 functions.go ~ 300\n" +
-			"157 locateCard.go ~ 80\n" +
-			"357 main.go ~ 320\n" +
-			"127 memoryFunctions.go ~ 45\n" +
-			"133 objectsAndMethods.go ~ 40\n" +
-			"82 prompts&directions.go ~ 75\n" +
-			"145 statsFunctions.go ~ 125 \n\n" +
-			"3045 lines of code (SOC) \n" +
-			"or, about 1,020 functional lines of code \n\n")
-	case "gamed":
+	case "abt":
+		about_app()
+	case "gdc":
 		fmt.Println("Enter a number for how many prompts there will be in the game")
 		_, _ = fmt.Scan(&count)
 		game_duration = count - 2
-	case "gameon":
+	case "bgs":
 		// game_loop_counter ++
 		game_on()
-	case "gameoff":
+	case "goff":
 		game_off()
-	case "reset":
-		// Flush (clear) the old stats and hits arrays
-		cyclicArrayOfTheJcharsGottenWrong = CyclicArrayOfTheJcharsGottenWrong{}
-		cyclicArrayHits = CyclicArrayHits{}
-		// Also, flush (clear) the maps
-		total_prompts = 0
-		//
-		//goland:noinspection ALL
-		fmt.Println("\nArrays and maps flushed:\n")
-		fmt.Println("    cyclicArrayOfTheJcharsGottenWrong")
-		fmt.Println("    cyclicArrayHits")
-		fmt.Println("    frequencyMapOf_IsFineOnChars")
-		//goland:noinspection ALL
-		fmt.Println("    frequencyMapOf_need_workOn\n")
-		fmt.Println("  And, all Game values have also been reset")
-	case "quit":
-		os.Exit(1)
+	case "rs":
+		reset_all_data()
 	case "q":
-		os.Exit(1)
-	case "exit":
-		os.Exit(1)
-	case "ex":
 		os.Exit(1)
 	case "??": // Directives follow:
 		handle_doubleQuestMark_directive(objective_kind)
 	case "?":
 		fmt.Printf("\n%s\n%s\n%s\n\n", aCard.HiraHint, aCard.KataHint, aCard.TT_Hint)
-	case "set":
+	case "stc":
 		prompt, objective, kind = reSet_aCard_andThereBy_reSet_thePromptString()
 	case "st":
 		newHits()
-	case "notes":
-		//goland:noinspection ALL  **do-this**
-		fmt.Println("\nIn the traditional Hepburn romanization system, the sound じ in hiragana is romanized as \"ji\" \n" +
-			"and the katakana ジ is also romanized as \"ji\" \n\n" +
-			"However, in some other romanization systems like the Nihon-shiki and Kunrei-shiki, the sound じ is romanized as\n" +
-			" \"zi\" instead of \"ji\"\n\n" +
-			"The sound gi:ぎ in hiragana is romanized as \"gi\" and the katakana ギ is also romanized as \"gi\"\n")
-		//goland:noinspection ALL  **do-this**
-		fmt.Println("゜is called \"handakuten\" 半濁点 translates to \"half-voicing mark\" or \"semi-voiced mark\"\n" +
-			"゛is called \"dakuten\" 濁点 meaning 'voiced mark' or 'voicing mark'")
-		fmt.Println("\"digraphs\" is the word that refers to what I have called conjunctions, like ひゅ, for example ")
+	case "nts":
+		notes_on_kana()
 	case "dir": // reDisplay the DIRECTORY OF DIRECTIVES (and instructions):
 		re_display_List_of_Directives()
 	case "rm":
 		read_map_of_fineOn()
 		read_map_of_needWorkOn()
 		read_pulledButNotUsedMap()
-		for i, lastPull := range cyclicArrayPulls.pulls {
-			if i < len(cyclicArrayPulls.pulls) {
-				if lastPull != "" {
-					fmt.Printf("array: %s\n", lastPull)
-				}
-			} else {
-				break
-			}
-		}
-	case "extended":
+		// read_pulls_not_used_array()
+	case "exko":
 		include_Extended_kata_deck = true
 		fmt.Println("Extended Kata deck has been loaded")
-	case "extended_off":
+	case "exkf":
 		include_Extended_kata_deck = false
 		fmt.Println("Extended Kata deck has been un-loaded")
 	default:

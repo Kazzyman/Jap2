@@ -3,7 +3,7 @@ package main
 var cyclicArrayPulls CyclicArrayPulls
 
 type CyclicArrayPulls struct {
-	pulls [180]string // Depth of memory for already seen chars
+	pulls [280]string // Depth of memory for already seen chars
 	index int
 }
 

@@ -5,21 +5,6 @@ import (
 )
 
 func List_of_Directives() {
-	/*
-	 'nts' for some background on Romaji conventions
-	 'dir' redisplay this menu of available Directives
-	 'gdc' set the Duration Counter for a Game session
-	 'bgs' or 'goff' Begin or end a Game Session
-	 '?' context-sensitive help on the current character
-	 '??' for help on a particular Hiragana character
-	 'st' Statistics
-	 'abt' for trivia about this app
-	 'rs' to reset (flush or clear) all stats logs etc.
-	 'rm' Read the current contents of the Maps
-	 'stc' (Set-Card) force the use of a specific card
-	 'exko' load the Extended Kata deck
-	 'exkf' un-load the Extended Kata deck
-	*/
 	fmt.Println("\n\nView source code at https://github.com/Kazzyman/Jap2")
 	fmt.Println("    Use Alpha-Numeric (US) input-mode on your system to:")
 	fmt.Println("        Enter '" + colorGreen +
@@ -41,7 +26,7 @@ func List_of_Directives() {
 		"' context-sensitive help on the current character")
 	fmt.Println("        Enter '" + colorGreen +
 		"??" + colorReset +
-		"' for help on a particular Hiragana character")
+		"' for help on a particular Hiragana or Romaji")
 	fmt.Println("        Enter '" + colorGreen +
 		"st" + colorReset +
 		"' Statistics")
@@ -68,26 +53,44 @@ func List_of_Directives() {
 		"', (quit) terminate the app")
 }
 
-// Special prompts for use when soliciting second, or final, guesses
-func promptForRomaji(promptField string) (usersGuessOrOptionDirective string) { //  - -
+// Special prompts for use when soliciting second guesses
+func promptForRomaji1(promptField string) (usersGuessOrOptionDirective string) { //  - -
 	fmt.Printf("%s", promptField)
 	fmt.Printf("%s", colorCyan)
 	fmt.Printf(" Romaji input-mode expected," + colorReset +
-		" you must guess\n Here:> ")
+		" you must try to guess\n Here:> ")
 	_, _ = fmt.Scan(&usersGuessOrOptionDirective)
 	return usersGuessOrOptionDirective
 }
-func promptForHira(promptField string) (usersGuessOrOptionDirective string) { //  - -
+func promptForHira1(promptField string) (usersGuessOrOptionDirective string) { //  - -
 	fmt.Printf("%s", promptField)
 	fmt.Printf("%s", colorCyan)
 	fmt.Printf(" Hiragana input-mode expected," + colorReset +
-		" you must guess\n Here:> ")
+		" you must try to guess\n Here:> ")
+	_, _ = fmt.Scan(&usersGuessOrOptionDirective)
+	return usersGuessOrOptionDirective
+}
+
+// Special prompts for use when soliciting final guesses
+func promptForRomaji2(promptField string) (usersGuessOrOptionDirective string) { //  - -
+	fmt.Printf("%s", promptField)
+	fmt.Printf("%s", colorCyan)
+	fmt.Printf(" Romaji input-mode expected," + colorReset +
+		" you must guess, just one more time\n Here:> ")
+	_, _ = fmt.Scan(&usersGuessOrOptionDirective)
+	return usersGuessOrOptionDirective
+}
+func promptForHira2(promptField string) (usersGuessOrOptionDirective string) { //  - -
+	fmt.Printf("%s", promptField)
+	fmt.Printf("%s", colorCyan)
+	fmt.Printf(" Hiragana input-mode expected," + colorReset +
+		" you must guess, just one more time\n Here:> ")
 	_, _ = fmt.Scan(&usersGuessOrOptionDirective)
 	return usersGuessOrOptionDirective
 }
 
 // Standard prompts for use when NOT soliciting second, or final, guesses
-func promptForHiraWithDir(prompt string) (usersGuessOrOptionDirective string) { // - -
+func promptForHiraWithDiro(prompt string) (usersGuessOrOptionDirective string) { // - -
 	fmt.Printf("%s", prompt)
 	fmt.Printf("%s", colorCyan)
 	fmt.Printf(" Hiragana input-mode expected, or '?' for help with: %s \n", prompt)
@@ -97,11 +100,31 @@ func promptForHiraWithDir(prompt string) (usersGuessOrOptionDirective string) { 
 	_, _ = fmt.Scan(&usersGuessOrOptionDirective)
 	return usersGuessOrOptionDirective
 }
-func promptForRomajiWithDir(prompt string) (usersGuessOrOptionDirective string) { // - -
+func promptForRomajiWithDiro(prompt string) (usersGuessOrOptionDirective string) { // - -
 	fmt.Printf("%s", prompt)
 	fmt.Printf("%s", colorCyan)
 	fmt.Printf(" Romaji input-mode expected, or '?' for help with: %s \n", prompt)
 	fmt.Printf(" or, type '??' for help with something else ... \n")
+	fmt.Printf(" Here:> ")
+	fmt.Printf("%s", colorReset)
+	_, _ = fmt.Scan(&usersGuessOrOptionDirective)
+	return usersGuessOrOptionDirective
+}
+
+// Standard prompts for use when NOT soliciting second, or final, guesses
+func promptForHiraWithDir(prompt string) (usersGuessOrOptionDirective string) { // - -
+	fmt.Printf("%s", prompt)
+	fmt.Printf("%s", colorCyan)
+	fmt.Printf(" Hiragana?, or 'dir'\n")
+	fmt.Printf(" Here:> ")
+	fmt.Printf("%s", colorReset)
+	_, _ = fmt.Scan(&usersGuessOrOptionDirective)
+	return usersGuessOrOptionDirective
+}
+func promptForRomajiWithDir(prompt string) (usersGuessOrOptionDirective string) { // - -
+	fmt.Printf("%s", prompt)
+	fmt.Printf("%s", colorCyan)
+	fmt.Printf(" Romaji?, or 'dir'\n")
 	fmt.Printf(" Here:> ")
 	fmt.Printf("%s", colorReset)
 	_, _ = fmt.Scan(&usersGuessOrOptionDirective)

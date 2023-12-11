@@ -131,7 +131,12 @@ func rightOrOops(in, promptField, objective, objective_kind string, skipOops boo
 		if in == "zu" {
 			log_right(promptField, in)
 			fmt.Printf("%s", colorGreen)
-			fmt.Printf("        ^^Right! ")
+			// fmt.Printf("        ^^Right! ")
+			if objective_kind == "Hira" {
+				fmt.Printf("      　%s %s \n", aCard.Romaji, aCard.Kata)
+			} else {
+				fmt.Printf("      　%s %s \n", aCard.Hira, aCard.Kata)
+			}
 			fmt.Printf("%s", colorReset)
 			fmt.Printf("It could have been either ず or づ as they are the same sound: zu\n")
 			// Since this was "^^Right!", next we obtain new values in-preparation of "returning" to caller
@@ -164,14 +169,26 @@ func rightOrOops(in, promptField, objective, objective_kind string, skipOops boo
 			} else {
 				log_oops(promptField, objective, in)
 				fmt.Printf("%s", colorRed)
-				fmt.Printf("       ^^Oops! ")
+				// fmt.Printf("       ^^Oops! ")
 			}
 		}
 	} else if thisCaseOfAnInHasAlreadyBeenProcessedAbove != true {
 		if in == objective {
 			log_right(promptField, in)
 			fmt.Printf("%s", colorGreen)
-			fmt.Printf("      　^^Right! \n")
+			/*
+				if objective_kind == "Hira" {
+					fmt.Printf("      　%s ^Right!\n", aCard.Romaji)
+				} else {
+					fmt.Printf("      　%s %s ^Right! \n", aCard.Hira, aCard.Kata)
+				}
+
+			*/
+			if objective_kind == "Hira" {
+				fmt.Printf("      　%s %s \n", aCard.Romaji, aCard.Kata)
+			} else {
+				fmt.Printf("      　%s %s \n", aCard.Hira, aCard.Kata)
+			}
 			fmt.Printf("%s", colorReset)
 			// Since this was "^^Right!", next we obtain new values in-preparation of "returning" to caller
 			new_prompt, new_objective, new_objective_kind := pick_RandomCard_Assign_fields() // Gets a new card and extract the new prompt field
@@ -203,7 +220,7 @@ func rightOrOops(in, promptField, objective, objective_kind string, skipOops boo
 			} else {
 				log_oops(promptField, objective, in)
 				fmt.Printf("%s", colorRed)
-				fmt.Printf("      　^^Oops! ")
+				// fmt.Printf("      　^^Oops! ")
 			}
 			tryAgain(promptField, objective, objective_kind) // passing the old original values
 		}
@@ -211,16 +228,16 @@ func rightOrOops(in, promptField, objective, objective_kind string, skipOops boo
 }
 
 func tryAgain(promptField, objective, objective_kind string) { // - -
-	fmt.Printf("Try again \n")
+	fmt.Printf("       Try again \n%s", colorReset)
 	var in string // var declaration needed as a ":=" would not work within the conditional because "in" not in signature
 	// **** Now that we are trying again, after a failed guess, prompts do not solicit Directives:(currently inoperative)
 	// ... so, these prompts, deployed by objective_kind, take promptField (rather than the new_prompt variant)
 	if objective_kind == "Romaji" {
-		in = promptForRomaji(promptField) // Get user's input, from a randomly selected prompt
+		in = promptForRomaji1(promptField) // Get user's input, from a randomly selected prompt
 	} else if objective_kind == "Extended_Romaji" {
 		in = promptForRomajiE(promptField) // A special prompt for Extended Kata, if|when deployed
 	} else if objective_kind == "Hira" {
-		in = promptForHira(promptField)
+		in = promptForHira1(promptField)
 	}
 	// **** Note here ^ ^ ^ the missing "WithDir" suffix to "promptForHira" as Directives are currently inoperative
 
@@ -233,7 +250,12 @@ func tryAgain(promptField, objective, objective_kind string) { // - -
 		if in == "zu" {
 			log_right(promptField, in)
 			fmt.Printf("%s", colorGreen)
-			fmt.Printf("        ^^Right! ")
+			// fmt.Printf("        ^^Right! ")
+			if objective_kind == "Hira" {
+				fmt.Printf("      　%s %s \n", aCard.Romaji, aCard.Kata)
+			} else {
+				fmt.Printf("      　%s %s \n", aCard.Hira, aCard.Kata)
+			}
 			fmt.Printf("%s", colorReset)
 			fmt.Printf("It could have been either ず or づ as they are the same sound: zu\n")
 			new_prompt, new_objective, new_objective_kind := pick_RandomCard_Assign_fields()
@@ -262,13 +284,18 @@ func tryAgain(promptField, objective, objective_kind string) { // - -
 		} else {
 			log_oops(promptField, objective, in)
 			fmt.Printf("%s", colorRed)
-			fmt.Printf("     ^^Oops! ")
+			// fmt.Printf("     ^^Oops! ")
 		}
 	} else if thisCaseOfAnInHasAlreadyBeenProcessedAbove != true {
 		if in == objective {
 			log_right(promptField, in)
 			fmt.Printf("%s", colorGreen)
-			fmt.Printf("      　^^Right! \n")
+			// fmt.Printf("      　^^Right! \n")
+			if objective_kind == "Hira" {
+				fmt.Printf("      　%s %s \n", aCard.Romaji, aCard.Kata)
+			} else {
+				fmt.Printf("      　%s %s \n", aCard.Hira, aCard.Kata)
+			}
 			fmt.Printf("%s", colorReset)
 			new_prompt, new_objective, new_objective_kind := pick_RandomCard_Assign_fields()
 			// These prompts, deployed by new_objective_kind, take new_prompt
@@ -296,23 +323,23 @@ func tryAgain(promptField, objective, objective_kind string) { // - -
 		} else {
 			log_oops(promptField, objective, in)
 			fmt.Printf("%s", colorRed)
-			fmt.Printf("      　^^Oops Again! ")
+			// fmt.Printf("      　^^Oops Again! ")
 			lastTry(promptField, objective, objective_kind)
 		}
 	}
 }
 
 func lastTry(promptField, objective, objective_kind string) { // - -
-	fmt.Printf("Last Try! \n")
+	fmt.Printf("       Last Try! \n%s", colorReset)
 	var in string // var declaration needed as a ":=" would not work within the conditional ~ "in" not in signature
 	// **** Now that we are trying again, after a failed guess, prompts do not solicit Directives:(currently inoperative)
 	// ... so, these prompts, deployed by objective_kind, take promptField (rather than the new_prompt variant)
 	if objective_kind == "Romaji" {
-		in = promptForRomaji(promptField) // Get user's input, from a randomly selected prompt
+		in = promptForRomaji2(promptField) // Get user's input, from a randomly selected prompt
 	} else if objective_kind == "Extended_Romaji" {
 		in = promptForRomajiE(promptField) // A special prompt for Extended Kata, if|when deployed
 	} else if objective_kind == "Hira" {
-		in = promptForHira(promptField)
+		in = promptForHira2(promptField)
 	}
 
 	// **** Note here ^ ^ ^ the missing "WithDir" suffix to "promptForHira" as Directives are currently inoperative
@@ -327,7 +354,12 @@ func lastTry(promptField, objective, objective_kind string) { // - -
 		if in == "zu" {
 			log_right(promptField, in)
 			fmt.Printf("%s", colorGreen)
-			fmt.Printf("        ^^Right! ")
+			// fmt.Printf("        ^^Right! ")
+			if objective_kind == "Hira" {
+				fmt.Printf("      　%s %s \n", aCard.Romaji, aCard.Kata)
+			} else {
+				fmt.Printf("      　%s %s \n", aCard.Hira, aCard.Kata)
+			}
 			fmt.Printf("%s", colorReset)
 			fmt.Printf("It could have been either ず or づ as they are the same sound: zu\n")
 			new_prompt, new_objective, new_objective_kind := pick_RandomCard_Assign_fields()
@@ -363,7 +395,12 @@ func lastTry(promptField, objective, objective_kind string) { // - -
 		if in == objective {
 			log_right(promptField, in)
 			fmt.Printf("%s", colorGreen)
-			fmt.Printf("      　^^Right! \n")
+			// fmt.Printf("      　^^Right! \n")
+			if objective_kind == "Hira" {
+				fmt.Printf("      　%s %s \n", aCard.Romaji, aCard.Kata)
+			} else {
+				fmt.Printf("      　%s %s \n", aCard.Hira, aCard.Kata)
+			}
 			fmt.Printf("%s", colorReset)
 			new_prompt, new_objective, new_objective_kind := pick_RandomCard_Assign_fields()
 			// These prompts, deployed by new_objective_kind, take new_prompt
@@ -391,7 +428,7 @@ func lastTry(promptField, objective, objective_kind string) { // - -
 		} else {
 			log_oops(aCard.Hira, aCard.Romaji, in)
 			fmt.Printf("%s", colorRed)
-			fmt.Printf("      　^^That was your last try, Oops! ")
+			fmt.Printf("      　^^That was your last try, Oops! %s", colorReset)
 			fmt.Printf("\n%s\n%s\n%s\n\n", aCard.HiraHint, aCard.KataHint, aCard.TT_Hint)
 		}
 	}

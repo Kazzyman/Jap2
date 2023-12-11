@@ -134,7 +134,7 @@ func silentlyLocateCard(setKeyRequest string) { //  - -
 	}
 
 	if isAlphanumeric == false { // ... then we should be safe to proceed with what will be a Hiragana char
-		for _, card := range fileOfCards {
+		for _, card := range fileOfCardsS {
 			if card.Hira == setKeyRequest {
 				// v v v if we find a 'card' in the range of 'fileOfCards',
 				// ... we set the foundElement global var, which is used in reSet_aCard_andThereBy_reSet_thePromptString()

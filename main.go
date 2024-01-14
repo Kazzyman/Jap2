@@ -43,7 +43,7 @@ func begin(promptField, objective, objective_kind string) { // May be a Hira, Ka
 		DetectedDirective := false
 		DetectedDirective = testForDirective(in) // Sets DetectedDirective true if a "Directive" was detected
 		if DetectedDirective {
-			if in == "set" { // respond_to_UserSuppliedDirective(in, new_objective_kind) will want to return values is "set" is switched on
+			if in == "stc" { // respond_to_UserSuppliedDirective(in, new_objective_kind) will want to return values is "set" is switched on
 				promptField, objective, objective_kind = respond_to_UserSuppliedDirective(in, objective_kind)
 			} else {
 				respond_to_UserSuppliedDirective(in, objective_kind)
@@ -102,7 +102,7 @@ func evaluateUsersGuess(in, promptField, objective, objective_kind string, recur
 	DetectedDirective := false
 	DetectedDirective = testForDirective(in)
 	if DetectedDirective {
-		if in == "set" { // See prior comments
+		if in == "stc" { // See prior comments
 			promptField, objective, objective_kind = respond_to_UserSuppliedDirective(in, objective_kind)
 		} else {
 			respond_to_UserSuppliedDirective(in, objective_kind)
@@ -154,7 +154,7 @@ func rightOrOops(in, promptField, objective, objective_kind string, skipOops boo
 			DetectedDirective := false
 			DetectedDirective = testForDirective(in)
 			if DetectedDirective {
-				if in == "set" {
+				if in == "stc" {
 					new_prompt, new_objective, new_objective_kind = respond_to_UserSuppliedDirective(in, new_objective_kind)
 				} else {
 					respond_to_UserSuppliedDirective(in, new_objective_kind)
@@ -205,7 +205,7 @@ func rightOrOops(in, promptField, objective, objective_kind string, skipOops boo
 			DetectedDirective := false
 			DetectedDirective = testForDirective(in)
 			if DetectedDirective {
-				if in == "set" {
+				if in == "stc" {
 					new_prompt, new_objective, new_objective_kind = respond_to_UserSuppliedDirective(in, new_objective_kind)
 				} else {
 					respond_to_UserSuppliedDirective(in, new_objective_kind)
@@ -272,7 +272,7 @@ func tryAgain(promptField, objective, objective_kind string) { // - -
 			DetectedDirective := false
 			DetectedDirective = testForDirective(in)
 			if DetectedDirective {
-				if in == "set" {
+				if in == "stc" {
 					new_prompt, new_objective, new_objective_kind = respond_to_UserSuppliedDirective(in, new_objective_kind)
 				} else {
 					respond_to_UserSuppliedDirective(in, new_objective_kind)
@@ -311,7 +311,7 @@ func tryAgain(promptField, objective, objective_kind string) { // - -
 			DetectedDirective := false
 			DetectedDirective = testForDirective(in)
 			if DetectedDirective {
-				if in == "set" {
+				if in == "stc" {
 					new_prompt, new_objective, new_objective_kind = respond_to_UserSuppliedDirective(in, new_objective_kind)
 				} else {
 					respond_to_UserSuppliedDirective(in, new_objective_kind)
@@ -376,7 +376,7 @@ func lastTry(promptField, objective, objective_kind string) { // - -
 			DetectedDirective := false
 			DetectedDirective = testForDirective(in)
 			if DetectedDirective {
-				if in == "set" {
+				if in == "stc" {
 					new_prompt, new_objective, new_objective_kind = respond_to_UserSuppliedDirective(in, new_objective_kind)
 				} else {
 					respond_to_UserSuppliedDirective(in, new_objective_kind)
@@ -416,7 +416,7 @@ func lastTry(promptField, objective, objective_kind string) { // - -
 			DetectedDirective := false
 			DetectedDirective = testForDirective(in)
 			if DetectedDirective {
-				if in == "set" {
+				if in == "stc" {
 					new_prompt, new_objective, new_objective_kind = respond_to_UserSuppliedDirective(in, new_objective_kind)
 				} else {
 					respond_to_UserSuppliedDirective(in, new_objective_kind)

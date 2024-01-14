@@ -253,6 +253,7 @@ func reset_all_data() {
 	fmt.Println("    frequencyMapOf_need_workOn\n")
 	fmt.Println("  And, all Game values have also been reset")
 }
+
 func notes_on_kana() {
 	//goland:noinspection ALL  **do-this**
 	fmt.Println("\nIn the traditional Hepburn romanization system, the sound じ in hiragana is romanized as \"ji\" \n" +
@@ -265,6 +266,7 @@ func notes_on_kana() {
 		"゛is called \"dakuten\" 濁点 meaning 'voiced mark' or 'voicing mark'")
 	fmt.Println("\"digraphs\" is the word that refers to what I have called conjunctions, like ひゅ, for example ")
 }
+
 func respond_to_UserSuppliedDirective(in, objective_kind string) (prompt, objective, kind string) { // - -
 	/*
 	 'nts' for some background on Romaji conventions

@@ -801,7 +801,7 @@ var fileOfCards = []charSetStruct{
 	// ma group: ====================================================================================================
 	// 2 of each ::
 	{"マ", "ま", "ma",
-		" ma:マ:ま ",
+		" ma:マ:ま -- note that the ma group has no modifying dakuten or handakuten like ha(は) does",
 		" mama is using a brest pump ",
 		" TT: right-index on the 'J' char :: ma",
 		" ?:マ:ま   lady is using a brest pump    TT: right-index on the 'J' char"},
@@ -828,7 +828,7 @@ var fileOfCards = []charSetStruct{
 	//
 	// Second set:
 	{"マ", "ま", "ma",
-		" ma:マ:ま ",
+		" ma:マ:ま  -- note that the ma group has no modifying dakuten or handakuten like ha(は) does",
 		" mama is using a brest pump ",
 		" TT: right-index on the 'J' char :: ma",
 		" ?:マ:ま   lady is using a brest pump    TT: right-index on the 'J' char"},

@@ -107,7 +107,9 @@ func testForDirective(in string) (result bool) { // - -
 		in == "gdc" ||
 		in == "exko" ||
 		in == "exkf" ||
-		in == "konly" {
+		in == "konly" ||
+		in == "honly" ||
+		in == "ronly" {
 		// Then:
 		result = true
 	}
@@ -231,6 +233,7 @@ func about_app() {
 func reset_all_data() {
 	// Flush (clear) the old stats and hits arrays
 	limitedToKataPrompts = false
+	limitedToHiraPrompts = false
 	cyclicArrayOfTheJcharsGottenWrong = CyclicArrayOfTheJcharsGottenWrong{}
 	cyclicArrayHits = CyclicArrayHits{}
 	cyclicArrayPulls = CyclicArrayPulls{}
@@ -328,6 +331,10 @@ func respond_to_UserSuppliedDirective(in, objective_kind string) (prompt, object
 		fmt.Println("Extended Kata deck has been un-loaded")
 	case "konly":
 		limitedToKataPrompts = true
+	case "honly":
+		limitedToHiraPrompts = true
+	case "ronly":
+		limitedToRomaPrompts = true
 	default:
 		// fmt.Println("Directive not found") // Does not work because only existent cases are passed to the switch
 	}

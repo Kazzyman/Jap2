@@ -50,11 +50,19 @@ func List_of_Directives() {
 		"' un-load the Extended Kata deck")
 	fmt.Println("        Enter '" + colorGreen +
 		"konly" + colorReset +
-		"' Use only the Kata deck, rs to ReSet")
+		"' Use only Kata prompting and Romaji objective, rs to ReSet")
+	fmt.Println("        Enter '" + colorGreen +
+		"honly" + colorReset +
+		"' Use only Hira prompting, rs to ReSet")
+	fmt.Println("        Enter '" + colorGreen +
+		"ronly" + colorReset +
+		"' Use only Romaji prompting, rs to ReSet")
 	fmt.Println("        Enter '" + colorGreen +
 		"q" + colorReset +
 		"', (quit) terminate the app")
 }
+
+//
 
 // Special prompts for use when soliciting second guesses
 func promptForRomaji1(promptField string) (usersGuessOrOptionDirective string) { //  - -
@@ -182,7 +190,9 @@ func display_List_of_Directives() { // (unique)     - -
 	fmt.Printf("Game counter: %d, Game Duration: %d \n", game_loop_counter, game_duration+2)
 	fmt.Printf("Current Prompt Count Total: %d \n", total_prompts)
 	fmt.Printf("Extended Kata deck is loaded: %t \n\n", include_Extended_kata_deck)
-	fmt.Printf("Limited to Kata only: %t \n\n", limitedToKataPrompts)
+	fmt.Printf("Limited to Kata prompts with romaji objectives: %t \n\n", limitedToKataPrompts)
+	fmt.Printf("Limited to Hira prompts only: %t \n\n", limitedToHiraPrompts)
+	fmt.Printf("Limited to Romaji prompts only: %t \n\n", limitedToRomaPrompts)
 }
 
 // 'Directive Menu' ; displays only in response to "Dir" Directive
@@ -208,5 +218,8 @@ func re_display_List_of_Directives() { // (unique)     - -
 	fmt.Printf("Game counter: %d, Game Duration: %d \n", game_loop_counter, game_duration+2)
 	fmt.Printf("Current Prompt Count Total: %d \n", total_prompts)
 	fmt.Printf("Extended Kata deck is loaded: %t \n\n", include_Extended_kata_deck)
-	fmt.Printf("Limited to Kata only: %t \n\n", limitedToKataPrompts)
+	fmt.Printf("Limited to Kata prompts with romaji objectives: %t \n\n", limitedToKataPrompts)
+	fmt.Printf("Limited to Hira prompts only: %t \n\n", limitedToHiraPrompts)
+	fmt.Printf("Limited to Romaji prompts only: %t \n\n", limitedToRomaPrompts)
+
 }

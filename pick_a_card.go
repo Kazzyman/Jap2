@@ -10,6 +10,10 @@ var pulledButNotUsedMap = make(map[string]int)
 func pick_RandomCard_Assign_fields() (promptField, objective, objective_kind string) { // - -
 	if limitedToKataPrompts {
 		promptField, objective, objective_kind = kata_prompting_romaji_objective()
+	} else if limitedToHiraPrompts {
+		promptField, objective, objective_kind = hira_prompting_romaji_objective()
+	} else if limitedToRomaPrompts {
+		promptField, objective, objective_kind = roma_prompting_hira_objective()
 	} else {
 		promptField, objective, objective_kind = randomize_over_all_decks()
 	}
@@ -27,6 +31,10 @@ func pick_RandomCard_Assign_fields() (promptField, objective, objective_kind str
 				found = true
 				if limitedToKataPrompts {
 					promptField, objective, objective_kind = kata_prompting_romaji_objective()
+				} else if limitedToHiraPrompts {
+					promptField, objective, objective_kind = hira_prompting_romaji_objective()
+				} else if limitedToRomaPrompts {
+					promptField, objective, objective_kind = roma_prompting_hira_objective()
 				} else {
 					promptField, objective, objective_kind = randomize_over_all_decks()
 				}
@@ -80,6 +88,32 @@ func kata_prompting_romaji_objective() (promptField, objective, objective_kind s
 	promptField = aCard.Kata
 	objective = aCard.Romaji
 	objective_kind = "Romaji"
+
+	return
+}
+
+func hira_prompting_romaji_objective() (promptField, objective, objective_kind string) {
+
+	randIndex := rand.Intn(len(fileOfCards)) // data.go
+	aCard = fileOfCards[randIndex]           // Randomly pick a 'card' from a 'deck' and store it in a global var
+
+	// Hira prompting, Romaji objective:
+	promptField = aCard.Hira
+	objective = aCard.Romaji
+	objective_kind = "Romaji"
+
+	return
+}
+
+func roma_prompting_hira_objective() (promptField, objective, objective_kind string) {
+
+	randIndex := rand.Intn(len(fileOfCards)) // data.go
+	aCard = fileOfCards[randIndex]           // Randomly pick a 'card' from a 'deck' and store it in a global var
+
+	// Romaji prompting, Hira objective:
+	promptField = aCard.Romaji
+	objective = aCard.Hira
+	objective_kind = "Hira"
 
 	return
 }

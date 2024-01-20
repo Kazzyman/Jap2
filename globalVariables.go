@@ -23,6 +23,7 @@ const colorYellow = "\033[33m"
 var include_Extended_kata_deck = false
 
 var randomFileOfCards int
+var randomArrangementOfCards int
 
 var returning_from_a_wrong_guess = false
 var current_deck string

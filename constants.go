@@ -1,5 +1,7 @@
 package main
 
+var limitedToKataPrompts bool
+
 // const aCard = charSetStruct{} // did not work
 /*
 There are four files (or decks) of cards:

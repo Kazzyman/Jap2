@@ -49,6 +49,9 @@ func List_of_Directives() {
 		"exkf" + colorReset +
 		"' un-load the Extended Kata deck")
 	fmt.Println("        Enter '" + colorGreen +
+		"konly" + colorReset +
+		"' Use only the Kata deck, rs to ReSet")
+	fmt.Println("        Enter '" + colorGreen +
 		"q" + colorReset +
 		"', (quit) terminate the app")
 }
@@ -179,6 +182,7 @@ func display_List_of_Directives() { // (unique)     - -
 	fmt.Printf("Game counter: %d, Game Duration: %d \n", game_loop_counter, game_duration+2)
 	fmt.Printf("Current Prompt Count Total: %d \n", total_prompts)
 	fmt.Printf("Extended Kata deck is loaded: %t \n\n", include_Extended_kata_deck)
+	fmt.Printf("Limited to Kata only: %t \n\n", limitedToKataPrompts)
 }
 
 // 'Directive Menu' ; displays only in response to "Dir" Directive
@@ -204,4 +208,5 @@ func re_display_List_of_Directives() { // (unique)     - -
 	fmt.Printf("Game counter: %d, Game Duration: %d \n", game_loop_counter, game_duration+2)
 	fmt.Printf("Current Prompt Count Total: %d \n", total_prompts)
 	fmt.Printf("Extended Kata deck is loaded: %t \n\n", include_Extended_kata_deck)
+	fmt.Printf("Limited to Kata only: %t \n\n", limitedToKataPrompts)
 }

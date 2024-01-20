@@ -8,7 +8,11 @@ import (
 var pulledButNotUsedMap = make(map[string]int)
 
 func pick_RandomCard_Assign_fields() (promptField, objective, objective_kind string) { // - -
-	promptField, objective, objective_kind = randomize_over_all_decks()
+	if limitedToKataPrompts {
+		promptField, objective, objective_kind = kata_prompting_romaji_objective()
+	} else {
+		promptField, objective, objective_kind = randomize_over_all_decks()
+	}
 	// Now that we have a newly-acquired promptField, check to see if we have it stored in the cyclicArrayPulls slice ...
 	// and, if it is so stored, obtain a replacement, and then look again through the entire slice. Repeat the entire
 	// process as many times as may be required to finally obtain a value of promptField which is novel according to said slice.
@@ -21,8 +25,11 @@ func pick_RandomCard_Assign_fields() (promptField, objective, objective_kind str
 				pulledButNotUsedMap[promptField]++ // The '++' increments the int value associated with promptField
 				// fmt.Printf("We've seen the pseudo-random char before; lastPull: %s and promptField: %s\n", lastPull, promptField)
 				found = true
-				promptField, objective, objective_kind = randomize_over_all_decks()
-
+				if limitedToKataPrompts {
+					promptField, objective, objective_kind = kata_prompting_romaji_objective()
+				} else {
+					promptField, objective, objective_kind = randomize_over_all_decks()
+				}
 				break // Exit the inner loop, having a new and potentially novel promptField in hand
 			}
 		}
@@ -59,11 +66,29 @@ func pick_RandomCard_Assign_fields() (promptField, objective, objective_kind str
 	return // promptField, objective, objective_kind
 }
 
+func kata_prompting_romaji_objective() (promptField, objective, objective_kind string) {
+
+	// This is for a future project.
+	// randIndexMK := rand.Intn(len(fileOfCardsKataPromptsOnly)) // dataK.go
+	// aCard = fileOfCardsKataPromptsOnly[randIndexMK]
+
+	// But for now ...
+	randIndex := rand.Intn(len(fileOfCards)) // data.go
+	aCard = fileOfCards[randIndex]           // Randomly pick a 'card' from a 'deck' and store it in a global var
+
+	// Kata prompting, Romaji objective:
+	promptField = aCard.Kata
+	objective = aCard.Romaji
+	objective_kind = "Romaji"
+
+	return
+}
+
 func randomize_over_all_decks() (promptField, objective, objective_kind string) {
-	randIndex := rand.Intn(len(fileOfCards))
-	randIndexS := rand.Intn(len(fileOfCardsS))
-	randIndexD := rand.Intn(len(fileOfCardsMostDifficult))
-	randIndexE := rand.Intn(len(fileOfCardsE))
+	randIndex := rand.Intn(len(fileOfCards))               // data.go
+	randIndexS := rand.Intn(len(fileOfCardsS))             // dataS.go
+	randIndexD := rand.Intn(len(fileOfCardsMostDifficult)) // dataD.go
+	randIndexE := rand.Intn(len(fileOfCardsE))             // optional dataExt.go
 
 	if include_Extended_kata_deck {
 		randomFileOfCards = rand.Intn(13)

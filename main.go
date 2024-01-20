@@ -8,6 +8,7 @@ import (
 
 func main() {
 	rand.Seed(time.Now().UnixNano())
+	// limitedToKataPrompts = false
 	gameOn = false
 	game = "off"
 	display_List_of_Directives()

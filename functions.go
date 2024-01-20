@@ -77,19 +77,20 @@ func reSet_aCard_andThereBy_reSet_thePromptString() (prompt, objective, objectiv
 
 func testForDirective(in string) (result bool) { // - -
 	/*
-	 'nts' for some background on Romaji conventions
-	 'dir' redisplay this menu of available Directives
-	 'gdc' set the Duration Counter for a Game session
-	 'bgs' or 'goff' Begin or end a Game Session
-	 '?' context-sensitive help on the current character
-	 '??' for help on a particular Hiragana character
-	 'st' Statistics
-	 'abt' for trivia about this app
-	 'rs' to reset (flush or clear) all stats logs etc.
-	 'rm' Read the current contents of the Maps
-	 'stc' (Set-Card) force the use of a specific card
-	 'exko' load the Extended Kata deck
-	 'exkf' un-load the Extended Kata deck
+		 'nts' for some background on Romaji conventions
+		 'dir' redisplay this menu of available Directives
+		 'gdc' set the Duration Counter for a Game session
+		 'bgs' or 'goff' Begin or end a Game Session
+		 '?' context-sensitive help on the current character
+		 '??' for help on a particular Hiragana character
+		 'st' Statistics
+		 'abt' for trivia about this app
+		 'rs' to reset (flush or clear) all stats logs etc.
+		 'rm' Read the current contents of the Maps
+		 'stc' (Set-Card) force the use of a specific card
+		 'exko' load the Extended Kata deck
+		 'exkf' un-load the Extended Kata deck
+			'konly' Use kata only
 	*/
 	if in == "stc" ||
 		in == "?" || // <-- If it IS a directive
@@ -105,7 +106,8 @@ func testForDirective(in string) (result bool) { // - -
 		in == "abt" ||
 		in == "gdc" ||
 		in == "exko" ||
-		in == "exkf" {
+		in == "exkf" ||
+		in == "konly" {
 		// Then:
 		result = true
 	}
@@ -228,6 +230,7 @@ func about_app() {
 }
 func reset_all_data() {
 	// Flush (clear) the old stats and hits arrays
+	limitedToKataPrompts = false
 	cyclicArrayOfTheJcharsGottenWrong = CyclicArrayOfTheJcharsGottenWrong{}
 	cyclicArrayHits = CyclicArrayHits{}
 	cyclicArrayPulls = CyclicArrayPulls{}
@@ -323,6 +326,8 @@ func respond_to_UserSuppliedDirective(in, objective_kind string) (prompt, object
 	case "exkf":
 		include_Extended_kata_deck = false
 		fmt.Println("Extended Kata deck has been un-loaded")
+	case "konly":
+		limitedToKataPrompts = true
 	default:
 		// fmt.Println("Directive not found") // Does not work because only existent cases are passed to the switch
 	}

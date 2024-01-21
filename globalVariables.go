@@ -25,6 +25,7 @@ var include_Extended_kata_deck = false
 var limitedToKataPrompts bool
 var limitedToHiraPrompts bool
 var limitedToRomaPrompts bool
+var limitedToDifficultKata bool
 
 var randomFileOfCards int
 var randomArrangementOfCards int

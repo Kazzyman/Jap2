@@ -14,6 +14,8 @@ func pick_RandomCard_Assign_fields() (promptField, objective, objective_kind str
 		promptField, objective, objective_kind = hira_prompting_romaji_objective()
 	} else if limitedToRomaPrompts {
 		promptField, objective, objective_kind = roma_prompting_hira_objective()
+	} else if limitedToDifficultKata {
+		promptField, objective, objective_kind = Difficult_kata_prompting_romaji_objective()
 	} else {
 		promptField, objective, objective_kind = randomize_over_all_decks()
 	}
@@ -35,6 +37,8 @@ func pick_RandomCard_Assign_fields() (promptField, objective, objective_kind str
 					promptField, objective, objective_kind = hira_prompting_romaji_objective()
 				} else if limitedToRomaPrompts {
 					promptField, objective, objective_kind = roma_prompting_hira_objective()
+				} else if limitedToDifficultKata {
+					promptField, objective, objective_kind = Difficult_kata_prompting_romaji_objective()
 				} else {
 					promptField, objective, objective_kind = randomize_over_all_decks()
 				}
@@ -74,55 +78,53 @@ func pick_RandomCard_Assign_fields() (promptField, objective, objective_kind str
 	return // promptField, objective, objective_kind
 }
 
-func kata_prompting_romaji_objective() (promptField, objective, objective_kind string) {
-
-	// This is for a future project.
-	// randIndexMK := rand.Intn(len(fileOfCardsKataPromptsOnly)) // dataK.go
-	// aCard = fileOfCardsKataPromptsOnly[randIndexMK]
-
-	// But for now ...
-	randIndex := rand.Intn(len(fileOfCards)) // data.go
-	aCard = fileOfCards[randIndex]           // Randomly pick a 'card' from a 'deck' and store it in a global var
-
+func Difficult_kata_prompting_romaji_objective() (promptField, objective, objective_kind string) {
+	randIndexMK := rand.Intn(len(dataMostDiff)) // dataK.go
+	aCard = dataMostDiff[randIndexMK]
 	// Kata prompting, Romaji objective:
 	promptField = aCard.Kata
 	objective = aCard.Romaji
 	objective_kind = "Romaji"
+	return
+}
 
+func kata_prompting_romaji_objective() (promptField, objective, objective_kind string) {
+	randIndex := rand.Intn(len(fileOfCards)) // data.go
+	aCard = fileOfCards[randIndex]           // Randomly pick a 'card' from a 'deck' and store it in a global var
+	// Kata prompting, Romaji objective:
+	promptField = aCard.Kata
+	objective = aCard.Romaji
+	objective_kind = "Romaji"
 	return
 }
 
 func hira_prompting_romaji_objective() (promptField, objective, objective_kind string) {
-
 	randIndex := rand.Intn(len(fileOfCards)) // data.go
 	aCard = fileOfCards[randIndex]           // Randomly pick a 'card' from a 'deck' and store it in a global var
-
 	// Hira prompting, Romaji objective:
 	promptField = aCard.Hira
 	objective = aCard.Romaji
 	objective_kind = "Romaji"
-
 	return
 }
 
 func roma_prompting_hira_objective() (promptField, objective, objective_kind string) {
-
 	randIndex := rand.Intn(len(fileOfCards)) // data.go
 	aCard = fileOfCards[randIndex]           // Randomly pick a 'card' from a 'deck' and store it in a global var
-
 	// Romaji prompting, Hira objective:
 	promptField = aCard.Romaji
 	objective = aCard.Hira
 	objective_kind = "Hira"
-
 	return
 }
 
+// This one is the default func
 func randomize_over_all_decks() (promptField, objective, objective_kind string) {
 	randIndex := rand.Intn(len(fileOfCards))               // data.go
 	randIndexS := rand.Intn(len(fileOfCardsS))             // dataS.go
 	randIndexD := rand.Intn(len(fileOfCardsMostDifficult)) // dataD.go
-	randIndexE := rand.Intn(len(fileOfCardsE))             // optional dataExt.go
+	// This next dataset can be added to the ones above with Dir: exko (EXtendedKataOn)
+	randIndexE := rand.Intn(len(fileOfCardsE)) // optional dataExt.go
 
 	if include_Extended_kata_deck {
 		randomFileOfCards = rand.Intn(13)
@@ -163,7 +165,6 @@ func randomize_over_all_decks() (promptField, objective, objective_kind string) 
 			whichDeck = 4
 		}
 	}
-
 	if randomFileOfCards == 3 {
 		aCard = fileOfCards[randIndex] // Randomly pick a 'card' from a 'deck' and store it in a global var
 		promptField = aCard.Kata
@@ -193,7 +194,6 @@ func randomize_over_all_decks() (promptField, objective, objective_kind string) 
 		objective = aCard.Hira
 		objective_kind = "Hira"
 		whichDeck = 1
-
 	}
 	if randomFileOfCards == 7 {
 		aCard = fileOfCardsS[randIndexS] // Randomly pick a 'card' from a 'deck' and store it in a global var

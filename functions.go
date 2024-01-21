@@ -90,7 +90,10 @@ func testForDirective(in string) (result bool) { // - -
 		 'stc' (Set-Card) force the use of a specific card
 		 'exko' load the Extended Kata deck
 		 'exkf' un-load the Extended Kata deck
-			'konly' Use kata only
+		'konly' Use kata only
+		"honly" .. Hira
+		"ronly" .. Romaji
+		"donly" .. Difficult
 	*/
 	if in == "stc" ||
 		in == "?" || // <-- If it IS a directive
@@ -109,7 +112,8 @@ func testForDirective(in string) (result bool) { // - -
 		in == "exkf" ||
 		in == "konly" ||
 		in == "honly" ||
-		in == "ronly" {
+		in == "ronly" ||
+		in == "donly" {
 		// Then:
 		result = true
 	}
@@ -234,6 +238,8 @@ func reset_all_data() {
 	// Flush (clear) the old stats and hits arrays
 	limitedToKataPrompts = false
 	limitedToHiraPrompts = false
+	limitedToRomaPrompts = false
+	limitedToDifficultKata = false
 	cyclicArrayOfTheJcharsGottenWrong = CyclicArrayOfTheJcharsGottenWrong{}
 	cyclicArrayHits = CyclicArrayHits{}
 	cyclicArrayPulls = CyclicArrayPulls{}
@@ -257,7 +263,7 @@ func reset_all_data() {
 	fmt.Println("    frequencyMapOf_IsFineOnChars")
 	//goland:noinspection ALL
 	fmt.Println("    frequencyMapOf_need_workOn\n")
-	fmt.Println("  And, all Game values have also been reset")
+	fmt.Println("  Limitations re Kata, Hira, and Romaji prompting; as well as all Game values have also been reset")
 }
 
 func notes_on_kana() {
@@ -331,10 +337,24 @@ func respond_to_UserSuppliedDirective(in, objective_kind string) (prompt, object
 		fmt.Println("Extended Kata deck has been un-loaded")
 	case "konly":
 		limitedToKataPrompts = true
+		limitedToHiraPrompts = false
+		limitedToRomaPrompts = false
+		limitedToDifficultKata = false
 	case "honly":
 		limitedToHiraPrompts = true
+		limitedToKataPrompts = false
+		limitedToRomaPrompts = false
+		limitedToDifficultKata = false
 	case "ronly":
 		limitedToRomaPrompts = true
+		limitedToKataPrompts = false
+		limitedToHiraPrompts = false
+		limitedToDifficultKata = false
+	case "donly":
+		limitedToDifficultKata = true
+		limitedToKataPrompts = false
+		limitedToHiraPrompts = false
+		limitedToRomaPrompts = false
 	default:
 		// fmt.Println("Directive not found") // Does not work because only existent cases are passed to the switch
 	}

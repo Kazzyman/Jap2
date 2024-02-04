@@ -221,10 +221,24 @@ func re_display_List_of_Directives() { // (unique)     - -
 	//goland:noinspection ALL
 	fmt.Printf("Game counter: %d, Game Duration: %d \n", game_loop_counter, game_duration+2)
 	fmt.Printf("Current Prompt Count Total: %d \n\n", total_prompts)
-	fmt.Printf("Extended Kata deck is loaded: %t \n\n", include_Extended_kata_deck)
-	fmt.Printf("Limited to Kata prompts with romaji objectives: %t \n", limitedToKataPrompts)
-	fmt.Printf("Limited to Hira prompts only:                   %t \n", limitedToHiraPrompts)
-	fmt.Printf("Limited to Romaji prompts only:                 %t \n", limitedToRomaPrompts)
-	fmt.Printf("Limited to Difficult Kata only:                 %t \n\n", limitedToDifficultKata)
+
+	if !include_Extended_kata_deck {
+		fmt.Println("Extended Kata deck is NOT loaded\n")
+	} else {
+		fmt.Println("Extended Kata deck is loaded\n")
+	}
+
+	if limitedToKataPrompts {
+		fmt.Printf("Limited to Kata prompts with romaji objectives: %t \n\n", limitedToKataPrompts)
+	}
+	if limitedToHiraPrompts {
+		fmt.Printf("Limited to Hira prompts only: %t \n\n", limitedToHiraPrompts)
+	}
+	if limitedToRomaPrompts {
+		fmt.Printf("Limited to Romaji prompts only: %t \n\n", limitedToRomaPrompts)
+	}
+	if limitedToDifficultKata {
+		fmt.Printf("Limited to Difficult Kata only: %t \n\n", limitedToDifficultKata)
+	}
 	//
 }

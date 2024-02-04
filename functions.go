@@ -240,6 +240,7 @@ func reset_all_data() {
 	limitedToHiraPrompts = false
 	limitedToRomaPrompts = false
 	limitedToDifficultKata = false
+	include_Extended_kata_deck = false
 	cyclicArrayOfTheJcharsGottenWrong = CyclicArrayOfTheJcharsGottenWrong{}
 	cyclicArrayHits = CyclicArrayHits{}
 	cyclicArrayPulls = CyclicArrayPulls{}
@@ -320,6 +321,24 @@ func respond_to_UserSuppliedDirective(in, objective_kind string) (prompt, object
 		prompt, objective, kind = reSet_aCard_andThereBy_reSet_thePromptString()
 	case "st":
 		newHits()
+		if !include_Extended_kata_deck {
+			fmt.Println("Extended Kata deck is NOT loaded\n")
+		} else {
+			fmt.Println("Extended Kata deck is loaded\n")
+		}
+
+		if limitedToKataPrompts {
+			fmt.Printf("Limited to Kata prompts with romaji objectives: %t \n\n", limitedToKataPrompts)
+		}
+		if limitedToHiraPrompts {
+			fmt.Printf("Limited to Hira prompts only: %t \n\n", limitedToHiraPrompts)
+		}
+		if limitedToRomaPrompts {
+			fmt.Printf("Limited to Romaji prompts only: %t \n\n", limitedToRomaPrompts)
+		}
+		if limitedToDifficultKata {
+			fmt.Printf("Limited to Difficult Kata only: %t \n\n", limitedToDifficultKata)
+		}
 	case "nts":
 		notes_on_kana()
 	case "dir": // reDisplay the DIRECTORY OF DIRECTIVES (and instructions):

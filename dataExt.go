@@ -64,7 +64,7 @@ package main
 	レ゜(le)
 	ロ゜(lo)
 */
-
+ 
 var fileOfCardsE = []charSetStruct{
 
 	{"イィ", "やぃ", "yi",

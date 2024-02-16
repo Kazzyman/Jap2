@@ -53,7 +53,6 @@ var game_duration = 998
 // Used in : func read_map_of_fineOn()
 // ... and in : func logSkipThisPrompt_inThe_frequencyMapOf_IsFineOnChars(promptToSkip string)
 var frequencyMapOf_IsFineOnChars = make(map[string]int) // - -
-//
 // Used in : func read_map_of_needWorkOn()
 // ... and in : func logReinforceThisPrompt_inThe_frequencyMapOf_need_workOn(promptToWorkMoreOn string)
 var frequencyMapOf_need_workOn = make(map[string]int) // - -

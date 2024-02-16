@@ -44,6 +44,7 @@ func read_map_of_needWorkOn() { //     - -
 	fmt.Println("")
 }
 
+/*
 // Only used in check_it_for_needing_more_practice() // ... abandoned
 func find_this_card_to_practice(promptField_found_in_map, currently_known_typeOf_objective string) { // - -
 	if whichDeck == 1 {
@@ -121,3 +122,5 @@ func find_this_card_to_practice(promptField_found_in_map, currently_known_typeOf
 		}
 	}
 }
+*/
+//

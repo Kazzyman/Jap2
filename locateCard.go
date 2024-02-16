@@ -6,7 +6,7 @@ import (
 )
 
 // Used only in handle_doubleQuestMark_directive()  '(a Directive)'
-// (temporarily deprecated) ********************* v v v v v
+// (temporarily deprecated) ********************* v v v v v ------------------------------------------------v v v v v uses objective_kind
 func locateCardAndDisplayHelpFieldsContainedInIt_deprecated(Hira_or_Romaji_input_sameAsPrompt_toFindHelpOn, objective_kind string) {
 	var isAlphanumeric bool
 	findAlphasIn := regexp.MustCompile(`[a-zA-Z]`)
@@ -22,7 +22,7 @@ func locateCardAndDisplayHelpFieldsContainedInIt_deprecated(Hira_or_Romaji_input
 	// Help for a Romaji prompt, should give only the SansR_Hint if new_objective_kind == "Romaji" ****
 	if isAlphanumeric { // We probably have a Romaji string to locate help on
 		// Iterate through the array to find the element with the desired Romaji
-		for _, card := range fileOfCards {
+		for _, card := range fileOfCardsS {
 			if card.Romaji == Hira_or_Romaji_input_sameAsPrompt_toFindHelpOn { // It is a Romaji
 				foundElement = &card // foundElement is a global
 				break
@@ -44,7 +44,7 @@ func locateCardAndDisplayHelpFieldsContainedInIt_deprecated(Hira_or_Romaji_input
 		// Help for a Hiragana prompt, should give only the SansR_Hint if new_objective_kind == "Romaji" ****
 	} else { // We probably have a Hiragana string to locate help on
 		// Iterate through array to find element w the desired Hiragana
-		for _, card := range fileOfCards {
+		for _, card := range fileOfCardsS {
 			if card.Hira == Hira_or_Romaji_input_sameAsPrompt_toFindHelpOn { // It is a Hira
 				foundElement = &card
 				break
@@ -54,7 +54,7 @@ func locateCardAndDisplayHelpFieldsContainedInIt_deprecated(Hira_or_Romaji_input
 			fmt.Printf("%s", colorRed)
 			fmt.Println("Hiragana Help on:", foundElement.Hira)
 			fmt.Printf("%s", colorReset)
-			if objective_kind == "Romaji" {
+			if objective_kind == "Romaji" { // this if-else clause is different/extra ????????????
 				fmt.Println(foundElement.SansR_Hint)
 			} else {
 				fmt.Println(foundElement.HiraHint)
@@ -67,8 +67,10 @@ func locateCardAndDisplayHelpFieldsContainedInIt_deprecated(Hira_or_Romaji_input
 	}
 }
 
-// Used only in handle_doubleQuestMark_directive()  '(a Directive)'
-func locateCardAndDisplayHelpFieldsContainedInIt(Hira_or_Romaji_input_sameAsPrompt_toFindHelpOn, objective_kind string) {
+// Used only in handle_doubleQuestMark_directive()  '(a Directive)' ------------
+// ...  -------------  differs from the deprecated ver in that does not use objective_kind --------- v v v v v
+// func locateCardAndDisplayHelpFieldsContainedInIt(Hira_or_Romaji_input_sameAsPrompt_toFindHelpOn, objective_kind string) {
+func locateCardAndDisplayHelpFieldsContainedInIt(Hira_or_Romaji_input_sameAsPrompt_toFindHelpOn string) {
 	var isAlphanumeric bool
 	findAlphasIn := regexp.MustCompile(`[a-zA-Z]`)
 	// Determine whether a Hira or a Romaji was entered to find help on
@@ -83,7 +85,7 @@ func locateCardAndDisplayHelpFieldsContainedInIt(Hira_or_Romaji_input_sameAsProm
 	// Help for a Romaji prompt
 	if isAlphanumeric { // We probably have a Romaji string to locate help on
 		// Iterate through the array to find the element with the desired Romaji
-		for _, card := range fileOfCards {
+		for _, card := range fileOfCardsS {
 			if card.Romaji == Hira_or_Romaji_input_sameAsPrompt_toFindHelpOn { // It is a Romaji
 				foundElement = &card // foundElement is a global
 				break
@@ -101,7 +103,7 @@ func locateCardAndDisplayHelpFieldsContainedInIt(Hira_or_Romaji_input_sameAsProm
 		// Help for a Hiragana prompt
 	} else { // We probably have a Hiragana string to locate help on
 		// Iterate through array to find element w the desired Hiragana
-		for _, card := range fileOfCards {
+		for _, card := range fileOfCardsS {
 			if card.Hira == Hira_or_Romaji_input_sameAsPrompt_toFindHelpOn { // It is a Hira
 				foundElement = &card
 				break

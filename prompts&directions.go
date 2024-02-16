@@ -48,15 +48,18 @@ func List_of_Directives() {
 	fmt.Println("        Enter '" + colorGreen +
 		"exkf" + colorReset +
 		"' un-load the Extended Kata deck")
+
 	fmt.Println("        Enter '" + colorGreen +
 		"konly" + colorReset +
 		"' Use only Kata prompting and Romaji objective, rs to ReSet")
+	// missing Kata prompting and Hira objective
 	fmt.Println("        Enter '" + colorGreen +
 		"honly" + colorReset +
-		"' Use only Hira prompting, rs to ReSet")
+		"' Use only Hira prompting and Romaji objective, rs to ReSet")
 	fmt.Println("        Enter '" + colorGreen +
 		"ronly" + colorReset +
-		"' Use only Romaji prompting, rs to ReSet")
+		"' Use only Romaji prompting and Hira objective , rs to ReSet")
+
 	fmt.Println("        Enter '" + colorGreen +
 		"donly" + colorReset +
 		"' Difficult Kata only, rs to ReSet")
@@ -125,26 +128,6 @@ func promptForRomajiWithDiro(prompt string) (usersGuessOrOptionDirective string)
 	return usersGuessOrOptionDirective
 }
 
-// Standard prompts for use when NOT soliciting second, or final, guesses
-func promptForHiraWithDir(prompt string) (usersGuessOrOptionDirective string) { // - -
-	fmt.Printf("%s", prompt)
-	fmt.Printf("%s", colorCyan)
-	fmt.Printf(" Hiragana?, or 'dir'\n")
-	fmt.Printf(" Here:> ")
-	fmt.Printf("%s", colorReset)
-	_, _ = fmt.Scan(&usersGuessOrOptionDirective)
-	return usersGuessOrOptionDirective
-}
-func promptForRomajiWithDir(prompt string) (usersGuessOrOptionDirective string) { // - -
-	fmt.Printf("%s", prompt)
-	fmt.Printf("%s", colorCyan)
-	fmt.Printf(" Romaji?, or 'dir'\n")
-	fmt.Printf(" Here:> ")
-	fmt.Printf("%s", colorReset)
-	_, _ = fmt.Scan(&usersGuessOrOptionDirective)
-	return usersGuessOrOptionDirective
-}
-
 // Special prompts for Extended Kata, if|when deployed **********************
 // ... Standard: used when NOT soliciting second, or final, guesses ***
 func promptForRomajiWithDirE(prompt string) (usersGuessOrOptionDirective string) { // - -
@@ -197,6 +180,46 @@ func display_List_of_Directives() { // (unique)     - -
 	fmt.Printf("Limited to Hira prompts only:                   %t \n", limitedToHiraPrompts)
 	fmt.Printf("Limited to Romaji prompts only:                 %t \n", limitedToRomaPrompts)
 	fmt.Printf("Limited to Difficult Kata only:                 %t \n\n", limitedToDifficultKata)
+}
+
+// Standard prompts for use when NOT soliciting second, or final, guesses
+func promptForHiraWithDir(prompt string) (usersGuessOrOptionDirective string) { // - -
+	fmt.Printf("%s", prompt)
+	fmt.Printf("%s", colorCyan)
+	if limitedToDifficultKata {
+		fmt.Printf(" Hiragana?, or 'dir' - Limited To Difficult Kata\n")
+	} else if limitedToRomaPrompts {
+		fmt.Printf(" Hiragana?, or 'dir' - Limited To Roma Prompts\n")
+	} else if limitedToHiraPrompts {
+		fmt.Printf(" Hiragana?, or 'dir' - Limited To Hira Prompts\n")
+	} else if limitedToKataPrompts {
+		fmt.Printf(" Hiragana?, or 'dir' - Limited To Kata Prompts\n")
+	} else {
+		fmt.Printf(" Hiragana?, or 'dir' - standard mix\n")
+	}
+	fmt.Printf(" Here:> ")
+	fmt.Printf("%s", colorReset)
+	_, _ = fmt.Scan(&usersGuessOrOptionDirective)
+	return usersGuessOrOptionDirective
+}
+func promptForRomajiWithDir(prompt string) (usersGuessOrOptionDirective string) { // - -
+	fmt.Printf("%s", prompt)
+	fmt.Printf("%s", colorCyan)
+	if limitedToDifficultKata {
+		fmt.Printf(" Romaji?, or 'dir' - Limited To Difficult Kata\n")
+	} else if limitedToRomaPrompts {
+		fmt.Printf(" Romaji?, or 'dir' - Limited To Roma Prompts\n")
+	} else if limitedToHiraPrompts {
+		fmt.Printf(" Romaji?, or 'dir' - Limited To Hira Prompts\n")
+	} else if limitedToKataPrompts {
+		fmt.Printf(" Romaji?, or 'dir' - Limited To Kata Prompts\n")
+	} else {
+		fmt.Printf(" Romaji?, or 'dir' - standard mix\n")
+	}
+	fmt.Printf(" Here:> ")
+	fmt.Printf("%s", colorReset)
+	_, _ = fmt.Scan(&usersGuessOrOptionDirective)
+	return usersGuessOrOptionDirective
 }
 
 // 'Directive Menu' ; displays only in response to "Dir" Directive

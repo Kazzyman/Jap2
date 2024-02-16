@@ -15,14 +15,15 @@ func check_error(e error) { //    - -
 }
 
 // DIRECTIVES : --------------------------------------------------------------------------------------------
-//
-func handle_doubleQuestMark_directive(objective_kind string) { //        - -
+// func handle_doubleQuestMark_directive(objective_kind string) { //        - -
+func handle_doubleQuestMark_directive() { // - -
 	var Hira_or_Romaji_input_sameAsPrompt_toFindHelpOn string
 	//
 	fmt.Printf("\n  -- Type either a Hiragana or Romaji prompt you need help with:> ")
 	_, _ = fmt.Scan(&Hira_or_Romaji_input_sameAsPrompt_toFindHelpOn)
 	//
-	locateCardAndDisplayHelpFieldsContainedInIt(Hira_or_Romaji_input_sameAsPrompt_toFindHelpOn, objective_kind)
+	// locateCardAndDisplayHelpFieldsContainedInIt(Hira_or_Romaji_input_sameAsPrompt_toFindHelpOn, objective_kind)
+	locateCardAndDisplayHelpFieldsContainedInIt(Hira_or_Romaji_input_sameAsPrompt_toFindHelpOn)
 	fmt.Println("")
 }
 
@@ -209,6 +210,7 @@ func read_pulledButNotUsedMap() {
 
 	*/
 }
+
 func read_pulls_not_used_array() {
 	for i, lastPull := range cyclicArrayPulls.pulls {
 		if i < len(cyclicArrayPulls.pulls) {
@@ -220,6 +222,7 @@ func read_pulls_not_used_array() {
 		}
 	}
 }
+
 func about_app() {
 	fmt.Printf("\n" +
 		"This app consists of the following files and lines of code:\n\n" +
@@ -234,6 +237,7 @@ func about_app() {
 		"3045 lines of code (SOC) \n" +
 		"or, about 1,020 functional lines of code \n\n")
 }
+
 func reset_all_data() {
 	// Flush (clear) the old stats and hits arrays
 	limitedToKataPrompts = false
@@ -264,7 +268,7 @@ func reset_all_data() {
 	fmt.Println("    frequencyMapOf_IsFineOnChars")
 	//goland:noinspection ALL
 	fmt.Println("    frequencyMapOf_need_workOn\n")
-	fmt.Println("  Limitations re Kata, Hira, and Romaji prompting; as well as all Game values have also been reset")
+	fmt.Println(colorCyan + "  Limitations re Kata, Hira, and Romaji prompting; as well as all Game values have also been reset\n" + colorReset)
 }
 
 func notes_on_kana() {
@@ -280,6 +284,7 @@ func notes_on_kana() {
 	fmt.Println("\"digraphs\" is the word that refers to what I have called conjunctions, like ひゅ, for example ")
 }
 
+// Too many usages of --------------------- v v v v v -- in main() to justify trying to fix this ?????
 func respond_to_UserSuppliedDirective(in, objective_kind string) (prompt, objective, kind string) { // - -
 	/*
 	 'nts' for some background on Romaji conventions
@@ -314,7 +319,8 @@ func respond_to_UserSuppliedDirective(in, objective_kind string) (prompt, object
 	case "q":
 		os.Exit(1)
 	case "??": // Directives follow:
-		handle_doubleQuestMark_directive(objective_kind)
+		// handle_doubleQuestMark_directive(objective_kind)
+		handle_doubleQuestMark_directive()
 	case "?":
 		fmt.Printf("\n%s\n%s\n%s\n\n", aCard.HiraHint, aCard.KataHint, aCard.TT_Hint)
 	case "stc":

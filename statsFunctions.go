@@ -43,7 +43,6 @@ func log_oops(prompt_it_was, field_it_was, guess string) { // - -
 		":it was:" + field_it_was + ":but you had guessed:" + guess)
 }
 
-//
 // 'Reinforce-or-Skip' loggers|Inserters:
 func logSkipThisPrompt_inThe_frequencyMapOf_IsFineOnChars(promptToSkip string) { // - -
 	frequencyMapOf_IsFineOnChars[promptToSkip]++
@@ -58,9 +57,7 @@ func logHits_in_cyclicArrayHits(RightOrOops, JChar string) { // - -
 	cyclicArrayHits.InsertChar(JChar)
 }
 
-//
 // A special Universal logger|Inserter: so we could drill the user more on chars he has missed
-//
 func logJcharsGottenWrong_in_cyclicArrayOfTheJcharsGottenWrong(Jchar string) { // - -
 	cyclicArrayOfTheJcharsGottenWrong.InsertCharsWrong(Jchar)
 }
@@ -168,8 +165,6 @@ func hits() { // - -
 	fmt.Println("")
 }
 
-//
-//
 func newHits() {
 	// Create maps to store the frequency of each relevant string for that map
 	frequencyMapRightOrOops := make(map[string]int)

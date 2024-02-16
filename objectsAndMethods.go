@@ -6,7 +6,7 @@ type CyclicArrayPulls struct {
 	pulls [280]string // Depth of memory for already seen chars
 	index int
 }
-
+ 
 func (ca *CyclicArrayPulls) InsertKChar(pulls string) { // Please refer also to the lengthy discussion below: // - -
 	ca.pulls[ca.index] = pulls                // Assign the passed string 'value' to the 'data' array at position 'ca.index'
 	ca.index = (ca.index + 1) % len(ca.pulls) // Increment 'index' (an integer indexing element) such that it loops-back to ...

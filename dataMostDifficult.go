@@ -4,7 +4,10 @@ package main
 . 7 Most difficult Kata:  type Romaji or Hira
 . 10 Most difficult: Romaji: type Hira:  /nu, /ne, /na, /me, /ri, /ra, /a, /u, /o
 */
+
 // When this deck is used, only Romaji objectives are requested
+// And, when right, only the aCard.Hira, and aCard.SansR_Hint fields are displayed
+// ... that is, only those two fields are shown in green to the user
 /*
 Easy to hard:
   no の
@@ -18,60 +21,87 @@ var dataMostDiff = []charSetStruct{
 	// All of the cards in this deck can be a problem (confusing?) when running with the standard mix (abandoned)
 	//
 	// ma is a stripped and lowered ho: ま vs ほ
-	{"Just a single vertical w two horiz & a loop at its base", "ま - ", "ma",
-		"Compare:  ma:ま  vs  ha:は",
-		" ma is a stripped and lowered ho: ま vs ほ",
-		" ma is a stripped and lowered ho: ま vs ほ",
-		" ma is a stripped and lowered ho: ま vs ほ"},
+	{"Hira is a single vertical w two horiz & a loop at its base",
+		"ま - ",
+		"ma",
+		"... this is the unused HiraHint field ...",
+		"... this is the unused KataHint field ...",
+		".... this is the unused TT_Hint field ...",
+		"ma is a stripped and lowered ho: ま vs ほ"},
 	//
 	// ho is a modified ma: ま becomes ほ
-	{"Same as ha but w a cap line", "ほ:は - ", "ho",
-		"Compare:  ma:ま  vs  ha:は  vs  ho:ほ",
-		" ho is a modified ma: ま becomes ほ",
-		" ho is a modified ma: ま becomes ほ",
-		" ho is a modified ma: ま becomes ほ"},
+	{"Hira is same as ha but w a cap line",
+		"ほ:は - ",
+		"ho",
+		"... this is the unused HiraHint field ...",
+		"... this is the unused KataHint field ...",
+		".... this is the unused TT_Hint field ...",
+		"ho is a modified ma: ま becomes ほ"},
 
-	{"Same as ke, but w loop at base", "は:け - ", "ha",
-		"ha:は  vs  ke:け",
-		" ",
-		" ",
-		" "},
+	{"Hira is same as ke, but w loop at base",
+		"は:け - ",
+		"ha",
+		"... this is the unused HiraHint field ...",
+		"... this is the unused KataHint field ...",
+		".... this is the unused TT_Hint field ...",
+		"ha:は  vs  ke:け"},
 
-	{"Same as ha, but no loop at base", "け:は - ", "ke",
-		"ha:は  vs  ke:け",
-		" ",
-		" ",
-		" "},
+	{"Hira is same as ha, but no loop at base",
+		"け:は - ",
+		"ke",
+		"... this is the unused HiraHint field ...",
+		"... this is the unused KataHint field ...",
+		".... this is the unused TT_Hint field ...",
+		"ha:は  vs  ke:け"},
 
-	{"Two vertical lines as Hira, or a T with sloped top", "い:イ - ", "i",
-		"i:い  vs  i:イ",
-		" ",
-		" ",
-		" "},
+	{"Two vertical lines as Hira, T with sloped top as Kata",
+		"い:イ - ",
+		"i",
+		"... this is the unused HiraHint field ...",
+		"... this is the unused KataHint field ...",
+		".... this is the unused TT_Hint field ...",
+		"i:い  vs  i:イ"},
 
-	{"T with sloped top, or Two vertical lines as Hira", "い:イ - ", "i",
-		"i:い  vs  i:イ",
-		" ",
-		" ",
-		" "},
+	{"Kata is a T with sloped top, or Two vertical lines as Hira",
+		"イ:い - ",
+		"i",
+		"... this is the unused HiraHint field ...",
+		"... this is the unused KataHint field ...",
+		".... this is the unused TT_Hint field ...",
+		"i:い  vs  i:イ"},
 
-	{"T bent left, w two horiz top lines", "て becomes テ - ", "te",
-		"テ  vs  て  (both are te)",
-		" ",
-		" ",
-		" "},
+	{"Kata is a T bent left, w two horiz top lines",
+		"テ, て becomes テ - ",
+		"te",
+		"... this is the unused HiraHint field ...",
+		"... this is the unused KataHint field ...",
+		".... this is the unused TT_Hint field ...",
+		"テ  vs  て  (both are te)"},
 
-	{"ra or u ?  As Kanji it has a vertical stroke", "ra:ら vs u:う - ", "ra",
-		"u:うウ  vs  ra:らラ",
-		" ",
-		" ",
-		" "},
+	{"Hira ra or u ?  Has a vertical stroke: Katas are ラ and ウ",
+		"ら vs u:う - ",
+		"ra",
+		"... this is the unused HiraHint field ...",
+		"... this is the unused KataHint field ...",
+		".... this is the unused TT_Hint field ...",
+		"u:うウ  vs  ra:らラ "},
 
-	{"This Katakana has a horiz atop a Kata fu", "ra:ラ vs fu:フ - ", "ra",
-		"ra:ラ  also: ら as Hira;  Compare: u:う　ra:ら　",
-		" ",
-		" ",
-		" "},
+	{"This Katakana has a horiz atop a Kata fu",
+		"ラ vs fu:フ - ",
+		"ra",
+		"... this is the unused HiraHint field ...",
+		"... this is the unused KataHint field ...",
+		".... this is the unused TT_Hint field ...",
+		"ラ  vs fu:フ  also: ら as Hira;  Compare: u:う　ra:ら"},
+
+	// All about u as a Katakana:
+	{"This Katakana is a kata wa with a top tick",
+		"ウ  wa:ワ becomes u:ウ - ",
+		"u",
+		"... this is the unused HiraHint field ...",
+		"... this is the unused KataHint field ...",
+		".... this is the unused TT_Hint field ...",
+		"u is a wa with a top tick "},
 
 	//
 	/*

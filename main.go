@@ -188,7 +188,11 @@ func rightOrOops(in, promptField, objective, objective_kind string, skipOops boo
 			if objective_kind == "Hira" {
 				fmt.Printf("      　%s %s   - %s\n", aCard.Romaji, aCard.Kata, aCard.SansR_Hint)
 			} else { // else it is Romaji, so:
-				fmt.Printf("      　%s %s   - %s\n", aCard.Hira, aCard.Kata, aCard.SansR_Hint)
+				if limitedToDifficultKata == true {
+					fmt.Printf("      　%s %s  \n", aCard.Hira, aCard.SansR_Hint)
+				} else {
+					fmt.Printf("      　%s %s   - %s\n", aCard.Hira, aCard.Kata, aCard.SansR_Hint)
+				}
 			}
 			fmt.Printf("%s", colorReset)
 			// Since this was "^^Right!", next we obtain new values in-preparation of "returning" to caller

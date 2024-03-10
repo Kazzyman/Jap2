@@ -132,11 +132,14 @@ func rightOrOops(in, promptField, objective, objective_kind string, skipOops boo
 		if in == "zu" {
 			log_right(promptField, in)
 			fmt.Printf("%s", colorGreen)
-			// fmt.Printf("        ^^Right! ")
 			if objective_kind == "Hira" {
-				fmt.Printf("      　%s %s \n", aCard.Romaji, aCard.Kata)
-			} else {
-				fmt.Printf("      　%s %s \n", aCard.Hira, aCard.Kata)
+				fmt.Printf("      　%s %s   - %s\n", aCard.Romaji, aCard.Kata, aCard.SansR_Hint)
+			} else { // else it is Romaji, so:
+				if limitedToDifficultKata == true {
+					fmt.Printf("      　%s %s  \n", aCard.Hira, aCard.SansR_Hint)
+				} else { // Then this correct guess must be a regular Kata
+					fmt.Printf("      　%s %s   - %s\n", aCard.Hira, aCard.Kata, aCard.SansR_Hint)
+				}
 			}
 			fmt.Printf("%s", colorReset)
 			fmt.Printf("It could have been either ず or づ as they are the same sound: zu\n")
@@ -170,27 +173,20 @@ func rightOrOops(in, promptField, objective, objective_kind string, skipOops boo
 			} else {
 				log_oops(promptField, objective, in)
 				fmt.Printf("%s", colorRed)
-				// fmt.Printf("       ^^Oops! ")
+				// fmt.Printf("       Try again, two more attempts remain \n %s", colorReset) // print in red, then reset to white
+				tryAgain(promptField, objective, objective_kind) // passing the old original values
 			}
 		}
 	} else if thisCaseOfAnInHasAlreadyBeenProcessedAbove != true {
 		if in == objective {
 			log_right(promptField, in)
-			fmt.Printf("%s", colorGreen)
-			/*
-				if objective_kind == "Hira" {
-					fmt.Printf("      　%s ^Right!\n", aCard.Romaji)
-				} else {
-					fmt.Printf("      　%s %s ^Right! \n", aCard.Hira, aCard.Kata)
-				}
-
-			*/
+			fmt.Printf("%s", colorGreen) // Just turn on green
 			if objective_kind == "Hira" {
 				fmt.Printf("      　%s %s   - %s\n", aCard.Romaji, aCard.Kata, aCard.SansR_Hint)
 			} else { // else it is Romaji, so:
 				if limitedToDifficultKata == true {
 					fmt.Printf("      　%s %s  \n", aCard.Hira, aCard.SansR_Hint)
-				} else {
+				} else { // Then this correct guess must be a regular Kata
 					fmt.Printf("      　%s %s   - %s\n", aCard.Hira, aCard.Kata, aCard.SansR_Hint)
 				}
 			}
@@ -224,7 +220,7 @@ func rightOrOops(in, promptField, objective, objective_kind string, skipOops boo
 				// Then do nothing
 			} else {
 				log_oops(promptField, objective, in)
-				fmt.Printf("%s", colorRed)
+				fmt.Printf("%s", colorRed) // Just turn on red
 				// fmt.Printf("      　^^Oops! ")
 			}
 			tryAgain(promptField, objective, objective_kind) // passing the old original values
@@ -233,8 +229,8 @@ func rightOrOops(in, promptField, objective, objective_kind string, skipOops boo
 }
 
 func tryAgain(promptField, objective, objective_kind string) { // - -
-	fmt.Printf("       Try again \n%s", colorReset)
-	var in string // var declaration needed as a ":=" would not work within the conditional because "in" not in signature
+	fmt.Printf("       Try again, two more attempts remain \n%s", colorReset) // print in red, then reset to white
+	var in string                                                             // var declaration needed as a ":=" would not work within the conditional because "in" not in signature
 	// **** Now that we are trying again, after a failed guess, prompts do not solicit Directives:(currently inoperative)
 	// ... so, these prompts, deployed by objective_kind, take promptField (rather than the new_prompt variant)
 	if objective_kind == "Romaji" {
@@ -255,11 +251,14 @@ func tryAgain(promptField, objective, objective_kind string) { // - -
 		if in == "zu" {
 			log_right(promptField, in)
 			fmt.Printf("%s", colorGreen)
-			// fmt.Printf("        ^^Right! ")
 			if objective_kind == "Hira" {
-				fmt.Printf("      　%s %s \n", aCard.Romaji, aCard.Kata)
-			} else {
-				fmt.Printf("      　%s %s \n", aCard.Hira, aCard.Kata)
+				fmt.Printf("      　%s %s   - %s\n", aCard.Romaji, aCard.Kata, aCard.SansR_Hint)
+			} else { // else it is Romaji, so:
+				if limitedToDifficultKata == true {
+					fmt.Printf("      　%s %s  \n", aCard.Hira, aCard.SansR_Hint)
+				} else { // Then this correct guess must be a regular Kata
+					fmt.Printf("      　%s %s   - %s\n", aCard.Hira, aCard.Kata, aCard.SansR_Hint)
+				}
 			}
 			fmt.Printf("%s", colorReset)
 			fmt.Printf("It could have been either ず or づ as they are the same sound: zu\n")
@@ -289,17 +288,21 @@ func tryAgain(promptField, objective, objective_kind string) { // - -
 		} else {
 			log_oops(promptField, objective, in)
 			fmt.Printf("%s", colorRed)
-			// fmt.Printf("     ^^Oops! ")
+			// fmt.Printf("       Try again, one more attempt remains \n %s", colorReset) // print in red, then reset to white
+			lastTry(promptField, objective, objective_kind)
 		}
 	} else if thisCaseOfAnInHasAlreadyBeenProcessedAbove != true {
 		if in == objective {
 			log_right(promptField, in)
 			fmt.Printf("%s", colorGreen)
-			// fmt.Printf("      　^^Right! \n")
 			if objective_kind == "Hira" {
-				fmt.Printf("      　%s %s \n", aCard.Romaji, aCard.Kata)
-			} else {
-				fmt.Printf("      　%s %s \n", aCard.Hira, aCard.Kata)
+				fmt.Printf("      　%s %s   - %s\n", aCard.Romaji, aCard.Kata, aCard.SansR_Hint)
+			} else { // else it is Romaji, so:
+				if limitedToDifficultKata == true {
+					fmt.Printf("      　%s %s  \n", aCard.Hira, aCard.SansR_Hint)
+				} else { // Then this correct guess must be a regular Kata
+					fmt.Printf("      　%s %s   - %s\n", aCard.Hira, aCard.Kata, aCard.SansR_Hint)
+				}
 			}
 			fmt.Printf("%s", colorReset)
 			new_prompt, new_objective, new_objective_kind := pick_RandomCard_Assign_fields()
@@ -359,11 +362,14 @@ func lastTry(promptField, objective, objective_kind string) { // - -
 		if in == "zu" {
 			log_right(promptField, in)
 			fmt.Printf("%s", colorGreen)
-			// fmt.Printf("        ^^Right! ")
 			if objective_kind == "Hira" {
-				fmt.Printf("      　%s %s \n", aCard.Romaji, aCard.Kata)
-			} else {
-				fmt.Printf("      　%s %s \n", aCard.Hira, aCard.Kata)
+				fmt.Printf("      　%s %s   - %s\n", aCard.Romaji, aCard.Kata, aCard.SansR_Hint)
+			} else { // else it is Romaji, so:
+				if limitedToDifficultKata == true {
+					fmt.Printf("      　%s %s  \n", aCard.Hira, aCard.SansR_Hint)
+				} else { // Then this correct guess must be a regular Kata
+					fmt.Printf("      　%s %s   - %s\n", aCard.Hira, aCard.Kata, aCard.SansR_Hint)
+				}
 			}
 			fmt.Printf("%s", colorReset)
 			fmt.Printf("It could have been either ず or づ as they are the same sound: zu\n")
@@ -394,17 +400,20 @@ func lastTry(promptField, objective, objective_kind string) { // - -
 		} else {
 			log_oops(promptField, objective, in)
 			fmt.Printf("%s", colorRed)
-			fmt.Printf("     ^^Oops! ")
+			fmt.Printf("     ^^Oops! And I lied about that being your last try, you've got this, try again...\n %s", colorReset)
 		}
 	} else if thisCaseOfAnInHasAlreadyBeenProcessedAbove != true {
 		if in == objective {
 			log_right(promptField, in)
 			fmt.Printf("%s", colorGreen)
-			// fmt.Printf("      　^^Right! \n")
 			if objective_kind == "Hira" {
-				fmt.Printf("      　%s %s \n", aCard.Romaji, aCard.Kata)
-			} else {
-				fmt.Printf("      　%s %s \n", aCard.Hira, aCard.Kata)
+				fmt.Printf("      　%s %s   - %s\n", aCard.Romaji, aCard.Kata, aCard.SansR_Hint)
+			} else { // else it is Romaji, so:
+				if limitedToDifficultKata == true {
+					fmt.Printf("      　%s %s  \n", aCard.Hira, aCard.SansR_Hint)
+				} else { // Then this correct guess must be a regular Kata
+					fmt.Printf("      　%s %s   - %s\n", aCard.Hira, aCard.Kata, aCard.SansR_Hint)
+				}
 			}
 			fmt.Printf("%s", colorReset)
 			new_prompt, new_objective, new_objective_kind := pick_RandomCard_Assign_fields()
@@ -433,7 +442,8 @@ func lastTry(promptField, objective, objective_kind string) { // - -
 		} else {
 			log_oops(aCard.Hira, aCard.Romaji, in)
 			fmt.Printf("%s", colorRed)
-			fmt.Printf("      　^^That was your last try, Oops! %s", colorReset)
+			// fmt.Printf("      　^^That was your last try, Oops! %s", colorReset)
+			fmt.Printf("     ^^Oops! That was your last try looser. Here's a clue, just for you: ...\n %s", colorReset)
 			fmt.Printf("\n%s\n%s\n%s\n\n", aCard.HiraHint, aCard.KataHint, aCard.TT_Hint)
 		}
 	}

@@ -233,9 +233,8 @@ func about_app() {
 		"127 memoryFunctions.go ~ 45\n" +
 		"133 objectsAndMethods.go ~ 40\n" +
 		"82 prompts&directions.go ~ 75\n" +
-		"145 statsFunctions.go ~ 125 \n\n" +
-		"3045 lines of code (SOC) \n" +
-		"or, about 1,020 functional lines of code \n\n")
+		"145 statsFunctions.go ~ 125 \n\n")
+	countSLOC()
 }
 
 func reset_all_data() {

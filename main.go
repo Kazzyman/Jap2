@@ -7,6 +7,8 @@ import (
 )
 
 func main() {
+	fmt.Println()
+	countSLOC()
 	rand.Seed(time.Now().UnixNano())
 	// limitedToKataPrompts = false
 	gameOn = false

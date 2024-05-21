@@ -5,6 +5,10 @@ import "time"
 // All global vars NOT located in the constants.go file :
 // ... Or/and, NOT located in the objectsAndMethods.go file ::
 
+var thisCaseOfAnInHasAlreadyBeenProcessedAbove bool
+var cameFrom_stcR_NOTstc bool
+
+// thisCaseOfAnInHasAlreadyBeenProcessedAbove is being flagged as
 // Create a kanjiHitMap map. A map of keys (kanji chars) and/to their associated history data, i.e., the struct: CardInfo
 var hiraHitMap = make(map[string]CardInfo)
 

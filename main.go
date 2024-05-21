@@ -2,64 +2,79 @@ package main
 
 import (
 	"fmt"
-	"math/rand"
-	"time"
 )
 
 func main() {
 	fmt.Println()
-	countSLOC()
-	rand.Seed(time.Now().UnixNano())
-	// limitedToKataPrompts = false
+	countSLOC() // Determine and display Source Lines Of Code.
+	// rand.Seed(time.Now().UnixNano())  todo: Can we lose this line?
 	gameOn = false
 	game = "off"
 	display_List_of_Directives()
+	mainLoop("junk", "junk", "junk") // Junk arguments are required, will not be used.
+}
+
+// Pick a new card -- OR, don't pick a new one, as for the case of:  if cameFrom_stcR_NOTstc {...} else {...}
+func mainLoop(new_prompt, objective, objective_kind string) { // Only using the vars in signature to create needed local vars. - -
 	for {
 		if gameOn {
-			// game_loop_counter++
+			game_loop_counter++
 		} else {
 			game_loop_counter = 0
 		}
 		if game_loop_counter > game_duration {
 			game_off()
 		}
-		new_prompt, objective, objective_kind := pick_RandomCard_Assign_fields() // This line is done after each ^^Right!
-		begin(new_prompt, objective, objective_kind)
+		if cameFrom_stcR_NOTstc { // todo: Once this bool value is set true, how and where does it (and should it) get set false?
+			begin(new_prompt, objective, objective_kind) // todo]  NOTICE: the use of the new_prompt variant vs the promptField variant.
+			// These vars ^ ^ ^ would not have existed if we had not created them via this function's signature. This is all well and good,
+			// ... because cameFrom_stcR_NOTstc will be false initially, and these local vars will have retained their values obtained
+			// ... below v v v in the "else" clause: exactly as they had been after the last call to pick_RandomCard_Assign_fields().
+		} else {
+			// In this NORMAL case, we want to clobber new_prompt as we pick the next fresh random card.
+			new_prompt, objective, objective_kind = pick_RandomCard_Assign_fields()
+			// todo]  Note: a new line similar to this ^ ^ ^ is done after each correct guess.
+			begin(new_prompt, objective, objective_kind) // Notice: the use of the new_prompt variant vs the promptField variant.
+			// ^ ^ ^ Since begin() is called here, from within this for loop, we will continue here after begin() finishes. And,
+			// ... as mentioned, "these local vars will have retained their values".  todo]  Hopefully a feature and not a bug.
+		}
 	}
 }
 
-func begin(promptField, objective, objective_kind string) { // May be a Hira, Kata, or Romaji prompt  - -
+func begin(promptField, objective, objective_kind string) { // promptField could be a Hira, Kata, or a Romaji-type prompt.  - -
 	if game_loop_counter > game_duration {
 		game_off()
 	}
-	var in string // var declaration needed as a ":=" would not work within the conditional because "in" not in signature
+	var in string // This var declaration was needed since ":=" would not work within the conditional because "in" not in signature.
 	for {
-		// These prompts, deployed by objective_kind, take promptField (rather than the new_prompt variant)
+		// todo] Note: 1:2 prompts (deployed via objective_kind) all use the promptField variant (rather than the new_prompt variant).
+		// Note: objective_kind may have been randomized by pick_RandomCard_Assign_fields() :: may NOT YET be "limited" to a particular type.
 		if objective_kind == "Romaji" {
-			in = promptForRomajiWithDir(promptField) // Get user's input, from a randomly selected prompt
+			in = promptForRomajiWithDir(promptField) // Get user's guess|dir.
 		} else if objective_kind == "Extended_Romaji" {
-			in = promptForRomajiWithDirE(promptField) // A special prompt for Extended Kata, if|when deployed
+			in = promptForRomajiWithDirE(promptField) // Special prompt for Extended Kata, if|when deployed.
 		} else if objective_kind == "Hira" {
 			in = promptForHiraWithDir(promptField)
-		}
+		} // todo: Further/better explain the above via comments, re prompt type and objective type (user's input mode).
 
-		DetectedDirective := false
-		DetectedDirective = testForDirective(in) // Sets DetectedDirective true if a "Directive" was detected
-		if DetectedDirective {
-			if in == "stc" { // respond_to_UserSuppliedDirective(in, new_objective_kind) will want to return values is "set" is switched on
+		// One of two constructs like this that use promptField etc. instead of new_prompt, new_objective, new_objective_kind.
+		aDirectiveWasDetected := false
+		aDirectiveWasDetected = detectDirective(in)
+		if aDirectiveWasDetected { // Respond to directive just one of two ways.
+			if in == "stc" || in == "stcr" {
 				promptField, objective, objective_kind = respond_to_UserSuppliedDirective(in, objective_kind)
 			} else {
+				// Note: when no stc or stcr was run we do not update promptField, objective, and objective_kind. (it's a naked call).
 				respond_to_UserSuppliedDirective(in, objective_kind)
 			}
-			continue // ... After "Directive" handling, re-prompt with the same/original promptField
+			continue // Re-prompt after "Directive" handling, with the same/original promptField  todo]  EXCEPT after an stc directive.
 		} else {
-			// Passing recursion false [or recall true], means do rightOrOops()
-			// ...                                                                  f,f,f Does rightOrOops
+			// Passing (below) a recursion flag of false, means we WILL execute rightOrOops(...)
 			evaluateUsersGuess(in, promptField, objective, objective_kind, false, false, false)
-			break // ... Having finished with all potential guessing, return to main ...
+			// Note: all bool flags passed in the above call are put to work throughout the called func.
+			break // Having finished with all potential guessing, return to the mainLoop() func.
 		}
-	} // ... Returns to main()'s inner loop; to randomly-select the next fieldOfCard ::
-
+	} // Returns to mainLoop to potentially randomly-select a fresh new Card.
 }
 
 func evaluateUsersGuess(in, promptField, objective, objective_kind string, recursion, recall, skipOops bool) { // - -
@@ -67,33 +82,37 @@ func evaluateUsersGuess(in, promptField, objective, objective_kind string, recur
 		game_off()
 	}
 	/*
-		This next construct is strange! Because, it seems to allow for rightOrOops() to be done "twice" -- but it does not!
-		since rightOrOops() sets in motion a chain of events that never returns directly here where it was called ...
-		duplication here never occurs. The construct is needed to allow for rightOrOops() to be omitted if
-		evaluateUsersGuess() has been called with recursion true and recall false
+		These following constructs are strange! Because, they seem to allow for rightOrOops() to be done "twice" -- but they do not!
+		Since rightOrOops() sets in motion a chain of events that never returns directly back to where it was called ...
+		... such duplication never occurs. The constructs are needed to allow for rightOrOops() to be conditionally omitted if ...
+		... e.g., evaluateUsersGuess() has been called with its recursion flag true and its recall flag false.
 	*/
+
 	if recursion {
-		// If recursion is true, then do nothing
+		// Just proceed to the next "if" clause AND proceed todo the rightOrOops func, JUST ONCE!
 	} else {
 		if gameOn {
 			game_loop_counter++
 		} else {
 			game_loop_counter = 0
-		}
-		rightOrOops(in, promptField, objective, objective_kind, skipOops) // This func may call: tryAgain() ... which may call: lastTry()
-	}
+		} // todo]  Note: Executes when recursion is False!
+		rightOrOops(in, promptField, objective, objective_kind, skipOops) // This func may, intern, call: tryAgain() ... and lastTry()
+	} // ^ ^ ^ ^ does NOT return directly back here.
+
 	if recall {
 		if gameOn {
 			game_loop_counter++
 		} else {
 			game_loop_counter = 0
-		}
-		rightOrOops(in, promptField, objective, objective_kind, skipOops) // This func may call: tryAgain() ... which may call: lastTry()
+		} // todo]  Note: Executes ONLY if recursion is True and recall is also True!
+		rightOrOops(in, promptField, objective, objective_kind, skipOops) // This func may, intern, call: tryAgain() ... and lastTry()
+		// ^ ^ ^ ^ does NOT return directly back here.
 	} else {
-		// If recall is false, then do nothing
+		// Do nothing.
 	}
-	// ^ ^ ^ If evaluateUsersGuess() has been called after handling a "Directive" then rightOrOops() is omitted entirely
-	// These prompts, deployed by objective_kind, take promptField (rather than the new_prompt variant)
+	// ^ ^ ^ If evaluateUsersGuess() has been called after handling a "Directive" then rightOrOops() is omitted entirely.
+
+	// todo]  Note: 2:2 prompts (deployed via objective_kind) all use the promptField variant (rather than the new_prompt variant).
 	if objective_kind == "Romaji" {
 		in = promptForRomajiWithDir(promptField) // Get user's input, from a randomly selected prompt
 	} else if objective_kind == "Extended_Romaji" {
@@ -102,17 +121,21 @@ func evaluateUsersGuess(in, promptField, objective, objective_kind string, recur
 		in = promptForHiraWithDir(promptField)
 	}
 
-	DetectedDirective := false
-	DetectedDirective = testForDirective(in)
-	if DetectedDirective {
-		if in == "stc" { // See prior comments
+	// Two of two constructs like this that use promptField etc. instead of new_prompt, new_objective, new_objective_kind.
+	aDirectiveWasDetected := false
+	aDirectiveWasDetected = detectDirective(in)
+	if aDirectiveWasDetected { // Respond to directive just one of two ways.
+		if in == "stc" || in == "stcr" {
 			promptField, objective, objective_kind = respond_to_UserSuppliedDirective(in, objective_kind)
 		} else {
+			// Note: when no stc or stcr was run we do not update promptField, objective, and objective_kind. (it's a naked call).
 			respond_to_UserSuppliedDirective(in, objective_kind)
 		}
+
+		// todo: consider rewriting the following documentation.
 		/*
 			Recursively ...
-			after responding to a Directive, prompt via recursion, from the same/original promptField
+			after responding to a Directive, prompt via recursion, from the same/original promptField??
 			With recursion true & recall false, rightOrOops() will NOT be done with this recursion,
 			and, with skipOops true [and passed to rightOrOops()] rightOrOops() will not say ^^Oops! after this recursion
 			...                                                                        t, f, t Skips rightOrOops
@@ -128,18 +151,20 @@ func evaluateUsersGuess(in, promptField, objective, objective_kind string, recur
 }
 
 func rightOrOops(in, promptField, objective, objective_kind string, skipOops bool) { // - -
-	var thisCaseOfAnInHasAlreadyBeenProcessedAbove = false
+	thisCaseOfAnInHasAlreadyBeenProcessedAbove = false
+
+	// todo]  Firstly, we'll do some special processing to address the strange case of zu, ず, and づ.
 	if objective == "zu" {
-		thisCaseOfAnInHasAlreadyBeenProcessedAbove = true
+		thisCaseOfAnInHasAlreadyBeenProcessedAbove = true // That is, it will be true :)
 		if in == "zu" {
 			log_right(promptField, in)
 			fmt.Printf("%s", colorGreen)
 			if objective_kind == "Hira" {
 				fmt.Printf("      　%s %s   - %s\n", aCard.Romaji, aCard.Kata, aCard.SansR_Hint)
-			} else { // else it is Romaji, so:
+			} else { // else it is Romaji, and ...
 				if limitedToDifficultKata == true {
 					fmt.Printf("      　%s %s  \n", aCard.Hira, aCard.SansR_Hint)
-				} else { // Then this correct guess must be a regular Kata
+				} else { // ... This correct guess must be a REGULAR Kata, so ...
 					fmt.Printf("      　%s %s   - %s\n", aCard.Hira, aCard.Kata, aCard.SansR_Hint)
 				}
 			}
@@ -147,23 +172,24 @@ func rightOrOops(in, promptField, objective, objective_kind string, skipOops boo
 			fmt.Printf("It could have been either ず or づ as they are the same sound: zu\n")
 			// Since this was "^^Right!", next we obtain new values in-preparation of "returning" to caller
 			new_prompt, new_objective, new_objective_kind := pick_RandomCard_Assign_fields()
-			// These prompts, deployed by new_objective_kind, take new_prompt
+
+			// These prompts (1 of 7 like this), deployed by new_objective_kind, take new_prompt etc.
 			if new_objective_kind == "Romaji" {
-				in = promptForRomajiWithDir(new_prompt) // Get user's input, from a randomly selected prompt
+				in = promptForRomajiWithDir(new_prompt)
 			} else if new_objective_kind == "Extended_Romaji" {
 				in = promptForRomajiWithDirE(new_prompt) // A special prompt for Extended Kata, if|when deployed
 			} else if new_objective_kind == "Hira" {
 				in = promptForHiraWithDir(new_prompt)
 			}
 
-			// Refer to the previous comments re the following mirrored section:
-			DetectedDirective := false
-			DetectedDirective = testForDirective(in)
-			if DetectedDirective {
-				if in == "stc" {
-					new_prompt, new_objective, new_objective_kind = respond_to_UserSuppliedDirective(in, new_objective_kind)
+			// One of seven constructs like this that use new_prompt, new_objective, and new_objective_kind instead of promptField etc.
+			aDirectiveWasDetected := false
+			aDirectiveWasDetected = detectDirective(in)
+			if aDirectiveWasDetected {
+				if in == "stc" || in == "stcr" {
+					new_prompt, new_objective, new_objective_kind = respond_to_UserSuppliedDirective(in, objective_kind)
 				} else {
-					respond_to_UserSuppliedDirective(in, new_objective_kind)
+					respond_to_UserSuppliedDirective(in, objective_kind)
 				}
 				evaluateUsersGuess(in, new_prompt, new_objective, new_objective_kind, true, false, true)
 			} else {
@@ -171,8 +197,8 @@ func rightOrOops(in, promptField, objective, objective_kind string, skipOops boo
 			}
 		} else {
 			if skipOops {
-				// Then do nothing
-			} else {
+				// Do nothing
+			} else { // Here is what we do if objective is zu AND if in != "zu"
 				log_oops(promptField, objective, in)
 				fmt.Printf("%s", colorRed)
 				// fmt.Printf("       Try again, two more attempts remain \n %s", colorReset) // print in red, then reset to white
@@ -180,74 +206,132 @@ func rightOrOops(in, promptField, objective, objective_kind string, skipOops boo
 			}
 		}
 	} else if thisCaseOfAnInHasAlreadyBeenProcessedAbove != true {
+		// todo]  Note: that "else", here, means that objective != "zu"  ... but the objective may yet be ず or づ.
+
+		if objective == "ず" || objective == "づ" {
+			if in == "づ" || in == "ず" {
+				log_right(promptField, in)
+				fmt.Printf("%s", colorGreen) // Just turn on green
+				if objective_kind == "Hira" {
+					fmt.Printf("      　%s %s   - %s\n", aCard.Romaji, aCard.Kata, aCard.SansR_Hint) // so, disp the rightness
+				} else { // else it (the objective type) is Romaji, so:
+					if limitedToDifficultKata == true {
+						fmt.Printf("      　%s %s  \n", aCard.Hira, aCard.SansR_Hint)
+					} else { // Then this correct guess must be a regular Kata, but ...
+						fmt.Printf("      　%s %s   - %s\n", aCard.Hira, aCard.Kata, aCard.SansR_Hint)
+						fmt.Printf("... and, it could have also been ず instead of %s since they have the same sound!\n", objective)
+					}
+				}
+				fmt.Printf("%s", colorReset)
+				// Since this was "^^Right!", next we obtain new values in-preparation of "returning" to caller
+				new_prompt, new_objective, new_objective_kind := pick_RandomCard_Assign_fields() // Gets a new card and extract the new prompt field
+
+				// These prompts (2 of 7 like this), deployed by new_objective_kind, take new_prompt etc.
+				if new_objective_kind == "Romaji" {
+					in = promptForRomajiWithDir(new_prompt)
+				} else if new_objective_kind == "Extended_Romaji" {
+					in = promptForRomajiWithDirE(new_prompt) // A special prompt for Extended Kata, if|when deployed
+				} else if new_objective_kind == "Hira" {
+					in = promptForHiraWithDir(new_prompt)
+				}
+
+				// Two of seven constructs like this that use new_prompt, new_objective, and new_objective_kind instead of promptField etc.
+				aDirectiveWasDetected := false
+				aDirectiveWasDetected = detectDirective(in)
+				if aDirectiveWasDetected {
+					if in == "stc" || in == "stcr" {
+						new_prompt, new_objective, new_objective_kind = respond_to_UserSuppliedDirective(in, objective_kind)
+					} else {
+						respond_to_UserSuppliedDirective(in, objective_kind)
+					}
+					evaluateUsersGuess(in, new_prompt, new_objective, new_objective_kind, true, false, true)
+				} else {
+					evaluateUsersGuess(in, new_prompt, new_objective, new_objective_kind, true, true, false)
+				}
+
+			} else {
+				if skipOops {
+					// Then do nothing
+				} else {
+					log_oops(promptField, objective, in)
+					fmt.Printf("%s", colorRed)
+				}
+				tryAgain(promptField, objective, objective_kind) // passing the old original values
+			}
+		}
+
+		// todo]  Now; having dispensed with the odd case of the zu clan -- we return you to our usual programming :)
 		if in == objective {
 			log_right(promptField, in)
-			fmt.Printf("%s", colorGreen) // Just turn on green
+			fmt.Printf("%s", colorGreen)
 			if objective_kind == "Hira" {
 				fmt.Printf("      　%s %s   - %s\n", aCard.Romaji, aCard.Kata, aCard.SansR_Hint)
 			} else { // else it is Romaji, so:
 				if limitedToDifficultKata == true {
 					fmt.Printf("      　%s %s  \n", aCard.Hira, aCard.SansR_Hint)
-				} else { // Then this correct guess must be a regular Kata
+				} else { // Then this correct guess must be a REGULAR Kata
 					fmt.Printf("      　%s %s   - %s\n", aCard.Hira, aCard.Kata, aCard.SansR_Hint)
 				}
 			}
 			fmt.Printf("%s", colorReset)
-			// Since this was "^^Right!", next we obtain new values in-preparation of "returning" to caller
-			new_prompt, new_objective, new_objective_kind := pick_RandomCard_Assign_fields() // Gets a new card and extract the new prompt field
-			// These prompts, deployed by new_objective_kind, take new_prompt
+			// Since this was a correct guess, next we obtain new values in-preparation of "returning" to the caller.
+			new_prompt, new_objective, new_objective_kind := pick_RandomCard_Assign_fields()
+
+			// These prompts (3 of 7 like this), deployed by new_objective_kind, take new_prompt etc.
 			if new_objective_kind == "Romaji" {
-				in = promptForRomajiWithDir(new_prompt) // Get user's input, from a randomly selected prompt
+				in = promptForRomajiWithDir(new_prompt)
 			} else if new_objective_kind == "Extended_Romaji" {
 				in = promptForRomajiWithDirE(new_prompt) // A special prompt for Extended Kata, if|when deployed
 			} else if new_objective_kind == "Hira" {
 				in = promptForHiraWithDir(new_prompt)
 			}
 
-			// Refer to the previous comments re the following mirrored section:
-			DetectedDirective := false
-			DetectedDirective = testForDirective(in)
-			if DetectedDirective {
-				if in == "stc" {
-					new_prompt, new_objective, new_objective_kind = respond_to_UserSuppliedDirective(in, new_objective_kind)
+			// Three of seven constructs like this that use new_prompt, new_objective, and new_objective_kind instead of promptField etc.
+			aDirectiveWasDetected := false
+			aDirectiveWasDetected = detectDirective(in)
+			if aDirectiveWasDetected {
+				if in == "stc" || in == "stcr" {
+					new_prompt, new_objective, new_objective_kind = respond_to_UserSuppliedDirective(in, objective_kind)
 				} else {
-					respond_to_UserSuppliedDirective(in, new_objective_kind)
+					respond_to_UserSuppliedDirective(in, objective_kind)
 				}
 				evaluateUsersGuess(in, new_prompt, new_objective, new_objective_kind, true, false, true)
 			} else {
 				evaluateUsersGuess(in, new_prompt, new_objective, new_objective_kind, true, true, false)
 			}
-		} else { // it is not a Right, and is therefor an Oops, no new aCard has been fetched etc. Not even checkMemory has been run
+		} else {
 			if skipOops {
-				// Then do nothing
+				// Do nothing
 			} else {
 				log_oops(promptField, objective, in)
-				fmt.Printf("%s", colorRed) // Just turn on red
-				// fmt.Printf("      　^^Oops! ")
+				fmt.Printf("%s", colorRed)
 			}
-			tryAgain(promptField, objective, objective_kind) // passing the old original values
+			tryAgain(promptField, objective, objective_kind) // Retaining the old original values.
 		}
 	}
 }
 
 func tryAgain(promptField, objective, objective_kind string) { // - -
-	fmt.Printf("       Try again, two more attempts remain \n%s", colorReset) // print in red, then reset to white
-	var in string                                                             // var declaration needed as a ":=" would not work within the conditional because "in" not in signature
-	// **** Now that we are trying again, after a failed guess, prompts do not solicit Directives:(currently inoperative)
-	// ... so, these prompts, deployed by objective_kind, take promptField (rather than the new_prompt variant)
+	fmt.Printf("       Try again, two more attempts remain \n%s", colorReset)
+	var in string // var declaration needed as a ":=" would not work within the conditional because "in" not in signature.
+
+	// **** Now that we are trying again, after a failed guess, prompts do not solicit Directives:(currently inoperative) ...
+	// ... so, these prompts, deployed by objective_kind, take promptField (rather than the new_prompt variant).
 	if objective_kind == "Romaji" {
-		in = promptForRomaji1(promptField) // Get user's input, from a randomly selected prompt
+		in = promptForRomaji1(promptField)
 	} else if objective_kind == "Extended_Romaji" {
-		in = promptForRomajiE(promptField) // A special prompt for Extended Kata, if|when deployed
+		in = promptForRomajiE(promptField) // A special prompt for Extended Kata, if|when deployed.
 	} else if objective_kind == "Hira" {
 		in = promptForHira1(promptField)
 	}
-	// **** Note here ^ ^ ^ the missing "WithDir" suffix to "promptForHira" as Directives are currently inoperative
+	// **** Note here ^ ^ ^ the missing "WithDir" suffix to "promptForHira" as Directives are currently inoperative.
 
 	// ...
-	// Note the lack of a Directive handling section which normally follows prompting, ergo currently inoperative
+	// Note the lack of a Directive handling section which normally follows prompting, ergo currently inoperative.
 	//
-	var thisCaseOfAnInHasAlreadyBeenProcessedAbove = false
+	thisCaseOfAnInHasAlreadyBeenProcessedAbove = false
+
+	// todo: "duplicate the fancier version of zu handling from rightOrOops.
 	if objective == "zu" {
 		thisCaseOfAnInHasAlreadyBeenProcessedAbove = true
 		if in == "zu" {
@@ -258,14 +342,15 @@ func tryAgain(promptField, objective, objective_kind string) { // - -
 			} else { // else it is Romaji, so:
 				if limitedToDifficultKata == true {
 					fmt.Printf("      　%s %s  \n", aCard.Hira, aCard.SansR_Hint)
-				} else { // Then this correct guess must be a regular Kata
+				} else { // Then this correct guess must be a REGULAR Kata
 					fmt.Printf("      　%s %s   - %s\n", aCard.Hira, aCard.Kata, aCard.SansR_Hint)
 				}
 			}
 			fmt.Printf("%s", colorReset)
 			fmt.Printf("It could have been either ず or づ as they are the same sound: zu\n")
 			new_prompt, new_objective, new_objective_kind := pick_RandomCard_Assign_fields()
-			// These prompts, deployed by new_objective_kind, take new_prompt
+
+			// These prompts (4 of 7 like this), deployed by new_objective_kind, take new_prompt etc.
 			if new_objective_kind == "Romaji" {
 				in = promptForRomajiWithDir(new_prompt) // Get user's input, from a randomly selected prompt
 			} else if new_objective_kind == "Extended_Romaji" {
@@ -274,14 +359,14 @@ func tryAgain(promptField, objective, objective_kind string) { // - -
 				in = promptForHiraWithDir(new_prompt)
 			}
 
-			// Refer to the previous comments re the following mirrored section:
-			DetectedDirective := false
-			DetectedDirective = testForDirective(in)
-			if DetectedDirective {
-				if in == "stc" {
-					new_prompt, new_objective, new_objective_kind = respond_to_UserSuppliedDirective(in, new_objective_kind)
+			// Four of seven constructs like this that use new_prompt, new_objective, and new_objective_kind instead of promptField etc.
+			aDirectiveWasDetected := false
+			aDirectiveWasDetected = detectDirective(in)
+			if aDirectiveWasDetected {
+				if in == "stc" || in == "stcr" {
+					new_prompt, new_objective, new_objective_kind = respond_to_UserSuppliedDirective(in, objective_kind)
 				} else {
-					respond_to_UserSuppliedDirective(in, new_objective_kind)
+					respond_to_UserSuppliedDirective(in, objective_kind)
 				}
 				evaluateUsersGuess(in, new_prompt, new_objective, new_objective_kind, true, false, true)
 			} else {
@@ -290,7 +375,6 @@ func tryAgain(promptField, objective, objective_kind string) { // - -
 		} else {
 			log_oops(promptField, objective, in)
 			fmt.Printf("%s", colorRed)
-			// fmt.Printf("       Try again, one more attempt remains \n %s", colorReset) // print in red, then reset to white
 			lastTry(promptField, objective, objective_kind)
 		}
 	} else if thisCaseOfAnInHasAlreadyBeenProcessedAbove != true {
@@ -302,29 +386,30 @@ func tryAgain(promptField, objective, objective_kind string) { // - -
 			} else { // else it is Romaji, so:
 				if limitedToDifficultKata == true {
 					fmt.Printf("      　%s %s  \n", aCard.Hira, aCard.SansR_Hint)
-				} else { // Then this correct guess must be a regular Kata
+				} else { // Then this correct guess must be a REGULAR Kata
 					fmt.Printf("      　%s %s   - %s\n", aCard.Hira, aCard.Kata, aCard.SansR_Hint)
 				}
 			}
 			fmt.Printf("%s", colorReset)
 			new_prompt, new_objective, new_objective_kind := pick_RandomCard_Assign_fields()
-			// These prompts, deployed by new_objective_kind, take new_prompt
+
+			// These prompts (5 of 7 like this), deployed by new_objective_kind, take new_prompt etc.
 			if new_objective_kind == "Romaji" {
-				in = promptForRomajiWithDir(new_prompt) // Get user's input, from a randomly selected prompt
+				in = promptForRomajiWithDir(new_prompt)
 			} else if new_objective_kind == "Extended_Romaji" {
 				in = promptForRomajiWithDirE(new_prompt) // A special prompt for Extended Kata, if|when deployed
 			} else if new_objective_kind == "Hira" {
 				in = promptForHiraWithDir(new_prompt)
 			}
 
-			// Refer to the previous comments re the following mirrored section:
-			DetectedDirective := false
-			DetectedDirective = testForDirective(in)
-			if DetectedDirective {
-				if in == "stc" {
-					new_prompt, new_objective, new_objective_kind = respond_to_UserSuppliedDirective(in, new_objective_kind)
+			// Five of seven constructs like this that use new_prompt, new_objective, and new_objective_kind instead of promptField etc.
+			aDirectiveWasDetected := false
+			aDirectiveWasDetected = detectDirective(in)
+			if aDirectiveWasDetected {
+				if in == "stc" || in == "stcr" {
+					new_prompt, new_objective, new_objective_kind = respond_to_UserSuppliedDirective(in, objective_kind)
 				} else {
-					respond_to_UserSuppliedDirective(in, new_objective_kind)
+					respond_to_UserSuppliedDirective(in, objective_kind)
 				}
 				evaluateUsersGuess(in, new_prompt, new_objective, new_objective_kind, true, false, true)
 			} else {
@@ -333,7 +418,6 @@ func tryAgain(promptField, objective, objective_kind string) { // - -
 		} else {
 			log_oops(promptField, objective, in)
 			fmt.Printf("%s", colorRed)
-			// fmt.Printf("      　^^Oops Again! ")
 			lastTry(promptField, objective, objective_kind)
 		}
 	}
@@ -341,8 +425,9 @@ func tryAgain(promptField, objective, objective_kind string) { // - -
 
 func lastTry(promptField, objective, objective_kind string) { // - -
 	fmt.Printf("       Last Try! \n%s", colorReset)
-	var in string // var declaration needed as a ":=" would not work within the conditional ~ "in" not in signature
-	// **** Now that we are trying again, after a failed guess, prompts do not solicit Directives:(currently inoperative)
+	var in string // var declaration needed as a ":=" would not work within the conditional ~ "in" not in signature.
+
+	// **** Now that we are trying again, after a failed guess, prompts do not solicit Directives:(currently inoperative) ...
 	// ... so, these prompts, deployed by objective_kind, take promptField (rather than the new_prompt variant)
 	if objective_kind == "Romaji" {
 		in = promptForRomaji2(promptField) // Get user's input, from a randomly selected prompt
@@ -351,14 +436,14 @@ func lastTry(promptField, objective, objective_kind string) { // - -
 	} else if objective_kind == "Hira" {
 		in = promptForHira2(promptField)
 	}
-
 	// **** Note here ^ ^ ^ the missing "WithDir" suffix to "promptForHira" as Directives are currently inoperative
 
 	// ...
 	// Note the lack of a Directive handling section which normally follows prompting, ergo currently inoperative
 	//
-	var thisCaseOfAnInHasAlreadyBeenProcessedAbove bool
 	thisCaseOfAnInHasAlreadyBeenProcessedAbove = false
+
+	// todo: "duplicate the fancier version of zu handling from rightOrOops.
 	if objective == "zu" {
 		thisCaseOfAnInHasAlreadyBeenProcessedAbove = true
 		if in == "zu" {
@@ -369,34 +454,34 @@ func lastTry(promptField, objective, objective_kind string) { // - -
 			} else { // else it is Romaji, so:
 				if limitedToDifficultKata == true {
 					fmt.Printf("      　%s %s  \n", aCard.Hira, aCard.SansR_Hint)
-				} else { // Then this correct guess must be a regular Kata
+				} else { // Then this correct guess must be a REGULAR Kata
 					fmt.Printf("      　%s %s   - %s\n", aCard.Hira, aCard.Kata, aCard.SansR_Hint)
 				}
 			}
 			fmt.Printf("%s", colorReset)
 			fmt.Printf("It could have been either ず or づ as they are the same sound: zu\n")
 			new_prompt, new_objective, new_objective_kind := pick_RandomCard_Assign_fields()
-			// These prompts, deployed by new_objective_kind, take new_prompt
+
+			// These prompts (6 of 7 like this), deployed by new_objective_kind, take new_prompt etc.
 			if new_objective_kind == "Romaji" {
-				in = promptForRomajiWithDir(new_prompt) // Get user's input, from a randomly selected prompt
+				in = promptForRomajiWithDir(new_prompt)
 			} else if new_objective_kind == "Extended_Romaji" {
 				in = promptForRomajiWithDirE(new_prompt) // A special prompt for Extended Kata, if|when deployed
 			} else if new_objective_kind == "Hira" {
 				in = promptForHiraWithDir(new_prompt)
 			}
 
-			// Refer to the previous comments re the following mirrored section:
-			DetectedDirective := false
-			DetectedDirective = testForDirective(in)
-			if DetectedDirective {
-				if in == "stc" {
-					new_prompt, new_objective, new_objective_kind = respond_to_UserSuppliedDirective(in, new_objective_kind)
+			// Six of seven constructs like this that use new_prompt, new_objective, and new_objective_kind instead of promptField etc.
+			aDirectiveWasDetected := false
+			aDirectiveWasDetected = detectDirective(in)
+			if aDirectiveWasDetected {
+				if in == "stc" || in == "stcr" {
+					new_prompt, new_objective, new_objective_kind = respond_to_UserSuppliedDirective(in, objective_kind)
 				} else {
-					respond_to_UserSuppliedDirective(in, new_objective_kind)
+					respond_to_UserSuppliedDirective(in, objective_kind)
 				}
 				evaluateUsersGuess(in, new_prompt, new_objective, new_objective_kind, true, false, true)
 			} else {
-
 				evaluateUsersGuess(in, new_prompt, new_objective, new_objective_kind, true, true, false)
 			}
 		} else {
@@ -419,7 +504,8 @@ func lastTry(promptField, objective, objective_kind string) { // - -
 			}
 			fmt.Printf("%s", colorReset)
 			new_prompt, new_objective, new_objective_kind := pick_RandomCard_Assign_fields()
-			// These prompts, deployed by new_objective_kind, take new_prompt
+
+			// These prompts (7 of 7 like this), deployed by new_objective_kind, take new_prompt etc.
 			if new_objective_kind == "Romaji" {
 				in = promptForRomajiWithDir(new_prompt) // Get user's input, from a randomly selected prompt
 			} else if new_objective_kind == "Extended_Romaji" {
@@ -428,14 +514,14 @@ func lastTry(promptField, objective, objective_kind string) { // - -
 				in = promptForHiraWithDir(new_prompt)
 			}
 
-			// Refer to the previous comments re the following mirrored section:
-			DetectedDirective := false
-			DetectedDirective = testForDirective(in)
-			if DetectedDirective {
-				if in == "stc" {
-					new_prompt, new_objective, new_objective_kind = respond_to_UserSuppliedDirective(in, new_objective_kind)
+			// Seven of seven constructs like this that use new_prompt, new_objective, and new_objective_kind instead of promptField etc.
+			aDirectiveWasDetected := false
+			aDirectiveWasDetected = detectDirective(in)
+			if aDirectiveWasDetected {
+				if in == "stc" || in == "stcr" {
+					new_prompt, new_objective, new_objective_kind = respond_to_UserSuppliedDirective(in, objective_kind)
 				} else {
-					respond_to_UserSuppliedDirective(in, new_objective_kind)
+					respond_to_UserSuppliedDirective(in, objective_kind)
 				}
 				evaluateUsersGuess(in, new_prompt, new_objective, new_objective_kind, true, false, true)
 			} else {
@@ -444,7 +530,6 @@ func lastTry(promptField, objective, objective_kind string) { // - -
 		} else {
 			log_oops(aCard.Hira, aCard.Romaji, in)
 			fmt.Printf("%s", colorRed)
-			// fmt.Printf("      　^^That was your last try, Oops! %s", colorReset)
 			fmt.Printf("     ^^Oops! That was your last try looser. Here's a clue, just for you: ...\n %s", colorReset)
 			fmt.Printf("\n%s\n%s\n%s\n\n", aCard.HiraHint, aCard.KataHint, aCard.TT_Hint)
 		}

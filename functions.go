@@ -29,6 +29,7 @@ func handle_doubleQuestMark_directive() { // - -
 
 // Handles the Directive 'stc'
 func reSet_aCard_andThereBy_reSet_thePromptString() (prompt, objective, objective_kind string) { //  - -
+	cameFrom_stcR_NOTstc = false
 	var theHiraganaOfCardToSilentlyLocate string
 	var isAlphanumeric bool
 
@@ -76,7 +77,59 @@ func reSet_aCard_andThereBy_reSet_thePromptString() (prompt, objective, objectiv
 	return prompt, objective, objective_kind
 }
 
-func testForDirective(in string) (result bool) { // - -
+// Handles the Directive 'stcr'
+func reSet_aCard_toAromaji_andThereBy_reSet_thePromptString() (prompt, objective, objective_kind string) { //  - -
+	cameFrom_stcR_NOTstc = true // todo, this may need to be pulled from global and passed back to caller instead
+	var theRomajiOfCardToSilentlyLocate string
+	var isAlphanumeric bool
+
+	fmt.Printf("\nEnter a Romaji to")
+	fmt.Printf("%s", colorCyan) //
+	fmt.Printf(" reSet the prompt :> ")
+	fmt.Printf("%s", colorReset) //
+	_, _ = fmt.Scan(&theRomajiOfCardToSilentlyLocate)
+
+	// Determine if the user has entered a valid Romaji char (instead of, accidentally, Hira char or string)
+	findAlphasIn := regexp.MustCompile(`[a-zA-Z]`)
+	switch true {
+	case findAlphasIn.MatchString(theRomajiOfCardToSilentlyLocate):
+		isAlphanumeric = true
+	default:
+		isAlphanumeric = true // todo ????????
+	}
+	// Tentatively, prepare to Scan for user's input and attempt locating a matching 'aCard'
+	if isAlphanumeric != true {
+		fmt.Println("Are you in Hira input mode?")
+		fmt.Printf("... if so, change it to Romaji (or I mignt die)\n")
+		fmt.Printf("%s", colorRed) //
+		fmt.Printf(" cautiously ")
+		fmt.Printf("%s", colorCyan)
+		fmt.Printf("re-enter your selection, in Romaji mode :> ")
+		fmt.Printf("%s", colorReset)
+		_, _ = fmt.Scan(&theRomajiOfCardToSilentlyLocate)
+		// May yet send an Alpha string to the next func, which will itself deal with it elegantly
+		silentlyLocateCard(theRomajiOfCardToSilentlyLocate) // Set the Convenience-global: foundElement
+		aCard = *foundElement                               // Set the global var-object 'aCard'
+		// new_prompt, new_objective, new_objective_kind
+		prompt = aCard.Romaji
+		objective = aCard.Hira
+		objective_kind = "Hira"
+		fmt.Println("")
+		// todo, must be re-prompting here ???? it is prompting for and testing for the original Romaji/Hiragana
+
+	} else {
+		// Confidently, go-looking for user's input: locate matching 'aCard'
+		silentlyLocateCard(theRomajiOfCardToSilentlyLocate) // Set the Convenience-global: foundElement
+		aCard = *foundElement                               // Set the global var-object 'aCard'
+		prompt = aCard.Romaji
+		objective = aCard.Hira
+		objective_kind = "Hira"
+		fmt.Println("")
+	}
+	return prompt, objective, objective_kind
+}
+
+func detectDirective(in string) (result bool) { // - -
 	/*
 		 'nts' for some background on Romaji conventions
 		 'dir' redisplay this menu of available Directives
@@ -88,7 +141,8 @@ func testForDirective(in string) (result bool) { // - -
 		 'abt' for trivia about this app
 		 'rs' to reset (flush or clear) all stats logs etc.
 		 'rm' Read the current contents of the Maps
-		 'stc' (Set-Card) force the use of a specific card
+		 'stc' (Set-Card) force the use of a specific card (Hira input)
+		'stcr' (Set-Card) force the use of a specific card (Romaji input)
 		 'exko' load the Extended Kata deck
 		 'exkf' un-load the Extended Kata deck
 		'konly' Use kata only
@@ -97,6 +151,7 @@ func testForDirective(in string) (result bool) { // - -
 		"donly" .. Difficult
 	*/
 	if in == "stc" ||
+		in == "stcr" ||
 		in == "?" || // <-- If it IS a directive
 		in == "??" ||
 		in == "rs" ||
@@ -283,7 +338,7 @@ func notes_on_kana() {
 	fmt.Println("\"digraphs\" is the word that refers to what I have called conjunctions, like ひゅ, for example ")
 }
 
-// Too many usages of --------------------- v v v v v -- in main() to justify trying to fix this ?????
+// todo: Too many usages of ---------------- v v v v v -- in main() to justify trying to fix this ?????
 func respond_to_UserSuppliedDirective(in, objective_kind string) (prompt, objective, kind string) { // - -
 	/*
 	 'nts' for some background on Romaji conventions
@@ -324,6 +379,9 @@ func respond_to_UserSuppliedDirective(in, objective_kind string) (prompt, object
 		fmt.Printf("\n%s\n%s\n%s\n\n", aCard.HiraHint, aCard.KataHint, aCard.TT_Hint)
 	case "stc":
 		prompt, objective, kind = reSet_aCard_andThereBy_reSet_thePromptString()
+	case "stcr":
+		// todo: new_prompt variant vs promptField ?????
+		prompt, objective, kind = reSet_aCard_toAromaji_andThereBy_reSet_thePromptString()
 	case "st":
 		newHits()
 		if !include_Extended_kata_deck {
@@ -380,7 +438,7 @@ func respond_to_UserSuppliedDirective(in, objective_kind string) (prompt, object
 		limitedToHiraPrompts = false
 		limitedToRomaPrompts = false
 	default:
-		// fmt.Println("Directive not found") // Does not work because only existent cases are passed to the switch
+		// fmt.Println("Directive not found") // Does not ever happen because only existent cases are passed to the switch.
 	}
 	return prompt, objective, kind
 }

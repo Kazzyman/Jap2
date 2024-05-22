@@ -351,7 +351,8 @@ func respond_to_UserSuppliedDirective(in, objective_kind string) (prompt, object
 	 'abt' for trivia about this app
 	 'rs' to reset (flush or clear) all stats logs etc.
 	 'rm' Read the current contents of the Maps
-	 'stc' (Set-Card) force the use of a specific card
+	 'stc' (Set-Card) force the use of a specific card (Hira input)
+	 'stcr' (Set-Card) force the use of a specific card (Roma input)
 	 'exko' load the Extended Kata deck
 	 'exkf' un-load the Extended Kata deck
 	*/

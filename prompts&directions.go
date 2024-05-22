@@ -41,7 +41,10 @@ func List_of_Directives() {
 		"' Read the current contents of the Maps")
 	fmt.Println("        Enter '" + colorGreen +
 		"stc" + colorReset +
-		"' (Set-Card) force the use of a specific card")
+		"' (Set-Card) force the use of a specific card (Hira input)")
+	fmt.Println("        Enter '" + colorGreen +
+		"stcr" + colorReset +
+		"' (Set-Card) force the use of a specific card (Roma input)")
 	fmt.Println("        Enter '" + colorGreen +
 		"exko" + colorReset +
 		"' load the Extended Kata deck")

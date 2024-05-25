@@ -2,8 +2,31 @@ package main
 
 import "time"
 
-// All global vars NOT located in the constants.go file :
-// ... Or/and, NOT located in the objectsAndMethods.go file ::
+/*
+	All global vars NOT located in the constants.go file :
+ 	... Or/and, NOT located in the objectsAndMethods.go file ::
+
+	I am going to use globals extensively
+
+    aCard.Kata
+	aCard.Hira
+	aCard.Romaji
+*/
+// ::: not needed: var prompt_field_to_display string
+// Will just be either aCard.Hira, aCard.Kata, or aCard.Romaji
+var expected_response_type string // Will be either "hira_char_as_users_guess" or "romaji_char_as_users_guess"
+var displayed_prompt_type string  // "hira" or "romaji" or "kata"
+var guess_attempt_count int       // Will be either 1, 2, or 3
+
+// prompt functions will be of 3 types ONLY and will ONLY display the prompt.
+// obtain_and_process_user_input() will be a separate function that will be responsible to collect, categorize, test, and also display the result of all processing
+// ... via consulting guess_attempt_count state (above). This will eliminate a lot of duplication and confusion.
+
+var usersInput string
+var userInput_category string // "is_a_directive_that_modifies_A_card", "is_a_misc_directive", "appears_to_be_a_guess"
+
+var hiraAcard string
+var romajiAcard string
 
 var thisCaseOfAnInHasAlreadyBeenProcessedAbove bool
 var cameFrom_stcR_NOTstc bool

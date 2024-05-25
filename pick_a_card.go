@@ -101,6 +101,43 @@ func pick_RandomCard_Assign_fields() (promptField, objective, objective_kind str
 		frequencyMapOf_need_workOn = make(map[string]int)
 		fmt.Println(colorCyan + "You have finished all the cards; repeats will now ensue ... \n" + colorReset)
 	}
+	if displayed_prompt_type == "hira" {
+		objective = aCard.Hira
+	}
+	if displayed_prompt_type == "romaji" {
+		objective = aCard.Romaji
+	}
+	if displayed_prompt_type == "kata" {
+		objective = aCard.Kata
+	}
+
+	if displayed_prompt_type == "kata" {
+		objective = aCard.Kata
+	}
+	if displayed_prompt_type == "kata" {
+		objective = aCard.Kata
+	}
+	if displayed_prompt_type == "kata" {
+		objective = aCard.Kata
+	}
+
+	promptField = objective
+	objective_kind = displayed_prompt_type
+	if expected_response_type == "hira char as users guess" {
+		displayed_prompt_type = "hira"
+	} else if expected_response_type == "romaji char as users guess" {
+		displayed_prompt_type = "romaji"
+	}
+	/*
+		aCard.Hira, aCard.Kata, aCard.Romaji ::: done
+
+		expected_response_type = "hira char as users guess"
+		expected_response_type = "romaji char as users guess" ::: done
+
+		displayed_prompt_type = "hira"
+		displayed_prompt_type = "romaji"
+		displayed_prompt_type = "kata" ::: done
+	*/
 	return // promptField, objective, objective_kind
 }
 

@@ -17,6 +17,10 @@ import "time"
 var expected_response_type string // Will be either "hira_char_as_users_guess" or "romaji_char_as_users_guess"
 var displayed_prompt_type string  // "hira" or "romaji" or "kata"
 var guess_attempt_count int       // Will be either 1, 2, or 3
+var objective string
+var promptField string
+var objective_kind string
+var typeOfUsersInput string
 
 // prompt functions will be of 3 types ONLY and will ONLY display the prompt.
 // obtain_and_process_user_input() will be a separate function that will be responsible to collect, categorize, test, and also display the result of all processing
@@ -24,6 +28,9 @@ var guess_attempt_count int       // Will be either 1, 2, or 3
 
 var usersInput string
 var userInput_category string // "is_a_directive_that_modifies_A_card", "is_a_misc_directive", "appears_to_be_a_guess"
+
+var aDirectiveWasDetected bool
+var returning_from_handling_a_directive bool
 
 var hiraAcard string
 var romajiAcard string

@@ -121,8 +121,8 @@ func reSet_aCard_toAromaji_andThereBy_reSet_thePromptString() (prompt, objective
 		// Confidently, go-looking for user's input: locate matching 'aCard'
 		silentlyLocateCard(theRomajiOfCardToSilentlyLocate) // Set the Convenience-global: foundElement
 		aCard = *foundElement                               // Set the global var-object 'aCard'
-		prompt = aCard.Romaji
-		objective = aCard.Hira
+		prompt, romajiAcard = aCard.Romaji, aCard.Romaji
+		objective, hiraAcard = aCard.Hira, aCard.Hira
 		objective_kind = "Hira"
 		fmt.Println("")
 	}
@@ -171,7 +171,7 @@ func detectDirective(in string) (result bool) { // - -
 		in == "ronly" ||
 		in == "donly" {
 		// Then:
-		result = true
+		aDirectiveWasDetected = true
 	}
 	return result
 }
@@ -338,8 +338,7 @@ func notes_on_kana() {
 	fmt.Println("\"digraphs\" is the word that refers to what I have called conjunctions, like ひゅ, for example ")
 }
 
-// todo: Too many usages of ---------------- v v v v v -- in main() to justify trying to fix this ?????
-func respond_to_UserSuppliedDirective(in, objective_kind string) (prompt, objective, kind string) { // - -
+func respond_to_UserSupplied_stc_Directive(userInput string) { // ::: - -
 	/*
 	 'nts' for some background on Romaji conventions
 	 'dir' redisplay this menu of available Directives
@@ -357,7 +356,110 @@ func respond_to_UserSuppliedDirective(in, objective_kind string) (prompt, object
 	 'exkf' un-load the Extended Kata deck
 	*/
 	var count int
-	switch in {
+	switch userInput {
+	case "abt":
+		about_app()
+	case "gdc":
+		fmt.Println("Enter a number for how many prompts there will be in the game")
+		_, _ = fmt.Scan(&count)
+		game_duration = count - 2
+	case "bgs":
+		// game_loop_counter ++
+		game_on()
+	case "goff":
+		game_off()
+	case "rs":
+		reset_all_data()
+	case "q":
+		os.Exit(1)
+	case "??": // Directives follow:
+		// handle_doubleQuestMark_directive(objective_kind)
+		handle_doubleQuestMark_directive()
+	case "?":
+		fmt.Printf("\n%s\n%s\n%s\n\n", aCard.HiraHint, aCard.KataHint, aCard.TT_Hint)
+	case "stc":
+		promptField, objective, displayed_prompt_type = reSet_aCard_andThereBy_reSet_thePromptString()
+	case "stcr":
+		// todo: new_prompt variant vs promptField ?????
+		promptField, objective, displayed_prompt_type = reSet_aCard_toAromaji_andThereBy_reSet_thePromptString()
+	case "st":
+		newHits()
+		if !include_Extended_kata_deck {
+			fmt.Println("Extended Kata deck is NOT loaded\n")
+		} else {
+			fmt.Println("Extended Kata deck is loaded\n")
+		}
+
+		if limitedToKataPrompts {
+			fmt.Printf("Limited to Kata prompts with romaji objectives: %t \n\n", limitedToKataPrompts)
+		}
+		if limitedToHiraPrompts {
+			fmt.Printf("Limited to Hira prompts only: %t \n\n", limitedToHiraPrompts)
+		}
+		if limitedToRomaPrompts {
+			fmt.Printf("Limited to Romaji prompts only: %t \n\n", limitedToRomaPrompts)
+		}
+		if limitedToDifficultKata {
+			fmt.Printf("Limited to Difficult Kata only: %t \n\n", limitedToDifficultKata)
+		}
+	case "nts":
+		notes_on_kana()
+	case "dir": // reDisplay the DIRECTORY OF DIRECTIVES (and instructions):
+		re_display_List_of_Directives()
+	case "rm":
+		read_map_of_fineOn()
+		read_map_of_needWorkOn()
+		read_pulledButNotUsedMap()
+		// read_pulls_not_used_array()
+	case "exko":
+		include_Extended_kata_deck = true
+		fmt.Println("Extended Kata deck has been loaded")
+	case "exkf":
+		include_Extended_kata_deck = false
+		fmt.Println("Extended Kata deck has been un-loaded")
+	case "konly":
+		limitedToKataPrompts = true
+		limitedToHiraPrompts = false
+		limitedToRomaPrompts = false
+		limitedToDifficultKata = false
+	case "honly":
+		limitedToHiraPrompts = true
+		limitedToKataPrompts = false
+		limitedToRomaPrompts = false
+		limitedToDifficultKata = false
+	case "ronly":
+		limitedToRomaPrompts = true
+		limitedToKataPrompts = false
+		limitedToHiraPrompts = false
+		limitedToDifficultKata = false
+	case "donly":
+		limitedToDifficultKata = true
+		limitedToKataPrompts = false
+		limitedToHiraPrompts = false
+		limitedToRomaPrompts = false
+	default:
+		// fmt.Println("Directive not found") // Does not ever happen because only existent cases are passed to the switch.
+	}
+}
+func respond_to_UserSuppliedDirective(userInput string) (prompt, objective, kind string) { // - -
+	/*
+	 'nts' for some background on Romaji conventions
+	 'dir' redisplay this menu of available Directives
+	 'gdc' set the Duration Counter for a Game session
+	 'bgs' or 'goff' Begin or end a Game Session
+	 '?' context-sensitive help on the current character
+	 '??' for help on a particular Hiragana character
+	 'st' Statistics
+	 'abt' for trivia about this app
+	 'rs' to reset (flush or clear) all stats logs etc.
+	 'rm' Read the current contents of the Maps
+	 'stc' (Set-Card) force the use of a specific card (Hira input)
+	 'stcr' (Set-Card) force the use of a specific card (Roma input)
+	 'exko' load the Extended Kata deck
+	 'exkf' un-load the Extended Kata deck
+	*/
+	var count int
+	switch userInput {
 	case "abt":
 		about_app()
 	case "gdc":

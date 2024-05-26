@@ -15,21 +15,21 @@ func check_error(e error) { //    - -
 }
 
 // DIRECTIVES : --------------------------------------------------------------------------------------------
-// func handle_doubleQuestMark_directive(objective_kind string) { //        - -
+// func handle_doubleQuestMark_directive(actual_objective_type string) { //        - -
 func handle_doubleQuestMark_directive() { // - -
 	var Hira_or_Romaji_input_sameAsPrompt_toFindHelpOn string
 	//
 	fmt.Printf("\n  -- Type either a Hiragana or Romaji prompt you need help with:> ")
 	_, _ = fmt.Scan(&Hira_or_Romaji_input_sameAsPrompt_toFindHelpOn)
 	//
-	// locateCardAndDisplayHelpFieldsContainedInIt(Hira_or_Romaji_input_sameAsPrompt_toFindHelpOn, objective_kind)
+	// locateCardAndDisplayHelpFieldsContainedInIt(Hira_or_Romaji_input_sameAsPrompt_toFindHelpOn, actual_objective_type)
 	locateCardAndDisplayHelpFieldsContainedInIt(Hira_or_Romaji_input_sameAsPrompt_toFindHelpOn)
 	fmt.Println("")
 }
 
 // Handles the Directive 'stc'
-func reSet_aCard_andThereBy_reSet_thePromptString() (prompt, objective, objective_kind string) { //  - -
-	cameFrom_stcR_NOTstc = false
+func reSet_aCard_andThereBy_reSet_thePromptString() (prompt, objective, actual_objective_type string) { //  - -
+	// cameFrom_stcR_NOTstc = false
 	var theHiraganaOfCardToSilentlyLocate string
 	var isAlphanumeric bool
 
@@ -60,10 +60,10 @@ func reSet_aCard_andThereBy_reSet_thePromptString() (prompt, objective, objectiv
 		// May yet send an Alpha string to the next func, which will itself deal with it elegantly
 		silentlyLocateCard(theHiraganaOfCardToSilentlyLocate) // Set the Convenience-global: foundElement
 		aCard = *foundElement                                 // Set the global var-object 'aCard'
-		// new_prompt, new_objective, new_objective_kind
+		// new_prompt, new_objective, actual_objective_type
 		prompt = aCard.Hira
 		objective = aCard.Romaji
-		objective_kind = "Romaji"
+		actual_objective_type = "romaji"
 		fmt.Println("")
 	} else {
 		// Confidently, go-looking for user's input: locate matching 'aCard'
@@ -71,15 +71,15 @@ func reSet_aCard_andThereBy_reSet_thePromptString() (prompt, objective, objectiv
 		aCard = *foundElement                                 // Set the global var-object 'aCard'
 		prompt = aCard.Hira
 		objective = aCard.Romaji
-		objective_kind = "Romaji"
+		actual_objective_type = "romaji"
 		fmt.Println("")
 	}
-	return prompt, objective, objective_kind
+	return prompt, objective, actual_objective_type
 }
 
 // Handles the Directive 'stcr'
-func reSet_aCard_toAromaji_andThereBy_reSet_thePromptString() (prompt, objective, objective_kind string) { //  - -
-	cameFrom_stcR_NOTstc = true // todo, this may need to be pulled from global and passed back to caller instead
+func reSet_aCard_toAromaji_andThereBy_reSet_thePromptString() (prompt, objective, actual_objective_type string) { //  - -
+	// cameFrom_stcR_NOTstc = true // todo, this may need to be pulled from global and passed back to caller instead
 	var theRomajiOfCardToSilentlyLocate string
 	var isAlphanumeric bool
 
@@ -110,10 +110,10 @@ func reSet_aCard_toAromaji_andThereBy_reSet_thePromptString() (prompt, objective
 		// May yet send an Alpha string to the next func, which will itself deal with it elegantly
 		silentlyLocateCard(theRomajiOfCardToSilentlyLocate) // Set the Convenience-global: foundElement
 		aCard = *foundElement                               // Set the global var-object 'aCard'
-		// new_prompt, new_objective, new_objective_kind
+		// new_prompt, new_objective, actual_objective_type
 		prompt = aCard.Romaji
 		objective = aCard.Hira
-		objective_kind = "Hira"
+		actual_objective_type = "hira"
 		fmt.Println("")
 		// todo, must be re-prompting here ???? it is prompting for and testing for the original Romaji/Hiragana
 
@@ -121,12 +121,12 @@ func reSet_aCard_toAromaji_andThereBy_reSet_thePromptString() (prompt, objective
 		// Confidently, go-looking for user's input: locate matching 'aCard'
 		silentlyLocateCard(theRomajiOfCardToSilentlyLocate) // Set the Convenience-global: foundElement
 		aCard = *foundElement                               // Set the global var-object 'aCard'
-		prompt, romajiAcard = aCard.Romaji, aCard.Romaji
-		objective, hiraAcard = aCard.Hira, aCard.Hira
-		objective_kind = "Hira"
+		prompt = aCard.Romaji
+		objective = aCard.Hira
+		actual_objective_type = "Hira"
 		fmt.Println("")
 	}
-	return prompt, objective, objective_kind
+	return prompt, objective, actual_objective_type
 }
 
 func detectDirective(in string) (result bool) { // - -
@@ -171,7 +171,7 @@ func detectDirective(in string) (result bool) { // - -
 		in == "ronly" ||
 		in == "donly" {
 		// Then:
-		aDirectiveWasDetected = true
+		its_a_directive = true
 	}
 	return result
 }
@@ -338,6 +338,7 @@ func notes_on_kana() {
 	fmt.Println("\"digraphs\" is the word that refers to what I have called conjunctions, like ひゅ, for example ")
 }
 
+// todo, what happened here ??????? to this func name ???????? ::: ***********************
 func respond_to_UserSupplied_stc_Directive(userInput string) { // ::: - -
 	/*
 	 'nts' for some background on Romaji conventions
@@ -373,15 +374,23 @@ func respond_to_UserSupplied_stc_Directive(userInput string) { // ::: - -
 	case "q":
 		os.Exit(1)
 	case "??": // Directives follow:
-		// handle_doubleQuestMark_directive(objective_kind)
+		// handle_doubleQuestMark_directive(actual_objective_type)
 		handle_doubleQuestMark_directive()
 	case "?":
 		fmt.Printf("\n%s\n%s\n%s\n\n", aCard.HiraHint, aCard.KataHint, aCard.TT_Hint)
 	case "stc":
-		promptField, objective, displayed_prompt_type = reSet_aCard_andThereBy_reSet_thePromptString()
+		/*
+			actual_objective ::         aCard.Hira  aCard.Romaji
+			actual_objective_type ::    "hira",  "roma"
+
+			actual_prompt_char ::       aCard.Hira  aCard.Romaji  aCard.Kata
+			actual_prompt_char_type ::  "hira",  "roma",  "kata"
+
+		*/
+		actual_prompt_char, actual_objective, actual_prompt_char_type = reSet_aCard_andThereBy_reSet_thePromptString()
 	case "stcr":
 		// todo: new_prompt variant vs promptField ?????
-		promptField, objective, displayed_prompt_type = reSet_aCard_toAromaji_andThereBy_reSet_thePromptString()
+		actual_prompt_char, actual_objective, actual_prompt_char_type = reSet_aCard_toAromaji_andThereBy_reSet_thePromptString()
 	case "st":
 		newHits()
 		if !include_Extended_kata_deck {
@@ -476,7 +485,7 @@ func respond_to_UserSuppliedDirective(userInput string) (prompt, objective, kind
 	case "q":
 		os.Exit(1)
 	case "??": // Directives follow:
-		// handle_doubleQuestMark_directive(objective_kind)
+		// handle_doubleQuestMark_directive(actual_objective_type)
 		handle_doubleQuestMark_directive()
 	case "?":
 		fmt.Printf("\n%s\n%s\n%s\n\n", aCard.HiraHint, aCard.KataHint, aCard.TT_Hint)
@@ -549,26 +558,26 @@ func respond_to_UserSuppliedDirective(userInput string) (prompt, objective, kind
 /*
 // This func, sans "_Extended" at the end of its name, becomes a testing version of pick_RandomCard_Assign_fields()
 // ... for fileOfCardsE : the deck of Extended Kata
-func pick_RandomCard_Assign_fields_Extended() (promptField, objective, objective_kind string) { // - -
+func pick_RandomCard_Assign_fields_Extended() (promptField, objective, actual_objective_type string) { // - -
 	randIndexE := rand.Intn(len(fileOfCardsE))
 	aCard = fileOfCardsE[randIndexE] // Randomly pick a 'card' from a 'deck' and store it in a global var
 	promptField = aCard.Kata
 	objective = aCard.Romaji
-	objective_kind = "Extended_Romaji" // Used to set a special prompt for Extended Kata
+	actual_objective_type = "Extended_Romaji" // Used to set a special prompt for Extended Kata
 	whichDeck = 4
-	return promptField, objective, objective_kind
+	return promptField, objective, actual_objective_type
 }
 */
 
 /*
 // Drop "_Test", at the end of its name, & this func becomes a short testing version of pick_RandomCard_Assign_fields()
-func pick_RandomCard_Assign_fields_Test() (promptField, objective, objective_kind string) { // - -
+func pick_RandomCard_Assign_fields_Test() (promptField, objective, actual_objective_type string) { // - -
 	randIndex := rand.Intn(len(fileOfCardsMostDifficult))
 	aCard = fileOfCardsMostDifficult[randIndex] // Randomly pick a 'card' from a 'deck' and store it in a global var
 	promptField = aCard.Hira
 	objective = aCard.Romaji
-	objective_kind = "Romaji"
+	actual_objective_type = "Romaji"
 	whichDeck = 3
-	return promptField, objective, objective_kind
+	return promptField, objective, actual_objective_type
 }
 */

@@ -3,47 +3,51 @@ package main
 import "time"
 
 /*
-	All global vars NOT located in the constants.go file :
- 	... Or/and, NOT located in the objectsAndMethods.go file ::
+aCard.Kata
+aCard.Hira
+aCard.Romaji
 
-	I am going to use globals extensively
+actual_objective ::         aCard.Hira  aCard.Romaji
+actual_objective_type ::    "hira",  "roma"
 
-    aCard.Kata
-	aCard.Hira
-	aCard.Romaji
+actual_prompt_char ::       aCard.Hira  aCard.Romaji  aCard.Kata
+actual_prompt_char_type ::  "hira",  "roma",  "kata"
+
+usersSubmission  ::         scanned from keyboard
+type_of_usersSubmission ::  "hira",  "roma"                 // rarely used.
+usersInputMode ::           "hira",  "roma"
+
+guessLevelCounter ::        0-4  ??
+byWayOfDirectiveHandler ::  true,  false
+its_a_directive ::  true,  false
+non_standard_origin_DirHandler = false
 */
-// ::: not needed: var prompt_field_to_display string
-// Will just be either aCard.Hira, aCard.Kata, or aCard.Romaji
-var expected_response_type string // Will be either "hira_char_as_users_guess" or "romaji_char_as_users_guess"
-var displayed_prompt_type string  // "hira" or "romaji" or "kata"
-var guess_attempt_count int       // Will be either 1, 2, or 3
-var objective string
-var promptField string
-var objective_kind string
-var typeOfUsersInput string
 
-// prompt functions will be of 3 types ONLY and will ONLY display the prompt.
-// obtain_and_process_user_input() will be a separate function that will be responsible to collect, categorize, test, and also display the result of all processing
-// ... via consulting guess_attempt_count state (above). This will eliminate a lot of duplication and confusion.
+var actual_objective string      // aCard.Hira  aCard.Romaji
+var actual_objective_type string // "hira",  "roma"
 
-var usersInput string
-var userInput_category string // "is_a_directive_that_modifies_A_card", "is_a_misc_directive", "appears_to_be_a_guess"
+var actual_prompt_char string      //  aCard.Hira  aCard.Romaji  aCard.Kata
+var actual_prompt_char_type string //  "hira",  "roma",  "kata"
 
-var aDirectiveWasDetected bool
-var returning_from_handling_a_directive bool
+var usersSubmission string
+var type_of_usersSubmission string //  "hira",  "roma"                 // rarely used.
+var usersInputMode string          //  "hira",  "roma"
 
-var hiraAcard string
-var romajiAcard string
+var guessLevelCounter = 0
+var byWayOfDirectiveHandler = false
+var its_a_directive = false
+var non_standard_origin_DirHandler = false
+var non_standard_origin_stcR bool
 
-var thisCaseOfAnInHasAlreadyBeenProcessedAbove bool
-var cameFrom_stcR_NOTstc bool
+var user_guessed_prior_card_rightly bool    // may need this ?
+var submission_already_processed_above bool // ? will I need this ?
 
-// thisCaseOfAnInHasAlreadyBeenProcessedAbove is being flagged as
+var skip_for_reasons bool // ? will I need this ?
+
 // Create a kanjiHitMap map. A map of keys (kanji chars) and/to their associated history data, i.e., the struct: CardInfo
 var hiraHitMap = make(map[string]CardInfo)
 
 // The above is a map of the things below, which is keyed by a kanji char string
-
 // The type of card which will be included in the above map
 type CardInfo struct {
 	UsersGuess            []string
@@ -52,8 +56,6 @@ type CardInfo struct {
 	CorrectGuessCount     int
 }
 
-const colorYellow = "\033[33m"
-
 var include_Extended_kata_deck = false
 
 var limitedToKataPrompts bool
@@ -61,12 +63,6 @@ var limitedToHiraPrompts bool
 var limitedToRomaPrompts bool
 var limitedToDifficultKata bool
 
-var randomFileOfCards int
-var randomArrangementOfCards int
-
-var returning_from_a_wrong_guess = false
-var current_deck string
-var current_deckA string
 var total_prompts int
 
 var game string

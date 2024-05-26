@@ -2,48 +2,48 @@ package main
 
 import "fmt"
 
-func promptFirstCase(objective_kind, promptField string) (in string) {
-	if objective_kind == "Romaji" {
-		in = promptForRomajiWithDir(promptField)
-	} else if objective_kind == "Extended_Romaji" {
-		in = promptForRomajiWithDirE(promptField) // A special prompt for Extended Kata, if|when deployed.
-	} else if objective_kind == "Hira" {
-		in = promptForHiraWithDir(promptField)
+func promptFirstCase(promptField, actual_objective_type string) (userInput string) {
+	if actual_objective_type == "Romaji" {
+		userInput = promptForRomajiWithDir(promptField)
+	} else if actual_objective_type == "Extended_Romaji" {
+		userInput = promptForRomajiWithDirE(promptField) // A special prompt for Extended Kata, if|when deployed.
+	} else if actual_objective_type == "Hira" {
+		userInput = promptForHiraWithDir(promptField)
 	}
-	return in
+	return userInput
 }
 
-func promptSecondCase(new_objective_kind, new_prompt string) (in string) {
-	if new_objective_kind == "Romaji" {
-		in = promptForRomajiWithDir(new_prompt)
-	} else if new_objective_kind == "Extended_Romaji" {
-		in = promptForRomajiWithDirE(new_prompt) // A special prompt for Extended Kata, if|when deployed.
-	} else if new_objective_kind == "Hira" {
-		in = promptForHiraWithDir(new_prompt)
+func promptSecondCase(new_prompt, actual_objective_type string) (userInput string) {
+	if actual_objective_type == "Romaji" {
+		userInput = promptForRomajiWithDir(new_prompt)
+	} else if actual_objective_type == "Extended_Romaji" {
+		userInput = promptForRomajiWithDirE(new_prompt) // A special prompt for Extended Kata, if|when deployed.
+	} else if actual_objective_type == "Hira" {
+		userInput = promptForHiraWithDir(new_prompt)
 	}
-	return in
+	return userInput
 }
 
-func directiveHandler(in, inew_prompt, iobjective_kind, inew_objective, inew_objective_kind string) (new_prompt, new_objective, new_objective_kind string) {
+func olddirectiveHandler(userInput, inew_prompt, inew_objective, iactual_objective_type string) (new_prompt, new_objective, actual_objective_type string) {
 	aDirectiveWasDetected := false
-	aDirectiveWasDetected = detectDirective(in)
+	aDirectiveWasDetected = detectDirective(userInput)
 	if aDirectiveWasDetected {
-		if in == "stc" || in == "stcr" {
-			new_prompt, new_objective, new_objective_kind = respond_to_UserSuppliedDirective(in, iobjective_kind)
+		if userInput == "stc" || userInput == "stcr" {
+			new_prompt, new_objective, actual_objective_type = respond_to_UserSuppliedDirective(userInput)
 		} else {
-			respond_to_UserSuppliedDirective(in, iobjective_kind)
+			respond_to_UserSuppliedDirective(userInput)
 		}
-		evaluateUsersGuess(in, inew_prompt, inew_objective, inew_objective_kind, true, false, true)
+		// evaluateUsersGuess(userInput, inew_prompt, inew_objective, iactual_objective_type, true, false)
 	} else {
-		evaluateUsersGuess(in, inew_prompt, inew_objective, inew_objective_kind, true, true, false)
+		// evaluateUsersGuess(userInput, inew_prompt, inew_objective, iactual_objective_type, true, true)
 	}
-	return new_prompt, new_objective, new_objective_kind
+	return new_prompt, new_objective, actual_objective_type
 }
 
-func logRight_zu(in, promptField, objective_kind string) {
-	log_right(promptField, in)
+func logRight_zu(userInput, promptField, actual_objective_type string) {
+	log_right(promptField, userInput)
 	fmt.Printf("%s", colorGreen)
-	if objective_kind == "Hira" {
+	if actual_objective_type == "Hira" {
 		fmt.Printf("      　%s %s   - %s\n", aCard.Romaji, aCard.Kata, aCard.SansR_Hint)
 	} else { // else it is Romaji, and ...
 		if limitedToDifficultKata == true {
@@ -56,11 +56,11 @@ func logRight_zu(in, promptField, objective_kind string) {
 	fmt.Printf("It could have been either ず or づ as they are the same sound: zu\n")
 }
 
-func logRight(in, promptField, objective_kind string) {
-	// logRight(in, promptField, objective_kind)
-	log_right(promptField, in)
+func logRight(userInput, promptField, actual_objective_type string) {
+	// logRight(userInput, promptField, actual_objective_type)
+	log_right(promptField, userInput)
 	fmt.Printf("%s", colorGreen)
-	if objective_kind == "Hira" {
+	if actual_objective_type == "Hira" {
 		fmt.Printf("      　%s %s   - %s\n", aCard.Romaji, aCard.Kata, aCard.SansR_Hint)
 	} else { // else it is Romaji, so:
 		if limitedToDifficultKata == true {
@@ -72,17 +72,17 @@ func logRight(in, promptField, objective_kind string) {
 	fmt.Printf("%s", colorReset)
 }
 
-func logOopsLoser(in string) {
-	log_oops(aCard.Hira, aCard.Romaji, in)
+func logOopsLoser(usersInput string) {
+	log_oops(aCard.Hira, aCard.Romaji, usersInput)
 	fmt.Printf("%s", colorRed)
 	fmt.Printf("     ^^Oops! That was your last try looser. Here's a clue, just for you: ...\n %s", colorReset)
 	fmt.Printf("\n%s\n%s\n%s\n\n", aCard.HiraHint, aCard.KataHint, aCard.TT_Hint)
 }
 
-func logRightZu2(in, promptField, objective_kind, objective string) {
-	log_right(promptField, in)
+func logRightZu2(userInput, promptField, actual_objective_type, objective string) {
+	log_right(promptField, userInput)
 	fmt.Printf("%s", colorGreen)
-	if objective_kind == "Hira" {
+	if actual_objective_type == "Hira" {
 		fmt.Printf("      　%s %s   - %s\n", aCard.Romaji, aCard.Kata, aCard.SansR_Hint)
 		fmt.Printf("... it could have been either ず or %s since they have the same sound!\n", objective)
 	} else {

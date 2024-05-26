@@ -6,39 +6,27 @@ import (
 	"math/rand"
 )
 
-// maybe the strategy here should be to only add what is needed rather than delete things I don't need. ::: done
-
-/*
-aCard.Hira, aCard.Kata, aCard.Romaji ::: done
-
-expected_response_type = "hira_char_as_users_guess"
-expected_response_type = "romaji_char_as_users_guess" ::: done
-
-displayed_prompt_type = "hira"  ::: all done
-displayed_prompt_type = "romaji"
-displayed_prompt_type = "kata"
-*/
-
 var pulledButNotUsedMap = make(map[string]int)
 
-func pick_RandomCard_Assign_fields() (promptField, objective, objective_kind string) { // - -
+func pick_RandomCard_Assign_fields() (promptField, objective, actual_objective_type string) { // - -
 	// There are 4 different exercises: four different picking sections each with its own prompting.
-	// Set (acquire) one of the 4 combinations of promptField, objective, objective_kind
+	// Set (acquire) one of the 4 combinations of promptField, objective, actual_objective_type
 	// This section only does the initial pick, and MAY be duplicated below in the for loop
+	limitedToRomaPrompts = true
 	if limitedToKataPrompts {
-		displayed_prompt_type = "kata"
-		promptField, objective, objective_kind = kata_prompting_romaji_objective() // 1
+		actual_prompt_char_type = "kata"
+		actual_prompt_char, actual_objective, actual_objective_type = kata_prompting_romaji_objective() // 1
 	} else if limitedToHiraPrompts {
-		displayed_prompt_type = "hira"
-		promptField, objective, objective_kind = hira_prompting_romaji_objective() // 2
+		actual_prompt_char_type = "hira"
+		actual_prompt_char, actual_objective, actual_objective_type = hira_prompting_romaji_objective() // 2
 	} else if limitedToRomaPrompts {
-		displayed_prompt_type = "romaji"
-		promptField, objective, objective_kind = roma_prompting_hira_objective() // 3
+		actual_prompt_char_type = "romaji"
+		actual_prompt_char, actual_objective, actual_objective_type = roma_prompting_hira_objective() // 3
 	} else if limitedToDifficultKata {
-		displayed_prompt_type = "kata"
-		promptField, objective, objective_kind = Difficult_kata_prompting_romaji_objective() // 4
+		actual_prompt_char_type = "kata"
+		actual_prompt_char, actual_objective, actual_objective_type = Difficult_kata_prompting_romaji_objective() // 4
 	} else {
-		promptField, objective, objective_kind = randomize_over_all_decks() // 1-4
+		randomize_over_all_decks() // 1-4
 	}
 	// Now that we have a newly-acquired promptField, check to see if we have it stored in the cyclicArrayPulls slice ...
 	// and, if it is so stored, obtain a replacement, and then look again through the entire slice. Repeat the entire
@@ -53,19 +41,19 @@ func pick_RandomCard_Assign_fields() (promptField, objective, objective_kind str
 				// fmt.Printf("We've seen the pseudo-random char before; lastPull: %s and promptField: %s\n", lastPull, promptField)
 				found = true
 				if limitedToKataPrompts {
-					displayed_prompt_type = "kata"
-					promptField, objective, objective_kind = kata_prompting_romaji_objective() // 1
+					actual_prompt_char_type = "kata"
+					actual_prompt_char, actual_objective, actual_objective_type = kata_prompting_romaji_objective() // 1
 				} else if limitedToHiraPrompts {
-					displayed_prompt_type = "hira"
-					promptField, objective, objective_kind = hira_prompting_romaji_objective()
+					actual_prompt_char_type = "hira"
+					actual_prompt_char, actual_objective, actual_objective_type = hira_prompting_romaji_objective()
 				} else if limitedToRomaPrompts {
-					displayed_prompt_type = "romaji"
-					promptField, objective, objective_kind = roma_prompting_hira_objective()
+					actual_prompt_char_type = "romaji"
+					actual_prompt_char, actual_objective, actual_objective_type = roma_prompting_hira_objective()
 				} else if limitedToDifficultKata {
-					displayed_prompt_type = "kata"
-					promptField, objective, objective_kind = Difficult_kata_prompting_romaji_objective()
+					actual_prompt_char_type = "kata"
+					actual_prompt_char, actual_objective, actual_objective_type = Difficult_kata_prompting_romaji_objective()
 				} else {
-					promptField, objective, objective_kind = randomize_over_all_decks() // 1-4
+					randomize_over_all_decks() // 1-4
 				}
 				break // Exit the inner loop, having a new and potentially novel promptField in hand
 			}
@@ -101,44 +89,33 @@ func pick_RandomCard_Assign_fields() (promptField, objective, objective_kind str
 		frequencyMapOf_need_workOn = make(map[string]int)
 		fmt.Println(colorCyan + "You have finished all the cards; repeats will now ensue ... \n" + colorReset)
 	}
-	if displayed_prompt_type == "hira" {
-		objective = aCard.Hira
-	}
-	if displayed_prompt_type == "romaji" {
-		objective = aCard.Romaji
-	}
-	if displayed_prompt_type == "kata" {
-		objective = aCard.Kata
-	}
-
-	if displayed_prompt_type == "kata" {
-		objective = aCard.Kata
-	}
-	if displayed_prompt_type == "kata" {
-		objective = aCard.Kata
-	}
-	if displayed_prompt_type == "kata" {
-		objective = aCard.Kata
-	}
-
-	promptField = objective
-	objective_kind = displayed_prompt_type
-	if expected_response_type == "hira char as users guess" {
-		displayed_prompt_type = "hira"
-	} else if expected_response_type == "romaji char as users guess" {
-		displayed_prompt_type = "romaji"
-	}
+	// we have a bug in that ::: actual_objective_type  --  is not being set to anything
 	/*
-		aCard.Hira, aCard.Kata, aCard.Romaji ::: done
-
-		expected_response_type = "hira char as users guess"
-		expected_response_type = "romaji char as users guess" ::: done
-
-		displayed_prompt_type = "hira"
-		displayed_prompt_type = "romaji"
-		displayed_prompt_type = "kata" ::: done
+		if displayed_prompt_type == "hira" {
+				objective = aCard.Hira
+			}
 	*/
-	return // promptField, objective, objective_kind
+	if actual_prompt_char_type == "hira" {
+		actual_objective = aCard.Hira
+	}
+	if actual_prompt_char_type == "romaji" {
+		actual_objective = aCard.Romaji
+	}
+	if actual_prompt_char_type == "kata" {
+		actual_objective = aCard.Kata
+	}
+
+	if actual_prompt_char_type == "kata" {
+		actual_objective = aCard.Kata
+	}
+	if actual_prompt_char_type == "kata" {
+		actual_objective = aCard.Kata
+	}
+	if actual_prompt_char_type == "kata" {
+		actual_objective = aCard.Kata
+	}
+
+	return // promptField, objective, actual_objective_type
 }
 
 // The 4 functions called above:
@@ -149,7 +126,7 @@ func pick_RandomCard_Assign_fields() (promptField, objective, objective_kind str
 //      Kata prompting, Hira objective, Missing, OK!
 //   Romaji prompting, Hira objective
 
-func hira_prompting_romaji_objective() (promptField, objective, objective_kind string) {
+func hira_prompting_romaji_objective() (promptField, objective, actual_objective_type string) {
 	randIndexRare := rand.Intn(len(fileOfCardsRare))
 	randIndexMedium := rand.Intn(len(fileOfCardsMedium))
 	randIndexOften := rand.Intn(len(fileOfCardsOften))
@@ -158,44 +135,30 @@ func hira_prompting_romaji_objective() (promptField, objective, objective_kind s
 
 	if randomized_selector == 0 {
 		aCard = fileOfCardsRare[randIndexRare]
-		promptField = aCard.Hira
-		displayed_prompt_type = "hira"
-		objective = aCard.Romaji
-		expected_response_type = "romaji_char_as_users_guess"
-		objective_kind = "Romaji"
+		actual_prompt_char = aCard.Hira
+		actual_prompt_char_type = "hira"
+		actual_objective = aCard.Romaji
+		actual_objective_type = "roma"
 	}
 	if randomized_selector == 1 || randomized_selector == 2 {
 		aCard = fileOfCardsMedium[randIndexMedium]
-		promptField = aCard.Hira
-		displayed_prompt_type = "hira"
-		objective = aCard.Romaji
-		expected_response_type = "romaji_char_as_users_guess"
-		objective_kind = "Romaji"
+		actual_prompt_char = aCard.Hira
+		actual_prompt_char_type = "hira"
+		actual_objective = aCard.Romaji
+		actual_objective_type = "roma"
 	}
 	if randomized_selector == 3 || randomized_selector == 4 || randomized_selector == 5 {
 		aCard = fileOfCardsOften[randIndexOften]
-		promptField = aCard.Hira
-		displayed_prompt_type = "hira"
-		objective = aCard.Romaji
-		expected_response_type = "romaji_char_as_users_guess"
-		objective_kind = "Romaji"
+		actual_prompt_char = aCard.Hira
+		actual_prompt_char_type = "hira"
+		actual_objective = aCard.Romaji
+		actual_objective_type = "roma"
 	}
-	/*
 
-				randIndex := rand.Intn(len(fileOfCards)) // data.go
-				aCard = fileOfCards[randIndex]           // Randomly pick a 'card' from a 'deck' and store it in a global var
-				// Hira prompting, Romaji objective:
-				promptField = aCard.Hira
-		displayed_prompt_type = "hira"
-				objective = aCard.Romaji
-		expected_response_type = "romaji_char_as_users_guess"
-				objective_kind = "Romaji"
-
-	*/
 	return
 }
 
-func kata_prompting_romaji_objective() (promptField, objective, objective_kind string) {
+func kata_prompting_romaji_objective() (promptField, objective, actual_objective_type string) {
 	randIndexRare := rand.Intn(len(fileOfCardsRare))
 	randIndexMedium := rand.Intn(len(fileOfCardsMedium))
 	randIndexOften := rand.Intn(len(fileOfCardsOften))
@@ -204,47 +167,39 @@ func kata_prompting_romaji_objective() (promptField, objective, objective_kind s
 
 	if randomized_selector == 0 {
 		aCard = fileOfCardsRare[randIndexRare]
-		promptField = aCard.Kata
-		displayed_prompt_type = "kata"
-		objective = aCard.Romaji
-		expected_response_type = "romaji_char_as_users_guess"
-		objective_kind = "Romaji"
+		actual_prompt_char = aCard.Kata
+		actual_prompt_char_type = "kata"
+		actual_objective = aCard.Romaji
+		actual_objective_type = "roma"
 	}
 	if randomized_selector == 1 || randomized_selector == 2 {
 		aCard = fileOfCardsMedium[randIndexMedium]
-		promptField = aCard.Kata
-		displayed_prompt_type = "kata"
-		objective = aCard.Romaji
-		expected_response_type = "romaji_char_as_users_guess"
-		objective_kind = "Romaji"
+		actual_prompt_char = aCard.Kata
+		actual_prompt_char_type = "kata"
+		actual_objective = aCard.Romaji
+		actual_objective_type = "roma"
 	}
 	if randomized_selector == 3 || randomized_selector == 4 || randomized_selector == 5 {
 		aCard = fileOfCardsOften[randIndexOften]
-		promptField = aCard.Kata
-		displayed_prompt_type = "kata"
-		objective = aCard.Romaji
-		expected_response_type = "romaji_char_as_users_guess"
-		objective_kind = "Romaji"
+		actual_prompt_char = aCard.Kata
+		actual_prompt_char_type = "kata"
+		actual_objective = aCard.Romaji
+		actual_objective_type = "roma"
 	}
-
 	/*
+	   actual_objective ::         aCard.Hira  aCard.Romaji
+	   actual_objective_type ::    "hira",  "roma"
 
-				randIndex := rand.Intn(len(fileOfCards)) // data.go
-				aCard = fileOfCards[randIndex]           // Randomly pick a 'card' from a 'deck' and store it in a global var
-				// Kata prompting, Romaji objective:
-				promptField = aCard.Kata
-		displayed_prompt_type = "kata"
-				objective = aCard.Romaji
-		expected_response_type = "romaji_char_as_users_guess"
-				objective_kind = "Romaji"
-
+	   actual_prompt_char ::       aCard.Hira  aCard.Romaji  aCard.Kata
+	   actual_prompt_char_type ::  "hira",  "roma",  "kata"
 	*/
+
 	return
 }
 
 //   Kata prompting, Hira objective
 
-func roma_prompting_hira_objective() (promptField, objective, objective_kind string) {
+func roma_prompting_hira_objective() (promptField, objective, actual_objective_type string) {
 	randIndexRare := rand.Intn(len(fileOfCardsRare))
 	randIndexMedium := rand.Intn(len(fileOfCardsMedium))
 	randIndexOften := rand.Intn(len(fileOfCardsOften))
@@ -253,40 +208,26 @@ func roma_prompting_hira_objective() (promptField, objective, objective_kind str
 
 	if randomized_selector == 0 {
 		aCard = fileOfCardsRare[randIndexRare] // Randomly pick a 'card' from a 'deck' and store it in a global var
-		promptField = aCard.Romaji
-		displayed_prompt_type = "romaji"
-		objective = aCard.Hira
-		expected_response_type = "hira_char_as_users_guess"
-		objective_kind = "Hira"
+		actual_prompt_char = aCard.Romaji
+		actual_prompt_char_type = "romaji"
+		actual_objective = aCard.Hira
+		actual_objective_type = "hira"
 	}
 	if randomized_selector == 1 || randomized_selector == 2 {
 		aCard = fileOfCardsMedium[randIndexMedium] // Note the capital S on fileOfCardsS
-		promptField = aCard.Romaji
-		displayed_prompt_type = "romaji"
-		objective = aCard.Hira
-		expected_response_type = "hira_char_as_users_guess"
-		objective_kind = "Hira"
+		actual_prompt_char = aCard.Romaji
+		actual_prompt_char_type = "romaji"
+		actual_objective = aCard.Hira
+		actual_objective_type = "hira" // ::: fix all these to hira or roma
 	}
 	if randomized_selector == 3 || randomized_selector == 4 || randomized_selector == 5 {
 		aCard = fileOfCardsOften[randIndexOften] // Note the capital S on fileOfCardsS
-		promptField = aCard.Romaji
-		displayed_prompt_type = "romaji"
-		objective = aCard.Hira
-		expected_response_type = "hira_char_as_users_guess"
-		objective_kind = "Hira"
+		actual_prompt_char = aCard.Romaji
+		actual_prompt_char_type = "romaji"
+		actual_objective = aCard.Hira
+		actual_objective_type = "hira"
 	}
 
-	/*
-				randIndex := rand.Intn(len(fileOfCards)) // data.go
-				aCard = fileOfCards[randIndex]           // Randomly pick a 'card' from a 'deck' and store it in a global var
-				// Romaji prompting, Hira objective:
-				promptField = aCard.Romaji
-		displayed_prompt_type = "romaji"
-				objective = aCard.Hira
-		expected_response_type = "hira_char_as_users_guess"
-				objective_kind = "Hira"
-
-	*/
 	return
 }
 
@@ -294,175 +235,13 @@ func roma_prompting_hira_objective() (promptField, objective, objective_kind str
 //
 //
 
-func Difficult_kata_prompting_romaji_objective() (promptField, objective, objective_kind string) {
+func Difficult_kata_prompting_romaji_objective() (promptField, objective, actual_objective_type string) {
 	randIndexMK := rand.Intn(len(dataMostDiff)) // dataK.go
 	aCard = dataMostDiff[randIndexMK]
 	// Kata prompting, Romaji objective:
-	promptField = aCard.Kata
-	displayed_prompt_type = "kata"
-	objective = aCard.Romaji
-	expected_response_type = "romaji_char_as_users_guess"
-	objective_kind = "Romaji"
+	actual_prompt_char = aCard.Kata
+	actual_prompt_char_type = "kata"
+	actual_objective = aCard.Romaji
+	actual_objective_type = "roma"
 	return
 }
-
-/*
-// This one is the default func: it randomly "calls" one of the above four functions and also sets whichDeck (abandoned)
-func randomize_over_all_decks_original() (promptField, objective, objective_kind string) {
-	randIndex := rand.Intn(len(fileOfCards))   // data.go
-	randIndexS := rand.Intn(len(fileOfCardsS)) // dataS.go
-	// randIndexD := rand.Intn(len(fileOfCardsMostDifficult)) // dataD.go
-	// This next dataset can be added to the ones above with Dir: exko (EXtendedKataOn)
-	randIndexE := rand.Intn(len(fileOfCardsE)) // optional dataExt.go
-
-	if include_Extended_kata_deck {
-		randomFileOfCards = rand.Intn(8) // If including the extended deck 0-8 = 9
-	} else {
-		randomFileOfCards = rand.Intn(7) // Normal set of three 0-7 = 8
-	}
-
-	// Hira prompting, Romaji objective:
-	if randomFileOfCards == 0 {
-		aCard = fileOfCards[randIndex] // Randomly pick a 'card' from a 'deck' and store it in a global var
-		promptField = aCard.Hira
-displayed_prompt_type = "hira"
-		objective = aCard.Romaji
-expected_response_type = "romaji_char_as_users_guess"
-		objective_kind = "Romaji"
-		whichDeck = 1
-	}
-
-	if randomFileOfCards == 1 {
-		aCard = fileOfCardsS[randIndexS] // Note the capital S on fileOfCardsS
-		promptField = aCard.Hira
-displayed_prompt_type = "hira"
-		objective = aCard.Romaji
-expected_response_type = "romaji_char_as_users_guess"
-		objective_kind = "Romaji"
-		whichDeck = 2
-	}
-	//
-		if randomFileOfCards == 2 {
-			aCard = fileOfCardsMostDifficult[randIndexD] // Randomly pick a 'card' from a 'deck' and store it in a global var
-			promptField = aCard.Hira
-displayed_prompt_type = "hira"
-			objective = aCard.Romaji
-expected_response_type = "romaji_char_as_users_guess"
-			objective_kind = "Romaji"
-			whichDeck = 3
-		}
-
-	//
-
-	// Kata prompting, Romaji objective: (plus an option for including Extended Kata)
-	if include_Extended_kata_deck { //              ^ ^                 v v v ^ ^ ^
-		if randomFileOfCards == 8 { // The optional ninth exercise
-			aCard = fileOfCardsE[randIndexE] // Randomly pick a 'card' from a 'deck' and store it in a global var
-			promptField = aCard.Kata
-displayed_prompt_type = "kata"
-			objective = aCard.Romaji
-expected_response_type = "romaji_char_as_users_guess"
-			objective_kind = "Extended_Romaji" // Used to set a special prompt for Extended Kata
-			whichDeck = 4
-		}
-	}
-	if randomFileOfCards == 2 {
-		aCard = fileOfCards[randIndex] // Randomly pick a 'card' from a 'deck' and store it in a global var
-		promptField = aCard.Kata
-displayed_prompt_type = "kata"
-		objective = aCard.Romaji
-expected_response_type = "romaji_char_as_users_guess"
-		objective_kind = "Romaji"
-		whichDeck = 1
-	}
-
-	if randomFileOfCards == 3 {
-		aCard = fileOfCardsS[randIndexS] // Note the capital S on fileOfCardsS
-		promptField = aCard.Kata
-displayed_prompt_type = "kata"
-		objective = aCard.Romaji
-expected_response_type = "romaji_char_as_users_guess"
-		objective_kind = "Romaji"
-		whichDeck = 2
-	}
-	//
-		if randomFileOfCards == 4 {
-			aCard = fileOfCardsMostDifficult[randIndexD] // Randomly pick a 'card' from a 'deck' and store it in a global var
-			promptField = aCard.Kata
-displayed_prompt_type = "kata"
-			objective = aCard.Romaji
-expected_response_type = "romaji_char_as_users_guess"
-			objective_kind = "Romaji"
-			whichDeck = 3
-		}
-
-	//
-
-	// Romaji prompting, Hira objective:
-	if randomFileOfCards == 4 {
-		aCard = fileOfCards[randIndex] // Randomly pick a 'card' from a 'deck' and store it in a global var
-		promptField = aCard.Romaji
-displayed_prompt_type = "romaji"
-		objective = aCard.Hira
-expected_response_type = "hira_char_as_users_guess"
-		objective_kind = "Hira"
-		whichDeck = 1
-	}
-
-	if randomFileOfCards == 5 {
-		aCard = fileOfCardsS[randIndexS] // Note the capital S on fileOfCardsS
-		promptField = aCard.Romaji
-displayed_prompt_type = "romaji"
-		objective = aCard.Hira
-expected_response_type = "hira_char_as_users_guess"
-		objective_kind = "Hira"
-		whichDeck = 2
-	}
-	//
-		if randomFileOfCards == 7 {
-			aCard = fileOfCardsMostDifficult[randIndexD] // Randomly pick a 'card' from a 'deck' and store it in a global var
-			promptField = aCard.Romaji
-displayed_prompt_type = "romaji"
-			objective = aCard.Hira
-expected_response_type = "hira_char_as_users_guess"
-			objective_kind = "Hira"
-			whichDeck = 3
-		}
-
-	//
-
-	// Kata prompting, Hira objective:
-	if randomFileOfCards == 6 {
-		aCard = fileOfCards[randIndex] // Randomly pick a 'card' from a 'deck' and store it in a global var
-		promptField = aCard.Kata
-displayed_prompt_type = "kata"
-		objective = aCard.Hira
-expected_response_type = "hira_char_as_users_guess"
-		objective_kind = "Hira"
-		whichDeck = 1
-	}
-
-	if randomFileOfCards == 7 {
-		aCard = fileOfCardsS[randIndexS] // Note the capital S on fileOfCardsS
-		promptField = aCard.Kata
-displayed_prompt_type = "kata"
-		objective = aCard.Hira
-expected_response_type = "hira_char_as_users_guess"
-		objective_kind = "Hira"
-		whichDeck = 2
-	}
-	//
-		if randomFileOfCards == 10 {
-			aCard = fileOfCardsMostDifficult[randIndexD] // Randomly pick a 'card' from a 'deck' and store it in a global var
-			promptField = aCard.Kata
-displayed_prompt_type = "kata"
-			objective = aCard.Hira
-expected_response_type = "hira_char_as_users_guess"
-			objective_kind = "Hira"
-			whichDeck = 3
-		}
-
-	//
-	return
-} // end of Old func
-*/

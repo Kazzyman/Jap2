@@ -1,27 +1,3 @@
-option-return  :: spell correction 
-double-tap shift  :: key to search everywhere
-
-splat [  :: to return to previous position||file  (multiple such commands will walk you back from whence you came).
-splat ]  :: steps forward after you have stepped back. 
-splat e  :: list of recent files
-shift splat backspace/delete  :: move to where you last made an edit
-
-splat F6  :: change/refactor signature (:::SUPER COOL!!!) 
-Shift splat U  :: toggle case
-splat b  :: go to declaration 
-
-::: Bugs: 
-stc does not work
-stcr only works for zu
-honly and then stcr zu gets messy, it sets the card but not the prompt; and, it seems that the prompt is being compared to the input
-
-
-do lots of testing of main and then clean it up!
-
-if it is asking for Hira and you give a Romaji it should inform you of your problem
-if it is asking for Romaji and you give a Hira it should inform you of your problem
- 
-also tally lines of data SLOC 
 
 ::: about prompting -- and testing
 
@@ -82,3 +58,32 @@ Registry:
   ide.completion.variant.limit=500
   suggest.all.run.configurations.from.context=true
   ide.experimental.ui=true
+
+
+
+::: Bugs: from old version 
+stc does not work
+stcr only works for zu
+honly and then stcr zu gets messy, it sets the card but not the prompt; and, it seems that the prompt is being compared to the input
+
+do lots of testing of main and then clean it up!
+
+if it is asking for Hira and you give a Romaji it should inform you of your problem
+if it is asking for Romaji and you give a Hira it should inform you of your problem
+ 
+also tally lines of data SLOC 
+
+
+::: cheat-sheet
+
+option-return  :: spell correction 
+double-tap shift  :: key to search everywhere
+
+splat [  :: to return to previous position||file  (multiple such commands will walk you back from whence you came).
+splat ]  :: steps forward after you have stepped back. 
+splat e  :: list of recent files
+shift splat backspace/delete  :: move to where you last made an edit
+
+splat F6  :: change/refactor signature (:::SUPER COOL!!!) 
+Shift splat U  :: toggle case
+splat b  :: go to declaration 

@@ -1,0 +1,37 @@
+/*
+aCard.Kata
+aCard.Hira
+aCard.Romaji
+
+actual_objective ::         aCard.Hira  aCard.Romaji
+actual_objective_type ::    "hira",  "roma"
+
+actual_prompt_char ::       aCard.Hira  aCard.Romaji  aCard.Kata
+actual_prompt_char_type ::  "hira",  "roma",  "kata"
+
+usersSubmission  ::         scanned from keyboard 
+type_of_usersSubmission ::  "hira",  "roma"                 // rarely used. 
+usersInputMode ::           "hira",  "roma" 
+
+guessLevelCounter ::        0-4  ??
+byWayOfDirectiveHandler ::  true,  false 
+its_a_directive ::  true,  false 
+
+
+*/
+
+var actual_objective string  // aCard.Hira  aCard.Romaji
+var actual_objective_type string  // "hira",  "roma"
+
+var actual_prompt_char string  //  aCard.Hira  aCard.Romaji  aCard.Kata
+var actual_prompt_char_type string  //  "hira",  "roma",  "kata"
+
+var usersSubmission string  // scanned from keyboard 
+var type_of_usersSubmission string  //  "hira",  "roma"                 // rarely used. 
+var usersInputMode string  //  "hira",  "roma" 
+
+var guessLevelCounter int  //  0-4 ??  
+var byWayOfDirectiveHandler bool  //  true, false 
+var its_a_directive bool   //  true,  false 
+var 
+

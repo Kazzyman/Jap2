@@ -4,6 +4,199 @@ import (
 	"fmt"
 )
 
+// func prompt_the_user_for_input(unlessComingFromDirHandler bool) { // ::: - -
+func prompt_the_user_for_input() { // ::: - -
+	/*
+			actual_objective_type = "hira"
+			actual_objective_type = "roma" ::: done
+
+			actual_prompt_char_type = "hira"  ::: all
+			actual_prompt_char_type = "romaji"
+			actual_prompt_char_type = "kata"
+
+			roma-hira ::: done
+			hira-roma ::: done
+
+			kata-hira ::: done
+			kata-roma ::: done
+
+		if unlessComingFromDirHandler {
+			// skip prompt.
+		} else if guessLevelCounter == 0 {
+			guessLevelCounter++
+			display_start_menu_etc()
+		}
+
+	*/
+
+	if guessLevelCounter == 1 {
+		guessLevelCounter++
+		if actual_prompt_char_type == "romaji" && actual_objective_type == "hira" {
+			fmt.Printf("%s", aCard.Romaji)
+			fmt.Printf("%s", colorCyan)
+			if limitedToDifficultKata {
+				fmt.Printf(" Hiragana?, or 'dir' - Limited To Difficult Kata\n")
+			} else if limitedToRomaPrompts {
+				fmt.Printf(" Hiragana?, or 'dir' - Limited To Roma Prompts\n")
+			} else if limitedToHiraPrompts {
+				fmt.Printf(" Hiragana?, or 'dir' - Limited To Hira Prompts\n")
+			} else if limitedToKataPrompts {
+				fmt.Printf(" Hiragana?, or 'dir' - Limited To Kata Prompts\n")
+			} else {
+				fmt.Printf(" Hiragana?, or 'dir' - standard mix\n")
+			}
+			fmt.Printf(" Here:> ")
+			fmt.Printf("%s", colorReset)
+		} else if actual_prompt_char_type == "hira" && actual_objective_type == "roma" {
+			fmt.Printf("%s", aCard.Hira)
+			fmt.Printf("%s", colorCyan)
+			if limitedToDifficultKata {
+				fmt.Printf(" Romaji?, or 'dir' - Limited To Difficult Kata\n")
+			} else if limitedToRomaPrompts {
+				fmt.Printf(" Romaji?, or 'dir' - Limited To Roma Prompts\n")
+			} else if limitedToHiraPrompts {
+				fmt.Printf(" Romaji?, or 'dir' - Limited To Hira Prompts\n")
+			} else if limitedToKataPrompts {
+				fmt.Printf(" Romaji?, or 'dir' - Limited To Kata Prompts\n")
+			} else {
+				fmt.Printf(" Romaji?, or 'dir' - standard mix\n")
+			}
+			fmt.Printf(" Here:> ")
+			fmt.Printf("%s", colorReset)
+		} else if actual_prompt_char_type == "kata" && actual_objective_type == "hira" {
+			fmt.Printf("%s", aCard.Kata)
+			fmt.Printf("%s", colorCyan)
+			if limitedToDifficultKata {
+				fmt.Printf(" Hiragana?, or 'dir' - Limited To Difficult Kata\n")
+			} else if limitedToRomaPrompts {
+				fmt.Printf(" Hiragana?, or 'dir' - Limited To Roma Prompts\n")
+			} else if limitedToHiraPrompts {
+				fmt.Printf(" Hiragana?, or 'dir' - Limited To Hira Prompts\n")
+			} else if limitedToKataPrompts {
+				fmt.Printf(" Hiragana?, or 'dir' - Limited To Kata Prompts\n")
+			} else {
+				fmt.Printf(" Hiragana?, or 'dir' - standard mix\n")
+			}
+			fmt.Printf(" Here:> ")
+			fmt.Printf("%s", colorReset)
+		} else if actual_prompt_char_type == "kata" && actual_objective_type == "roma" {
+			fmt.Printf("%s", aCard.Kata)
+			fmt.Printf("%s", colorCyan)
+			if limitedToDifficultKata {
+				fmt.Printf(" Romaji?, or 'dir' - Limited To Difficult Kata\n")
+			} else if limitedToRomaPrompts {
+				fmt.Printf(" Romaji?, or 'dir' - Limited To Roma Prompts\n")
+			} else if limitedToHiraPrompts {
+				fmt.Printf(" Romaji?, or 'dir' - Limited To Hira Prompts\n")
+			} else if limitedToKataPrompts {
+				fmt.Printf(" Romaji?, or 'dir' - Limited To Kata Prompts\n")
+			} else {
+				fmt.Printf(" Romaji?, or 'dir' - standard mix\n")
+			}
+			fmt.Printf(" Here:> ")
+			fmt.Printf("%s", colorReset)
+		} else {
+			fmt.Printf("Missing one or more elements of prompting style actual_prompt_char_type is %s, and actual_objective_type is %s\n", actual_prompt_char_type, actual_objective_type)
+
+		}
+
+	} else if guessLevelCounter == 2 {
+		guessLevelCounter++
+		if actual_prompt_char_type == "romaji" && actual_objective_type == "hira" {
+			fmt.Printf("%s", aCard.Romaji)
+			fmt.Printf("%s", colorCyan)
+			fmt.Printf(" Hiragana input-mode expected," + colorReset +
+				" you must try to guess\n Here:> ")
+		} else if actual_prompt_char_type == "hira" && actual_objective_type == "roma" {
+			fmt.Printf("%s", aCard.Hira)
+			fmt.Printf("%s", colorCyan)
+			fmt.Printf(" Romaji input-mode expected," + colorReset +
+				" you must try to guess\n Here:> ")
+		} else if actual_prompt_char_type == "kata" && actual_objective_type == "hira" {
+			fmt.Printf("%s", aCard.Kata)
+			fmt.Printf("%s", colorCyan)
+			fmt.Printf(" Hiragana input-mode expected," + colorReset +
+				" you must try to guess\n Here:> ")
+		} else if actual_prompt_char_type == "kata" && actual_objective_type == "roma" {
+			fmt.Printf("%s", aCard.Kata)
+			fmt.Printf("%s", colorCyan)
+			fmt.Printf(" Romaji input-mode expected," + colorReset +
+				" you must try to guess\n Here:> ")
+		} else {
+			fmt.Printf("Missing one or more elements of prompting style actual_prompt_char_type is %s, and actual_objective_type is %s\n", actual_prompt_char_type, actual_objective_type)
+
+		}
+
+	} else if guessLevelCounter == 3 {
+		if actual_prompt_char_type == "romaji" && actual_objective_type == "hira" {
+			fmt.Printf("%s", aCard.Romaji)
+			fmt.Printf("%s", colorCyan)
+			fmt.Printf(" Hiragana input-mode expected," + colorReset +
+				" you must guess, just one more time\n Here:> ")
+		} else if actual_prompt_char_type == "hira" && actual_objective_type == "roma" {
+			fmt.Printf("%s", aCard.Hira)
+			fmt.Printf("%s", colorCyan)
+			fmt.Printf(" Romaji input-mode expected," + colorReset +
+				" you must guess, just one more time\n Here:> ")
+		} else if actual_prompt_char_type == "kata" && actual_objective_type == "hira" {
+			fmt.Printf("%s", aCard.Kata)
+			fmt.Printf("%s", colorCyan)
+			fmt.Printf(" Hiragana input-mode expected," + colorReset +
+				" you must guess, just one more time\n Here:> ")
+		} else if actual_prompt_char_type == "kata" && actual_objective_type == "roma" {
+			fmt.Printf("%s", aCard.Kata)
+			fmt.Printf("%s", colorCyan)
+			fmt.Printf(" Romaji input-mode expected," + colorReset +
+				" you must guess, just one more time\n Here:> ")
+		} else {
+			fmt.Printf("Missing one or more elements of prompting style actual_prompt_char_type is %s, and actual_objective_type is %s\n", actual_prompt_char_type, actual_objective_type)
+		}
+		guessLevelCounter++
+		//
+	} else if guessLevelCounter > 3 {
+		display_failure_of_final_guess_message_etc(usersSubmission)
+		guessLevelCounter = 1
+		Kana_practice()
+	} else if guessLevelCounter >= 4 || guessLevelCounter <= -1 {
+		fmt.Printf("The value of guessLevelCounter is out of range, it is %d \n", guessLevelCounter)
+	}
+}
+
+/*
+.
+*/
+
+// ::: Special prompts for Extended Kata, if|when deployed **********************
+// ... Standard: used when NOT soliciting second, or final, guesses ***
+func promptForRomajiWithDirE(prompt string) (usersGuessOrOptionDirective string) { // - -
+	fmt.Printf("%s", prompt)
+	fmt.Printf("%s", colorCyan)
+	fmt.Printf(" E-Romaji input-mode expected, or '?' for help with: %s \n", prompt)
+	fmt.Printf(" or, type '??' for help with something else ... \n")
+	fmt.Printf(" Here:> ")
+	fmt.Printf("%s", colorReset)
+	_, _ = fmt.Scan(&usersGuessOrOptionDirective)
+	return usersGuessOrOptionDirective
+}
+
+// ... Special: used when soliciting second, or final, guesses ***
+func promptForRomajiE(prompt string) (usersGuessOrOptionDirective string) { // - -
+	fmt.Printf("%s", prompt)
+	fmt.Printf("%s", colorCyan)
+	fmt.Printf(" E-Romaji input-mode expected," + colorReset +
+		" you must guess\n Here:> ")
+	fmt.Printf("%s", colorReset)
+	_, _ = fmt.Scan(&usersGuessOrOptionDirective)
+	return usersGuessOrOptionDirective
+} // ::: ***********************************************************************
+/*
+-
+-
+-
+-
+-
+*/
+
 func List_of_Directives() {
 	fmt.Println("\n\nView source code at https://github.com/Kazzyman/Jap2")
 	fmt.Println("    Use Alpha-Numeric (US) input-mode on your system to:")
@@ -71,91 +264,12 @@ func List_of_Directives() {
 		"', (quit) terminate the app")
 }
 
-//
+/*
+.
 
-// Special prompts for use when soliciting second guesses
-func promptForRomaji1(promptField string) (usersGuessOrOptionDirective string) { //  - -
-	fmt.Printf("%s", promptField)
-	fmt.Printf("%s", colorCyan)
-	fmt.Printf(" Romaji input-mode expected," + colorReset +
-		" you must try to guess\n Here:> ")
-	_, _ = fmt.Scan(&usersGuessOrOptionDirective)
-	return usersGuessOrOptionDirective
-}
-func promptForHira1(promptField string) (usersGuessOrOptionDirective string) { //  - -
-	fmt.Printf("%s", promptField)
-	fmt.Printf("%s", colorCyan)
-	fmt.Printf(" Hiragana input-mode expected," + colorReset +
-		" you must try to guess\n Here:> ")
-	_, _ = fmt.Scan(&usersGuessOrOptionDirective)
-	return usersGuessOrOptionDirective
-}
+*/
 
-// Special prompts for use when soliciting final guesses
-func promptForRomaji2(promptField string) (usersGuessOrOptionDirective string) { //  - -
-	fmt.Printf("%s", promptField)
-	fmt.Printf("%s", colorCyan)
-	fmt.Printf(" Romaji input-mode expected," + colorReset +
-		" you must guess, just one more time\n Here:> ")
-	_, _ = fmt.Scan(&usersGuessOrOptionDirective)
-	return usersGuessOrOptionDirective
-}
-func promptForHira2(promptField string) (usersGuessOrOptionDirective string) { //  - -
-	fmt.Printf("%s", promptField)
-	fmt.Printf("%s", colorCyan)
-	fmt.Printf(" Hiragana input-mode expected," + colorReset +
-		" you must guess, just one more time\n Here:> ")
-	_, _ = fmt.Scan(&usersGuessOrOptionDirective)
-	return usersGuessOrOptionDirective
-}
-
-// Standard prompts for use when NOT soliciting second, or final, guesses
-func promptForHiraWithDiro(prompt string) (usersGuessOrOptionDirective string) { // - -
-	fmt.Printf("%s", prompt)
-	fmt.Printf("%s", colorCyan)
-	fmt.Printf(" Hiragana input-mode expected, or '?' for help with: %s \n", prompt)
-	fmt.Printf(" or, type '??' for help with something else ... \n")
-	fmt.Printf(" Here:> ")
-	fmt.Printf("%s", colorReset)
-	_, _ = fmt.Scan(&usersGuessOrOptionDirective)
-	return usersGuessOrOptionDirective
-}
-func promptForRomajiWithDiro(prompt string) (usersGuessOrOptionDirective string) { // - -
-	fmt.Printf("%s", prompt)
-	fmt.Printf("%s", colorCyan)
-	fmt.Printf(" Romaji input-mode expected, or '?' for help with: %s \n", prompt)
-	fmt.Printf(" or, type '??' for help with something else ... \n")
-	fmt.Printf(" Here:> ")
-	fmt.Printf("%s", colorReset)
-	_, _ = fmt.Scan(&usersGuessOrOptionDirective)
-	return usersGuessOrOptionDirective
-}
-
-// Special prompts for Extended Kata, if|when deployed **********************
-// ... Standard: used when NOT soliciting second, or final, guesses ***
-func promptForRomajiWithDirE(prompt string) (usersGuessOrOptionDirective string) { // - -
-	fmt.Printf("%s", prompt)
-	fmt.Printf("%s", colorCyan)
-	fmt.Printf(" E-Romaji input-mode expected, or '?' for help with: %s \n", prompt)
-	fmt.Printf(" or, type '??' for help with something else ... \n")
-	fmt.Printf(" Here:> ")
-	fmt.Printf("%s", colorReset)
-	_, _ = fmt.Scan(&usersGuessOrOptionDirective)
-	return usersGuessOrOptionDirective
-}
-
-// ... Special: used when soliciting second, or final, guesses ***
-func promptForRomajiE(prompt string) (usersGuessOrOptionDirective string) { // - -
-	fmt.Printf("%s", prompt)
-	fmt.Printf("%s", colorCyan)
-	fmt.Printf(" E-Romaji input-mode expected," + colorReset +
-		" you must guess\n Here:> ")
-	fmt.Printf("%s", colorReset)
-	_, _ = fmt.Scan(&usersGuessOrOptionDirective)
-	return usersGuessOrOptionDirective
-} // ***********************************************************************
-
-// 'Directive Menu' ; displays only at inception
+// 'Directive Menu' ::: in use : displays only at inception
 func display_List_of_Directives() { // (unique)     - -
 	frequencyMapRightOrOops := make(map[string]int)
 	for i := 0; i < len(cyclicArrayHits.RightOrOops); i++ {
@@ -185,47 +299,14 @@ func display_List_of_Directives() { // (unique)     - -
 	fmt.Printf("Limited to Difficult Kata only:                 %t \n\n", limitedToDifficultKata)
 }
 
-// Standard prompts for use when NOT soliciting second, or final, guesses
-func promptForHiraWithDir(prompt string) (usersGuessOrOptionDirective string) { // - -
-	fmt.Printf("%s", prompt)
-	fmt.Printf("%s", colorCyan)
-	if limitedToDifficultKata {
-		fmt.Printf(" Hiragana?, or 'dir' - Limited To Difficult Kata\n")
-	} else if limitedToRomaPrompts {
-		fmt.Printf(" Hiragana?, or 'dir' - Limited To Roma Prompts\n")
-	} else if limitedToHiraPrompts {
-		fmt.Printf(" Hiragana?, or 'dir' - Limited To Hira Prompts\n")
-	} else if limitedToKataPrompts {
-		fmt.Printf(" Hiragana?, or 'dir' - Limited To Kata Prompts\n")
-	} else {
-		fmt.Printf(" Hiragana?, or 'dir' - standard mix\n")
-	}
-	fmt.Printf(" Here:> ")
-	fmt.Printf("%s", colorReset)
-	_, _ = fmt.Scan(&usersGuessOrOptionDirective)
-	return usersGuessOrOptionDirective
-}
-func promptForRomajiWithDir(prompt string) (usersGuessOrOptionDirective string) { // - -
-	fmt.Printf("%s", prompt)
-	fmt.Printf("%s", colorCyan)
-	if limitedToDifficultKata {
-		fmt.Printf(" Romaji?, or 'dir' - Limited To Difficult Kata\n")
-	} else if limitedToRomaPrompts {
-		fmt.Printf(" Romaji?, or 'dir' - Limited To Roma Prompts\n")
-	} else if limitedToHiraPrompts {
-		fmt.Printf(" Romaji?, or 'dir' - Limited To Hira Prompts\n")
-	} else if limitedToKataPrompts {
-		fmt.Printf(" Romaji?, or 'dir' - Limited To Kata Prompts\n")
-	} else {
-		fmt.Printf(" Romaji?, or 'dir' - standard mix\n")
-	}
-	fmt.Printf(" Here:> ")
-	fmt.Printf("%s", colorReset)
-	_, _ = fmt.Scan(&usersGuessOrOptionDirective)
-	return usersGuessOrOptionDirective
-}
+/*
+..
+..
 
-// 'Directive Menu' ; displays only in response to "Dir" Directive
+*/
+
+// ::: in current use
+// ::: 'Directive Menu' ; displays only in response to "Dir" Directive
 func re_display_List_of_Directives() { // (unique)     - -
 	frequencyMapRightOrOops := make(map[string]int)
 	for i := 0; i < len(cyclicArrayHits.RightOrOops); i++ {
@@ -266,5 +347,4 @@ func re_display_List_of_Directives() { // (unique)     - -
 	if limitedToDifficultKata {
 		fmt.Printf("Limited to Difficult Kata only: %t \n\n", limitedToDifficultKata)
 	}
-	//
 }

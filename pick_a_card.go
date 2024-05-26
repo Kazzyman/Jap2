@@ -12,7 +12,7 @@ func pick_RandomCard_Assign_fields() (promptField, objective, actual_objective_t
 	// There are 4 different exercises: four different picking sections each with its own prompting.
 	// Set (acquire) one of the 4 combinations of promptField, objective, actual_objective_type
 	// This section only does the initial pick, and MAY be duplicated below in the for loop
-	limitedToRomaPrompts = true
+	limitedToRomaPrompts = true // ::: why did I do this?
 	if limitedToKataPrompts {
 		actual_prompt_char_type = "kata"
 		actual_prompt_char, actual_objective, actual_objective_type = kata_prompting_romaji_objective() // 1
@@ -96,12 +96,13 @@ func pick_RandomCard_Assign_fields() (promptField, objective, actual_objective_t
 			}
 	*/
 	if actual_prompt_char_type == "hira" {
-		actual_objective = aCard.Hira
-	}
-	if actual_prompt_char_type == "romaji" {
+		// actual_objective = aCard.Hira // ::: these have to be wrong
 		actual_objective = aCard.Romaji
 	}
-	if actual_prompt_char_type == "kata" {
+	if actual_prompt_char_type == "romaji" { // :::
+		actual_objective = aCard.Hira
+	}
+	if actual_prompt_char_type == "kata" { // todo ::: See. prompt tye could be hira or roma
 		actual_objective = aCard.Kata
 	}
 

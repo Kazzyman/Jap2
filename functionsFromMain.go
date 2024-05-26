@@ -2,42 +2,20 @@ package main
 
 import "fmt"
 
-func promptFirstCase(promptField, actual_objective_type string) (userInput string) {
-	if actual_objective_type == "Romaji" {
-		userInput = promptForRomajiWithDir(promptField)
-	} else if actual_objective_type == "Extended_Romaji" {
-		userInput = promptForRomajiWithDirE(promptField) // A special prompt for Extended Kata, if|when deployed.
-	} else if actual_objective_type == "Hira" {
-		userInput = promptForHiraWithDir(promptField)
-	}
-	return userInput
-}
-
-func promptSecondCase(new_prompt, actual_objective_type string) (userInput string) {
-	if actual_objective_type == "Romaji" {
-		userInput = promptForRomajiWithDir(new_prompt)
-	} else if actual_objective_type == "Extended_Romaji" {
-		userInput = promptForRomajiWithDirE(new_prompt) // A special prompt for Extended Kata, if|when deployed.
-	} else if actual_objective_type == "Hira" {
-		userInput = promptForHiraWithDir(new_prompt)
-	}
-	return userInput
-}
-
-func olddirectiveHandler(userInput, inew_prompt, inew_objective, iactual_objective_type string) (new_prompt, new_objective, actual_objective_type string) {
-	aDirectiveWasDetected := false
-	aDirectiveWasDetected = detectDirective(userInput)
-	if aDirectiveWasDetected {
-		if userInput == "stc" || userInput == "stcr" {
-			new_prompt, new_objective, actual_objective_type = respond_to_UserSuppliedDirective(userInput)
-		} else {
-			respond_to_UserSuppliedDirective(userInput)
-		}
-		// evaluateUsersGuess(userInput, inew_prompt, inew_objective, iactual_objective_type, true, false)
+func HandlerFor_stcS(userInput string) {
+	// aDirectiveWasDetected := false
+	// aDirectiveWasDetected = detectDirective(userInput)
+	// if aDirectiveWasDetected {
+	if usersSubmission == "stc" || usersSubmission == "stcr" {
+		respond_to_UserSuppliedDirective(usersSubmission)
+		// instead of doing that, you need to go find the card
 	} else {
-		// evaluateUsersGuess(userInput, inew_prompt, inew_objective, iactual_objective_type, true, true)
+		respond_to_UserSuppliedDirective(usersSubmission)
 	}
-	return new_prompt, new_objective, actual_objective_type
+	/*
+		if userInput == "stc" {
+			respond_to_UserSuppliedDirective(userInput)
+	*/
 }
 
 func logRight_zu(userInput, promptField, actual_objective_type string) {

@@ -28,7 +28,7 @@ func handle_doubleQuestMark_directive() { // - -
 }
 
 // Handles the Directive 'stc'
-func reSet_aCard_andThereBy_reSet_thePromptString() (prompt, objective, actual_objective_type string) { //  - -
+func reSet_aCard_andThereBy_reSet_thePromptString() { //  - -
 	// cameFrom_stcR_NOTstc = false
 	var theHiraganaOfCardToSilentlyLocate string
 	var isAlphanumeric bool
@@ -61,24 +61,24 @@ func reSet_aCard_andThereBy_reSet_thePromptString() (prompt, objective, actual_o
 		silentlyLocateCard(theHiraganaOfCardToSilentlyLocate) // Set the Convenience-global: foundElement
 		aCard = *foundElement                                 // Set the global var-object 'aCard'
 		// new_prompt, new_objective, actual_objective_type
-		prompt = aCard.Hira
-		objective = aCard.Romaji
+		actual_prompt_char = aCard.Hira
+		actual_objective = aCard.Romaji
 		actual_objective_type = "romaji"
 		fmt.Println("")
 	} else {
 		// Confidently, go-looking for user's input: locate matching 'aCard'
 		silentlyLocateCard(theHiraganaOfCardToSilentlyLocate) // Set the Convenience-global: foundElement
 		aCard = *foundElement                                 // Set the global var-object 'aCard'
-		prompt = aCard.Hira
-		objective = aCard.Romaji
+		actual_prompt_char = aCard.Hira
+		actual_objective = aCard.Romaji
 		actual_objective_type = "romaji"
 		fmt.Println("")
 	}
-	return prompt, objective, actual_objective_type
+	// return prompt, objective, actual_objective_type
 }
 
 // Handles the Directive 'stcr'
-func reSet_aCard_toAromaji_andThereBy_reSet_thePromptString() (prompt, objective, actual_objective_type string) { //  - -
+func reSet_aCard_toAromaji_andThereBy_reSet_thePromptString() { //  - -
 	// cameFrom_stcR_NOTstc = true // todo, this may need to be pulled from global and passed back to caller instead
 	var theRomajiOfCardToSilentlyLocate string
 	var isAlphanumeric bool
@@ -111,8 +111,8 @@ func reSet_aCard_toAromaji_andThereBy_reSet_thePromptString() (prompt, objective
 		silentlyLocateCard(theRomajiOfCardToSilentlyLocate) // Set the Convenience-global: foundElement
 		aCard = *foundElement                               // Set the global var-object 'aCard'
 		// new_prompt, new_objective, actual_objective_type
-		prompt = aCard.Romaji
-		objective = aCard.Hira
+		actual_prompt_char = aCard.Romaji
+		actual_objective = aCard.Hira
 		actual_objective_type = "hira"
 		fmt.Println("")
 		// todo, must be re-prompting here ???? it is prompting for and testing for the original Romaji/Hiragana
@@ -121,12 +121,12 @@ func reSet_aCard_toAromaji_andThereBy_reSet_thePromptString() (prompt, objective
 		// Confidently, go-looking for user's input: locate matching 'aCard'
 		silentlyLocateCard(theRomajiOfCardToSilentlyLocate) // Set the Convenience-global: foundElement
 		aCard = *foundElement                               // Set the global var-object 'aCard'
-		prompt = aCard.Romaji
-		objective = aCard.Hira
+		actual_prompt_char = aCard.Romaji
+		actual_objective = aCard.Hira
 		actual_objective_type = "Hira"
 		fmt.Println("")
 	}
-	return prompt, objective, actual_objective_type
+	// return prompt, objective, actual_objective_type
 }
 
 func detectDirective(in string) (result bool) { // - -
@@ -339,7 +339,8 @@ func notes_on_kana() {
 }
 
 // todo, what happened here ??????? to this func name ???????? ::: ***********************
-func respond_to_UserSupplied_stc_Directive(userInput string) { // ::: - -
+// func respond_to_UserSupplied_stc_Directive(userInput string) { // ::: - -
+func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 	/*
 	 'nts' for some background on Romaji conventions
 	 'dir' redisplay this menu of available Directives
@@ -357,7 +358,7 @@ func respond_to_UserSupplied_stc_Directive(userInput string) { // ::: - -
 	 'exkf' un-load the Extended Kata deck
 	*/
 	var count int
-	switch userInput {
+	switch usersSubmission {
 	case "abt":
 		about_app()
 	case "gdc":
@@ -387,10 +388,10 @@ func respond_to_UserSupplied_stc_Directive(userInput string) { // ::: - -
 			actual_prompt_char_type ::  "hira",  "roma",  "kata"
 
 		*/
-		actual_prompt_char, actual_objective, actual_prompt_char_type = reSet_aCard_andThereBy_reSet_thePromptString()
+		reSet_aCard_andThereBy_reSet_thePromptString()
 	case "stcr":
 		// todo: new_prompt variant vs promptField ?????
-		actual_prompt_char, actual_objective, actual_prompt_char_type = reSet_aCard_toAromaji_andThereBy_reSet_thePromptString()
+		reSet_aCard_toAromaji_andThereBy_reSet_thePromptString()
 	case "st":
 		newHits()
 		if !include_Extended_kata_deck {
@@ -490,10 +491,9 @@ func respond_to_UserSuppliedDirective(userInput string) (prompt, objective, kind
 	case "?":
 		fmt.Printf("\n%s\n%s\n%s\n\n", aCard.HiraHint, aCard.KataHint, aCard.TT_Hint)
 	case "stc":
-		prompt, objective, kind = reSet_aCard_andThereBy_reSet_thePromptString()
+		reSet_aCard_andThereBy_reSet_thePromptString()
 	case "stcr":
-		// todo: new_prompt variant vs promptField ?????
-		prompt, objective, kind = reSet_aCard_toAromaji_andThereBy_reSet_thePromptString()
+		reSet_aCard_toAromaji_andThereBy_reSet_thePromptString()
 	case "st":
 		newHits()
 		if !include_Extended_kata_deck {

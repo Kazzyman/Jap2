@@ -221,6 +221,11 @@ var fileOfCardsRare = []charSetStruct{
 	//
 	//
 	//
+	{"ソ", "そ", "so",
+		" so:そ:ソ  starting with all angles -- I guess they `had to `backtrack? ",
+		" so:そ:ソ ,  Compare:  n:ん:ン which lays-down more, and has a more-laid-down back-tick ",
+		" TT: index<-- to the 'C' char,  so:ソ Looks like: し:シ  & no:ノ but MOSTLY like:  n:ん:ン ",
+		" ?:そ:ソ  ,  Compare:  n:ん:ン     TT: L-index<-- to the 'C' char"},
 	{"ニ", "に", "ni",
 		" ni:に:ニ  I can see a knee-cap in the Hiragana ",
 		" ni:に:ニ  ",

@@ -6,6 +6,8 @@ import (
 	"time"
 )
 
+// todo Bug::: stcr still has an issue.
+
 func main() {
 	rand.Seed(time.Now().UnixNano()) // seed the random number generator with the current time in nanoseconds.
 	gameOn = false
@@ -15,26 +17,28 @@ func main() {
 	// todo ::: determine and set type_of_usersSubmission at appropriate times
 	// type_of_usersSubmission = "romaji"
 
-	// todo ::: actual_objective_type or equivalent also needed
+	// todo ::: actual_objective_type or equivalent also needed -- what was I thinking here??
 	// actual_prompt_char_type
 
 	// usersSubmission = "ronly"
+	limitedToHiraPrompts = true // ::: works
+	// limitedToKataPrompts = true // ::: but this breaks it
 	user_guessed_prior_card_rightly = false
 	// categorize_and_process_users_input()
 	fmt.Println()
-	countSLOC() // Determine and display Source Lines Of Code.
-	// pick_RandomCard_Assign_fields()
-	randomize_over_all_decks()
+	countSLOC()                     // Determine and display Source Lines Of Code.
+	pick_RandomCard_Assign_fields() // this has a bug: Missing one or more elements of prompting style actual_prompt_char_type is romaji, and actual_objective_type is
+	// randomize_over_all_decks()
 	display_start_menu_etc()
 	Kana_practice()
 }
 
-func Kana_practice() { // ::: done ::: - -
+func Kana_practice() { // ::: - -
 	for {
 		if non_standard_origin_DirHandler { // ::: May not actually need this ??, could "user_guessed_prior_card_rightly" suffice??
 			non_standard_origin_DirHandler = false
-			// ::: debug off fmt.Printf("guessLevelCounter: %d, top of Kana_practice(), inside non_standard_origin...\n", guessLevelCounter)
-			// ::: debug off fmt.Printf("at top of Kana_practice()\n")
+			// ::: debug off fmt..Printf("guessLevelCounter: %d, top of Kana_practice(), inside non_standard_origin...\n", guessLevelCounter)
+			// ::: debug off fmt..Printf("at top of Kana_practice()\n")
 
 			// Bypass those elements contained within the following else clause.
 			// Note: the dir handler: handle_directive() will have already done each of those things, if needed;
@@ -42,8 +46,8 @@ func Kana_practice() { // ::: done ::: - -
 			// guessLevelCounter = 1 // ::: as a debug test
 		} else {
 			if user_guessed_prior_card_rightly {
-				// pick_RandomCard_Assign_fields()
-				randomize_over_all_decks()
+				pick_RandomCard_Assign_fields()
+				// randomize_over_all_decks()
 				guessLevelCounter = 1
 			}
 			/*
@@ -57,17 +61,17 @@ func Kana_practice() { // ::: done ::: - -
 				actual_prompt_char_type = "kata" ::: done
 			*/
 			// Prompt according to guessLevelCounter, type of displayed prompt, and type of requested response.
-			// ::: debug off fmt.Printf("guessLevelCounter: %d, before first prompt in Kana_practice()\n", guessLevelCounter)
+			// ::: debug off fmt..Printf("guessLevelCounter: %d, before first prompt in Kana_practice()\n", guessLevelCounter)
 			// prompt_the_user_for_input(true) // ::: done // todo, lets try true
 			prompt_the_user_for_input() // ::: try this
-			// ::: debug off fmt.Printf("guessLevelCounter: %d, after first prompt in Kana_practice()\n", guessLevelCounter)
+			// ::: debug off fmt..Printf("guessLevelCounter: %d, after first prompt in Kana_practice()\n", guessLevelCounter)
 
 			// Obtain users input. ::: done
 			_, _ = fmt.Scan(&usersSubmission)
 
 			// Is users input a Directive, etc. ? Categorize and process users input accordingly.
 			categorize_and_process_users_input()
-			// ::: debug off fmt.Printf("guessLevelCounter: %d, after call to categorize_and... at bottom of Kana_practice()\n", guessLevelCounter)
+			// ::: debug off fmt..Printf("guessLevelCounter: %d, after call to categorize_and... at bottom of Kana_practice()\n", guessLevelCounter)
 		}
 		// Loop, will now get a fresh card and the process continues (exit Directive is "q").
 	}
@@ -126,35 +130,26 @@ func Process_users_input_as_a_guess() { // ::: - -
 		}
 	}
 
-	// ::: if we dont stop it, execution continues top of Kana_practice()
 	// todo]  Now; having dispensed with the odd case of the zu clan -- we return you to our usual programming :)
 	// ::: debug off fmt.Printf("guess is %s, objective is %s\n", usersSubmission, actual_objective)
 
 	if usersSubmission == actual_objective {
 		non_standard_origin_DirHandler = false
 		user_guessed_prior_card_rightly = true
-		// ::: debug off fmt.Printf("guess is %s, objective is %s\n", usersSubmission, actual_objective)
+		// ::: debug off fmt..Printf("guess is %s, objective is %s\n", usersSubmission, actual_objective)
 		logRight(usersSubmission, actual_prompt_char, actual_objective_type)
-		// ::: debug off fmt.Println("nearing last else in Process_users_input_as_a_guess()")
+		// ::: debug off fmt..Println("nearing last else in Process_users_input_as_a_guess()")
 	} else {
 		user_guessed_prior_card_rightly = false
 		non_standard_origin_DirHandler = false
 		if guessLevelCounter >= 4 {
 			guessLevelCounter = 1
 			logOopsLoser(usersSubmission)
-			/*
-				log_oops(aCard.Hira, aCard.Romaji, usersSubmission)
-					fmt.Printf("%s", colorRed)
-					fmt.Printf("     ^^Oops! That was your last try looser. Here's a clue, just for you: ...\n %s", colorReset)
-					fmt.Printf("\n%s\n%s\n%s\n\n", aCard.HiraHint, aCard.KataHint, aCard.TT_Hint)
-			*/
-
 		} else {
-			// log_oops(actual_prompt_char, actual_objective, usersSubmission)
 			user_guessed_prior_card_rightly = false
 			non_standard_origin_DirHandler = false
-			// ::: debug off fmt.Println("at: log_oops  in Process_users_input_as_a_guess()　::")
-			// ::: debug off fmt.Printf("usersSubmission was: %s, actual_objective was: %s\n", usersSubmission, actual_objective)
+			// ::: debug off fmt..Println("at: log_oops  in Process_users_input_as_a_guess()　::")
+			// ::: debug off fmt..Printf("usersSubmission was: %s, actual_objective was: %s\n", usersSubmission, actual_objective)
 		}
 	}
 }
@@ -165,24 +160,9 @@ func potentially_handle_a_directive() { // ::: - -
 	if its_a_directive {
 		its_a_directive = false
 		non_standard_origin_DirHandler = true
-		/*
-			if usersSubmission == "stc" || usersSubmission == "stcr" {
-				// respond_to_UserSupplied_stc_Directive(usersSubmission) // ::: I think this func got it name messed up?
-				HandlerFor_stcS(usersSubmission) // new fix?
-				// /*
-			} else {
-				respond_to_UserSuppliedDirective(usersSubmission)
-				// respond_to_UserSupplied_Directive
-			}
-
-		*/
 
 		respond_to_UserSupplied_Directive(usersSubmission)
-		// */
-		// }
-		// Re-prompt.
-		// unlessComingFromDirHandler := true // todo ::: fix this
-		// prompt_the_user_for_input(unlessComingFromDirHandler)
+
 		prompt_the_user_for_input()
 		guessLevelCounter = 1 // Directives normally only get done at level 1 ::: ??
 
@@ -191,7 +171,6 @@ func potentially_handle_a_directive() { // ::: - -
 
 		if its_a_directive {
 			its_a_directive = false
-			// guessLevelCounter = 1
 			potentially_handle_a_directive() // ::: Recursion
 		} else {
 			non_standard_origin_DirHandler = true

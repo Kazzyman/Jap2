@@ -2,26 +2,7 @@ package main
 
 import "time"
 
-/*
-aCard.Kata
-aCard.Hira
-aCard.Romaji
-
-actual_objective ::         aCard.Hira  aCard.Romaji
-actual_objective_type ::    "hira",  "roma"
-
-actual_prompt_char ::       aCard.Hira  aCard.Romaji  aCard.Kata
-actual_prompt_char_type ::  "hira",  "roma",  "kata"
-
-usersSubmission  ::         scanned from keyboard
-type_of_usersSubmission ::  "hira",  "roma"                 // rarely used.
-usersInputMode ::           "hira",  "roma"
-
-guessLevelCounter ::        0-4  ??
-byWayOfDirectiveHandler ::  true,  false
-its_a_directive ::  true,  false
-non_standard_origin_DirHandler = false
-*/
+var count = 1
 
 var actual_objective string      // aCard.Hira  aCard.Romaji
 var actual_objective_type string // "hira",  "roma"
@@ -30,19 +11,14 @@ var actual_prompt_char string      //  aCard.Hira  aCard.Romaji  aCard.Kata
 var actual_prompt_char_type string //  "hira",  "roma",  "kata"
 
 var usersSubmission string
-var type_of_usersSubmission string //  "hira",  "roma"                 // rarely used.
-var usersInputMode string          //  "hira",  "roma"
 
 var guessLevelCounter = 0
-var byWayOfDirectiveHandler = false
 var its_a_directive = false
 var non_standard_origin_DirHandler = false
 var non_standard_origin_stcR bool
 
-var user_guessed_prior_card_rightly bool    // may need this ?
-var submission_already_processed_above bool // ? will I need this ?
-
-var skip_for_reasons bool // ? will I need this ?
+var user_guessed_prior_card_rightly bool
+var submission_already_processed_above bool // review the use of this ?
 
 // Create a kanjiHitMap map. A map of keys (kanji chars) and/to their associated history data, i.e., the struct: CardInfo
 var hiraHitMap = make(map[string]CardInfo)

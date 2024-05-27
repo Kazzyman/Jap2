@@ -5,7 +5,7 @@ import (
 	"regexp"
 )
 
-// Used only in handle_doubleQuestMark_directive()  '(a Directive)'
+// ::: Used only in handle_doubleQuestMark_directive()  '(a Directive)'
 // (temporarily deprecated) ********************* v v v v v ------------------------------------------------v v v v v uses actual_objective_type
 func locateCardAndDisplayHelpFieldsContainedInIt_deprecated(Hira_or_Romaji_input_sameAsPrompt_toFindHelpOn, actual_objective_type string) {
 	var isAlphanumeric bool

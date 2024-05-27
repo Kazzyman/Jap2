@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func countSLOC() {
+func countSLOC() { // ::: - -
 	filenameOfThisFile1 := "/Users/quasar/Jap2-main/main.go"
 	totalLines1, nonEmptyLines1 := reportSLOCstats(filenameOfThisFile1) // another locally-defined func; returns, and creates, local values of predetermined type
 
@@ -56,7 +56,7 @@ func countSLOC() {
 
 }
 
-func reportSLOCstats(filepath string) (int, int) {
+func reportSLOCstats(filepath string) (int, int) { // ::: - -
 	// Patterns to identify comments, blank lines, and strings
 	singleLineCommentPattern := `^\s*//`
 	multiLineCommentPattern := `(?s)/\*.*?\*/`

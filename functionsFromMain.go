@@ -2,23 +2,7 @@ package main
 
 import "fmt"
 
-func HandlerFor_stcS(userInput string) {
-	// aDirectiveWasDetected := false
-	// aDirectiveWasDetected = detectDirective(userInput)
-	// if aDirectiveWasDetected {
-	if usersSubmission == "stc" || usersSubmission == "stcr" {
-		respond_to_UserSuppliedDirective(usersSubmission)
-		// instead of doing that, you need to go find the card
-	} else {
-		respond_to_UserSuppliedDirective(usersSubmission)
-	}
-	/*
-		if userInput == "stc" {
-			respond_to_UserSuppliedDirective(userInput)
-	*/
-}
-
-func logRight_zu(userInput, promptField, actual_objective_type string) {
+func logRight_zu(userInput, promptField, actual_objective_type string) { // ::: - -
 	log_right(promptField, userInput)
 	fmt.Printf("%s", colorGreen)
 	if actual_objective_type == "Hira" {
@@ -34,7 +18,7 @@ func logRight_zu(userInput, promptField, actual_objective_type string) {
 	fmt.Printf("It could have been either ず or づ as they are the same sound: zu\n")
 }
 
-func logRight(userInput, promptField, actual_objective_type string) {
+func logRight(userInput, promptField, actual_objective_type string) { // ::: - -
 	// logRight(userInput, promptField, actual_objective_type)
 	log_right(promptField, userInput)
 	fmt.Printf("%s", colorGreen)
@@ -50,14 +34,14 @@ func logRight(userInput, promptField, actual_objective_type string) {
 	fmt.Printf("%s", colorReset)
 }
 
-func logOopsLoser(usersInput string) {
+func logOopsLoser(usersInput string) { // ::: - -
 	log_oops(aCard.Hira, aCard.Romaji, usersInput)
 	fmt.Printf("%s", colorRed)
 	fmt.Printf("     ^^Oops! That was your last try looser. Here's a clue, just for you: ...\n %s", colorReset)
 	fmt.Printf("\n%s\n%s\n%s\n\n", aCard.HiraHint, aCard.KataHint, aCard.TT_Hint)
 }
 
-func logRightZu2(userInput, promptField, actual_objective_type, objective string) {
+func logRightZu2(userInput, promptField, actual_objective_type, objective string) { // ::: - -
 	log_right(promptField, userInput)
 	fmt.Printf("%s", colorGreen)
 	if actual_objective_type == "Hira" {

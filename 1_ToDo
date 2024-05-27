@@ -2,40 +2,16 @@
 ::: about prompting -- and testing
 
 prompting: 
-    whenever it is time to do any prompt, there are two things to consider first: 
+    whenever it is time to do any prompt, there are two things to consider: 
         1. whether the prompt should be of a Hira, Kata, or Romaji char (3 types)
         2. whether the prompt is of primary, secondary, or tertiary format. (3 types) 
-
-Pre-testing: (guess vs directive): 2 categories (one of which is split two ways: those that modify the card structure, and those that don't)
-    2 categories of userInput: directive and guess
-    2 categories of directive: modifiers and non-modifiers 
     
-Directive handlers ALL can do their own re-prompting, and re-testing. By doing it this way we can use recursion within the scope of the directive handler itself to allow for consecutive dir commands. 
-
 guessMatch testing: 2 modalities to address ::: done/agreed 
     this should involve branching on one of two categories: Hira or Romaji guesses (two objective modalities) 
     -- the way I have been doing it is stupid! Trying to put the right one of these values in the right place at the right time makes the code obtuse!!
 
 There must be just one structure that can always be trusted to contain all the up-to-date fields re data. ::: agreed 
-And, one new structure for storing states: current guess is 1 2 or 3
--- I cannot now think of any instances in my program that will need access to the prior states of any of those fields --
-
-elements of the structures: ::: done
-
-    Hira (could be objective or prompt)
-    Romaji (could be objective or prompt)
-    Kata (only used as prompt)
-    
-    the 4 various hint fields (used during prompting according to the three possible positions: first, second, or final attempt)
-
-    aCard.Kata
-	aCard.Hira
-	aCard.Romaji
-
-	aCard.HiraHint
-	aCard.KataHint
-	aCard.TT_Hint
-	aCard.SansR_Hint  ::: done
+And, one new structure for storing states: globals for ALL it shall be. 
 
 
 GoLand: Mid May 2024 Your subscription was cancelled.
@@ -60,13 +36,6 @@ Registry:
   ide.experimental.ui=true
 
 
-
-::: Bugs: from old version 
-stc does not work
-stcr only works for zu
-honly and then stcr zu gets messy, it sets the card but not the prompt; and, it seems that the prompt is being compared to the input
-
-do lots of testing of main and then clean it up!
 
 if it is asking for Hira and you give a Romaji it should inform you of your problem
 if it is asking for Romaji and you give a Hira it should inform you of your problem

@@ -1,0 +1,16 @@
+
+ The game began at: 08:53:30 on Monday 05-27-2024 
+
+ The game began at: 08:55:32 on Monday 05-27-2024 
+
+ The game began at: 08:58:45 on Monday 05-27-2024 
+
+ The game ended at: 08:58:56 on Monday 05-27-2024  Total prompts was: 0 
+
+ Elapsed time of game was: 11.639259292s 
+
+ The game began at: 09:00:30 on Monday 05-27-2024 
+
+ The game ended at: 09:00:43 on Monday 05-27-2024  Total prompts was: 6 
+
+ Elapsed time of game was: 13.966403958s 

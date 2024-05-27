@@ -3,6 +3,7 @@ package main
 import "time"
 
 var count = 1
+var fileExplored int
 
 var actual_objective string      // aCard.Hira  aCard.Romaji
 var actual_objective_type string // "hira",  "roma"
@@ -14,7 +15,7 @@ var usersSubmission string
 
 var guessLevelCounter = 0
 var its_a_directive = false
-var non_standard_origin_DirHandler = false
+var from_non_standard_origin_DirHandler = false
 var non_standard_origin_stcR bool
 
 var user_guessed_prior_card_rightly bool

@@ -1,0 +1,24 @@
+todo Bug::: stcr still has an issue. Though it does not crash the app if it us run immediately after an stc ...
+... it is actually recoverable if it is run after an stc. 
+ 
+also tally lines of data SLOC 
+
+
+::: cheat-sheet :
+
+splat e  :: list of recent files
+shift splat backspace/delete  :: move to where you last made an edit
+splat [  :: to return to previous position||file  (multiple such commands will walk you back from whence you came).
+splat ]  :: steps forward after you have stepped back. 
+
+option-return  :: spell correction 
+double-tap shift  :: key to search everywhere
+
+splat F6  :: change/refactor signature (:::SUPER COOL!!!) 
+Shift splat U  :: toggle case
+splat b  :: go to declaration 
+
+Ctrl-k  :: kill to end of line. 
+
+::: end cheat-sheet.
+

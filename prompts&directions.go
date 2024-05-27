@@ -81,23 +81,19 @@ func prompt_the_user_for_input() { // ::: - -
 			fmt.Printf("%s", aCard.Romaji)
 			fmt.Printf("%s", colorCyan)
 			fmt.Printf(" Hiragana input-mode expected," + colorReset +
-				" you must try to guess again\n Here:> ")
+				" Guess again, or '?' for clue\n Here:> ")
 
 		} else if actual_prompt_char_type == "hira" && actual_objective_type == "roma" {
 			fmt.Printf("%s", aCard.Hira)
 			fmt.Printf("%s", colorCyan)
 			fmt.Printf(" Romaji input-mode expected," + colorReset +
-				" you must try to guess again\n Here:> ")
-
-			/*
-				} else if actual_prompt_char_type == "kata" && actual_objective_type == "hira" { // ::: not a possible thang
-			*/
+				" Guess again, or '?' for clue\n Here:> ")
 
 		} else if actual_prompt_char_type == "kata" && actual_objective_type == "roma" {
 			fmt.Printf("%s", aCard.Kata)
 			fmt.Printf("%s", colorCyan)
 			fmt.Printf(" Romaji input-mode expected," + colorReset +
-				" you must try to guess again\n Here:> ")
+				" Guess again, or '?' for clue\n Here:> ")
 		} else {
 			fmt.Printf("Missing one or more elements of prompting style actual_prompt_char_type is %s, and actual_objective_type is %s\n", actual_prompt_char_type, actual_objective_type)
 		}
@@ -135,7 +131,7 @@ func prompt_the_user_for_input() { // ::: - -
 	} else if guessLevelCounter > 3 {
 		display_failure_of_final_guess_message_etc(usersSubmission)
 		guessLevelCounter = 1
-		Kana_practice()
+		begin_Kana_practice()
 	} else if guessLevelCounter >= 4 || guessLevelCounter <= -1 {
 		fmt.Printf("The value of guessLevelCounter is out of range, it is %d \n", guessLevelCounter)
 	}
@@ -164,9 +160,8 @@ func promptForRomajiE(prompt string) { // ::: - -
 		" you must guess\n Here:> ")
 	fmt.Printf("%s", colorReset)
 } // ::: ***********************************************************************
+
 /*
--
--
 -
 -
 -
@@ -238,6 +233,11 @@ func List_of_Directives() { // ::: - -
 	fmt.Println("        Enter '" + colorGreen +
 		"donly" + colorReset +
 		"' Difficult Kata only, rs to ReSet")
+
+	fmt.Println("        Enter '" + colorGreen +
+		"help" + colorReset +
+		"' For instructions on how to use this app")
+
 	fmt.Println("        Enter '" + colorGreen +
 		"q" + colorReset +
 		"', (quit) terminate the app")

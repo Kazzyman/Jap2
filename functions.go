@@ -59,23 +59,7 @@ func reSet_via_a_hira_aCard_andThereBy_reSet_thePromptString() { // ::: - -
 		// May yet send an Alpha string to the next func, which will itself deal with it elegantly
 		silentlyLocateCard(theHiraganaOfCardToSilentlyLocate) // Set the Convenience-global: foundElement
 		aCard = *foundElement                                 // Set the global var-object 'aCard'
-		// ::: we now are wanting to reset all of the variables associated with the fields in our new card ??
-		// ::: ... but that may be a difficult task: we will need to know how those fields will be used. MAYBE WE SHOULD JUST SET THEM FROM aCard.x just-before they are needed ???????????????????????????****************
-		//                                                                                           :::                    ^^^  always!!!!!!!!!!!
-		// But; if we could do THAT we never needed the named vars in the first place!!!!!!!! But if we take context into account maybe we can know what each of the aCard.x fields are being used for??????????????????????
-		// ::: in other words, can you always know from context the type of var you are looking for ??  ----  Nah! I found a resolution I can live with (no such thing as kata prompting with hira objective).
-		/*
-							we would need to figure out what the objective (hira or roma) should be based on the current objective type (actual_objective_type) but how would that even be knowable?????
-							actual_prompt_char = aCard.Hira ::: is this one indeterminable? No, it can never be Kata. It will be Hira in the case of stc and it will be Romaji in the case of stcr !!!!?????
-							actual_objective = ::: done
-							actual_objective_type ::: was already set and knowable
-
-						here, in stc, we ask for the か (hira) card to be set. What should it prompt us with? There ARE 3 reasonable options (roma-kata, and yes, hira). Albeit, if we are under limitation, i.e., we are not doing a mix ...
-						... then we would probably like to and expect to see the prompt char type to match the current limitation on prompting. But we cannot say what the objective will be.
-							imagine the new card is the ka card and we know that the objective is aCard.Romaji because we found that the actual_objective_type is roma
-							... however, the prompt field could end up being either the aCard.Hira or the aCard.Kata, ::: or could it ??????? Well, not if we follow the imposed limitation. Easy, but the mix could be tricky.
-			::: some of this has been solved by eliminating the possibility of kata prompting with hira objective.
-		*/
+	
 		if limitedToKataPrompts { // ::: we always know the card. So, if we also know one more thing, e.g., the type of the prompt. We then know other things.
 			// and, we always know the type of the prompt, ALWAYS!!!! Unfortunately, there are three (not two) prompt types. If there were only two prompt types we could know the object by elimination. We need one more piece of info.
 			// : the "response" type. That is, the (one of two) possible types of objective type. Where then, is actual_objective_type set??
@@ -89,16 +73,12 @@ func reSet_via_a_hira_aCard_andThereBy_reSet_thePromptString() { // ::: - -
 		} else if limitedToDifficultKata {
 			actual_prompt_char = aCard.Kata
 		} else {
-			// tricky ??????
+			// ::: don't even think about it!
 		}
 
-		/*
-			If, here in stc, we ask that か be the new aCard; we are saying that we want ka:か:(or kata ka) to be the new prompt. And, if we can determine the type
-		*/
 		// by the current objective type
 		if actual_objective_type == "roma" {
 			actual_objective = aCard.Romaji
-			// so, the actual_prompt_char could be either aCard.Hira or aCard.Kata, but it should never be aCard.Romaji
 		} else { // ::: else it is "hira"
 			actual_objective = aCard.Hira
 		}
@@ -114,23 +94,14 @@ func reSet_via_a_hira_aCard_andThereBy_reSet_thePromptString() { // ::: - -
 		// Confidently, go-looking for user's input: locate matching 'aCard'
 		silentlyLocateCard(theHiraganaOfCardToSilentlyLocate) // Set the Convenience-global: foundElement
 		aCard = *foundElement                                 // Set the global var-object 'aCard'
-		// ::: we now would like to reset all of the variables associated with the fields in our new card ??
-		// ::: ... but that may be a challenging task because there is no way to know how those fields will be used.
-		/*
-			we need to figure out what the objective (hira or roma) should be based on the current objective type
-			actual_prompt_char = aCard.Hira ::: is this one indeterminable? No, it can never be Kata. It will be Hira in the case of stc and it will be Romaji in the case of stcr !!!!
-			actual_objective = ::: done
-			actual_objective_type ::: was already set and knowable
-		*/
-		// by the current objective type
+
 		// ::: said yet another way :
+		// by the current objective type
 		if actual_objective_type == "roma" {
 			actual_objective = aCard.Romaji
-			// so, the actual_prompt_char could be either aCard.Hira or aCard.Kata, but it should never be aCard.Romaji
 		}
 		if actual_objective_type == "hira" {
 			actual_objective = aCard.Hira
-			// so, the actual_prompt_char could be either aCard.Romaji or aCard.Kata, but it should never be aCard.Hira
 		}
 		fmt.Println("")
 	}
@@ -147,59 +118,74 @@ func reSet_aCard_via_a_romaji_andThereBy_reSet_thePromptString() { // ::: - -
 	fmt.Printf("%s", colorReset) //
 	_, _ = fmt.Scan(&theRomajiOfCardToSilentlyLocate)
 
-	// Determine if the user has entered a valid Romaji char (instead of, accidentally, Hira char or string)
+	// Determine if the user has entered a valid Hiragana char (instead of, accidentally, an alpha char or string)
 	findAlphasIn := regexp.MustCompile(`[a-zA-Z]`)
 	switch true {
 	case findAlphasIn.MatchString(theRomajiOfCardToSilentlyLocate):
-		isAlphanumeric = true
-		// ::: debug off fmt.Printf("verify value of switch argument, isAlphanumeric is %t \n", isAlphanumeric)("verify value of switch argument, isAlphanumeric is %t \n", isAlphanumeric)
+		isAlphanumeric = false // ::: was true in stc/hira version ************
 	default:
-		isAlphanumeric = true // todo ????????
+		isAlphanumeric = true // ::: was false in stc/hira version ********************************* 
 	}
 	// Tentatively, prepare to Scan for user's input and attempt locating a matching 'aCard'
-	if isAlphanumeric != true {
-		fmt.Println("Are you in Hira input mode?")
-		fmt.Printf("... if so, change it to Romaji (or I mignt die)\n")
+	if isAlphanumeric == true { // ::: was also true in stc/hira version **************************
+		fmt.Println("Are you in Japanese input mode?")
+		fmt.Printf("... if so, change it to US/romaji (or I mignt die)\n")
 		fmt.Printf("%s", colorRed) //
 		fmt.Printf(" cautiously ")
 		fmt.Printf("%s", colorCyan)
-		fmt.Printf("re-enter your selection, in Romaji mode :> ")
+		fmt.Printf("re-enter your selection, in US/romaji mode :> ")
 		fmt.Printf("%s", colorReset)
 		_, _ = fmt.Scan(&theRomajiOfCardToSilentlyLocate)
-		// May yet send an Alpha string to the next func, which will itself deal with it elegantly
-		silentlyLocateCard(theRomajiOfCardToSilentlyLocate) // Set the Convenience-global: foundElement
-		aCard = *foundElement                               // Set the global var-object 'aCard'
-		// new_prompt, new_objective, actual_objective_type
-		actual_prompt_char = aCard.Romaji
+		// May yet send a hira string to the next func, which will itself deal with it elegantly -- we hope.
+		silentlyLocateCardr(theRomajiOfCardToSilentlyLocate) // Set the Convenience-global: foundElement
+		aCard = *foundElement                                // Set the global var-object 'aCard'
 
-		/*
-				we need to figure out what the objective (hira or roma) should be based on the current objective type
-				actual_prompt_char = aCard.Hira ::: is this one indeterminable? No, it can never be Kata. It will be Hira in the case of stc and it will be Romaji in the case of stcr !!!!
-				actual_objective = ::: done
-				actual_objective_type ::: was already set and knowable
+		if limitedToKataPrompts { // ::: we always know the card. So, if we also know one more thing, e.g., the type of the prompt. We then know other things.
+			// and, we always know the type of the prompt, ALWAYS!!!! Unfortunately, there are three (not two) prompt types. 
+			// If there were only two prompt types we could know the object by elimination. We need one more piece of info.
+			// : the "response" type. That is, the (one of two) possible types of objective type. Where then, is actual_objective_type set??
+			actual_prompt_char = aCard.Kata
+			// but the actual_objective type is undetermined ?? the objective type (hira or roma) is undetermined ??
+		} else if limitedToRomaPrompts {
+			actual_prompt_char = aCard.Romaji
+		} else if limitedToHiraPrompts {
+			// if you have been getting hira prompts, and you run stc and supply a hira char ... you will get that hira char as the prompt
+			actual_prompt_char = aCard.Hira
+		} else if limitedToDifficultKata {
+			actual_prompt_char = aCard.Kata
+		} else {
+			// ::: don't even think about it!
+		}
 
-			here, in stcr, we ask for the ka card to be set. What should it prompt us with? There ARE 3 options. If we are under limitation, i.e., we are not doing a mix ...
-			... then we would probably like to and expect to see the prompt char type to match the current limitation.
-				imagine the new card is the ka card and we know that the objective is aCard.Romaji because we found that the actual_objective_type is roma
-				... however, the prompt field could end up being either the aCard.Hira or the aCard.Kata, ::: or could it ???????
+		// by the current objective type
+		if actual_objective_type == "roma" {
+			actual_objective = aCard.Romaji
+		} else { // ::: else it is "hira"
+			actual_objective = aCard.Hira
+		}
+		// ::: or, said differently :
+		if actual_objective_type == "hira" {
+			actual_objective = aCard.Hira
+		} else { // ::: else it is "roma"
+			actual_objective = aCard.Romaji
+		}
 
-		*/
-
-		actual_objective = aCard.Hira
-		actual_objective_type = "hira"
 		fmt.Println("")
-		// todo, must be re-prompting here ???? it is prompting for and testing for the original Romaji/Hiragana
-
 	} else {
 		// Confidently, go-looking for user's input: locate matching 'aCard'
-		silentlyLocateCard(theRomajiOfCardToSilentlyLocate) // Set the Convenience-global: foundElement
-		aCard = *foundElement                               // Set the global var-object 'aCard'
-		actual_prompt_char = aCard.Romaji
-		actual_objective = aCard.Hira
-		actual_objective_type = "hira"
+		silentlyLocateCardr(theRomajiOfCardToSilentlyLocate) // Set the Convenience-global: foundElement
+		aCard = *foundElement                                // Set the global var-object 'aCard'
+
+		// by the current objective type
+		// ::: said yet another way :
+		if actual_objective_type == "roma" {
+			actual_objective = aCard.Romaji
+		}
+		if actual_objective_type == "hira" {
+			actual_objective = aCard.Hira
+		}
 		fmt.Println("")
 	}
-	// return prompt, objective, actual_objective_type
 }
 
 func detectDirective(in string) (result bool) { // ::: - -
@@ -244,7 +230,8 @@ func detectDirective(in string) (result bool) { // ::: - -
 		in == "honly" ||
 		in == "ronly" ||
 		in == "donly" ||
-		in == "hko" {
+		in == "hko" ||
+		in == "help" {
 		// Then:
 		its_a_directive = true
 	}
@@ -354,17 +341,9 @@ func read_pulls_not_used_array() {
 }
 
 func about_app() { // ::: - -
-	fmt.Printf("\n" +
-		"This app consists of the following files and lines of code:\n\n" +
-		"1701 constants.go ~ 35\n" +
-		"343 functions.go ~ 300\n" +
-		"157 locateCard.go ~ 80\n" +
-		"357 main.go ~ 320\n" +
-		"127 memoryFunctions.go ~ 45\n" +
-		"133 objectsAndMethods.go ~ 40\n" +
-		"82 prompts&directions.go ~ 75\n" +
-		"145 statsFunctions.go ~ 125 \n\n")
+	fmt.Printf("\nThis app consists of the following lines of code accross %d files:\n\n", fileExplored)
 	countSLOC()
+	fmt.Printf("As Calculated in real-time by countSLOC(), a custom internal function.\n\n")
 }
 
 func reset_all_data() { // ::: - -
@@ -435,45 +414,54 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 	'exkf' un-load the Extended Kata deck
 	*/
 	// ::: alphabetically (mostly)
-	var count int
+	// todo game_duration, delete next line?
+	// var count int
 	switch usersSubmission {
+	// Directives follow:
 	case "?":
 		fmt.Printf("\n%s\n%s\n%s\n\n", aCard.HiraHint, aCard.KataHint, aCard.TT_Hint)
-	case "??": // Directives follow:
+	case "??":
 		// handle_doubleQuestMark_directive(actual_objective_type)
 		handle_doubleQuestMark_directive()
+	case "help":
+		helpText()
 	case "hko":
 		limitedToKataPrompts = true
 		limitedToHiraPrompts = true
 		limitedToRomaPrompts = false
 		limitedToDifficultKata = false
+		fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
 	case "konly":
 		limitedToKataPrompts = true
 		limitedToHiraPrompts = false
 		limitedToRomaPrompts = false
 		limitedToDifficultKata = false
+		fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
 	case "honly":
 		limitedToHiraPrompts = true
 		limitedToKataPrompts = false
 		limitedToRomaPrompts = false
 		limitedToDifficultKata = false
+		fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
 	case "ronly":
 		limitedToRomaPrompts = true
 		limitedToKataPrompts = false
 		limitedToHiraPrompts = false
 		limitedToDifficultKata = false
+		fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
 	case "donly":
 		limitedToDifficultKata = true
 		limitedToKataPrompts = false
 		limitedToHiraPrompts = false
 		limitedToRomaPrompts = false
+		fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
 		/*
 			.
 		*/
 	case "abt":
 		about_app()
 	case "bgs":
-		// game_loop_counter ++
+		game_loop_counter++
 		game_on()
 	case "dir": // reDisplay the DIRECTORY OF DIRECTIVES (and instructions):
 		re_display_List_of_Directives()
@@ -531,6 +519,12 @@ func st_stats_function() {
 	if limitedToDifficultKata {
 		fmt.Printf("Limited to Difficult Kata only: %t \n\n", limitedToDifficultKata)
 	}
+}
+
+func helpText() {
+	fmt.Println(colorRed)
+	fmt.Printf("\nTo use this app you will need either a Japanese keyboard\n or a software work-around for same. \n\n")
+	fmt.Println(colorReset)
 }
 
 /*

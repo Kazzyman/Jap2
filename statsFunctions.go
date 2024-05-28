@@ -36,12 +36,6 @@ func log_right(prompt_it_was, in string) { // - -
 	logSkipThisPrompt_inThe_frequencyMapOf_IsFineOnChars(prompt_it_was)
 	logHits_in_cyclicArrayHits("Right", prompt_it_was)
 }
-func log_oops(prompt_it_was, field_it_was, guess string) { // - -
-	logReinforceThisPrompt_inThe_frequencyMapOf_need_workOn(prompt_it_was)
-	logHits_in_cyclicArrayHits("Oops", prompt_it_was)
-	logJcharsGottenWrong_in_cyclicArrayOfTheJcharsGottenWrong(prompt_it_was +
-		":it was:" + field_it_was + ":but you had guessed:" + guess)
-}
 
 // 'Reinforce-or-Skip' loggers|Inserters:
 func logSkipThisPrompt_inThe_frequencyMapOf_IsFineOnChars(promptToSkip string) { // - -

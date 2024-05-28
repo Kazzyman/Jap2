@@ -8,7 +8,10 @@ func prompt_the_user_for_input() { // ::: - -
 
 	if guessLevelCounter == 1 {
 		guessLevelCounter++
-
+		game_loop_counter++
+		if game_loop_counter > game_duration {
+			game_off()
+		}
 		if actual_prompt_char_type == "roma" && actual_objective_type == "hira" {
 			fmt.Printf("%s", aCard.Romaji)
 			fmt.Printf("%s", colorCyan)
@@ -75,8 +78,10 @@ func prompt_the_user_for_input() { // ::: - -
 		}
 
 	} else if guessLevelCounter == 2 {
+		no_interim_error_flag = false
 		guessLevelCounter++
-
+		// correct, single_faults, double_faults, errors
+		single_faults++
 		if actual_prompt_char_type == "roma" && actual_objective_type == "hira" {
 			fmt.Printf("%s", aCard.Romaji)
 			fmt.Printf("%s", colorCyan)
@@ -99,7 +104,9 @@ func prompt_the_user_for_input() { // ::: - -
 		}
 
 	} else if guessLevelCounter == 3 {
-
+		// correct, single_faults, double_faults, errors
+		double_faults++
+		single_faults--
 		if actual_prompt_char_type == "roma" && actual_objective_type == "hira" {
 			fmt.Printf("%s", aCard.Romaji)
 			fmt.Printf("%s", colorCyan)
@@ -269,7 +276,7 @@ func display_List_of_Directives() { // (unique) // ::: - -
 	List_of_Directives()
 	//goland:noinspection ALL
 	fmt.Println("\n")
-	fmt.Printf("Game counter: %d, Game Duration: %d \n", game_loop_counter, game_duration+2)
+	fmt.Printf("Game counter: %d, Game Duration: %d \n", game_loop_counter, game_duration)
 	fmt.Printf("Current Prompt Count Total: %d \n\n", total_prompts)
 	fmt.Printf("Extended Kata deck is loaded: %t \n\n", include_Extended_kata_deck)
 	fmt.Printf("Limited to Kata prompts with Romaji objectives: %t \n", limitedToKataPrompts)
@@ -305,8 +312,8 @@ func re_display_List_of_Directives() { // (unique) // ::: - -
 	}
 	List_of_Directives()
 	//goland:noinspection ALL
-	fmt.Printf("Game counter: %d, Game Duration: %d \n", game_loop_counter, game_duration+2)
-	fmt.Printf("Current Prompt Count Total: %d \n\n", total_prompts)
+	fmt.Printf("game_loop_counter:%d, game_duration:%d \n", game_loop_counter, game_duration)
+	fmt.Printf("total_prompts:%d,  \n\n", total_prompts)
 
 	if !include_Extended_kata_deck {
 		fmt.Println("Extended Kata deck is NOT loaded\n")

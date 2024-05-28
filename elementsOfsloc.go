@@ -87,6 +87,9 @@ func countSLOC() { // ::: - -
 
 }
 
+/*
+.
+*/
 func reportSLOCstats(filepath string) (blankLines, singleComments, commentBlock1, commentBlock2, commentBlock3, runes1, runes2, runes3, totalLines, sloc int) { // ::: - -
 	// Patterns to identify comments, blank lines, and strings
 	singleLineCommentPattern := `^\s*//`
@@ -135,11 +138,11 @@ func reportSLOCstats(filepath string) (blankLines, singleComments, commentBlock1
 				inMultiLineComment = false
 				line = multiLineCommentRe.ReplaceAllString(line, "")
 				if blankLineRe.MatchString(line) || singleLineCommentRe.MatchString(line) {
-					commentBlock1++
+					commentBlock1++ // Does not normally accumulate anything.
 					continue
 				}
 			} else {
-				commentBlock2++
+				commentBlock2++ // This is where we find lines that match.
 				continue
 			}
 		}
@@ -147,7 +150,7 @@ func reportSLOCstats(filepath string) (blankLines, singleComments, commentBlock1
 			inMultiLineComment = true
 			line = multiLineCommentRe.ReplaceAllString(line, "")
 			if blankLineRe.MatchString(line) || singleLineCommentRe.MatchString(line) { // blankLines, singleComments, commentBlock1, commentBlock2, commentBlock3, runes1, runes2, runes3
-				commentBlock3++
+				commentBlock3++ // Does not normally accumulate anything.
 				continue
 			}
 		}
@@ -158,11 +161,11 @@ func reportSLOCstats(filepath string) (blankLines, singleComments, commentBlock1
 				inMultiLineString = false
 				line = stringLiteralRe.ReplaceAllString(line, "")
 				if blankLineRe.MatchString(line) || singleLineCommentRe.MatchString(line) {
-					runes1++
+					runes1++ // Does not normally accumulate anything.
 					continue
 				}
 			} else {
-				runes2++
+				runes2++ // This is where we find lines that match.
 				continue
 			}
 		}
@@ -170,7 +173,7 @@ func reportSLOCstats(filepath string) (blankLines, singleComments, commentBlock1
 			inMultiLineString = true
 			line = stringLiteralRe.ReplaceAllString(line, "")
 			if blankLineRe.MatchString(line) || singleLineCommentRe.MatchString(line) {
-				runes3++
+				runes3++ // Does not normally accumulate anything.
 				continue
 			}
 		}

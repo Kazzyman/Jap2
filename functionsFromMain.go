@@ -34,13 +34,6 @@ func logRight(userInput, promptField, actual_objective_type string) { // ::: - -
 	fmt.Printf("%s", colorReset)
 }
 
-func logOopsLoser(usersInput string) { // ::: - -
-	log_oops(aCard.Hira, aCard.Romaji, usersInput)
-	fmt.Printf("%s", colorRed)
-	fmt.Printf("     ^^Oops! That was your last try looser. Here's a clue, just for you: ...\n %s", colorReset)
-	fmt.Printf("\n%s\n%s\n%s\n\n", aCard.HiraHint, aCard.KataHint, aCard.TT_Hint)
-}
-
 func logRightZu2(userInput, promptField, actual_objective_type, objective string) { // ::: - -
 	log_right(promptField, userInput)
 	fmt.Printf("%s", colorGreen)

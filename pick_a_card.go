@@ -9,11 +9,11 @@ var pulledButNotUsedMap = make(map[string]int)
 
 func pick_RandomCard_Assign_fields() { // ::: - -
 	// There are 4 different exercises: four different picking sections each with its own prompting.
-	// Set (acquire) one of the 4 combinations of actual_prompt_char, objective, actual_objective_type
-	// This section only does the initial pick, and MAY be duplicated below in the for loop
+	// Set (acquire) one of the 4 combinations of actual_prompt_char, actual_objective, actual_objective_type
+	// This section only does the initial pick, and MAY be duplicated below in the for loop.
 	if limitedToKataPrompts && limitedToHiraPrompts {
 
-		// randomize - alternate // count starts as 1 and is a global var
+		// "Randomize" - or, at least, alternate between kata and hira prompting. // count starts as 1 and is a global var
 		for {
 			if count == 1 {
 				actual_prompt_char_type = "kata"

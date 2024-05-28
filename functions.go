@@ -14,6 +14,9 @@ func check_error(e error) { // ::: - -
 	}
 }
 
+/*
+.
+*/
 // DIRECTIVES : --------------------------------------------------------------------------------------------
 // func handle_doubleQuestMark_directive(actual_objective_type string) { //        - -
 func handle_doubleQuestMark_directive() { // ::: - -
@@ -27,7 +30,10 @@ func handle_doubleQuestMark_directive() { // ::: - -
 	fmt.Println("")
 }
 
-// Handles the Directive ::: 'stc'
+/*
+.
+*/
+// Handles the Directive ::: 'stc' <--------------------------
 func reSet_via_a_hira_aCard_andThereBy_reSet_thePromptString() { // ::: - -
 	var theHiraganaOfCardToSilentlyLocate string
 	var isAlphanumeric bool
@@ -59,16 +65,14 @@ func reSet_via_a_hira_aCard_andThereBy_reSet_thePromptString() { // ::: - -
 		// May yet send an Alpha string to the next func, which will itself deal with it elegantly
 		silentlyLocateCard(theHiraganaOfCardToSilentlyLocate) // Set the Convenience-global: foundElement
 		aCard = *foundElement                                 // Set the global var-object 'aCard'
-	
+
 		if limitedToKataPrompts { // ::: we always know the card. So, if we also know one more thing, e.g., the type of the prompt. We then know other things.
-			// and, we always know the type of the prompt, ALWAYS!!!! Unfortunately, there are three (not two) prompt types. If there were only two prompt types we could know the object by elimination. We need one more piece of info.
-			// : the "response" type. That is, the (one of two) possible types of objective type. Where then, is actual_objective_type set??
+			// and, we always know the type of the prompt, ALWAYS!!!! Unfortunately, there are three (not two) prompt types.
+			// If there were only two prompt types we could know the object by elimination.
 			actual_prompt_char = aCard.Kata
-			// but the actual_objective type is undetermined ?? the objective type (hira or roma) is undetermined ??
 		} else if limitedToRomaPrompts {
 			actual_prompt_char = aCard.Romaji
 		} else if limitedToHiraPrompts {
-			// if you have been getting hira prompts, and you run stc and supply a hira char ... you will get that hira char as the prompt
 			actual_prompt_char = aCard.Hira
 		} else if limitedToDifficultKata {
 			actual_prompt_char = aCard.Kata
@@ -107,7 +111,10 @@ func reSet_via_a_hira_aCard_andThereBy_reSet_thePromptString() { // ::: - -
 	}
 }
 
-// Handles the Directive ::: 'stcr'
+/*
+.
+*/
+// Handles the Directive ::: 'stcr' <--------------------------
 func reSet_aCard_via_a_romaji_andThereBy_reSet_thePromptString() { // ::: - -
 	var theRomajiOfCardToSilentlyLocate string
 	var isAlphanumeric bool
@@ -122,12 +129,12 @@ func reSet_aCard_via_a_romaji_andThereBy_reSet_thePromptString() { // ::: - -
 	findAlphasIn := regexp.MustCompile(`[a-zA-Z]`)
 	switch true {
 	case findAlphasIn.MatchString(theRomajiOfCardToSilentlyLocate):
-		isAlphanumeric = false // ::: was true in stc/hira version ************
+		isAlphanumeric = false // ::: true in stc/hira version false here *********
 	default:
-		isAlphanumeric = true // ::: was false in stc/hira version ********************************* 
+		isAlphanumeric = true // ::: false in stc/hira version, true here *********************************
 	}
 	// Tentatively, prepare to Scan for user's input and attempt locating a matching 'aCard'
-	if isAlphanumeric == true { // ::: was also true in stc/hira version **************************
+	if isAlphanumeric == true { // ::: true in stc/hira version (and here too) **************************
 		fmt.Println("Are you in Japanese input mode?")
 		fmt.Printf("... if so, change it to US/romaji (or I mignt die)\n")
 		fmt.Printf("%s", colorRed) //
@@ -141,15 +148,12 @@ func reSet_aCard_via_a_romaji_andThereBy_reSet_thePromptString() { // ::: - -
 		aCard = *foundElement                                // Set the global var-object 'aCard'
 
 		if limitedToKataPrompts { // ::: we always know the card. So, if we also know one more thing, e.g., the type of the prompt. We then know other things.
-			// and, we always know the type of the prompt, ALWAYS!!!! Unfortunately, there are three (not two) prompt types. 
-			// If there were only two prompt types we could know the object by elimination. We need one more piece of info.
-			// : the "response" type. That is, the (one of two) possible types of objective type. Where then, is actual_objective_type set??
+			// and, we always know the type of the prompt, ALWAYS!!!! Unfortunately, there are three (not two) prompt types.
+			// If there were only two prompt types we could know the object by elimination.
 			actual_prompt_char = aCard.Kata
-			// but the actual_objective type is undetermined ?? the objective type (hira or roma) is undetermined ??
 		} else if limitedToRomaPrompts {
 			actual_prompt_char = aCard.Romaji
 		} else if limitedToHiraPrompts {
-			// if you have been getting hira prompts, and you run stc and supply a hira char ... you will get that hira char as the prompt
 			actual_prompt_char = aCard.Hira
 		} else if limitedToDifficultKata {
 			actual_prompt_char = aCard.Kata
@@ -188,28 +192,10 @@ func reSet_aCard_via_a_romaji_andThereBy_reSet_thePromptString() { // ::: - -
 	}
 }
 
+/*
+.
+*/
 func detectDirective(in string) (result bool) { // ::: - -
-	/*
-		 'nts' for some background on Romaji conventions
-		 'dir' redisplay this menu of available Directives
-		 'gdc' set the Duration Counter for a Game session
-		 'bgs' or 'goff' Begin or end a Game Session
-		 '?' context-sensitive help on the current character
-		 '??' for help on a particular Hiragana character
-		 'st' Statistics
-		 'abt' for trivia about this app
-		 'rs' to reset (flush or clear) all stats logs etc.
-		 'rm' Read the current contents of the Maps
-		 'stc' (Set-Card) force the use of a specific card (Hira input)
-		'stcr' (Set-Card) force the use of a specific card (Romaji input)
-		 'exko' load the Extended Kata deck
-		 'exkf' un-load the Extended Kata deck
-		'konly' Use Kata only
-		'hko'  Use both Hira and Kata prompting
-		"honly" .. Hira
-		"ronly" .. Romaji
-		"donly" .. Difficult
-	*/
 	if in == "stc" ||
 		in == "stcr" ||
 		in == "?" || // <-- If it IS a directive
@@ -238,14 +224,22 @@ func detectDirective(in string) (result bool) { // ::: - -
 	return result
 }
 
-func game_on() (game string) { // ::: - -
-	game = "on"
+/*
+.
+*/
+func game_on() { // ::: - -
+	game_loop_counter = 0
+
+	errors = 0
+	single_faults = 0
+	double_faults = 0
+	correctOnFirstAttempt = 0
+
 	gameOn = true
 	fmt.Println("The game is on")
 
-	startBeforeCall = time.Now()
 	currentTime := time.Now()
-	TimeOfStartFromTop = time.Now()
+	TimeOfStartFromInceptionOfGame = time.Now()
 
 	fileHandle, err := os.OpenFile("Jap2Log.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
 	check_error(err)
@@ -254,12 +248,11 @@ func game_on() (game string) { // ::: - -
 		"\n The game began at: %s \n",
 		currentTime.Format("15:04:05 on Monday 01-02-2006"))
 	check_error(err1)
-	return game
+	// return game
 }
 func game_off() (game string) { // ::: - -
 	game = "off"
 	gameOn = false
-	game_duration = 998
 
 	fileHandle, err := os.OpenFile("Jap2Log.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
 	check_error(err)
@@ -268,12 +261,46 @@ func game_off() (game string) { // ::: - -
 
 	// calculate elapsed time
 	t_s2 := time.Now()
-	elapsed := t_s2.Sub(TimeOfStartFromTop)
+	elapsed := t_s2.Sub(TimeOfStartFromInceptionOfGame)
 
 	// cast time durations to a String type for Fprintf "formatted print"
-	TotalRun := elapsed.String()
+	// TotalRun := elapsed.String()
 
-	fmt.Printf("\nRun time was: %s, gameOn is: %t \n\n", TotalRun, gameOn)
+	// Format the elapsed time to display minutes and whole seconds
+	minutes := int(elapsed.Minutes())
+	seconds := int(elapsed.Seconds()) % 60
+
+	// Create the formatted string
+	TotalRun := fmt.Sprintf("%02d:%02d", minutes, seconds)
+
+	// errors and correct should be right
+	//
+	// single_faults = single_faults - // as they happen ( double_faults + errors)
+
+	if errors == 0 && double_faults == 0 {
+		fmt.Println(colorRed)
+		fmt.Printf("\nYour Game run-time was:%s,  you got %d correct on your first try,  %d right on your second try. \n\n", TotalRun, correctOnFirstAttempt, single_faults)
+		fmt.Println(colorReset)
+	} else if errors == 0 {
+		fmt.Println(colorRed)
+		fmt.Printf("\nYour Game run-time was:%s,  you got %d correct on your first try,  %d right on your second try,\n"+
+			"you got %d right on your third try. \n\n", TotalRun, correctOnFirstAttempt, single_faults, double_faults)
+		fmt.Println(colorReset)
+	} else if double_faults == 0 {
+		fmt.Println(colorRed)
+		fmt.Printf("\nYour Game run-time was:%s,  you got %d correct on your first try,  %d right on your second try \n\n", TotalRun, correctOnFirstAttempt, single_faults)
+		fmt.Println(colorReset)
+	} else if single_faults == 0 {
+		fmt.Println(colorRed)
+		fmt.Printf("\nYour Game run-time was:%s,  Gongratulations! you got %d correct on your first try. \n\n", TotalRun, correctOnFirstAttempt)
+		fmt.Println(colorReset)
+	} else {
+		fmt.Println(colorRed)
+		fmt.Printf("\nYour Game run-time was:%s,  you got %d correct on your first try,  %d right on your second try,\n"+
+			"you got %d right on your third try, and were unable to answer correctly without a hint "+
+			"%d times. \n\n", TotalRun, correctOnFirstAttempt, single_faults, double_faults, errors)
+		fmt.Println(colorReset)
+	}
 
 	// End timer and report elapsed time
 	_, err1 := fmt.Fprintf(fileHandle,
@@ -287,6 +314,9 @@ func game_off() (game string) { // ::: - -
 	return game
 }
 
+/*
+.
+*/
 func read_pulledButNotUsedMap() { // ::: - -
 	if len(pulledButNotUsedMap) == 0 {
 		fmt.Printf(colorRed)
@@ -328,28 +358,37 @@ func read_pulledButNotUsedMap() { // ::: - -
 	*/
 }
 
-func read_pulls_not_used_array() {
-	for i, lastPull := range cyclicArrayPulls.pulls {
-		if i < len(cyclicArrayPulls.pulls) {
-			if lastPull != "" {
-				fmt.Printf("array: %s\n", lastPull)
+/*
+.
+
+	func read_pulls_not_used_array() {
+		for i, lastPull := range cyclicArrayPulls.pulls {
+			if i < len(cyclicArrayPulls.pulls) {
+				if lastPull != "" {
+					fmt.Printf("array: %s\n", lastPull)
+				}
+			} else {
+				break
 			}
-		} else {
-			break
 		}
 	}
-}
 
+/*
+.
+*/
 func about_app() { // ::: - -
 	fmt.Printf("\nThis app consists of the following lines of code accross %d files:\n\n", fileExplored)
 	countSLOC()
 	fmt.Printf("As Calculated in real-time by countSLOC(), a custom internal function.\n\n")
 }
 
+/*
+.
+*/
 func reset_all_data() { // ::: - -
 	// Flush (clear) the old stats and hits arrays
 	limitedToKataPrompts = false
-	limitedToHiraPrompts = false
+	limitedToHiraPrompts = true
 	limitedToRomaPrompts = false
 	limitedToDifficultKata = false
 	include_Extended_kata_deck = false
@@ -362,10 +401,14 @@ func reset_all_data() { // ::: - -
 	frequencyMapOf_need_workOn = make(map[string]int)
 	pulledButNotUsedMap = make(map[string]int)
 	total_prompts = 0
-	game = "off"
-	gameOn = false
-	game_duration = 998
+	correctOnFirstAttempt = 0
+	single_faults = 0
+	double_faults = 0
+	errors = 0
 	game_loop_counter = 0
+	game_duration = 15
+	gameOn = false
+
 	total_prompts = 0
 	//
 	//goland:noinspection ALL
@@ -379,6 +422,9 @@ func reset_all_data() { // ::: - -
 	fmt.Println(colorCyan + "  Limitations re Kata, Hira, and Romaji prompting; as well as all Game values have also been reset\n" + colorReset)
 }
 
+/*
+.
+*/
 func notes_on_kana() { // ::: - -
 	//goland:noinspection ALL  **do-this**
 	fmt.Println("\nIn the traditional Hepburn romanization system, the sound じ in hiragana is romanized as \"ji\" \n" +
@@ -397,27 +443,9 @@ func notes_on_kana() { // ::: - -
 .
 */
 func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
-	/* ::: as displayed
-	'nts' for some background on Romaji conventions
-	'dir' redisplay this menu of available Directives
-	'gdc' set the Duration Counter for a Game session
-	'bgs' or 'goff' Begin or end a Game Session
-	'?' context-sensitive help on the current character
-	'??' for help on a particular Hiragana character
-	'st' Statistics
-	'abt' for trivia about this app
-	'rs' to reset (flush or clear) all stats logs etc.
-	'rm' Read the current contents of the Maps
-	'stc' (Set-Card) force the use of a specific card (Hira input)
-	'stcr' (Set-Card) force the use of a specific card (Roma input)
-	'exko' load the Extended Kata deck
-	'exkf' un-load the Extended Kata deck
-	*/
-	// ::: alphabetically (mostly)
-	// todo game_duration, delete next line?
-	// var count int
 	switch usersSubmission {
 	// Directives follow:
+	// ::: alphabetically (mostly)
 	case "?":
 		fmt.Printf("\n%s\n%s\n%s\n\n", aCard.HiraHint, aCard.KataHint, aCard.TT_Hint)
 	case "??":
@@ -426,30 +454,35 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 	case "help":
 		helpText()
 	case "hko":
+		single_faults--
 		limitedToKataPrompts = true
 		limitedToHiraPrompts = true
 		limitedToRomaPrompts = false
 		limitedToDifficultKata = false
 		fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
 	case "konly":
+		single_faults--
 		limitedToKataPrompts = true
 		limitedToHiraPrompts = false
 		limitedToRomaPrompts = false
 		limitedToDifficultKata = false
 		fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
 	case "honly":
+		single_faults--
 		limitedToHiraPrompts = true
 		limitedToKataPrompts = false
 		limitedToRomaPrompts = false
 		limitedToDifficultKata = false
 		fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
 	case "ronly":
+		single_faults--
 		limitedToRomaPrompts = true
 		limitedToKataPrompts = false
 		limitedToHiraPrompts = false
 		limitedToDifficultKata = false
 		fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
 	case "donly":
+		single_faults--
 		limitedToDifficultKata = true
 		limitedToKataPrompts = false
 		limitedToHiraPrompts = false
@@ -461,7 +494,6 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 	case "abt":
 		about_app()
 	case "bgs":
-		game_loop_counter++
 		game_on()
 	case "dir": // reDisplay the DIRECTORY OF DIRECTIVES (and instructions):
 		re_display_List_of_Directives()
@@ -473,8 +505,7 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 		fmt.Println("Extended Kata deck has been un-loaded")
 	case "gdc":
 		fmt.Println("Enter a number for how many prompts there will be in the game")
-		_, _ = fmt.Scan(&count)
-		game_duration = count - 2
+		_, _ = fmt.Scan(&game_duration)
 	case "goff":
 		game_off()
 	case "nts":
@@ -499,7 +530,10 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 	}
 }
 
-func st_stats_function() {
+/*
+.
+*/
+func st_stats_function() { // ::: - -
 	newHits()
 	if !include_Extended_kata_deck {
 		fmt.Println("Extended Kata deck is NOT loaded\n")
@@ -521,7 +555,10 @@ func st_stats_function() {
 	}
 }
 
-func helpText() {
+/*
+.
+*/
+func helpText() { // ::: - -
 	fmt.Println(colorRed)
 	fmt.Printf("\nTo use this app you will need either a Japanese keyboard\n or a software work-around for same. \n\n")
 	fmt.Println(colorReset)

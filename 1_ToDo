@@ -1,7 +1,5 @@
-todo Bug::: stcr still has an issue. Though it does not crash the app if it us run immediately after an stc ...
-... it is actually recoverable if it is run after an stc. 
- 
-also tally lines of data SLOC 
+
+todo: also tally lines of data in SLOC 
 
 
 ::: cheat-sheet :

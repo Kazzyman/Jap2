@@ -12,7 +12,7 @@ func oldmain() {
 	fmt.Println()
 	countSLOC()                      // Determine and display Source Lines Of Code.
 	rand.Seed(time.Now().UnixNano()) // seed the random number generator with the current time in nanoseconds.
-	gameOn = false
+	theGameIsRunning = false
 	game = "off"
 	display_List_of_Directives()
 	oldmainLoop("junk", "junk", "junk") // Junk arguments are required, will not be used.
@@ -23,12 +23,12 @@ func oldmain() {
 func oldmainLoop(new_prompt, objective, actual_objective_type string) { // Only using the vars in signature to create needed local vars. - -
 	// mainLoop(...) is endless, excepting os.Exit(1) via Directive "q".
 	for {
-		if gameOn {
+		if theGameIsRunning {
 			game_loop_counter++
 		} else {
 			game_loop_counter = 0
 		}
-		if game_loop_counter > game_duration {
+		if game_loop_counter > jim {
 			game_off()
 		}
 		if cameFrom_stcR_NOTstc { // todo: Once this bool value is set true, how and where does it (and should it) get set false?
@@ -48,7 +48,7 @@ func oldmainLoop(new_prompt, objective, actual_objective_type string) { // Only 
 }
 
 func oldbegin(promptField, objective, actual_objective_type string) { // promptField could be a Hira, Kata, or a Romaji-type prompt.  - -
-	if game_loop_counter > game_duration {
+	if game_loop_counter > jim {
 		game_off()
 	}
 	var userInput string // This var declaration was needed since ":=" would not work within the conditional because "in" not in signature.
@@ -82,7 +82,7 @@ func oldbegin(promptField, objective, actual_objective_type string) { // promptF
 }
 
 func evaluateUsersGuess(userInput, promptField, objective, actual_objective_type string, recursion, recall bool) { // - -
-	if game_loop_counter > game_duration {
+	if game_loop_counter > jim {
 		game_off()
 	}
 	/*
@@ -95,7 +95,7 @@ func evaluateUsersGuess(userInput, promptField, objective, actual_objective_type
 	if recursion {
 		// Just proceed to the next "if" clause AND proceed todo the rightOrOops func, JUST ONCE!
 	} else {
-		if gameOn {
+		if theGameIsRunning {
 			game_loop_counter++
 		} else {
 			game_loop_counter = 0
@@ -104,7 +104,7 @@ func evaluateUsersGuess(userInput, promptField, objective, actual_objective_type
 	} // ^ ^ ^ ^ does NOT return directly back here.
 
 	if recall {
-		if gameOn {
+		if theGameIsRunning {
 			game_loop_counter++
 		} else {
 			game_loop_counter = 0

@@ -5,13 +5,8 @@ import (
 )
 
 func prompt_the_user_for_input() { // ::: - -
-
 	if guessLevelCounter == 1 {
 		guessLevelCounter++
-		game_loop_counter++
-		if game_loop_counter > game_duration {
-			game_off()
-		}
 		if actual_prompt_char_type == "roma" && actual_objective_type == "hira" {
 			fmt.Printf("%s", aCard.Romaji)
 			fmt.Printf("%s", colorCyan)
@@ -30,7 +25,6 @@ func prompt_the_user_for_input() { // ::: - -
 			}
 			fmt.Printf(" Here:> ")
 			fmt.Printf("%s", colorReset)
-
 		} else if actual_prompt_char_type == "hira" && actual_objective_type == "roma" {
 			fmt.Printf("%s", aCard.Hira)
 			fmt.Printf("%s", colorCyan)
@@ -49,11 +43,9 @@ func prompt_the_user_for_input() { // ::: - -
 			}
 			fmt.Printf(" Here:> ")
 			fmt.Printf("%s", colorReset)
-
 			/*
 				} else if actual_prompt_char_type == "kata" && actual_objective_type == "hira" { // ::: not a possible thang
 			*/
-
 		} else if actual_prompt_char_type == "kata" && actual_objective_type == "roma" {
 			fmt.Printf("%s", aCard.Kata)
 			fmt.Printf("%s", colorCyan)
@@ -72,28 +64,24 @@ func prompt_the_user_for_input() { // ::: - -
 			}
 			fmt.Printf(" Here:> ")
 			fmt.Printf("%s", colorReset)
-
 		} else {
 			fmt.Printf("Missing one or more elements of prompting style actual_prompt_char_type is %s, and actual_objective_type is %s\n", actual_prompt_char_type, actual_objective_type)
 		}
-
+		/*
+		   ;
+		*/
 	} else if guessLevelCounter == 2 {
-		no_interim_error_flag = false
 		guessLevelCounter++
-		// correct, single_faults, double_faults, errors
-		single_faults++
 		if actual_prompt_char_type == "roma" && actual_objective_type == "hira" {
 			fmt.Printf("%s", aCard.Romaji)
 			fmt.Printf("%s", colorCyan)
 			fmt.Printf(" Hiragana input-mode expected," + colorReset +
 				" Guess again, or '?' for clue\n Here:> ")
-
 		} else if actual_prompt_char_type == "hira" && actual_objective_type == "roma" {
 			fmt.Printf("%s", aCard.Hira)
 			fmt.Printf("%s", colorCyan)
 			fmt.Printf(" Romaji input-mode expected," + colorReset +
 				" Guess again, or '?' for clue\n Here:> ")
-
 		} else if actual_prompt_char_type == "kata" && actual_objective_type == "roma" {
 			fmt.Printf("%s", aCard.Kata)
 			fmt.Printf("%s", colorCyan)
@@ -102,38 +90,29 @@ func prompt_the_user_for_input() { // ::: - -
 		} else {
 			fmt.Printf("Missing one or more elements of prompting style actual_prompt_char_type is %s, and actual_objective_type is %s\n", actual_prompt_char_type, actual_objective_type)
 		}
-
 	} else if guessLevelCounter == 3 {
-		// correct, single_faults, double_faults, errors
-		double_faults++
-		single_faults--
+		guessLevelCounter++
 		if actual_prompt_char_type == "roma" && actual_objective_type == "hira" {
 			fmt.Printf("%s", aCard.Romaji)
 			fmt.Printf("%s", colorCyan)
 			fmt.Printf(" Hiragana input-mode expected," + colorReset +
 				" you must guess, just one more time\n Here:> ")
-
 		} else if actual_prompt_char_type == "hira" && actual_objective_type == "roma" {
 			fmt.Printf("%s", aCard.Hira)
 			fmt.Printf("%s", colorCyan)
 			fmt.Printf(" Romaji input-mode expected," + colorReset +
 				" you must guess, just one more time\n Here:> ")
-
 			/*
 				} else if actual_prompt_char_type == "kata" && actual_objective_type == "hira" { // ::: not a possible thang
 			*/
-
 		} else if actual_prompt_char_type == "kata" && actual_objective_type == "roma" {
 			fmt.Printf("%s", aCard.Kata)
 			fmt.Printf("%s", colorCyan)
 			fmt.Printf(" Romaji input-mode expected," + colorReset +
 				" you must guess, just one more time\n Here:> ")
-
 		} else {
 			fmt.Printf("Missing one or more elements of prompting style actual_prompt_char_type is %s, and actual_objective_type is %s\n", actual_prompt_char_type, actual_objective_type)
 		}
-		//
-		guessLevelCounter++
 		//
 	} else if guessLevelCounter > 3 {
 		display_failure_of_final_guess_message_etc(usersSubmission)
@@ -141,6 +120,7 @@ func prompt_the_user_for_input() { // ::: - -
 		begin_Kana_practice()
 	} else if guessLevelCounter >= 4 || guessLevelCounter <= -1 {
 		fmt.Printf("The value of guessLevelCounter is out of range, it is %d \n", guessLevelCounter)
+	} else {
 	}
 }
 
@@ -187,6 +167,9 @@ func List_of_Directives() { // ::: - -
 	fmt.Println("        Enter '" + colorGreen +
 		"gdc" + colorReset +
 		"' set the Duration Counter for a Game session ")
+	fmt.Println("        Enter '" + colorGreen +
+		"gdcs" + colorReset +
+		"' set game_duration_set_by_user for a Game session ")
 	fmt.Println("        Enter '" + colorGreen +
 		"bgs" + colorReset +
 		"' or " + colorGreen +
@@ -276,7 +259,11 @@ func display_List_of_Directives() { // (unique) // ::: - -
 	List_of_Directives()
 	//goland:noinspection ALL
 	fmt.Println("\n")
-	fmt.Printf("Game counter: %d, Game Duration: %d \n", game_loop_counter, game_duration)
+	if now_using_game_duration_set_by_user {
+		fmt.Printf("Game counter: %d, Game Duration: %d \n", game_loop_counter, game_duration_set_by_user)
+	} else {
+		fmt.Printf("Game counter: %d, Game Duration: %d \n", game_loop_counter, jim)
+	}
 	fmt.Printf("Current Prompt Count Total: %d \n\n", total_prompts)
 	fmt.Printf("Extended Kata deck is loaded: %t \n\n", include_Extended_kata_deck)
 	fmt.Printf("Limited to Kata prompts with Romaji objectives: %t \n", limitedToKataPrompts)
@@ -312,8 +299,20 @@ func re_display_List_of_Directives() { // (unique) // ::: - -
 	}
 	List_of_Directives()
 	//goland:noinspection ALL
-	fmt.Printf("game_loop_counter:%d, game_duration:%d \n", game_loop_counter, game_duration)
-	fmt.Printf("total_prompts:%d,  \n\n", total_prompts)
+	if theGameIsRunning {
+		if now_using_game_duration_set_by_user {
+			fmt.Println(colorRed)
+			fmt.Printf("\nAn active game is in session, the game_loop_counter is:%s%d%s, and the game_duration is set to:%s%d \n\n", colorReset, game_loop_counter, colorRed, colorReset, game_duration_set_by_user)
+			fmt.Println(colorReset)
+		} else {
+			fmt.Printf("game_loop_counter:%d, game_duration:%d \n", game_loop_counter, jim)
+		}
+		fmt.Printf("total_prompts:%d,  \n\n", total_prompts)
+	} else {
+		fmt.Println(colorRed)
+		fmt.Printf("\nYou are not currently engaged in a timed game sesion. \n\n")
+		fmt.Println(colorReset)
+	}
 
 	if !include_Extended_kata_deck {
 		fmt.Println("Extended Kata deck is NOT loaded\n")

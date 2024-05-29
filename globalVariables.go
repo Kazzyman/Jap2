@@ -21,8 +21,7 @@ var its_a_directive = false // A flag used to record the fact that we determined
 
 var non_standard_origin_stcR bool // Used in silentlyLocateCard to signal that we've come by-way-of the strc Directive.
 
-// user_guessed_prior_card_rightly, used w/ another var thisIsOurFirstRodeo (declared in main.go) to conditionally pick a new card.
-var user_guessed_prior_card_rightly bool // , i.e., if user_guessed_prior_card_rightly || thisIsOurFirstRodeo { ...
+var gotLastCardRightSoGetFreshOne bool
 
 var submission_already_processed_above bool // Used to avoid the Double-processing of usersSubmission s.
 
@@ -35,23 +34,27 @@ var limitedToDifficultKata bool
 
 var total_prompts int // Used in various statistical reporting functions.
 
-// Game-Feature-control-and-tallying-vars-Section: ***************************************
-var correctOnFirstAttempt int // Used along with no_interim_error_flag to log the obvious.
-var single_faults int
-var double_faults int
-var errors int
-var game_loop_counter int
-var game_duration = 15
-var no_interim_error_flag bool // Used to signal that the user has gotten this card correctly on his first attempt.
-var gameOn bool
+// ::: Game-Feature-control-and-tallying-vars-Section: ---------------------------------------
+var correctOnFirstAttemptAccumulator int
+var correctOnSecondAttemptAccumulator int
+var correctOnThirdAttemptAccumulator int
+var failedOnThirdAttemptAccumulator int
 
-// ***************************************************************************************
+var game_loop_counter int
+
+const game_duration = 15 // Fun with constants and
+var game_duration_set_by_user int
+var now_using_game_duration_set_by_user bool
+
+var theGameIsRunning bool
+
+// ::: ---------------------------------------------------------------------------------------
 
 var TimeOfStartFromInceptionOfGame = time.Now()
 
-var whichDeck int // Currently not actually being used. Under review. 
+var whichDeck int // Currently not actually being used. Under review.
 
-var foundElement *charSetStruct // Used in silentlyLocateCard for the stc and stcr Directives. 
+var foundElement *charSetStruct // Used in silentlyLocateCard for the stc and stcr Directives.
 
 // Global Maps:
 //
@@ -73,3 +76,10 @@ type CardInfo struct { // Technically, this is a constant rather than a global. 
 	SecondMeaningOnRecord string
 	CorrectGuessCount     int
 }
+
+const (
+	jim = game_duration
+)
+
+const rick = "\u001B[33m" // Another example, fun with constants
+const dick = rick

@@ -195,48 +195,10 @@ func reSet_aCard_via_a_romaji_andThereBy_reSet_thePromptString() { // ::: - -
 /*
 .
 */
-func detectDirective(in string) (result bool) { // ::: - -
-	if in == "stc" ||
-		in == "stcr" ||
-		in == "?" || // <-- If it IS a directive
-		in == "??" ||
-		in == "rs" ||
-		in == "st" ||
-		in == "dir" ||
-		in == "nts" ||
-		in == "q" ||
-		in == "rm" ||
-		in == "bgs" ||
-		in == "goff" ||
-		in == "abt" ||
-		in == "gdc" ||
-		in == "exko" ||
-		in == "exkf" ||
-		in == "konly" ||
-		in == "honly" ||
-		in == "ronly" ||
-		in == "donly" ||
-		in == "hko" ||
-		in == "help" {
-		// Then:
-		its_a_directive = true
-	}
-	return result
-}
 
-/*
-.
-*/
-func game_on() { // ::: - -
+func the_game_begins() { // ::: - -
 	game_loop_counter = 0
-
-	errors = 0
-	single_faults = 0
-	double_faults = 0
-	correctOnFirstAttempt = 0
-
-	gameOn = true
-	fmt.Println("The game is on")
+	theGameIsRunning = true
 
 	currentTime := time.Now()
 	TimeOfStartFromInceptionOfGame = time.Now()
@@ -248,11 +210,12 @@ func game_on() { // ::: - -
 		"\n The game began at: %s \n",
 		currentTime.Format("15:04:05 on Monday 01-02-2006"))
 	check_error(err1)
-	// return game
 }
-func game_off() (game string) { // ::: - -
-	game = "off"
-	gameOn = false
+func the_game_ends() (game string) { // ::: - -
+	theGameIsRunning = false
+	now_using_game_duration_set_by_user = false
+	game_duration_set_by_user = 0
+	game_loop_counter = 0
 
 	fileHandle, err := os.OpenFile("Jap2Log.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
 	check_error(err)
@@ -263,9 +226,6 @@ func game_off() (game string) { // ::: - -
 	t_s2 := time.Now()
 	elapsed := t_s2.Sub(TimeOfStartFromInceptionOfGame)
 
-	// cast time durations to a String type for Fprintf "formatted print"
-	// TotalRun := elapsed.String()
-
 	// Format the elapsed time to display minutes and whole seconds
 	minutes := int(elapsed.Minutes())
 	seconds := int(elapsed.Seconds()) % 60
@@ -273,39 +233,30 @@ func game_off() (game string) { // ::: - -
 	// Create the formatted string
 	TotalRun := fmt.Sprintf("%02d:%02d", minutes, seconds)
 
-	// errors and correct should be right
-	//
-	// single_faults = single_faults - // as they happen ( double_faults + errors)
-
-	if errors == 0 && double_faults == 0 {
+	if correctOnFirstAttemptAccumulator > 0 && correctOnSecondAttemptAccumulator > 0 && correctOnThirdAttemptAccumulator > 0 && failedOnThirdAttemptAccumulator == 0 { // ::: done
 		fmt.Println(colorRed)
-		fmt.Printf("\nYour Game run-time was:%s,  you got %d correct on your first try,  %d right on your second try. \n\n", TotalRun, correctOnFirstAttempt, single_faults)
-		fmt.Println(colorReset)
-	} else if errors == 0 {
+		fmt.Printf("\nYour Game run-time was:%s,  you got %s%d%s correct on your first try,  %s%d%s right on your second try,\n"+
+			"... and you got %s%d right on your third try. \n\n", TotalRun, colorReset, correctOnFirstAttemptAccumulator, colorRed, colorReset, correctOnSecondAttemptAccumulator,
+			colorRed, colorReset, correctOnThirdAttemptAccumulator)
+	} else if correctOnFirstAttemptAccumulator > 0 && correctOnSecondAttemptAccumulator > 0 && correctOnThirdAttemptAccumulator == 0 && failedOnThirdAttemptAccumulator == 0 { // ::: done
 		fmt.Println(colorRed)
-		fmt.Printf("\nYour Game run-time was:%s,  you got %d correct on your first try,  %d right on your second try,\n"+
-			"you got %d right on your third try. \n\n", TotalRun, correctOnFirstAttempt, single_faults, double_faults)
-		fmt.Println(colorReset)
-	} else if double_faults == 0 {
+		fmt.Printf("\nYour Game run-time was:%s,  you got %s%d%s correct on your first try,  %s%d right on your second try. \n\n", TotalRun, colorReset, correctOnFirstAttemptAccumulator,
+			colorRed, colorReset, correctOnSecondAttemptAccumulator)
+	} else if correctOnFirstAttemptAccumulator > 0 && correctOnSecondAttemptAccumulator == 0 && correctOnThirdAttemptAccumulator == 0 && failedOnThirdAttemptAccumulator == 0 { // ::: done
 		fmt.Println(colorRed)
-		fmt.Printf("\nYour Game run-time was:%s,  you got %d correct on your first try,  %d right on your second try \n\n", TotalRun, correctOnFirstAttempt, single_faults)
-		fmt.Println(colorReset)
-	} else if single_faults == 0 {
-		fmt.Println(colorRed)
-		fmt.Printf("\nYour Game run-time was:%s,  Gongratulations! you got %d correct on your first try. \n\n", TotalRun, correctOnFirstAttempt)
-		fmt.Println(colorReset)
+		fmt.Printf("\nYour Game run-time was:%s,  Gongratulations! you got %s%d correct on your first try. \n\n", TotalRun, colorReset, correctOnFirstAttemptAccumulator)
 	} else {
 		fmt.Println(colorRed)
-		fmt.Printf("\nYour Game run-time was:%s,  you got %d correct on your first try,  %d right on your second try,\n"+
-			"you got %d right on your third try, and were unable to answer correctly without a hint "+
-			"%d times. \n\n", TotalRun, correctOnFirstAttempt, single_faults, double_faults, errors)
-		fmt.Println(colorReset)
+		fmt.Printf("\nYour Game run-time was:%s,  you got %s%d%s correct on your first try,  %s%d%s right on your second try,\n"+
+			"... and you got %s%d%s right on your third try, and were unable to answer correctly without a hint "+
+			"%s%d times. \n\n", TotalRun, colorReset, correctOnFirstAttemptAccumulator, colorRed, colorReset, correctOnSecondAttemptAccumulator,
+			colorRed, colorReset, correctOnThirdAttemptAccumulator, colorRed, colorReset, failedOnThirdAttemptAccumulator)
 	}
 
 	// End timer and report elapsed time
 	_, err1 := fmt.Fprintf(fileHandle,
-		"\n The game ended at: %s  Total prompts was: %d \n",
-		currentTime.Format("15:04:05 on Monday 01-02-2006"), total_prompts)
+		"\n The game ended at: %s  Total prompts was: %s%d%s \n",
+		currentTime.Format("15:04:05 on Monday 01-02-2006"), colorReset, total_prompts)
 	check_error(err1)
 	_, err2 := fmt.Fprintf(fileHandle,
 		"\n Elapsed time of game was: %s \n",
@@ -401,13 +352,13 @@ func reset_all_data() { // ::: - -
 	frequencyMapOf_need_workOn = make(map[string]int)
 	pulledButNotUsedMap = make(map[string]int)
 	total_prompts = 0
-	correctOnFirstAttempt = 0
-	single_faults = 0
-	double_faults = 0
-	errors = 0
+	correctOnFirstAttemptAccumulator = 0
+	correctOnSecondAttemptAccumulator = 0
+	correctOnThirdAttemptAccumulator = 0
+	failedOnThirdAttemptAccumulator = 0
 	game_loop_counter = 0
-	game_duration = 15
-	gameOn = false
+	// jim = 15
+	theGameIsRunning = false
 
 	total_prompts = 0
 	//
@@ -442,7 +393,40 @@ func notes_on_kana() { // ::: - -
 .
 .
 */
-func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
+func detectDirective(in string) (result bool) { // ::: - -
+	if in == "stc" ||
+		in == "stcr" ||
+		in == "?" || // <-- If it IS a directive
+		in == "??" ||
+		in == "rs" ||
+		in == "st" ||
+		in == "dir" ||
+		in == "nts" ||
+		in == "q" ||
+		in == "rm" ||
+		in == "bgs" ||
+		in == "goff" ||
+		in == "abt" ||
+		in == "gdc" ||
+		in == "exko" ||
+		in == "exkf" ||
+		in == "konly" ||
+		in == "honly" ||
+		in == "ronly" ||
+		in == "donly" ||
+		in == "hko" ||
+		in == "help" ||
+		in == "f" ||
+		in == "gdcs" {
+		// Then:
+		its_a_directive = true
+	}
+	return result
+}
+
+/*
+.
+*/func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 	switch usersSubmission {
 	// Directives follow:
 	// ::: alphabetically (mostly)
@@ -454,35 +438,30 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 	case "help":
 		helpText()
 	case "hko":
-		single_faults--
 		limitedToKataPrompts = true
 		limitedToHiraPrompts = true
 		limitedToRomaPrompts = false
 		limitedToDifficultKata = false
 		fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
 	case "konly":
-		single_faults--
 		limitedToKataPrompts = true
 		limitedToHiraPrompts = false
 		limitedToRomaPrompts = false
 		limitedToDifficultKata = false
 		fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
 	case "honly":
-		single_faults--
 		limitedToHiraPrompts = true
 		limitedToKataPrompts = false
 		limitedToRomaPrompts = false
 		limitedToDifficultKata = false
 		fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
 	case "ronly":
-		single_faults--
 		limitedToRomaPrompts = true
 		limitedToKataPrompts = false
 		limitedToHiraPrompts = false
 		limitedToDifficultKata = false
 		fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
 	case "donly":
-		single_faults--
 		limitedToDifficultKata = true
 		limitedToKataPrompts = false
 		limitedToHiraPrompts = false
@@ -494,7 +473,8 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 	case "abt":
 		about_app()
 	case "bgs":
-		game_on()
+		fmt.Println("temp out-of-order, duration is jim, i.e., 15") // Just playing here.
+		the_game_begins()
 	case "dir": // reDisplay the DIRECTORY OF DIRECTIVES (and instructions):
 		re_display_List_of_Directives()
 	case "exko":
@@ -504,10 +484,20 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 		include_Extended_kata_deck = false
 		fmt.Println("Extended Kata deck has been un-loaded")
 	case "gdc":
+		fmt.Println("temp out-of-order, duration is jim, i.e., 15") // Just playing here.
+		/*
+			fmt.Println("Enter a number for how many prompts there will be in the game")
+			_, _ = fmt.Scan(&jim) // Would break if attempt is made to assign a value to a const such as jim.
+
+		*/
+		the_game_begins()
+	case "f": // "gdcs":
 		fmt.Println("Enter a number for how many prompts there will be in the game")
-		_, _ = fmt.Scan(&game_duration)
+		_, _ = fmt.Scan(&game_duration_set_by_user)
+		now_using_game_duration_set_by_user = true
+		the_game_begins()
 	case "goff":
-		game_off()
+		the_game_ends()
 	case "nts":
 		notes_on_kana()
 	case "q":

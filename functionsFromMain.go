@@ -18,10 +18,10 @@ func logRight_zu(userInput, promptField, actual_objective_type string) { // ::: 
 	fmt.Printf("It could have been either ず or づ as they are the same sound: zu\n")
 }
 
-func logRight(userInput, promptField, actual_objective_type string) { // ::: - -
-	// logRight(userInput, promptField, actual_objective_type)
+func displayRight_logRight(userInput, promptField, actual_objective_type string) { // ::: - -
 	log_right(promptField, userInput)
 	fmt.Printf("%s", colorGreen)
+
 	if actual_objective_type == "Hira" {
 		fmt.Printf("      　%s %s   - %s\n", aCard.Romaji, aCard.Kata, aCard.SansR_Hint)
 	} else { // else it is Romaji, so:

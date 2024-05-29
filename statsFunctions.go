@@ -35,6 +35,29 @@ func log_right(prompt_it_was, in string) { // - -
 	recordGuess(prompt_it_was, in, aCard.Kata, aCard.Hira)
 	logSkipThisPrompt_inThe_frequencyMapOf_IsFineOnChars(prompt_it_was)
 	logHits_in_cyclicArrayHits("Right", prompt_it_was)
+
+	if theGameIsRunning {
+		game_loop_counter++
+		if game_loop_counter > game_duration_set_by_user {
+			the_game_ends()
+		}
+		if guessLevelCounter == 2 {
+			correctOnFirstAttemptAccumulator++
+		} else if guessLevelCounter == 3 {
+			correctOnSecondAttemptAccumulator++
+		} else {
+			// ... then ... the guessLevelCounter was 4.
+			correctOnThirdAttemptAccumulator++
+		}
+	} else {
+		guessLevelCounter = 0
+		correctOnSecondAttemptAccumulator = 0
+		correctOnThirdAttemptAccumulator = 0
+	}
+
+	// Only get a fresh card if been here.
+	gotLastCardRightSoGetFreshOne = true
+
 }
 
 // 'Reinforce-or-Skip' loggers|Inserters:

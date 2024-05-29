@@ -122,7 +122,7 @@ func locateCardAndDisplayHelpFieldsContainedInIt(Hira_or_Romaji_input_sameAsProm
 	}
 }
 
-// used ONLY in the 'stc' directive to reSet the prompt & "aCard." fields
+// ::: used ONLY in the 'stc' directive to reSet the prompt & "aCard." fields
 func silentlyLocateCard(setKeyRequest string) { //  - -
 	var isAlphanumeric bool
 	findAlphasIn := regexp.MustCompile(`[a-zA-Z]`)
@@ -186,31 +186,25 @@ func silentlyLocateCard(setKeyRequest string) { //  - -
 	}
 }
 
-// used ONLY in the 'stcr' directive to reSet the prompt & "aCard." fields
+// ::: used ONLY in the 'stcr' directive to reSet the prompt & "aCard." fields
 func silentlyLocateCardr(setKeyRequest string) { //  - -
-
-	// ::: debug on - fmt.Println("a")
 
 	var isAlphanumeric bool
 	findAlphasIn := regexp.MustCompile(`[a-zA-Z]`)
 
 	if non_standard_origin_stcR { // ::: This is never true!!  this gets me to the bottom.
-		// ::: debug on - fmt.Println("b")
 
 		switch true {
 		case findAlphasIn.MatchString(setKeyRequest):
 			isAlphanumeric = true
-			// ::: debug on - fmt.Println("c")
 
 		default:
 			isAlphanumeric = true
 		}
 
 		if isAlphanumeric != true { // ... then we should be safe to proceed with what will be a romaji char
-			// ::: debug on - fmt.Println("d")
 
 			for _, card := range fileOfCardsS {
-				// ::: debug on - fmt.Println("e")
 
 				if card.Romaji == setKeyRequest {
 					// v v v if we find a 'card' in the range of 'fileOfCards',
@@ -221,40 +215,28 @@ func silentlyLocateCardr(setKeyRequest string) { //  - -
 					break
 				}
 			}
-			// ::: debug on - fmt.Println("f")
 
 			if foundElement == nil {
 				fmt.Println("Element not found in: silentlyLocateCard(setKeyRequest string)")
 			}
 		} else {
-			// ::: debug on - fmt.Println("g")
-
 			fmt.Printf(colorRed)
 			fmt.Println("\nYou bastard!")
 			fmt.Printf("\nYou have killed me with a Hira string instead of a Romaji char\n\n")
 			fmt.Printf("the card we got was: %s\n\n", foundElement)
-
 			fmt.Printf(colorReset)
 		}
 	} else { // we are doing a Hira reset instead of a Romaji reset
-
-		// ::: debug on - fmt.Println("one")
 
 		switch true {
 		case findAlphasIn.MatchString(setKeyRequest):
 			isAlphanumeric = false
 
-			// ::: debug on - fmt.Println("two")
-
 		default:
 			isAlphanumeric = true
-
-			// ::: debug on - fmt.Println("three")
-
 		}
 
 		if isAlphanumeric == false { // ... then we should be safe to proceed with what will be a Hiragana char
-			// ::: debug on - fmt.Println("four")
 
 			for _, card := range fileOfCardsS {
 				if card.Romaji == setKeyRequest {
@@ -265,14 +247,10 @@ func silentlyLocateCardr(setKeyRequest string) { //  - -
 				}
 			}
 
-			// ::: debug on - fmt.Println("five")
-
 			if foundElement == nil {
 				fmt.Println("Element not found in: silentlyLocateCard(setKeyRequest string)")
 			}
 		} else {
-			// ::: debug on - fmt.Println("six")
-
 			fmt.Printf(colorRed)
 			fmt.Println("\nYou bastard!")
 			fmt.Printf("\nYou have killed me with an Alpha string instead of a Hiragana\n\n")

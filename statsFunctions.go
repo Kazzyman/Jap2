@@ -36,13 +36,19 @@ func log_right(prompt_it_was, in string) { // - -
 	logSkipThisPrompt_inThe_frequencyMapOf_IsFineOnChars(prompt_it_was)
 	logHits_in_cyclicArrayHits("Right", prompt_it_was)
 
+	// when we finally got it right, we see if a game is running
 	if theGameIsRunning {
 		game_loop_counter++
 		if game_loop_counter > game_duration_set_by_user {
 			the_game_ends()
 		}
 		if guessLevelCounter == 2 {
-			correctOnFirstAttemptAccumulator++
+			if gottenHonestly { // ::: trying not to accumulate if after an error
+				correctOnFirstAttemptAccumulator++
+				gottenHonestly = false // ::: trying not to accumulate if after an error
+			} else {
+				// gottenHonestly = false // was false
+			}
 		} else if guessLevelCounter == 3 {
 			correctOnSecondAttemptAccumulator++
 		} else {
@@ -50,9 +56,8 @@ func log_right(prompt_it_was, in string) { // - -
 			correctOnThirdAttemptAccumulator++
 		}
 	} else {
-		guessLevelCounter = 0
-		correctOnSecondAttemptAccumulator = 0
-		correctOnThirdAttemptAccumulator = 0
+		// else the game is not running, so:
+		guessLevelCounter = 0 // ::: only instance
 	}
 
 	// Only get a fresh card if been here.

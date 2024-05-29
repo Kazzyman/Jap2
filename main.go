@@ -16,6 +16,7 @@ func main() {
 	theGameIsRunning = false
 	guessLevelCounter = 1
 	limitedToHiraPrompts = true
+	gottenHonestly = true
 	fmt.Println()
 	countSLOC()                     // Determine and display Source Lines Of Code.
 	pick_RandomCard_Assign_fields() // Pick the first card.
@@ -40,7 +41,7 @@ func begin_Kana_practice() { // ::: - -
 		_, _ = fmt.Scan(&usersSubmission)
 
 		// If users input is a Directive, handle it.
-		frontEnd_Possible_Recursive_DirHandler()
+		frontEnd_Possible_Recursive_DirHandler() // ::: this contains the only other prompt
 
 		priorToProcessingUsersSubmission_check_IfTypeEnteredRightly()
 	}
@@ -113,7 +114,6 @@ func Process_users_input_as_a_guess() { // ::: - -
 			logRight_zu(usersSubmission, actual_prompt_char, actual_objective_type)
 		} else {
 			gotLastCardRightSoGetFreshOne = false
-			display_failure_of_final_guess_message_etc(usersSubmission)
 		}
 	} else {
 		// todo]  Note: that "else", here, means that actual_objective != "zu"  ... but the actual_objective may yet be ず or づ.
@@ -126,7 +126,6 @@ func Process_users_input_as_a_guess() { // ::: - -
 				logRightZu2(usersSubmission, actual_prompt_char, actual_objective_type, actual_objective)
 			} else {
 				gotLastCardRightSoGetFreshOne = false
-				display_failure_of_final_guess_message_etc(usersSubmission)
 			}
 		}
 	} // If the objective was any form of zu,  it has been processed above.
@@ -142,7 +141,6 @@ func Process_users_input_as_a_guess() { // ::: - -
 			gotLastCardRightSoGetFreshOne = true
 			displayRight_logRight(usersSubmission, actual_prompt_char, actual_objective_type)
 		} else {
-			display_failure_of_final_guess_message_etc(usersSubmission) // ::: Oops! Wrong!
 			gotLastCardRightSoGetFreshOne = false
 		}
 	}

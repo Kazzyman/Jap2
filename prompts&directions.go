@@ -11,17 +11,25 @@ func prompt_the_user_for_input() { // ::: - -
 			fmt.Printf("%s", aCard.Romaji)
 			fmt.Printf("%s", colorCyan)
 			if limitedToDifficultKata {
-				fmt.Printf(" Hiragana?, or 'dir' - Limited To Difficult Kata\n")
+				fmt.Printf(" Hiragana?, or 'dir' - Limited To Difficult Kata")
 			} else if limitedToRomaPrompts {
-				fmt.Printf(" Hiragana?, or 'dir' - Limited To Romaji Prompts\n")
+				fmt.Printf(" Hiragana?, or 'dir' - Limited To Romaji Prompts")
 			} else if limitedToKataPrompts && limitedToHiraPrompts {
-				fmt.Printf(" Romaji?, or 'dir' - Includes both Kata and Hira Prompts\n")
+				fmt.Printf(" Romaji?, or 'dir' - Includes both Kata and Hira Prompts")
 			} else if limitedToHiraPrompts {
-				fmt.Printf(" Hiragana?, or 'dir' - Limited To Hira Prompts\n")
+				fmt.Printf(" Hiragana?, or 'dir' - Limited To Hira Prompts")
 			} else if limitedToKataPrompts {
-				fmt.Printf(" Hiragana?, or 'dir' - Limited To Kata Prompts\n")
+				fmt.Printf(" Hiragana?, or 'dir' - Limited To Kata Prompts")
 			} else {
-				fmt.Printf(" Hiragana?, or 'dir' - standard mix\n")
+				fmt.Printf(" Hiragana?, or 'dir' - standard mix")
+			}
+			if theGameIsRunning {
+				fmt.Printf(", %s%s is playing: %s1st:%s%d%s, 2nd:%s%d%s, 3rd:%s%d%s, fails:%s%d%s \n",
+					colorReset, nameOfPlayer, colorRed, colorReset, correctOnFirstAttemptAccumulator,
+					colorRed, colorReset, correctOnSecondAttemptAccumulator, colorRed, colorReset, correctOnThirdAttemptAccumulator,
+					colorRed, colorReset, failedOnThirdAttemptAccumulator, colorReset)
+			} else {
+				fmt.Println()
 			}
 			fmt.Printf(" Here:> ")
 			fmt.Printf("%s", colorReset)
@@ -29,17 +37,25 @@ func prompt_the_user_for_input() { // ::: - -
 			fmt.Printf("%s", aCard.Hira)
 			fmt.Printf("%s", colorCyan)
 			if limitedToDifficultKata {
-				fmt.Printf(" Romaji?, or 'dir' - Limited To Difficult Kata\n")
+				fmt.Printf(" Romaji?, or 'dir' - Limited To Difficult Kata")
 			} else if limitedToRomaPrompts {
-				fmt.Printf(" Romaji?, or 'dir' - Limited To Romaji Prompts\n")
+				fmt.Printf(" Romaji?, or 'dir' - Limited To Romaji Prompts")
 			} else if limitedToKataPrompts && limitedToHiraPrompts {
-				fmt.Printf(" Romaji?, or 'dir' - Includes both Kata and Hira Prompts\n")
+				fmt.Printf(" Romaji?, or 'dir' - Includes both Kata and Hira Prompts")
 			} else if limitedToHiraPrompts {
-				fmt.Printf(" Romaji?, or 'dir' - Limited To Hira Prompts\n")
+				fmt.Printf(" Romaji?, or 'dir' - Limited To Hira Prompts")
 			} else if limitedToKataPrompts {
-				fmt.Printf(" Romaji?, or 'dir' - Limited To Kata Prompts\n")
+				fmt.Printf(" Romaji?, or 'dir' - Limited To Kata Prompts")
 			} else {
-				fmt.Printf(" Romaji?, or 'dir' - standard mix\n")
+				fmt.Printf(" Romaji?, or 'dir' - standard mix")
+			}
+			if theGameIsRunning {
+				fmt.Printf(", %s%s is playing: %s1st:%s%d%s, 2nd:%s%d%s, 3rd:%s%d%s, fails:%s%d%s \n",
+					colorReset, nameOfPlayer, colorRed, colorReset, correctOnFirstAttemptAccumulator,
+					colorRed, colorReset, correctOnSecondAttemptAccumulator, colorRed, colorReset, correctOnThirdAttemptAccumulator,
+					colorRed, colorReset, failedOnThirdAttemptAccumulator, colorReset)
+			} else {
+				fmt.Println()
 			}
 			fmt.Printf(" Here:> ")
 			fmt.Printf("%s", colorReset)
@@ -50,17 +66,25 @@ func prompt_the_user_for_input() { // ::: - -
 			fmt.Printf("%s", aCard.Kata)
 			fmt.Printf("%s", colorCyan)
 			if limitedToDifficultKata {
-				fmt.Printf(" Romaji?, or 'dir' - Limited To Difficult Kata\n")
+				fmt.Printf(" Romaji?, or 'dir' - Limited To Difficult Kata")
 			} else if limitedToRomaPrompts {
-				fmt.Printf(" Romaji?, or 'dir' - Limited To Romaji Prompts\n")
+				fmt.Printf(" Romaji?, or 'dir' - Limited To Romaji Prompts")
 			} else if limitedToKataPrompts && limitedToHiraPrompts {
-				fmt.Printf(" Romaji?, or 'dir' - Includes both Kata and Hira Prompts\n")
+				fmt.Printf(" Romaji?, or 'dir' - Includes both Kata and Hira Prompts")
 			} else if limitedToHiraPrompts {
-				fmt.Printf(" Romaji?, or 'dir' - Limited To Hira Prompts\n")
+				fmt.Printf(" Romaji?, or 'dir' - Limited To Hira Prompts")
 			} else if limitedToKataPrompts {
-				fmt.Printf(" Romaji?, or 'dir' - Limited To Kata Prompts\n")
+				fmt.Printf(" Romaji?, or 'dir' - Limited To Kata Prompts")
 			} else {
-				fmt.Printf(" Romaji?, or 'dir' - standard mix\n")
+				fmt.Printf(" Romaji?, or 'dir' - standard mix")
+			}
+			if theGameIsRunning {
+				fmt.Printf(", %s%s is playing: %s1st:%s%d%s, 2nd:%s%d%s, 3rd:%s%d%s, fails:%s%d%s \n",
+					colorReset, nameOfPlayer, colorRed, colorReset, correctOnFirstAttemptAccumulator,
+					colorRed, colorReset, correctOnSecondAttemptAccumulator, colorRed, colorReset, correctOnThirdAttemptAccumulator,
+					colorRed, colorReset, failedOnThirdAttemptAccumulator, colorReset)
+			} else {
+				fmt.Println()
 			}
 			fmt.Printf(" Here:> ")
 			fmt.Printf("%s", colorReset)
@@ -70,6 +94,7 @@ func prompt_the_user_for_input() { // ::: - -
 		/*
 		   ;
 		*/
+		gottenHonestly = true
 	} else if guessLevelCounter == 2 {
 		guessLevelCounter++
 		if actual_prompt_char_type == "roma" && actual_objective_type == "hira" {
@@ -100,11 +125,8 @@ func prompt_the_user_for_input() { // ::: - -
 		} else if actual_prompt_char_type == "hira" && actual_objective_type == "roma" {
 			fmt.Printf("%s", aCard.Hira)
 			fmt.Printf("%s", colorCyan)
-			fmt.Printf(" Romaji input-mode expected," + colorReset +
+			fmt.Printf(" vRomaji input-mode expected," + colorReset +
 				" you must guess, just one more time\n Here:> ")
-			/*
-				} else if actual_prompt_char_type == "kata" && actual_objective_type == "hira" { // ::: not a possible thang
-			*/
 		} else if actual_prompt_char_type == "kata" && actual_objective_type == "roma" {
 			fmt.Printf("%s", aCard.Kata)
 			fmt.Printf("%s", colorCyan)
@@ -114,6 +136,7 @@ func prompt_the_user_for_input() { // ::: - -
 			fmt.Printf("Missing one or more elements of prompting style actual_prompt_char_type is %s, and actual_objective_type is %s\n", actual_prompt_char_type, actual_objective_type)
 		}
 		//
+		gottenHonestly = false
 	} else if guessLevelCounter > 3 {
 		display_failure_of_final_guess_message_etc(usersSubmission)
 		guessLevelCounter = 1

@@ -197,8 +197,11 @@ func reSet_aCard_via_a_romaji_andThereBy_reSet_thePromptString() { // ::: - -
 */
 
 func the_game_begins() { // ::: - -
-	game_loop_counter = 0
 	theGameIsRunning = true
+	game_loop_counter = 0
+	correctOnFirstAttemptAccumulator = 1
+	correctOnSecondAttemptAccumulator = -1
+	correctOnThirdAttemptAccumulator = 0
 
 	currentTime := time.Now()
 	TimeOfStartFromInceptionOfGame = time.Now()
@@ -492,6 +495,8 @@ func detectDirective(in string) (result bool) { // ::: - -
 		*/
 		the_game_begins()
 	case "f": // "gdcs":
+		fmt.Println("What is your name?")
+		_, _ = fmt.Scan(&nameOfPlayer)
 		fmt.Println("Enter a number for how many prompts there will be in the game")
 		_, _ = fmt.Scan(&game_duration_set_by_user)
 		now_using_game_duration_set_by_user = true

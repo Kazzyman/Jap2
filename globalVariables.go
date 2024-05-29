@@ -39,6 +39,8 @@ var correctOnFirstAttemptAccumulator int
 var correctOnSecondAttemptAccumulator int
 var correctOnThirdAttemptAccumulator int
 var failedOnThirdAttemptAccumulator int
+var gottenHonestly bool
+var nameOfPlayer string
 
 var game_loop_counter int
 

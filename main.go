@@ -16,6 +16,7 @@ func main() {
 	rand.Seed(time.Now().UnixNano()) // Seed the random number generator with the current time in nanoseconds.
 	theGameIsRunning = false
 	guessLevelCounter = 1
+	limitedToKataPrompts = true
 	limitedToHiraPrompts = true
 	gottenHonestly = true
 	fmt.Println()
@@ -41,13 +42,21 @@ func begin_Kana_practice() { // ::: - -
 		// Do you want to play a game?
 		if usersSubmission == "game" {
 			guessLevelCounter = 1
-			fmt.Println("Welcome to the game. You may end the game early via a submission of off or goff")
+			fmt.Println("Welcome to the game. Dir options: off/goff, stc, stcr, q, dirg")
 			fmt.Println("What is your name?")
 			_, _ = fmt.Scan(&nameOfPlayer)
 			fmt.Println("Enter a number for how many prompts there will be in the game")
 			_, _ = fmt.Scan(&game_duration_set_by_user)
+			display_limited_gaming_dir_list()
+			
 			now_using_game_duration_set_by_user = true
 			the_game_begins()
+		} else if usersSubmission == "stc" {
+			reSet_via_a_hira_aCard_andThereBy_reSet_thePromptString()
+		} else if usersSubmission == "stcr" {
+			reSet_aCard_via_a_romaji_andThereBy_reSet_thePromptString()
+		} else if usersSubmission == "dirg" {
+			display_limited_gaming_dir_list()
 		}
 
 		// During gaming, disallow checking for Directives other than q, and goff.
@@ -126,9 +135,23 @@ func priorToProcessingUsersSubmission_check_IfTypeEnteredRightly() { // ::: - -
 
 func Process_users_input_as_a_guess() { // ::: - -
 	// ::: Firstly, we'll do some special processing to address the strange case of zu, ず, and づ.
+	// Since actual_objective can only ever be of roma or hira type, those two we now do.
+	// ... First the roma:
 	if actual_objective == "zu" {
 		if usersSubmission == "zu" {
-
+			if guessLevelCounter == 3 {
+				fileHandle, err := os.OpenFile("Jap2Log.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
+				check_error(err)
+				_, err1 := fmt.Fprintf(fileHandle,
+					"\nUser may have mistyped==%s:%s:%s", aCard.Romaji, aCard.Hira, aCard.Kata) // mistyped is a word?
+				check_error(err1)
+			} else if guessLevelCounter == 4 {
+				fileHandle, err := os.OpenFile("Jap2Log.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
+				check_error(err)
+				_, err1 := fmt.Fprintf(fileHandle,
+					"\n3 User had a some difficulty with==%s:%s:%s", aCard.Romaji, aCard.Hira, aCard.Kata)
+				check_error(err1)
+			}
 			gotLastCardRightSoGetFreshOne = true
 			submission_already_processed_above = true // ::: because we are doing it now.
 
@@ -137,11 +160,24 @@ func Process_users_input_as_a_guess() { // ::: - -
 			gotLastCardRightSoGetFreshOne = false
 			// logging etc. of Oops is being done in log_oops() by way of prompt_the_user_for_input()
 		}
+		// ... and Then the hira: (and in the case of zu, there are two hira forms of zu)
 	} else {
 		// todo]  Note: that "else", here, means that actual_objective != "zu"  ... but the actual_objective may yet be ず or づ.
 		if actual_objective == "ず" || actual_objective == "づ" {
 			if usersSubmission == "づ" || usersSubmission == "ず" {
-
+				if guessLevelCounter == 3 {
+					fileHandle, err := os.OpenFile("Jap2Log.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
+					check_error(err)
+					_, err1 := fmt.Fprintf(fileHandle,
+						"\nUser may have mistyped==%s:%s:%s", aCard.Romaji, aCard.Hira, aCard.Kata) // mistyped is a word?
+					check_error(err1)
+				} else if guessLevelCounter == 4 {
+					fileHandle, err := os.OpenFile("Jap2Log.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
+					check_error(err)
+					_, err1 := fmt.Fprintf(fileHandle,
+						"\n3 User had a some difficulty with==%s:%s:%s", aCard.Romaji, aCard.Hira, aCard.Kata)
+					check_error(err1)
+				}
 				gotLastCardRightSoGetFreshOne = true
 				submission_already_processed_above = true // ::: because we are doing it now.
 
@@ -151,16 +187,29 @@ func Process_users_input_as_a_guess() { // ::: - -
 				// logging etc. of Oops is being done in log_oops() by way of prompt_the_user_for_input()
 			}
 		}
-	} // If the objective was any form of zu,  it has been processed above.
+	} // If the objective was any form of zu,  it has already been processed above.
 	/*
 	   ===
 	   ===
 	*/
 	// ::: Now; having dispensed with the odd case of the zu clan -- we return you to our usual programming :)
 	if submission_already_processed_above == true { // If it was handled as a zu case above ...
-		// ... then there is nothing to do, else
+		// ... it was a form of zu, and there is nothing more to do, else
 	} else {
-		if usersSubmission == actual_objective { // ::: Right
+		if usersSubmission == actual_objective {
+			if guessLevelCounter == 3 {
+				fileHandle, err := os.OpenFile("Jap2Log.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
+				check_error(err)
+				_, err1 := fmt.Fprintf(fileHandle,
+					"\nUser may have mistyped==%s:%s:%s", aCard.Romaji, aCard.Hira, aCard.Kata) // mistyped is a word?
+				check_error(err1)
+			} else if guessLevelCounter == 4 {
+				fileHandle, err := os.OpenFile("Jap2Log.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
+				check_error(err)
+				_, err1 := fmt.Fprintf(fileHandle,
+					"\n3 User had a some difficulty with==%s:%s:%s", aCard.Romaji, aCard.Hira, aCard.Kata)
+				check_error(err1)
+			}
 			gotLastCardRightSoGetFreshOne = true
 			displayRight_logRight(usersSubmission, actual_prompt_char, actual_objective_type)
 		} else {
@@ -169,6 +218,7 @@ func Process_users_input_as_a_guess() { // ::: - -
 		}
 	}
 	submission_already_processed_above = false // So, reset it for the next round.
+
 }
 
 /*
@@ -204,6 +254,12 @@ func display_failure_of_final_guess_message_etc(userInput string) { // ::: - -
 	fmt.Printf("%s", colorRed)
 	fmt.Printf("     ^^Oops! That was your last try looser. Here's a clue, just for you: ...\n %s", colorReset)
 	fmt.Printf("\n%s\n%s\n%s\n\n", aCard.HiraHint, aCard.KataHint, aCard.TT_Hint)
+
+	fileHandle, err := os.OpenFile("Jap2Log.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
+	check_error(err)
+	_, err1 := fmt.Fprintf(fileHandle,
+		"\nUser had a REAL ISSUE with==%s:%s:%s", aCard.Romaji, aCard.Hira, aCard.Kata)
+	check_error(err1)
 }
 func log_oops_andUpdateGame(prompt_it_was, field_it_was, guess string) { // - -
 	if theGameIsRunning {

@@ -6,7 +6,7 @@ import (
 
 func prompt_the_user_for_input() { // ::: - -
 
-	if guessLevelCounter == 1 {
+	if guessLevelCounter == 1 { // ::: --------- 1 1 1 1 1 1 ------------------
 		guessLevelCounter++
 		if actual_prompt_char_type == "roma" && actual_objective_type == "hira" {
 			fmt.Printf("%s", aCard.Romaji)
@@ -16,7 +16,7 @@ func prompt_the_user_for_input() { // ::: - -
 			} else if limitedToRomaPrompts {
 				fmt.Printf(" Hiragana?, or 'dir' - Limited To Romaji Prompts")
 			} else if limitedToKataPrompts && limitedToHiraPrompts {
-				fmt.Printf(" Romaji?, or 'dir' - Includes both Kata and Hira Prompts")
+				fmt.Printf(" Romaji?, or 'dir' - Includes Kata&Hira Prompts")
 			} else if limitedToHiraPrompts {
 				fmt.Printf(" Hiragana?, or 'dir' - Limited To Hira Prompts")
 			} else if limitedToKataPrompts {
@@ -42,7 +42,7 @@ func prompt_the_user_for_input() { // ::: - -
 			} else if limitedToRomaPrompts {
 				fmt.Printf(" Romaji?, or 'dir' - Limited To Romaji Prompts")
 			} else if limitedToKataPrompts && limitedToHiraPrompts {
-				fmt.Printf(" Romaji?, or 'dir' - Includes both Kata and Hira Prompts")
+				fmt.Printf(" Romaji?, or 'dir' - Includes Kata&Hira Prompts")
 			} else if limitedToHiraPrompts {
 				fmt.Printf(" Romaji?, or 'dir' - Limited To Hira Prompts")
 			} else if limitedToKataPrompts {
@@ -71,7 +71,7 @@ func prompt_the_user_for_input() { // ::: - -
 			} else if limitedToRomaPrompts {
 				fmt.Printf(" Romaji?, or 'dir' - Limited To Romaji Prompts")
 			} else if limitedToKataPrompts && limitedToHiraPrompts {
-				fmt.Printf(" Romaji?, or 'dir' - Includes both Kata and Hira Prompts")
+				fmt.Printf(" Romaji?, or 'dir' - Includes Kata&Hira Prompts")
 			} else if limitedToHiraPrompts {
 				fmt.Printf(" Romaji?, or 'dir' - Limited To Hira Prompts")
 			} else if limitedToKataPrompts {
@@ -96,7 +96,7 @@ func prompt_the_user_for_input() { // ::: - -
 		   ;
 		*/
 		gottenHonestly = true
-	} else if guessLevelCounter == 2 {
+	} else if guessLevelCounter == 2 { // ::: ------------------------------------------ 2 2 2 2 2 2 2 2 2 2 2 -------------------
 		guessLevelCounter++
 		if actual_prompt_char_type == "roma" && actual_objective_type == "hira" {
 			fmt.Printf("%s", aCard.Romaji)
@@ -116,7 +116,12 @@ func prompt_the_user_for_input() { // ::: - -
 		} else {
 			fmt.Printf("Missing one or more elements of prompting style actual_prompt_char_type is %s, and actual_objective_type is %s\n", actual_prompt_char_type, actual_objective_type)
 		}
-	} else if guessLevelCounter == 3 {
+		/*.
+		.
+
+		*/
+	} else if guessLevelCounter == 3 { // ::: -------------------3 3 3 3 3 3 3 3 3 3 --------------------------------------
+
 		guessLevelCounter++
 		if actual_prompt_char_type == "roma" && actual_objective_type == "hira" {
 			fmt.Printf("%s", aCard.Romaji)
@@ -138,7 +143,7 @@ func prompt_the_user_for_input() { // ::: - -
 		}
 		//
 		gottenHonestly = false
-	} else if guessLevelCounter > 3 {
+	} else if guessLevelCounter > 3 { // ::: --------------------------  > 3  > 3  > 3  > 3  > 3  > 3  ---- i.e. 4  --------------------
 		display_failure_of_final_guess_message_etc(usersSubmission)
 		weHadFailed_And_OnlyGotThisRightBecauseOfTheClue = true
 		guessLevelCounter = 1 // ::: was 1, why 1 ??, prob because it is set to 1 twice in main
@@ -178,6 +183,23 @@ func promptForRomajiE(prompt string) { // ::: - -
 -
 -
 */
+func display_limited_gaming_dir_list() {
+	fmt.Println("        Enter '" + colorGreen +
+		"dirg" + colorReset +
+		"' DirGame, Display this list")
+	fmt.Println("        Enter '" + colorGreen +
+		"off" + colorReset +
+		"' End this game early")
+	fmt.Println("        Enter '" + colorGreen +
+		"stc" + colorReset +
+		"' (Set-Card) force the use of a specific card (Hira input)")
+	fmt.Println("        Enter '" + colorGreen +
+		"stcr" + colorReset +
+		"' (Set-Card) force the use of a specific card (Roma input)")
+	fmt.Println("        Enter '" + colorGreen +
+		"q" + colorReset +
+		"', (quit) terminate the app")
+}
 
 // List_of_Directives ::: is in use, a few steps removed.
 func List_of_Directives() { // ::: - -
@@ -337,7 +359,7 @@ func re_display_List_of_Directives() { // (unique) // ::: - -
 	}
 
 	if limitedToKataPrompts && limitedToHiraPrompts {
-		fmt.Printf("Includes BOTH Kata AND Hira prompts, with romaji objectives: %t \n\n", limitedToKataPrompts)
+		fmt.Printf("Includes Kata&Hira prompts, w/romaji objectives: %t \n\n", limitedToKataPrompts)
 	}
 	if limitedToKataPrompts {
 		fmt.Printf("Limited to Kata prompts, with ONLY Romaji objectives: %t \n\n", limitedToKataPrompts)

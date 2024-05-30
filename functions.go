@@ -215,15 +215,15 @@ func the_game_begins() { // ::: - -
 	check_error(err)
 
 	_, err1 := fmt.Fprintf(fileHandle,
-		"\n The game began at: %s \n",
+		"\n\n-- A game began at: %s",
 		currentTime.Format("15:04:05 on Monday 01-02-2006"))
 	check_error(err1)
 }
 func the_game_ends() { // ::: - -
 	theGameIsRunning = false
 	now_using_game_duration_set_by_user = false
-	game_duration_set_by_user = 0
-	game_loop_counter = 0
+	// game_duration_set_by_user = 0
+	// game_loop_counter = 0
 
 	fileHandle, err := os.OpenFile("Jap2Log.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
 	check_error(err)
@@ -280,18 +280,18 @@ func the_game_ends() { // ::: - -
 
 	// End timer and report elapsed time and other stats to a file.
 	_, err1 := fmt.Fprintf(fileHandle,
-		"\n The game ended at: %s  Total prompts was: %d \n",
+		"\n-- A game ended at: %s  Total prompts was: %d \n",
 		currentTime.Format("15:04:05 on Monday 01-02-2006"), game_loop_counter)
 	check_error(err1)
 
-	_, err3 := fmt.Fprintf(fileHandle, "\n\n%s played: 1st:%d, 2nd:%d, 3rd:%d, fails:%d, %d/%d\n\n",
+	_, err3 := fmt.Fprintf(fileHandle, "%s's results were as follows: Right on first attempt:%d, on 2nd attempt:%d, 3rd attempt:%d, even a hint was ineffective:%d, %d/%d\n",
 		nameOfPlayer, correctOnFirstAttemptAccumulator,
 		correctOnSecondAttemptAccumulator, correctOnThirdAttemptAccumulator,
 		failedOnThirdAttemptAccumulator, game_loop_counter, game_duration_set_by_user)
 	check_error(err3)
 
 	_, err2 := fmt.Fprintf(fileHandle,
-		"\n Elapsed time of game was: %s \n",
+		"The Elapsed time of the game was: %s \n\n\n",
 		TotalRun)
 	check_error(err2)
 }

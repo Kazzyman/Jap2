@@ -190,17 +190,6 @@ func List_of_Directives() { // ::: - -
 		"dir" + colorReset +
 		"' redisplay this menu of available Directives")
 	fmt.Println("        Enter '" + colorGreen +
-		"gdc" + colorReset +
-		"' set the Duration Counter for a Game session ")
-	fmt.Println("        Enter '" + colorGreen +
-		"gdcs" + colorReset +
-		"' set game_duration_set_by_user for a Game session ")
-	fmt.Println("        Enter '" + colorGreen +
-		"bgs" + colorReset +
-		"' or " + colorGreen +
-		"'goff'" + colorReset +
-		" Begin or end a Game Session ")
-	fmt.Println("        Enter '" + colorGreen +
 		"?" + colorReset +
 		"' context-sensitive help on the current character")
 	fmt.Println("        Enter '" + colorGreen +
@@ -224,6 +213,7 @@ func List_of_Directives() { // ::: - -
 	fmt.Println("        Enter '" + colorGreen +
 		"stcr" + colorReset +
 		"' (Set-Card) force the use of a specific card (Roma input)")
+
 	fmt.Println("        Enter '" + colorGreen +
 		"exko" + colorReset +
 		"' load the Extended Kata deck")
@@ -244,7 +234,6 @@ func List_of_Directives() { // ::: - -
 	fmt.Println("        Enter '" + colorGreen +
 		"ronly" + colorReset +
 		"' Use only Romaji prompting and Hira objective , rs to ReSet")
-
 	fmt.Println("        Enter '" + colorGreen +
 		"donly" + colorReset +
 		"' Difficult Kata only, rs to ReSet")
@@ -252,10 +241,12 @@ func List_of_Directives() { // ::: - -
 	fmt.Println("        Enter '" + colorGreen +
 		"help" + colorReset +
 		"' For instructions on how to use this app")
-
 	fmt.Println("        Enter '" + colorGreen +
 		"q" + colorReset +
 		"', (quit) terminate the app")
+	fmt.Println("        Enter '" + colorGreen +
+		"game" + colorReset +
+		"', to begin a session and log stats to a file")
 }
 
 /*

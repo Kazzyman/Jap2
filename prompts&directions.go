@@ -5,6 +5,7 @@ import (
 )
 
 func prompt_the_user_for_input() { // ::: - -
+
 	if guessLevelCounter == 1 {
 		guessLevelCounter++
 		if actual_prompt_char_type == "roma" && actual_objective_type == "hira" {
@@ -24,10 +25,10 @@ func prompt_the_user_for_input() { // ::: - -
 				fmt.Printf(" Hiragana?, or 'dir' - standard mix")
 			}
 			if theGameIsRunning {
-				fmt.Printf(", %s%s is playing: %s1st:%s%d%s, 2nd:%s%d%s, 3rd:%s%d%s, fails:%s%d%s \n",
+				fmt.Printf(", %s%s is playing: %s1st:%s%d%s, 2nd:%s%d%s, 3rd:%s%d%s, fails:%s%d, %s%d/%d%s\n",
 					colorReset, nameOfPlayer, colorRed, colorReset, correctOnFirstAttemptAccumulator,
 					colorRed, colorReset, correctOnSecondAttemptAccumulator, colorRed, colorReset, correctOnThirdAttemptAccumulator,
-					colorRed, colorReset, failedOnThirdAttemptAccumulator, colorReset)
+					colorRed, colorReset, failedOnThirdAttemptAccumulator, colorCyan, game_loop_counter, game_duration_set_by_user, colorReset)
 			} else {
 				fmt.Println()
 			}
@@ -50,10 +51,10 @@ func prompt_the_user_for_input() { // ::: - -
 				fmt.Printf(" Romaji?, or 'dir' - standard mix")
 			}
 			if theGameIsRunning {
-				fmt.Printf(", %s%s is playing: %s1st:%s%d%s, 2nd:%s%d%s, 3rd:%s%d%s, fails:%s%d%s \n",
+				fmt.Printf(", %s%s is playing: %s1st:%s%d%s, 2nd:%s%d%s, 3rd:%s%d%s, fails:%s%d, %s%d/%d%s\n",
 					colorReset, nameOfPlayer, colorRed, colorReset, correctOnFirstAttemptAccumulator,
 					colorRed, colorReset, correctOnSecondAttemptAccumulator, colorRed, colorReset, correctOnThirdAttemptAccumulator,
-					colorRed, colorReset, failedOnThirdAttemptAccumulator, colorReset)
+					colorRed, colorReset, failedOnThirdAttemptAccumulator, colorCyan, game_loop_counter, game_duration_set_by_user, colorReset)
 			} else {
 				fmt.Println()
 			}
@@ -79,10 +80,10 @@ func prompt_the_user_for_input() { // ::: - -
 				fmt.Printf(" Romaji?, or 'dir' - standard mix")
 			}
 			if theGameIsRunning {
-				fmt.Printf(", %s%s is playing: %s1st:%s%d%s, 2nd:%s%d%s, 3rd:%s%d%s, fails:%s%d%s \n",
+				fmt.Printf(", %s%s is playing: %s1st:%s%d%s, 2nd:%s%d%s, 3rd:%s%d%s, fails:%s%d, %s%d/%d%s\n",
 					colorReset, nameOfPlayer, colorRed, colorReset, correctOnFirstAttemptAccumulator,
 					colorRed, colorReset, correctOnSecondAttemptAccumulator, colorRed, colorReset, correctOnThirdAttemptAccumulator,
-					colorRed, colorReset, failedOnThirdAttemptAccumulator, colorReset)
+					colorRed, colorReset, failedOnThirdAttemptAccumulator, colorCyan, game_loop_counter, game_duration_set_by_user, colorReset)
 			} else {
 				fmt.Println()
 			}
@@ -139,7 +140,8 @@ func prompt_the_user_for_input() { // ::: - -
 		gottenHonestly = false
 	} else if guessLevelCounter > 3 {
 		display_failure_of_final_guess_message_etc(usersSubmission)
-		guessLevelCounter = 1
+		weHadFailed_And_OnlyGotThisRightBecauseOfTheClue = true
+		guessLevelCounter = 1 // ::: was 1, why 1 ??, prob because it is set to 1 twice in main
 		begin_Kana_practice()
 	} else if guessLevelCounter >= 4 || guessLevelCounter <= -1 {
 		fmt.Printf("The value of guessLevelCounter is out of range, it is %d \n", guessLevelCounter)

@@ -197,12 +197,17 @@ func reSet_aCard_via_a_romaji_andThereBy_reSet_thePromptString() { // ::: - -
 */
 
 func the_game_begins() { // ::: - -
-	theGameIsRunning = true
+	theGameIsRunning = true // ::: this flag is the only thing that "starts" a game
 	game_loop_counter = 0
-	correctOnFirstAttemptAccumulator = 1
-	correctOnSecondAttemptAccumulator = -1
-	correctOnThirdAttemptAccumulator = 0
+	// correctOnFirstAttemptAccumulator = 1   // ::: here it is/was not able to process the last guess prior to game ending.
+	// correctOnSecondAttemptAccumulator = -1 // ::: kluge !!
+	// ::: if the first query of a game is gotten right on the first attempt, it is logged as a 2nd and not a 1st
+	correctOnFirstAttemptAccumulator = 0
+	correctOnSecondAttemptAccumulator = 0
+	failedOnThirdAttemptAccumulator = 0
 
+	//
+	// ::: file-writing and time-stamping is all that follows ==========================================
 	currentTime := time.Now()
 	TimeOfStartFromInceptionOfGame = time.Now()
 
@@ -214,7 +219,7 @@ func the_game_begins() { // ::: - -
 		currentTime.Format("15:04:05 on Monday 01-02-2006"))
 	check_error(err1)
 }
-func the_game_ends() (game string) { // ::: - -
+func the_game_ends() { // ::: - -
 	theGameIsRunning = false
 	now_using_game_duration_set_by_user = false
 	game_duration_set_by_user = 0
@@ -236,6 +241,23 @@ func the_game_ends() (game string) { // ::: - -
 	// Create the formatted string
 	TotalRun := fmt.Sprintf("%02d:%02d", minutes, seconds)
 
+	// ::: ------------------------------------------------------------------- v v v v
+	Process_users_input_as_a_guess() // ::: trying this ---- and these ------- v v v v
+	if guessLevelCounter == 2 {
+		if gottenHonestly {
+			correctOnFirstAttemptAccumulator++
+			gottenHonestly = false
+		}
+	} else if guessLevelCounter == 3 {
+		correctOnSecondAttemptAccumulator++
+	} else { // :::  this else never runs, so guessLevelCounter is either 2 or 3, but never 1 or 4 ? ---------------------------
+		// correctOnThirdAttemptAccumulator++ // ::: why had I commented-out this line ??? if the else never is done, it could not have mattered
+		fmt.Printf("guessLevelCounter is:%d, where it maybe-should-be-4-? \n", guessLevelCounter) // ::: never executes ????
+		// ... then ... the guessLevelCounter was 4?.
+		// correctOnThirdAttemptAccumulator++ // ::: why had I commented-out this line ???
+		// ::: fail/error accumulator gets incremented (or at least it gets displayed [below]) during the oops message
+	} // - - - - - - - - - - - - - - - - - - - - - - - - - ::: -----------------------------------------------------------------
+
 	if correctOnFirstAttemptAccumulator > 0 && correctOnSecondAttemptAccumulator > 0 && correctOnThirdAttemptAccumulator > 0 && failedOnThirdAttemptAccumulator == 0 { // ::: done
 		fmt.Println(colorRed)
 		fmt.Printf("\nYour Game run-time was:%s,  you got %s%d%s correct on your first try,  %s%d%s right on your second try,\n"+
@@ -256,16 +278,22 @@ func the_game_ends() (game string) { // ::: - -
 			colorRed, colorReset, correctOnThirdAttemptAccumulator, colorRed, colorReset, failedOnThirdAttemptAccumulator)
 	}
 
-	// End timer and report elapsed time
+	// End timer and report elapsed time and other stats to a file.
 	_, err1 := fmt.Fprintf(fileHandle,
-		"\n The game ended at: %s  Total prompts was: %s%d%s \n",
-		currentTime.Format("15:04:05 on Monday 01-02-2006"), colorReset, total_prompts)
+		"\n The game ended at: %s  Total prompts was: %d \n",
+		currentTime.Format("15:04:05 on Monday 01-02-2006"), game_loop_counter)
 	check_error(err1)
+
+	_, err3 := fmt.Fprintf(fileHandle, "\n\n%s played: 1st:%d, 2nd:%d, 3rd:%d, fails:%d, %d/%d\n\n",
+		nameOfPlayer, correctOnFirstAttemptAccumulator,
+		correctOnSecondAttemptAccumulator, correctOnThirdAttemptAccumulator,
+		failedOnThirdAttemptAccumulator, game_loop_counter, game_duration_set_by_user)
+	check_error(err3)
+
 	_, err2 := fmt.Fprintf(fileHandle,
 		"\n Elapsed time of game was: %s \n",
 		TotalRun)
 	check_error(err2)
-	return game
 }
 
 /*
@@ -407,10 +435,7 @@ func detectDirective(in string) (result bool) { // ::: - -
 		in == "nts" ||
 		in == "q" ||
 		in == "rm" ||
-		in == "bgs" ||
-		in == "goff" ||
 		in == "abt" ||
-		in == "gdc" ||
 		in == "exko" ||
 		in == "exkf" ||
 		in == "konly" ||
@@ -418,9 +443,7 @@ func detectDirective(in string) (result bool) { // ::: - -
 		in == "ronly" ||
 		in == "donly" ||
 		in == "hko" ||
-		in == "help" ||
-		in == "f" ||
-		in == "gdcs" {
+		in == "help" {
 		// Then:
 		its_a_directive = true
 	}
@@ -486,23 +509,6 @@ func detectDirective(in string) (result bool) { // ::: - -
 	case "exkf":
 		include_Extended_kata_deck = false
 		fmt.Println("Extended Kata deck has been un-loaded")
-	case "gdc":
-		fmt.Println("temp out-of-order, duration is jim, i.e., 15") // Just playing here.
-		/*
-			fmt.Println("Enter a number for how many prompts there will be in the game")
-			_, _ = fmt.Scan(&jim) // Would break if attempt is made to assign a value to a const such as jim.
-
-		*/
-		the_game_begins()
-	case "f": // "gdcs":
-		fmt.Println("What is your name?")
-		_, _ = fmt.Scan(&nameOfPlayer)
-		fmt.Println("Enter a number for how many prompts there will be in the game")
-		_, _ = fmt.Scan(&game_duration_set_by_user)
-		now_using_game_duration_set_by_user = true
-		the_game_begins()
-	case "goff":
-		the_game_ends()
 	case "nts":
 		notes_on_kana()
 	case "q":

@@ -31,33 +31,35 @@ func recordGuess(kana, users_Guess, Meaning_on_record, second_meaning string) {
 }
 
 // LOGGERS:
-func log_right(prompt_it_was, in string) { // - -
+func log_right_andUpdateGame(prompt_it_was, in string) { // - -
 	recordGuess(prompt_it_was, in, aCard.Kata, aCard.Hira)
 	logSkipThisPrompt_inThe_frequencyMapOf_IsFineOnChars(prompt_it_was)
 	logHits_in_cyclicArrayHits("Right", prompt_it_was)
 
-	// when we finally got it right, we see if a game is running
 	if theGameIsRunning {
 		game_loop_counter++
 		if game_loop_counter > game_duration_set_by_user {
 			the_game_ends()
 		}
-		if guessLevelCounter == 2 {
-			if gottenHonestly { // ::: trying not to accumulate if after an error
-				correctOnFirstAttemptAccumulator++
-				gottenHonestly = false // ::: trying not to accumulate if after an error
-			} else {
-				// gottenHonestly = false // was false
-			}
-		} else if guessLevelCounter == 3 {
-			correctOnSecondAttemptAccumulator++
+
+		if weHadFailed_And_OnlyGotThisRightBecauseOfTheClue {
+			// Then that fail has already been logged and we need to skip all logging.
+			weHadFailed_And_OnlyGotThisRightBecauseOfTheClue = false
 		} else {
-			// ... then ... the guessLevelCounter was 4.
-			correctOnThirdAttemptAccumulator++
+			if guessLevelCounter == 2 {
+				if gottenHonestly { // todo] do not accumulate if after an "error" or hint
+					correctOnFirstAttemptAccumulator++ // ::: 1st
+					gottenHonestly = false
+				}
+			} else if guessLevelCounter == 3 {
+				correctOnSecondAttemptAccumulator++ // ::: 2nd
+			} else {
+				// ... then ... the guessLevelCounter was 4.
+				fmt.Printf("here in log right, guessLevelCounter is:%d, and it should be 4\n", guessLevelCounter)
+				correctOnThirdAttemptAccumulator++ // ::: 3rd
+			}
+			// ::: The other accumulator++  thang : failedOnThirdAttemptAccumulator ]todo[ ... gets handled in log_oops()
 		}
-	} else {
-		// else the game is not running, so:
-		guessLevelCounter = 0 // ::: only instance
 	}
 
 	// Only get a fresh card if been here.

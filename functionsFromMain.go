@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 func logRight_zu(userInput, promptField, actual_objective_type string) { // ::: - -
-	log_right(promptField, userInput)
+	log_right_andUpdateGame(promptField, userInput)
 	fmt.Printf("%s", colorGreen)
 	if actual_objective_type == "Hira" {
 		fmt.Printf("      　%s %s   - %s\n", aCard.Romaji, aCard.Kata, aCard.SansR_Hint)
@@ -19,7 +19,7 @@ func logRight_zu(userInput, promptField, actual_objective_type string) { // ::: 
 }
 
 func displayRight_logRight(userInput, promptField, actual_objective_type string) { // ::: - -
-	log_right(promptField, userInput)
+	log_right_andUpdateGame(promptField, userInput)
 	fmt.Printf("%s", colorGreen)
 
 	if actual_objective_type == "Hira" {
@@ -35,7 +35,7 @@ func displayRight_logRight(userInput, promptField, actual_objective_type string)
 }
 
 func logRightZu2(userInput, promptField, actual_objective_type, objective string) { // ::: - -
-	log_right(promptField, userInput)
+	log_right_andUpdateGame(promptField, userInput)
 	fmt.Printf("%s", colorGreen)
 	if actual_objective_type == "Hira" {
 		fmt.Printf("      　%s %s   - %s\n", aCard.Romaji, aCard.Kata, aCard.SansR_Hint)

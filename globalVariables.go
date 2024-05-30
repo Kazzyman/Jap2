@@ -15,8 +15,6 @@ var actual_prompt_char_type string //  "hira",  "roma",  "kata"
 
 var usersSubmission string
 
-var guessLevelCounter = 0 // Used to determine the level of (or the format of) prompts.
-
 var its_a_directive = false // A flag used to record the fact that we determined that the usersSubmission was a Directive.
 
 var non_standard_origin_stcR bool // Used in silentlyLocateCard to signal that we've come by-way-of the strc Directive.
@@ -41,7 +39,9 @@ var correctOnThirdAttemptAccumulator int
 var failedOnThirdAttemptAccumulator int
 var gottenHonestly bool
 var nameOfPlayer string
+var weHadFailed_And_OnlyGotThisRightBecauseOfTheClue bool
 
+var guessLevelCounter = 1 // Used to determine the level of (or the format of) prompts.
 var game_loop_counter int
 
 const game_duration = 15 // Fun with constants and

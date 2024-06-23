@@ -1,3 +1,5 @@
+bugs:
+
 todo: add comparisons in data like wa to ne (they are very similar)
 
 todo::: extensive testing, then tackle Kanji.
@@ -23,4 +25,3 @@ splat b  :: go to declaration
 Ctrl-k  :: kill to end of line. 
 
 ::: end cheat-sheet.
-

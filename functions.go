@@ -370,7 +370,7 @@ func about_app() { // ::: - -
 func reset_all_data() { // ::: - -
 	// Flush (clear) the old stats and hits arrays
 	limitedToKataPrompts = false
-	limitedToHiraPrompts = true
+	limitedToHiraPrompts = false
 	limitedToRomaPrompts = false
 	limitedToDifficultDescriptions = false
 	include_Extended_kata_deck = false

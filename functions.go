@@ -74,7 +74,7 @@ func reSet_via_a_hira_aCard_andThereBy_reSet_thePromptString() { // ::: - -
 			actual_prompt_char = aCard.Romaji
 		} else if limitedToHiraPrompts {
 			actual_prompt_char = aCard.Hira
-		} else if limitedToDifficultKata {
+		} else if limitedToDifficultDescriptions {
 			actual_prompt_char = aCard.Kata
 		} else {
 			// ::: don't even think about it!
@@ -155,7 +155,7 @@ func reSet_aCard_via_a_romaji_andThereBy_reSet_thePromptString() { // ::: - -
 			actual_prompt_char = aCard.Romaji
 		} else if limitedToHiraPrompts {
 			actual_prompt_char = aCard.Hira
-		} else if limitedToDifficultKata {
+		} else if limitedToDifficultDescriptions {
 			actual_prompt_char = aCard.Kata
 		} else {
 			// ::: don't even think about it!
@@ -372,7 +372,7 @@ func reset_all_data() { // ::: - -
 	limitedToKataPrompts = false
 	limitedToHiraPrompts = true
 	limitedToRomaPrompts = false
-	limitedToDifficultKata = false
+	limitedToDifficultDescriptions = false
 	include_Extended_kata_deck = false
 	cyclicArrayOfTheJcharsGottenWrong = CyclicArrayOfTheJcharsGottenWrong{}
 	cyclicArrayHits = CyclicArrayHits{}
@@ -424,7 +424,7 @@ func notes_on_kana() { // ::: - -
 .
 .
 */
-func detectDirective(in string) (result bool) { // ::: - -
+func detectDirective(in string) { // ::: - -
 	if in == "stc" ||
 		in == "stcr" ||
 		in == "?" || // <-- If it IS a directive
@@ -447,12 +447,14 @@ func detectDirective(in string) (result bool) { // ::: - -
 		// Then:
 		its_a_directive = true
 	}
-	return result
+	// return result
 }
 
 /*
 .
-*/func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
+*/
+
+func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 	switch usersSubmission {
 	// Directives follow:
 	// ::: alphabetically (mostly)
@@ -467,29 +469,29 @@ func detectDirective(in string) (result bool) { // ::: - -
 		limitedToKataPrompts = true
 		limitedToHiraPrompts = true
 		limitedToRomaPrompts = false
-		limitedToDifficultKata = false
+		limitedToDifficultDescriptions = false
 		fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
 	case "konly":
 		limitedToKataPrompts = true
 		limitedToHiraPrompts = false
 		limitedToRomaPrompts = false
-		limitedToDifficultKata = false
+		limitedToDifficultDescriptions = false
 		fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
 	case "honly":
 		limitedToHiraPrompts = true
 		limitedToKataPrompts = false
 		limitedToRomaPrompts = false
-		limitedToDifficultKata = false
+		limitedToDifficultDescriptions = false
 		fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
 	case "ronly":
 		limitedToRomaPrompts = true
 		limitedToKataPrompts = false
 		limitedToHiraPrompts = false
-		limitedToDifficultKata = false
+		limitedToDifficultDescriptions = false
 		fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
 	case "donly":
-		limitedToDifficultKata = true
-		limitedToKataPrompts = false
+		limitedToDifficultDescriptions = true
+		limitedToKataPrompts = true
 		limitedToHiraPrompts = false
 		limitedToRomaPrompts = false
 		fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
@@ -498,9 +500,7 @@ func detectDirective(in string) (result bool) { // ::: - -
 		*/
 	case "abt":
 		about_app()
-	case "bgs":
-		fmt.Println("temp out-of-order, duration is jim, i.e., 15") // Just playing here.
-		the_game_begins()
+
 	case "dir": // reDisplay the DIRECTORY OF DIRECTIVES (and instructions):
 		re_display_List_of_Directives()
 	case "exko":
@@ -551,8 +551,8 @@ func st_stats_function() { // ::: - -
 	if limitedToRomaPrompts {
 		fmt.Printf("Limited to Romaji prompts only: %t \n\n", limitedToRomaPrompts)
 	}
-	if limitedToDifficultKata {
-		fmt.Printf("Limited to Difficult Kata only: %t \n\n", limitedToDifficultKata)
+	if limitedToDifficultDescriptions {
+		fmt.Printf("Limited to Difficult Kata only: %t \n\n", limitedToDifficultDescriptions)
 	}
 }
 

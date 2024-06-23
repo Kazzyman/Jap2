@@ -16,8 +16,8 @@ func main() {
 	rand.Seed(time.Now().UnixNano()) // Seed the random number generator with the current time in nanoseconds.
 	theGameIsRunning = false
 	guessLevelCounter = 1
-	limitedToKataPrompts = true
-	limitedToHiraPrompts = true
+	// limitedToKataPrompts = true
+	// limitedToHiraPrompts = true
 	gottenHonestly = true
 	fmt.Println()
 	countSLOC()                          // Determine and display Source Lines Of Code.
@@ -30,17 +30,18 @@ func main() {
 func begin_Kana_practice() { // ::: - -
 	for {
 		if gotLastCardRightSoGetFreshOne {
-			pick_RandomCard_Assign_fields()
+			pick_RandomCard_Assign_fields() // This has within it lots of code to assure novel and fresh cards.
 			guessLevelCounter = 1
 		}
 
 		// Prompt according to guessLevelCounter, type of displayed prompt, and type of requested response.
-		prompt_the_user_for_input() // each time we do this we increment the guessLevelCounter.
+		prompt_the_user_for_input() // Each time we do this we increment the guessLevelCounter.
 		// Obtain users input.
 		_, _ = fmt.Scan(&usersSubmission)
 
-		// Do you want to play a game?
-		if usersSubmission == "game" {
+		if theGameIsRunning == true {
+			// Skip looking to start a game if one is already running.
+		} else if usersSubmission == "game" {
 			guessLevelCounter = 1
 			fmt.Println("Welcome to the game. Dir options: off/goff, stc, stcr, q, dirg")
 			fmt.Println("What is your name?")
@@ -48,15 +49,21 @@ func begin_Kana_practice() { // ::: - -
 			fmt.Println("Enter a number for how many prompts there will be in the game")
 			_, _ = fmt.Scan(&game_duration_set_by_user)
 			display_limited_gaming_dir_list()
-			
+
 			now_using_game_duration_set_by_user = true
 			the_game_begins()
-		} else if usersSubmission == "stc" {
+		}
+
+		if theGameIsRunning != true {
+			// skip looking to dirg since it only makes sense when a game is running.
+		} else if usersSubmission == "dirg" {
+			display_limited_gaming_dir_list()
+		}
+
+		if usersSubmission == "stc" {
 			reSet_via_a_hira_aCard_andThereBy_reSet_thePromptString()
 		} else if usersSubmission == "stcr" {
 			reSet_aCard_via_a_romaji_andThereBy_reSet_thePromptString()
-		} else if usersSubmission == "dirg" {
-			display_limited_gaming_dir_list()
 		}
 
 		// During gaming, disallow checking for Directives other than q, and goff.
@@ -79,6 +86,7 @@ func begin_Kana_practice() { // ::: - -
 
 /*
 .
+.
 */
 
 func priorToProcessingUsersSubmission_check_IfTypeEnteredRightly() { // ::: - -
@@ -89,42 +97,51 @@ func priorToProcessingUsersSubmission_check_IfTypeEnteredRightly() { // ::: - -
 
 		switch true {
 		case findAlphasIn.MatchString(usersSubmission): // if this returns true
-			isAlphanumeric = true // then do this
-		default:
-			isAlphanumeric = false // else do this.
-		}
-		/*
-		   .
-		*/
-		switch isAlphanumeric {
-		case isAlphanumeric: // if isAlphanumeric was set true above :: if type_of_usersSubmission == actual_objective_type ...
-			Process_users_input_as_a_guess() // then do this ...
-		default:
-			// ... else display a message informing the user that he should change his input method.
-			fmt.Println(colorRed)
-			fmt.Println("Please change your input method to match the char type that was requested:)")
-			fmt.Printf("Requested type being: %s\n", actual_objective_type)
-			fmt.Println(colorReset)
-		}
-
-	} else if actual_objective_type == "hira" {
-		// ::: Determine if the user has entered a valid Hiragana char instead of, accidentally, an alpha char or string. If so, advise user.
-		var isAlphanumeric bool
-		findAlphasIn := regexp.MustCompile(`[a-zA-Z]`)
-		switch true {
-		case findAlphasIn.MatchString(usersSubmission):
 			isAlphanumeric = true
 		default:
 			isAlphanumeric = false
 		}
-		if isAlphanumeric == false { // as will be the case with a Hiragana char. :: if type_of_usersSubmission == actual_objective_type ...
-			Process_users_input_as_a_guess() // then do this ...
+
+		if isAlphanumeric {
+			Process_users_input_as_a_guess()
 		} else {
 			// Display a message informing the user that he should change his input method.
 			fmt.Println(colorRed)
 			fmt.Println("Please change your input method to match the char type that was requested:)")
 			fmt.Printf("Requested type being: %s\n", actual_objective_type)
 			fmt.Println(colorReset)
+			// RE-Prompt according to guessLevelCounter, type of displayed prompt, and type of requested response.
+			prompt_the_user_for_input() // Each time we do this we increment the guessLevelCounter.
+			// Obtain users input.
+			_, _ = fmt.Scan(&usersSubmission)
+			priorToProcessingUsersSubmission_check_IfTypeEnteredRightly()
+		}
+
+	} else if actual_objective_type == "hira" {
+		// ::: Determine if the user has entered a valid Hiragana char instead of, accidentally, an alpha char or string. If so, advise user.
+		var isAlphanumeric bool
+		findAlphasIn := regexp.MustCompile(`[a-zA-Z]`)
+
+		switch true {
+		case findAlphasIn.MatchString(usersSubmission): // if this returns true
+			isAlphanumeric = true
+		default:
+			isAlphanumeric = false
+		}
+
+		if isAlphanumeric == false { // as will be the case with a Hiragana char. :: if type_of_usersSubmission == actual_objective_type ...
+			Process_users_input_as_a_guess()
+		} else {
+			// Display a message informing the user that he should change his input method.
+			fmt.Println(colorRed)
+			fmt.Println("Please change your input method to match the char type that was requested:)")
+			fmt.Printf("Requested type being: %s\n", actual_objective_type)
+			fmt.Println(colorReset)
+			// RE-Prompt according to guessLevelCounter, type of displayed prompt, and type of requested response.
+			prompt_the_user_for_input() // Each time we do this we increment the guessLevelCounter.
+			// Obtain users input.
+			_, _ = fmt.Scan(&usersSubmission)
+			priorToProcessingUsersSubmission_check_IfTypeEnteredRightly()
 		}
 	}
 }
@@ -196,6 +213,7 @@ func Process_users_input_as_a_guess() { // ::: - -
 	if submission_already_processed_above == true { // If it was handled as a zu case above ...
 		// ... it was a form of zu, and there is nothing more to do, else
 	} else {
+		// Write to a file:
 		if usersSubmission == actual_objective {
 			if guessLevelCounter == 3 {
 				fileHandle, err := os.OpenFile("Jap2Log.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
@@ -207,9 +225,10 @@ func Process_users_input_as_a_guess() { // ::: - -
 				fileHandle, err := os.OpenFile("Jap2Log.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
 				check_error(err)
 				_, err1 := fmt.Fprintf(fileHandle,
-					"\n3 User had a some difficulty with==%s:%s:%s", aCard.Romaji, aCard.Hira, aCard.Kata)
+					"\nUser had a some difficulty with==%s:%s:%s", aCard.Romaji, aCard.Hira, aCard.Kata)
 				check_error(err1)
 			}
+			// These two lines are all we do when a match occurs.
 			gotLastCardRightSoGetFreshOne = true
 			displayRight_logRight(usersSubmission, actual_prompt_char, actual_objective_type)
 		} else {

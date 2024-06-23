@@ -9,7 +9,7 @@ func displayRight_logRight(userInput, promptField, actual_objective_type string)
 	if actual_objective_type == "hira" { // actual_objective_type == "Hira"
 		fmt.Printf("      　%s %s   - %s\n", aCard.Romaji, aCard.Kata, aCard.HiraHint)
 	} else { // else it is Romaji, so:
-		if limitedToDifficultKata == true {
+		if limitedToDifficultDescriptions == true {
 			fmt.Printf("      　%s %s  \n", aCard.Hira, aCard.SansR_Hint)
 		} else { // Then this correct guess must be a REGULAR Kata
 			fmt.Printf("      　%s %s   - %s\n", aCard.Hira, aCard.Kata, aCard.SansR_Hint)
@@ -24,7 +24,7 @@ func logRight_zu(userInput, promptField, actual_objective_type string) { // ::: 
 	if actual_objective_type == "hira" {
 		fmt.Printf("      　%s %s   - %s\n", aCard.Romaji, aCard.Kata, aCard.HiraHint)
 	} else { // else it is Romaji, and ...
-		if limitedToDifficultKata == true {
+		if limitedToDifficultDescriptions == true {
 			fmt.Printf("      　%s %s  \n", aCard.Hira, aCard.SansR_Hint)
 		} else { // ... This correct guess must be a REGULAR Kata
 			fmt.Printf("      　%s %s   - %s\n", aCard.Hira, aCard.Kata, aCard.SansR_Hint)
@@ -41,7 +41,7 @@ func logRightZu2(userInput, promptField, actual_objective_type, objective string
 		fmt.Printf("      　%s %s   - %s\n", aCard.Romaji, aCard.Kata, aCard.HiraHint)
 		fmt.Printf("... it could have been either ず or %s since they have the same sound!\n", objective)
 	} else { // it can be assumed to have been of roma type
-		if limitedToDifficultKata == true {
+		if limitedToDifficultDescriptions == true {
 			fmt.Printf("      　%s %s   - \n", aCard.Hira, aCard.SansR_Hint)
 			fmt.Printf("... it could have been either ず or %s since they have the same sound!\n", objective)
 		} else {

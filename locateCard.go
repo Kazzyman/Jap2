@@ -32,7 +32,7 @@ func locateCardAndDisplayHelpFieldsContainedInIt_deprecated(Hira_or_Romaji_input
 			fmt.Printf("%s", colorRed)
 			fmt.Println("Romaji Help on:", foundElement.Romaji)
 			fmt.Printf("%s", colorReset)
-			if actual_objective_type == "Romaji" {
+			if actual_objective_type == "roma" {
 				fmt.Println(foundElement.SansR_Hint)
 			} else {
 				fmt.Println(foundElement.HiraHint)
@@ -54,7 +54,7 @@ func locateCardAndDisplayHelpFieldsContainedInIt_deprecated(Hira_or_Romaji_input
 			fmt.Printf("%s", colorRed)
 			fmt.Println("Hiragana Help on:", foundElement.Hira)
 			fmt.Printf("%s", colorReset)
-			if actual_objective_type == "Romaji" { // this if-else clause is different/extra ????????????
+			if actual_objective_type == "roma" { // this if-else clause is different/extra ????????????
 				fmt.Println(foundElement.SansR_Hint)
 			} else {
 				fmt.Println(foundElement.HiraHint)

@@ -5,43 +5,100 @@ import (
 	"math/rand"
 )
 
-var pulledButNotUsedMap = make(map[string]int)
+/* ::: these are the options available to the user:
+todo, since these only have to do with prompting, we will eventually, want to add two options to limit objective type to romaji or hira
+as it is, objective type is always "randomized" for konly and the ko cases of hko
+	'honly' Use only Hira prompting ::: 1
+	'konly' Use only Kata prompting, could be either hira or romaji objective ::: 2, or 3
+	'hko' Use BOTH Hira & Kata prompting (prompt with either, but no romaji prompting) ::: 1, 2, or 3
+	'ronly' Use only Romaji prompting ::: 4
+	'donly' Difficult descriptive prompting (romaji objective) ::: 5
+*/
+// ::: The sixth "option" is the default of randomizing over all decks except the difficult one (6)
 
+/*
+There are 5 exercises.
+That is, there are 4 classes plus one special case.
+
+The four classes are:
+1. Hira prompting that requires a Romaji response.
+2. Kata prompting that requires a Romaji response.
+3. Kata prompting that requires a Hira response.
+4. Romaji prompting that requires a Hira response.
+
+the one special case is:
+5. Difficult-descriptive-only prompting, requiring a Romaji response.
+
+So, herein we will determine which of those 5 is in progress; and deploy the correct function.
+*/
+
+// This global map is used in the next function and also in func read_pulledButNotUsedMap() {
+var pulledButNotUsedMap = make(map[string]int) // Global map, this, declared and made right hear.
+
+var hiraOrRomajiObjective = 1 // just like count
+// var kataPromptsObjective = "oneOfTwoPotentialOptions" // hira, or romaji
+
+// this func handles the cases in which limits have been selected by the user
 func pick_RandomCard_Assign_fields() { // ::: - -
-	// There are 4 different exercises: four different picking sections each with its own prompting.
-	// Set (acquire) one of the 4 combinations of actual_prompt_char, actual_objective, actual_objective_type
-	// This section only does the initial pick, and MAY be duplicated below in the for loop.
-	if limitedToKataPrompts && limitedToHiraPrompts {
 
+	// There are 4 different classes of exercises: four different picking sections each with its own prompting.
+	// Set (acquire) one of the potential combinations of actual_prompt_char, actual_objective, actual_objective_type
+	// This section only does the initial pick, and MAY be duplicated below in the next (larger) for loop.
+	if limitedToKataPrompts && limitedToHiraPrompts {
+		// true on both means potentially use either
 		// "Randomize" - or, at least, alternate between kata and hira prompting. // count starts as 1 and is a global var
 		for {
 			if count == 1 {
 				actual_prompt_char_type = "kata"
-				kata_prompting_romaji_objective() // 1
+				for {
+					if hiraOrRomajiObjective == 1 {
+						kata_prompting_romaji_objective() // ::: 2
+					} else {
+						// ::: todo: if prompting with kata we should "randomly" ask for either a hira or a romaji objective
+						kata_prompting_hira_objective() // ::: 3
+						hiraOrRomajiObjective = 1
+						break
+					}
+					hiraOrRomajiObjective++
+					break
+				}
 				// then fall to count++ and break
 			} else {
 				actual_prompt_char_type = "hira"
-				hira_prompting_romaji_objective() // 2
+				hira_prompting_romaji_objective() // ::: 1
 				count = 1                         // do the other form with the next card
 				break
 			}
 			count++
 			break // the next time that a card is fetched we will use the alternate formulation.
 		}
+	} else if limitedToDifficultDescriptions {
+		actual_prompt_char_type = "kata"
+		Difficult_descriptive_prompting_romaji_objective() // ::: 5
 
 	} else if limitedToKataPrompts {
 		actual_prompt_char_type = "kata"
-		kata_prompting_romaji_objective() // 1
+		// ::: if prompting with kata we should "randomly" ask for either a hira or a romaji objective
+		for {
+			if hiraOrRomajiObjective == 1 {
+				kata_prompting_romaji_objective() // ::: 2
+			} else {
+				kata_prompting_hira_objective() // ::: 3
+				hiraOrRomajiObjective = 1
+				break
+			}
+			hiraOrRomajiObjective++
+			break
+		}
 	} else if limitedToHiraPrompts {
 		actual_prompt_char_type = "hira"
-		hira_prompting_romaji_objective() // 2
+		hira_prompting_romaji_objective() // ::: 1
 	} else if limitedToRomaPrompts {
 		actual_prompt_char_type = "roma"
-		roma_prompting_hira_objective() // 3
-	} else if limitedToDifficultKata {
-		actual_prompt_char_type = "kata"
+		roma_prompting_hira_objective() // ::: 4
 	} else {
-		randomize_over_all_decks()
+		// if no limits have been set via a directive, prompt as standard mix (prompts will be hira, roma, or kata)
+		randomize_over_all_decks() // ::: (6)
 	}
 	// Now that we have a newly-acquired actual_prompt_char, check to see if we have it stored in the cyclicArrayPulls slice ...
 	// and, if it is so stored, obtain a replacement, and then look again through the entire slice. Repeat the entire
@@ -55,30 +112,67 @@ func pick_RandomCard_Assign_fields() { // ::: - -
 				pulledButNotUsedMap[actual_prompt_char]++ // The '++' increments the int value associated with actual_prompt_char
 				// fmt.Printf("We've seen the pseudo-random char before; lastPull: %s and actual_prompt_char: %s\n", lastPull, actual_prompt_char)
 				found = true
+
+				//
+				// copied from above
 				if limitedToKataPrompts && limitedToHiraPrompts {
-
-					// randomize - alternate
-
+					// true on both means potentially use either
+					// "Randomize" - or, at least, alternate between kata and hira prompting. // count starts as 1 and is a global var
+					for {
+						if count == 1 {
+							actual_prompt_char_type = "kata"
+							for {
+								if hiraOrRomajiObjective == 1 {
+									kata_prompting_romaji_objective() // ::: 2
+								} else {
+									// ::: todo: if prompting with kata we should "randomly" ask for either a hira or a romaji objective
+									kata_prompting_hira_objective() // ::: 3
+									hiraOrRomajiObjective = 1
+									break
+								}
+								hiraOrRomajiObjective++
+								break
+							}
+							// then fall to count++ and break
+						} else {
+							actual_prompt_char_type = "hira"
+							hira_prompting_romaji_objective() // ::: 1
+							count = 1                         // do the other form with the next card
+							break
+						}
+						count++
+						break // the next time that a card is fetched we will use the alternate formulation.
+					}
+				} else if limitedToDifficultDescriptions {
 					actual_prompt_char_type = "kata"
-					kata_prompting_romaji_objective() // 1
-
-					actual_prompt_char_type = "hira"
-					hira_prompting_romaji_objective() // 2
+					Difficult_descriptive_prompting_romaji_objective() // ::: 5
 
 				} else if limitedToKataPrompts {
 					actual_prompt_char_type = "kata"
-					kata_prompting_romaji_objective() // 1
+					// add the kata-hira func ::: 3
+					// ::: if prompting with kata we should "randomly" ask for either a hira or a romaji objective
+					for {
+						if hiraOrRomajiObjective == 1 {
+							kata_prompting_romaji_objective() // ::: 2
+						} else {
+							kata_prompting_hira_objective() // ::: 3
+							hiraOrRomajiObjective = 1
+							break
+						}
+						hiraOrRomajiObjective++
+						break
+					}
 				} else if limitedToHiraPrompts {
 					actual_prompt_char_type = "hira"
-					hira_prompting_romaji_objective() // 2
+					hira_prompting_romaji_objective() // ::: 1
 				} else if limitedToRomaPrompts {
 					actual_prompt_char_type = "roma"
-					roma_prompting_hira_objective() // 3
-				} else if limitedToDifficultKata {
-					actual_prompt_char_type = "kata"
+					roma_prompting_hira_objective() // ::: 4
 				} else {
-					randomize_over_all_decks()
+					// if no limits have been set via a directive, prompt as standard mix (prompts will be hira, roma, or kata)
+					randomize_over_all_decks() // ::: (6)
 				}
+
 				break // Exit the inner loop, having a new and potentially novel actual_prompt_char in hand
 			}
 		}
@@ -113,26 +207,15 @@ func pick_RandomCard_Assign_fields() { // ::: - -
 		frequencyMapOf_need_workOn = make(map[string]int)
 		fmt.Println(colorCyan + "You have finished all the cards; repeats will now ensue ... \n" + colorReset)
 	}
-
-	if actual_prompt_char_type == "hira" {
-		actual_objective = aCard.Romaji // true by process of elimination
-	}
-	if actual_prompt_char_type == "romaji" {
-		actual_objective = aCard.Hira // true by process of elimination
-	}
-	if actual_prompt_char_type == "kata" { // todo ::: objective could be hira or roma
-		actual_objective = aCard.Romaji // ::: nailing this down to just roma solves the issue.
-	}
 }
 
-// The 4 functions called above:
+/*
+= ::: ------------ END OF FUNCTION ------------------------------------------------------------------------------------
+=
+=
+*/
 
-// 4 exercise categories :
-//   Hira prompting, Romaji objective
-//   Kata prompting, Romaji objective
-//      Kata prompting, Hira objective, Missing, OK! ::: more than just OK, it is logically required to be just one of the two.
-//   Romaji prompting, Hira objective
-
+// ::: 1
 func hira_prompting_romaji_objective() { // ::: - -
 	randIndexRare := rand.Intn(len(fileOfCardsRare))
 	randIndexMedium := rand.Intn(len(fileOfCardsMedium))
@@ -163,6 +246,7 @@ func hira_prompting_romaji_objective() { // ::: - -
 	}
 }
 
+// ::: 2
 func kata_prompting_romaji_objective() { // ::: - -
 	randIndexRare := rand.Intn(len(fileOfCardsRare))
 	randIndexMedium := rand.Intn(len(fileOfCardsMedium))
@@ -193,9 +277,38 @@ func kata_prompting_romaji_objective() { // ::: - -
 	}
 }
 
-// ::: Kata prompting, Hira objective:
-// func kata_prompting_hira_objective() // ::: is logically not possible.
+// ::: 3
+func kata_prompting_hira_objective() { // ::: - -
+	randIndexRare := rand.Intn(len(fileOfCardsRare))
+	randIndexMedium := rand.Intn(len(fileOfCardsMedium))
+	randIndexOften := rand.Intn(len(fileOfCardsOften))
 
+	randomized_selector := rand.Intn(6) // 6 random numbers, 0->5
+
+	if randomized_selector == 0 {
+		aCard = fileOfCardsRare[randIndexRare]
+		actual_prompt_char = aCard.Kata
+		actual_prompt_char_type = "kata"
+		actual_objective = aCard.Hira
+		actual_objective_type = "hira"
+	}
+	if randomized_selector == 1 || randomized_selector == 2 {
+		aCard = fileOfCardsMedium[randIndexMedium]
+		actual_prompt_char = aCard.Kata
+		actual_prompt_char_type = "kata"
+		actual_objective = aCard.Hira
+		actual_objective_type = "hira"
+	}
+	if randomized_selector == 3 || randomized_selector == 4 || randomized_selector == 5 {
+		aCard = fileOfCardsOften[randIndexOften]
+		actual_prompt_char = aCard.Kata
+		actual_prompt_char_type = "kata"
+		actual_objective = aCard.Hira
+		actual_objective_type = "hira"
+	}
+}
+
+// ::: 4
 func roma_prompting_hira_objective() { // ::: - -
 	randIndexRare := rand.Intn(len(fileOfCardsRare))
 	randIndexMedium := rand.Intn(len(fileOfCardsMedium))
@@ -226,12 +339,11 @@ func roma_prompting_hira_objective() { // ::: - -
 	}
 }
 
-//
-
-func Difficult_kata_prompting_romaji_objective() { // ::: - -
+// ::: 5
+func Difficult_descriptive_prompting_romaji_objective() { // ::: - -
 	randIndexMK := rand.Intn(len(dataMostDiff)) // dataK.go
 	aCard = dataMostDiff[randIndexMK]
-	// Kata prompting, Romaji objective:
+	// prompting from a description in the kata field, Romaji objective:
 	actual_prompt_char = aCard.Kata
 	actual_prompt_char_type = "kata"
 	actual_objective = aCard.Romaji

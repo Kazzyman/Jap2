@@ -8,22 +8,63 @@ func prompt_the_user_for_input() { // ::: - -
 
 	if guessLevelCounter == 1 { // ::: --------- 1 1 1 1 1 1 ------------------
 		guessLevelCounter++
+
 		if actual_prompt_char_type == "roma" && actual_objective_type == "hira" {
 			fmt.Printf("%s", aCard.Romaji)
 			fmt.Printf("%s", colorCyan)
-			if limitedToDifficultKata {
-				fmt.Printf(" Hiragana?, or 'dir' - Limited To Difficult Kata")
-			} else if limitedToRomaPrompts {
-				fmt.Printf(" Hiragana?, or 'dir' - Limited To Romaji Prompts")
-			} else if limitedToKataPrompts && limitedToHiraPrompts {
-				fmt.Printf(" Romaji?, or 'dir' - Includes Kata&Hira Prompts")
+
+			if limitedToRomaPrompts {
+				fmt.Printf(" Hiragana?, or 'dir' - Limited To Romaji Prompts") // could be, could be
+			} else {
+				fmt.Printf(" Hiragana?, or 'dir' - standard mix") // We should print "standard mix" only if we have proved that we are not here by random
+			}
+
+			if theGameIsRunning {
+				fmt.Printf(", %s%s is playing: %s1st:%s%d%s, 2nd:%s%d%s, 3rd:%s%d%s, fails:%s%d, %s%d/%d%s\n",
+					colorReset, nameOfPlayer, colorRed, colorReset, correctOnFirstAttemptAccumulator,
+					colorRed, colorReset, correctOnSecondAttemptAccumulator, colorRed, colorReset, correctOnThirdAttemptAccumulator,
+					colorRed, colorReset, failedOnThirdAttemptAccumulator, colorCyan, game_loop_counter, game_duration_set_by_user, colorReset)
+			} else {
+				fmt.Println()
+			}
+			fmt.Printf(" Here:> ")
+			fmt.Printf("%s", colorReset)
+			//
+		} else if actual_prompt_char_type == "hira" && actual_objective_type == "roma" {
+			fmt.Printf("%s", aCard.Hira)
+			fmt.Printf("%s", colorCyan)
+
+			if limitedToKataPrompts && limitedToHiraPrompts { // either
+				fmt.Printf(" Romaji?, or 'dir' - Includes Kata&Hira Prompts, in this case hira")
 			} else if limitedToHiraPrompts {
-				fmt.Printf(" Hiragana?, or 'dir' - Limited To Hira Prompts")
+				fmt.Printf(" Romaji?, or 'dir' - Limited To Hira Prompts")
+			} else {
+				fmt.Printf(" Romaji?, or 'dir' - standard mix")
+			}
+
+			if theGameIsRunning {
+				fmt.Printf(", %s%s is playing: %s1st:%s%d%s, 2nd:%s%d%s, 3rd:%s%d%s, fails:%s%d, %s%d/%d%s\n",
+					colorReset, nameOfPlayer, colorRed, colorReset, correctOnFirstAttemptAccumulator,
+					colorRed, colorReset, correctOnSecondAttemptAccumulator, colorRed, colorReset, correctOnThirdAttemptAccumulator,
+					colorRed, colorReset, failedOnThirdAttemptAccumulator, colorCyan, game_loop_counter, game_duration_set_by_user, colorReset)
+			} else {
+				fmt.Println()
+			}
+			fmt.Printf(" Here:> ")
+			fmt.Printf("%s", colorReset)
+			//
+		} else if actual_prompt_char_type == "kata" && actual_objective_type == "hira" {
+			fmt.Printf("%s", aCard.Kata)
+			fmt.Printf("%s", colorCyan)
+
+			if limitedToKataPrompts && limitedToHiraPrompts { // limited to kata OR hira prompts
+				fmt.Printf(" Hiragana?, or 'dir' - Includes Kata&Hira Prompts, in this case kata")
 			} else if limitedToKataPrompts {
 				fmt.Printf(" Hiragana?, or 'dir' - Limited To Kata Prompts")
 			} else {
 				fmt.Printf(" Hiragana?, or 'dir' - standard mix")
 			}
+
 			if theGameIsRunning {
 				fmt.Printf(", %s%s is playing: %s1st:%s%d%s, 2nd:%s%d%s, 3rd:%s%d%s, fails:%s%d, %s%d/%d%s\n",
 					colorReset, nameOfPlayer, colorRed, colorReset, correctOnFirstAttemptAccumulator,
@@ -34,51 +75,19 @@ func prompt_the_user_for_input() { // ::: - -
 			}
 			fmt.Printf(" Here:> ")
 			fmt.Printf("%s", colorReset)
-		} else if actual_prompt_char_type == "hira" && actual_objective_type == "roma" {
-			fmt.Printf("%s", aCard.Hira)
-			fmt.Printf("%s", colorCyan)
-			if limitedToDifficultKata {
-				fmt.Printf(" Romaji?, or 'dir' - Limited To Difficult Kata")
-			} else if limitedToRomaPrompts {
-				fmt.Printf(" Romaji?, or 'dir' - Limited To Romaji Prompts")
-			} else if limitedToKataPrompts && limitedToHiraPrompts {
-				fmt.Printf(" Romaji?, or 'dir' - Includes Kata&Hira Prompts")
-			} else if limitedToHiraPrompts {
-				fmt.Printf(" Romaji?, or 'dir' - Limited To Hira Prompts")
-			} else if limitedToKataPrompts {
-				fmt.Printf(" Romaji?, or 'dir' - Limited To Kata Prompts")
-			} else {
-				fmt.Printf(" Romaji?, or 'dir' - standard mix")
-			}
-			if theGameIsRunning {
-				fmt.Printf(", %s%s is playing: %s1st:%s%d%s, 2nd:%s%d%s, 3rd:%s%d%s, fails:%s%d, %s%d/%d%s\n",
-					colorReset, nameOfPlayer, colorRed, colorReset, correctOnFirstAttemptAccumulator,
-					colorRed, colorReset, correctOnSecondAttemptAccumulator, colorRed, colorReset, correctOnThirdAttemptAccumulator,
-					colorRed, colorReset, failedOnThirdAttemptAccumulator, colorCyan, game_loop_counter, game_duration_set_by_user, colorReset)
-			} else {
-				fmt.Println()
-			}
-			fmt.Printf(" Here:> ")
-			fmt.Printf("%s", colorReset)
-			/*
-				} else if actual_prompt_char_type == "kata" && actual_objective_type == "hira" { // ::: not a possible thang
-			*/
+			//
 		} else if actual_prompt_char_type == "kata" && actual_objective_type == "roma" {
 			fmt.Printf("%s", aCard.Kata)
 			fmt.Printf("%s", colorCyan)
-			if limitedToDifficultKata {
-				fmt.Printf(" Romaji?, or 'dir' - Limited To Difficult Kata")
-			} else if limitedToRomaPrompts {
-				fmt.Printf(" Romaji?, or 'dir' - Limited To Romaji Prompts")
-			} else if limitedToKataPrompts && limitedToHiraPrompts {
-				fmt.Printf(" Romaji?, or 'dir' - Includes Kata&Hira Prompts")
-			} else if limitedToHiraPrompts {
-				fmt.Printf(" Romaji?, or 'dir' - Limited To Hira Prompts")
+
+			if limitedToKataPrompts && limitedToHiraPrompts {
+				fmt.Printf(" Romaji?, or 'dir' - Includes Kata&Hira Prompts, in this case kata")
 			} else if limitedToKataPrompts {
 				fmt.Printf(" Romaji?, or 'dir' - Limited To Kata Prompts")
 			} else {
 				fmt.Printf(" Romaji?, or 'dir' - standard mix")
 			}
+
 			if theGameIsRunning {
 				fmt.Printf(", %s%s is playing: %s1st:%s%d%s, 2nd:%s%d%s, 3rd:%s%d%s, fails:%s%d, %s%d/%d%s\n",
 					colorReset, nameOfPlayer, colorRed, colorReset, correctOnFirstAttemptAccumulator,
@@ -89,6 +98,7 @@ func prompt_the_user_for_input() { // ::: - -
 			}
 			fmt.Printf(" Here:> ")
 			fmt.Printf("%s", colorReset)
+			//
 		} else {
 			fmt.Printf("Missing one or more elements of prompting style actual_prompt_char_type is %s, and actual_objective_type is %s\n", actual_prompt_char_type, actual_objective_type)
 		}
@@ -113,7 +123,13 @@ func prompt_the_user_for_input() { // ::: - -
 			fmt.Printf("%s", colorCyan)
 			fmt.Printf(" Romaji input-mode expected," + colorReset +
 				" Guess again, or '?' for clue\n Here:> ")
+		} else if actual_prompt_char_type == "kata" && actual_objective_type == "hira" { // was a bug fix ???
+			fmt.Printf("%s", aCard.Kata)
+			fmt.Printf("%s", colorCyan)
+			fmt.Printf(" Hiragana input-mode expected," + colorReset +
+				" Guess again, or '?' for clue\n Here:> ")
 		} else {
+			// ::: got this message in error ??
 			fmt.Printf("Missing one or more elements of prompting style actual_prompt_char_type is %s, and actual_objective_type is %s\n", actual_prompt_char_type, actual_objective_type)
 		}
 		/*.
@@ -131,12 +147,17 @@ func prompt_the_user_for_input() { // ::: - -
 		} else if actual_prompt_char_type == "hira" && actual_objective_type == "roma" {
 			fmt.Printf("%s", aCard.Hira)
 			fmt.Printf("%s", colorCyan)
-			fmt.Printf(" vRomaji input-mode expected," + colorReset +
+			fmt.Printf(" Romaji input-mode expected," + colorReset +
 				" you must guess, just one more time\n Here:> ")
 		} else if actual_prompt_char_type == "kata" && actual_objective_type == "roma" {
 			fmt.Printf("%s", aCard.Kata)
 			fmt.Printf("%s", colorCyan)
 			fmt.Printf(" Romaji input-mode expected," + colorReset +
+				" you must guess, just one more time\n Here:> ")
+		} else if actual_prompt_char_type == "kata" && actual_objective_type == "hira" { // was a bug fix ???
+			fmt.Printf("%s", aCard.Kata)
+			fmt.Printf("%s", colorCyan)
+			fmt.Printf(" Hiragana input-mode expected," + colorReset +
 				" you must guess, just one more time\n Here:> ")
 		} else {
 			fmt.Printf("Missing one or more elements of prompting style actual_prompt_char_type is %s, and actual_objective_type is %s\n", actual_prompt_char_type, actual_objective_type)
@@ -245,20 +266,19 @@ func List_of_Directives() { // ::: - -
 
 	fmt.Println("        Enter '" + colorGreen +
 		"hko" + colorReset +
-		"' Use BOTH Kata & Hira prompting w/ a Romaji objective, rs to ReSet")
+		"' Use BOTH Kata & Hira prompting (no romaji prompting)")
 	fmt.Println("        Enter '" + colorGreen +
 		"konly" + colorReset +
-		"' Use only Kata prompting and Romaji objective, rs to ReSet")
-	// missing Kata prompting and Hira objective
+		"' Use only Kata prompting")
 	fmt.Println("        Enter '" + colorGreen +
 		"honly" + colorReset +
-		"' Use only Hira prompting and Romaji objective, rs to ReSet")
+		"' Use only Hira prompting")
 	fmt.Println("        Enter '" + colorGreen +
 		"ronly" + colorReset +
-		"' Use only Romaji prompting and Hira objective , rs to ReSet")
+		"' Use only Romaji prompting")
 	fmt.Println("        Enter '" + colorGreen +
 		"donly" + colorReset +
-		"' Difficult Kata only, rs to ReSet")
+		"' Difficult descriptive prompting")
 
 	fmt.Println("        Enter '" + colorGreen +
 		"help" + colorReset +
@@ -304,10 +324,10 @@ func display_List_of_Directives() { // (unique) // ::: - -
 	}
 	fmt.Printf("Current Prompt Count Total: %d \n\n", total_prompts)
 	fmt.Printf("Extended Kata deck is loaded: %t \n\n", include_Extended_kata_deck)
-	fmt.Printf("Limited to Kata prompts with Romaji objectives: %t \n", limitedToKataPrompts)
-	fmt.Printf("Limited to Hira prompts only:                   %t \n", limitedToHiraPrompts)
-	fmt.Printf("Limited to Romaji prompts only:                 %t \n", limitedToRomaPrompts)
-	fmt.Printf("Limited to Difficult Kata only:                 %t \n\n", limitedToDifficultKata)
+	fmt.Printf("Limited to Kata prompts:             %t \n", limitedToKataPrompts)
+	fmt.Printf("Limited to Hira prompts only:        %t \n", limitedToHiraPrompts)
+	fmt.Printf("Limited to Romaji prompts only:      %t \n", limitedToRomaPrompts)
+	fmt.Printf("Limited to Difficult Kata only:      %t \n\n", limitedToDifficultDescriptions)
 }
 
 /*
@@ -362,16 +382,16 @@ func re_display_List_of_Directives() { // (unique) // ::: - -
 		fmt.Printf("Includes Kata&Hira prompts, w/romaji objectives: %t \n\n", limitedToKataPrompts)
 	}
 	if limitedToKataPrompts {
-		fmt.Printf("Limited to Kata prompts, with ONLY Romaji objectives: %t \n\n", limitedToKataPrompts)
+		fmt.Printf("Limited to Kata prompts: %t \n\n", limitedToKataPrompts)
 		// Remembering that the Kata-Hira combination is not logically sound (too difficult to determine hira or roma)
 	}
 	if limitedToHiraPrompts {
-		fmt.Printf("Limited to Hira prompts (Romaji objectives): %t \n\n", limitedToHiraPrompts)
+		fmt.Printf("Limited to Hira prompts: %t \n\n", limitedToHiraPrompts)
 	}
 	if limitedToRomaPrompts {
-		fmt.Printf("Limited to Romaji prompts (Hira objective): %t \n\n", limitedToRomaPrompts)
+		fmt.Printf("Limited to Romaji prompts: %t \n\n", limitedToRomaPrompts)
 	}
-	if limitedToDifficultKata {
-		fmt.Printf("Limited to Difficult Kata only (may ask for either Hira or Romaji as objective): %t \n\n", limitedToDifficultKata)
+	if limitedToDifficultDescriptions {
+		fmt.Printf("Limited to Difficult descriptive prompts only (Romaji as objective): %t \n\n", limitedToDifficultDescriptions)
 	}
 }

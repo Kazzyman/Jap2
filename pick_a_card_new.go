@@ -4,18 +4,21 @@ import (
 	"math/rand"
 )
 
-// The objective of this function is to query the user more on some characters than others
-// 4 exercise categories :
-//   Hira prompting, Romaji objective
-//   Kata prompting, Romaji objective
-//   Kata prompting, Hira objective // Missing Kata prompting, Hira objective AS A DIRECTIVE, OK!
-//   Romaji prompting, Hira objective
+// The objective of this function is to randomly query the user, but more on some characters than others
+// 4 exercises: todo plus two optional ones
+//   Hira prompting, Romaji objective ::: 1
+
+//   Kata prompting, Romaji objective ::: 2, todo plus optional extended kata
+//   Kata prompting, Hira objective ::: 3, todo plus optional extended kata
+
+//   Romaji prompting, Hira objective ::: 4
 //
-// 3 frequency categories :
-//   Rarely drilled (e.g., ya, yu, and yo constructs) - 4*1=4
-//   Moderate in frequency (chars of average difficulty) - 4*2=8
-//   Often drilled (difficult or potentially confusing chars) 4*3=12
-//                                                         4+8+12=24
+// 3 frequency categories (or decks) : rare, medium, often ::: 4 sets meaning 12 decks in all (plus 2) , so 14 instances
+//
+//    1. fileOfCardsRare, 2. fileOfCardsMedium, and 3. fileOfCardsOften
+//   Rarely drilled (e.g., ya, yu, and yo constructs)
+//   Moderate in frequency (chars of average difficulty)
+//   Often drilled (difficult or potentially confusing chars)
 
 // This one is the default func: it randomly "calls" one of the above four functions and also sets whichDeck (abandoned)
 func randomize_over_all_decks() { // ::: - -
@@ -26,12 +29,13 @@ func randomize_over_all_decks() { // ::: - -
 
 	var randomized_selector = 0
 	if include_Extended_kata_deck {
-		randomized_selector = rand.Intn(25) // If including the extended deck 0-24 = 25
+		randomized_selector = rand.Intn(32) // If including the extended deck 0-31 = 32
 	} else {
-		randomized_selector = rand.Intn(24) // 24 random numbers, 0->23
+		randomized_selector = rand.Intn(30) // 30 random numbers, 0->29
 	}
 
-	// ::: Hira prompting, Romaji objective:
+	// 2,3,4 = 9
+	// ::: Hira prompting, Romaji objective: 1
 	if randomized_selector == 0 || randomized_selector == 13 {
 		aCard = fileOfCardsRare[randIndexRare]
 		actual_prompt_char = aCard.Hira
@@ -53,8 +57,10 @@ func randomize_over_all_decks() { // ::: - -
 		actual_objective = aCard.Romaji
 		actual_objective_type = "roma"
 	}
+
+	// 1,3,4,1 = 9 = 18
 	//
-	// ::: Kata prompting, Romaji objective: (plus an option for including Extended Kata)
+	// ::: Kata prompting, Romaji objective: (plus an option for including Extended Kata): 2
 	if randomized_selector == 6 { // 13
 		aCard = fileOfCardsRare[randIndexRare]
 		actual_prompt_char = aCard.Kata
@@ -77,41 +83,50 @@ func randomize_over_all_decks() { // ::: - -
 		actual_objective_type = "roma"
 	}
 	// ::: Optional todo[の] extended Kata deck, via dir: exko
-	if randomized_selector == 24 {
+	if randomized_selector == 30 {
 		aCard = fileOfCardsE[randIndexExtendedKata]
 		actual_prompt_char = aCard.Kata
 		actual_prompt_char_type = "kata"
 		actual_objective = aCard.Romaji
 		actual_objective_type = "roma"
 	}
-	/*
-		//
-		// ::: Kata prompting, Hira objective:
-		if randomized_selector == 12 {
-			aCard = fileOfCardsRare[randIndexRare]
-			actual_prompt_char = aCard.Kata
-			actual_prompt_char_type = "kata"
-			actual_objective = aCard.Hira
-			actual_objective_type = "hira"
-		}
-		if randomized_selector == 13 || randomized_selector == 14 {
-			aCard = fileOfCardsMedium[randIndexMedium]
-			actual_prompt_char = aCard.Kata
-			actual_prompt_char_type = "kata"
-			actual_objective = aCard.Hira
-			actual_objective_type = "hira"
-		}
-		if randomized_selector == 15 || randomized_selector == 16 || randomized_selector == 17 {
-			aCard = fileOfCardsOften[randIndexOften]
-			actual_prompt_char = aCard.Kata
-			actual_prompt_char_type = "kata"
-			actual_objective = aCard.Hira
-			actual_objective_type = "hira"
-		}
 
-	*/
+	// 1,2,3,1 = 7 = 25
 	//
-	// ::: Romaji prompting, Hira objective:
+	// ::: Kata prompting, Hira objective: 3
+	if randomized_selector == 24 {
+		aCard = fileOfCardsRare[randIndexRare]
+		actual_prompt_char = aCard.Kata
+		actual_prompt_char_type = "kata"
+		actual_objective = aCard.Hira
+		actual_objective_type = "hira"
+	}
+	if randomized_selector == 25 || randomized_selector == 26 {
+		aCard = fileOfCardsMedium[randIndexMedium]
+		actual_prompt_char = aCard.Kata
+		actual_prompt_char_type = "kata"
+		actual_objective = aCard.Hira
+		actual_objective_type = "hira"
+	}
+	if randomized_selector == 27 || randomized_selector == 28 || randomized_selector == 29 {
+		aCard = fileOfCardsOften[randIndexOften]
+		actual_prompt_char = aCard.Kata
+		actual_prompt_char_type = "kata"
+		actual_objective = aCard.Hira
+		actual_objective_type = "hira"
+	}
+	// ::: Optional todo[の] extended Kata deck, via dir: exko
+	if randomized_selector == 31 {
+		aCard = fileOfCardsE[randIndexExtendedKata]
+		actual_prompt_char = aCard.Kata
+		actual_prompt_char_type = "kata"
+		actual_objective = aCard.Romaji
+		actual_objective_type = "roma"
+	}
+
+	// 2,2,3 = 7 = 32
+	//
+	// ::: Romaji prompting, Hira objective: 4
 	if randomized_selector == 18 || randomized_selector == 12 {
 		aCard = fileOfCardsRare[randIndexRare]
 		actual_prompt_char = aCard.Romaji

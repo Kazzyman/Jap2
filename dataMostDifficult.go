@@ -1,43 +1,36 @@
 package main
 
 /*
-. 7 Most difficult Kata:  type Romaji or Hira
-. 10 Most difficult: Romaji: type Hira:  /nu, /ne, /na, /me, /ri, /ra, /a, /u, /o
+::: could be kata or hira chars
+. Most difficult Kata: type Romaji or Hira:  ヌnuぬ, ネneね, ナnaな, メmeめ, リriり, ラraら, アaあ, ウuう, オoお vs ナnaな vs メmeめ
+. Most difficult: Romaji: type Hira/kata:  nuぬヌ, neねネ, naなナ, meめメ, riりリ, raらラ, aあア, uうウ, oおオ
 */
 
 // When this deck is used, only Romaji objectives are requested
 // And, when right, only the aCard.Hira, and aCard.SansR_Hint fields are displayed
 // ... that is, only those two fields are shown in green to the user
-/*
-Easy to hard:
-  no の
-  shi し
-  etc
-  Kata
-  se vs sa
 
-*/
 var dataMostDiff = []charSetStruct{
-	// All of the cards in this deck can be a problem (confusing?) when running with the standard mix (abandoned)
 	//
-	// ma is a stripped and lowered ho: ま vs ほ
-	{"Hira is a single vertical w two horiz & a loop at its base",
-		"ま - ",
+	// ma is a stripped and lowered ho: ま vs ほ　　マ
+	{"looks like breast pump, Hira is a single vertical w two horiz & a loop at its base",
+		"マ  ま - ",
 		"ma",
 		"... this is the unused HiraHint field ...",
 		"... this is the unused KataHint field ...",
 		".... this is the unused TT_Hint field ...",
 		"ma is a stripped and lowered ho: ま vs ほ"},
 	//
-	// ho is a modified ma: ま becomes ほ
-	{"Hira is same as ha but w a cap line",
-		"ほ:は - ",
+	// ho is a modified ma: ま becomes ほ　ホ　ハ
+	{"as Kata or Hira, it is same as ha but w a cap line",
+		"ホ　<- ハ , ほ <- は - ",
 		"ho",
 		"... this is the unused HiraHint field ...",
 		"... this is the unused KataHint field ...",
 		".... this is the unused TT_Hint field ...",
-		"ho is a modified ma: ま becomes ほ"},
+		" hira ho is nearly a modified ma:ま becomes ho:ほ"},
 
+	//   ケ
 	{"Hira is same as ke, but w loop at base",
 		"は:け - ",
 		"ha",
@@ -78,7 +71,7 @@ var dataMostDiff = []charSetStruct{
 		".... this is the unused TT_Hint field ...",
 		"テ  vs  て  (both are te)"},
 
-	{"Hira ra or u ?  Has a vertical stroke: Katas are ラ and ウ",
+	{"this Hira includes a vertical stroke making it diff from u : Katas are ラ and ウ",
 		"ら vs u:う - ",
 		"ra",
 		"... this is the unused HiraHint field ...",
@@ -86,7 +79,7 @@ var dataMostDiff = []charSetStruct{
 		".... this is the unused TT_Hint field ...",
 		"u:うウ  vs  ra:らラ "},
 
-	{"This Katakana has a horiz atop a Kata fu",
+	{"This Katakana has a horiz atop a Kata-fu",
 		"ラ vs fu:フ - ",
 		"ra",
 		"... this is the unused HiraHint field ...",
@@ -95,7 +88,7 @@ var dataMostDiff = []charSetStruct{
 		"ラ  vs fu:フ  also: ら as Hira;  Compare: u:う　ra:ら"},
 
 	// All about u as a Katakana:
-	{"This Katakana is a kata wa with a top tick",
+	{"This Katakana is a kata-wa but with a top tick",
 		"ウ  wa:ワ becomes u:ウ - ",
 		"u",
 		"... this is the unused HiraHint field ...",

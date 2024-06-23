@@ -7,7 +7,7 @@ import (
 
 /* ::: these are the options available to the user:
 todo, since these only have to do with prompting, we will eventually, want to add two options to limit objective type to romaji or hira
-as it is, objective type is always "randomized" for konly and the ko cases of hko
+as it is, objective type is always "randomized" for the ko cases of hko
 	'honly' Use only Hira prompting ::: 1
 	'konly' Use only Kata prompting, could be either hira or romaji objective ::: 2, or 3
 	'hko' Use BOTH Hira & Kata prompting (prompt with either, but no romaji prompting) ::: 1, 2, or 3
@@ -96,6 +96,10 @@ func pick_RandomCard_Assign_fields() { // ::: - -
 	} else if limitedToRomaPrompts {
 		actual_prompt_char_type = "roma"
 		roma_prompting_hira_objective() // ::: 4
+	} else if kata_roma {
+		kata_prompting_romaji_objective() // ::: 2
+	} else if kata_hira {
+		kata_prompting_hira_objective() // ::: 3
 	} else {
 		// if no limits have been set via a directive, prompt as standard mix (prompts will be hira, roma, or kata)
 		randomize_over_all_decks() // ::: (6)
@@ -168,6 +172,10 @@ func pick_RandomCard_Assign_fields() { // ::: - -
 				} else if limitedToRomaPrompts {
 					actual_prompt_char_type = "roma"
 					roma_prompting_hira_objective() // ::: 4
+				} else if kata_roma {
+					kata_prompting_romaji_objective() // ::: 2
+				} else if kata_hira {
+					kata_prompting_hira_objective() // ::: 3
 				} else {
 					// if no limits have been set via a directive, prompt as standard mix (prompts will be hira, roma, or kata)
 					randomize_over_all_decks() // ::: (6)

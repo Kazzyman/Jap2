@@ -359,7 +359,7 @@ func read_pulledButNotUsedMap() { // ::: - -
 .
 */
 func about_app() { // ::: - -
-	fmt.Printf("\nThis app consists of the following lines of code accross %d files:\n\n", fileExplored)
+	fmt.Printf("\nThis app consists of the following lines of code across %d files:\n\n", fileExplored)
 	countSLOC()
 	fmt.Printf("As Calculated in real-time by countSLOC(), a custom internal function.\n\n")
 }
@@ -443,6 +443,8 @@ func detectDirective(in string) { // ::: - -
 		in == "ronly" ||
 		in == "donly" ||
 		in == "hko" ||
+		in == "kh" ||
+		in == "kr" ||
 		in == "help" {
 		// Then:
 		its_a_directive = true
@@ -455,6 +457,7 @@ func detectDirective(in string) { // ::: - -
 */
 
 func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
+	guessLevelCounter--
 	switch usersSubmission {
 	// Directives follow:
 	// ::: alphabetically (mostly)
@@ -465,6 +468,22 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 		handle_doubleQuestMark_directive()
 	case "help":
 		helpText()
+
+	case "kh":
+		kata_hira = true
+		limitedToKataPrompts = false
+		limitedToHiraPrompts = false
+		limitedToRomaPrompts = false
+		limitedToDifficultDescriptions = false
+		fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
+	case "kr":
+		kata_roma = true
+		limitedToKataPrompts = false
+		limitedToHiraPrompts = false
+		limitedToRomaPrompts = false
+		limitedToDifficultDescriptions = false
+		fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
+
 	case "hko":
 		limitedToKataPrompts = true
 		limitedToHiraPrompts = true

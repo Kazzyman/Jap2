@@ -4,6 +4,8 @@ import "time"
 
 // count var used only to "Randomize" - or, at least, to alternate between kata and hira prompting when picking a new card.
 var count = 1
+var kata_roma bool
+var kata_hira bool
 
 var fileExplored int // Used only in countSLOC() and the associated about_app()
 

@@ -61,6 +61,8 @@ func prompt_the_user_for_input() { // ::: - -
 				fmt.Printf(" Hiragana?, or 'dir' - Includes Kata&Hira Prompts, in this case kata")
 			} else if limitedToKataPrompts {
 				fmt.Printf(" Hiragana?, or 'dir' - Limited To Kata Prompts")
+			} else if kata_hira {
+				fmt.Printf(" Hiragana?, or 'dir' - Limited To Kata Prompts w/hira obj")
 			} else {
 				fmt.Printf(" Hiragana?, or 'dir' - standard mix")
 			}
@@ -84,6 +86,8 @@ func prompt_the_user_for_input() { // ::: - -
 				fmt.Printf(" Romaji?, or 'dir' - Includes Kata&Hira Prompts, in this case kata")
 			} else if limitedToKataPrompts {
 				fmt.Printf(" Romaji?, or 'dir' - Limited To Kata Prompts")
+			} else if kata_roma {
+				fmt.Printf(" Hiragana?, or 'dir' - Limited To Kata Prompts w/roma obj")
 			} else {
 				fmt.Printf(" Romaji?, or 'dir' - standard mix")
 			}
@@ -100,7 +104,7 @@ func prompt_the_user_for_input() { // ::: - -
 			fmt.Printf("%s", colorReset)
 			//
 		} else {
-			fmt.Printf("Missing one or more elements of prompting style actual_prompt_char_type is %s, and actual_objective_type is %s\n", actual_prompt_char_type, actual_objective_type)
+			fmt.Printf("Miss-matched elements of prompting style actual_prompt_char_type is %s, and actual_objective_type is %s\n", actual_prompt_char_type, actual_objective_type)
 		}
 		/*
 		   ;
@@ -130,7 +134,7 @@ func prompt_the_user_for_input() { // ::: - -
 				" Guess again, or '?' for clue\n Here:> ")
 		} else {
 			// ::: got this message in error ??
-			fmt.Printf("Missing one or more elements of prompting style actual_prompt_char_type is %s, and actual_objective_type is %s\n", actual_prompt_char_type, actual_objective_type)
+			fmt.Printf("Miss-matched elements of prompting style actual_prompt_char_type is %s, and actual_objective_type is %s\n", actual_prompt_char_type, actual_objective_type)
 		}
 		/*.
 		.
@@ -160,7 +164,7 @@ func prompt_the_user_for_input() { // ::: - -
 			fmt.Printf(" Hiragana input-mode expected," + colorReset +
 				" you must guess, just one more time\n Here:> ")
 		} else {
-			fmt.Printf("Missing one or more elements of prompting style actual_prompt_char_type is %s, and actual_objective_type is %s\n", actual_prompt_char_type, actual_objective_type)
+			fmt.Printf("Miss-matched elements of prompting style actual_prompt_char_type is %s, and actual_objective_type is %s\n", actual_prompt_char_type, actual_objective_type)
 		}
 		//
 		gottenHonestly = false
@@ -281,6 +285,13 @@ func List_of_Directives() { // ::: - -
 		"' Difficult descriptive prompting")
 
 	fmt.Println("        Enter '" + colorGreen +
+		"kh" + colorReset +
+		"' Use only kata_hira prompt_response")
+	fmt.Println("        Enter '" + colorGreen +
+		"kr" + colorReset +
+		"' Use only kata_roma prompt_response")
+
+	fmt.Println("        Enter '" + colorGreen +
 		"help" + colorReset +
 		"' For instructions on how to use this app")
 	fmt.Println("        Enter '" + colorGreen +
@@ -320,14 +331,22 @@ func display_List_of_Directives() { // (unique) // ::: - -
 	if now_using_game_duration_set_by_user {
 		fmt.Printf("Game counter: %d, Game Duration: %d \n", game_loop_counter, game_duration_set_by_user)
 	} else {
-		fmt.Printf("Game counter: %d, Game Duration: %d \n", game_loop_counter, jim)
+		fmt.Printf("Game counter: %d, Game Duration: %d \n\n", game_loop_counter, jim)
 	}
-	fmt.Printf("Current Prompt Count Total: %d \n\n", total_prompts)
-	fmt.Printf("Extended Kata deck is loaded: %t \n\n", include_Extended_kata_deck)
-	fmt.Printf("Limited to Kata prompts:             %t \n", limitedToKataPrompts)
-	fmt.Printf("Limited to Hira prompts only:        %t \n", limitedToHiraPrompts)
-	fmt.Printf("Limited to Romaji prompts only:      %t \n", limitedToRomaPrompts)
-	fmt.Printf("Limited to Difficult Kata only:      %t \n\n", limitedToDifficultDescriptions)
+	/*
+		fmt.Printf("Current Prompt Count Total: %d \n\n", total_prompts)
+
+		fmt.Printf("Extended Kata deck is loaded: %t \n\n", include_Extended_kata_deck)
+
+		fmt.Printf("Limited to Kata_hira prompt_response:             %t \n", kata_hira)
+		fmt.Printf("Limited to Kata_roma prompt_response:             %t \n", kata_roma)
+
+		fmt.Printf("Limited to Kata prompts:             %t \n", limitedToKataPrompts)
+		fmt.Printf("Limited to Hira prompts only:        %t \n", limitedToHiraPrompts)
+		fmt.Printf("Limited to Romaji prompts only:      %t \n", limitedToRomaPrompts)
+		fmt.Printf("Limited to Difficult Kata only:      %t \n\n", limitedToDifficultDescriptions)
+
+	*/
 }
 
 /*
@@ -383,8 +402,15 @@ func re_display_List_of_Directives() { // (unique) // ::: - -
 	}
 	if limitedToKataPrompts {
 		fmt.Printf("Limited to Kata prompts: %t \n\n", limitedToKataPrompts)
-		// Remembering that the Kata-Hira combination is not logically sound (too difficult to determine hira or roma)
 	}
+
+	if kata_hira {
+		fmt.Printf("Limited to Kata_hira prompt_response: %t \n\n", kata_hira)
+	}
+	if kata_roma {
+		fmt.Printf("Limited to Kata_roma prompt_response: %t \n\n", kata_roma)
+	}
+
 	if limitedToHiraPrompts {
 		fmt.Printf("Limited to Hira prompts: %t \n\n", limitedToHiraPrompts)
 	}

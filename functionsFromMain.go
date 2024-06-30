@@ -6,13 +6,27 @@ func displayRight_logRight(userInput, promptField, actual_objective_type string)
 	log_right_andUpdateGame(promptField, userInput)
 	fmt.Printf("%s", colorGreen)
 
+	// if objective was of type hira, the prompt could have been either roma or kata
+	// ::: hira objective
 	if actual_objective_type == "hira" { // actual_objective_type == "Hira"
-		fmt.Printf("      　%s %s   - %s\n", aCard.Romaji, aCard.Kata, aCard.HiraHint)
-	} else { // else it is Romaji, so:
+		if actual_prompt_char_type == "kata" {
+			fmt.Printf("      　%s  - %s\n", aCard.Romaji, aCard.HiraHint)
+		} else { // type of prompt must have been of Romaji type
+			fmt.Printf("      　%s  - %s\n", aCard.Kata, aCard.HiraHint)
+		}
+	} else { // else the objective type is Romaji, so:
+		// ::: roma objective
 		if limitedToDifficultDescriptions == true {
-			fmt.Printf("      　%s %s  \n", aCard.Hira, aCard.SansR_Hint)
-		} else { // Then this correct guess must be a REGULAR Kata
-			fmt.Printf("      　%s %s   - %s\n", aCard.Hira, aCard.Kata, aCard.SansR_Hint)
+			fmt.Printf("      　%s %s  - %s\n", aCard.Hira, aCard.Kata, aCard.SansR_Hint)
+		} else { // if objective was of type roma, the prompt could have been either hira or kata
+			if actual_prompt_char_type == "kata" { //
+				// ::: kata prompt
+				fmt.Printf("      　%s  - %s\n", aCard.Hira, aCard.HiraHint)
+			} else { // type of prompt must have been of hira type, and the objective was a roma
+				// ::: hira prompt
+				fmt.Printf("      　%s  - %s\n", aCard.Kata, aCard.HiraHint)
+			}
+			// fmt.Printf("      　%s %s   - %s\n", aCard.Hira, aCard.Kata, aCard.SansR_Hint) // todo ? aCard.SansR_Hint
 		}
 	}
 	fmt.Printf("%s", colorReset)

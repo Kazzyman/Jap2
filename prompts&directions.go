@@ -9,6 +9,7 @@ func prompt_the_user_for_input() { // ::: - -
 	if guessLevelCounter == 1 { // ::: --------- 1 1 1 1 1 1 ------------------
 		guessLevelCounter++
 
+		// Roma_Hira
 		if actual_prompt_char_type == "roma" && actual_objective_type == "hira" {
 			fmt.Printf("%s", aCard.Romaji)
 			fmt.Printf("%s", colorCyan)
@@ -29,7 +30,8 @@ func prompt_the_user_for_input() { // ::: - -
 			}
 			fmt.Printf(" Here:> ")
 			fmt.Printf("%s", colorReset)
-			//
+
+			// Hira_Roma
 		} else if actual_prompt_char_type == "hira" && actual_objective_type == "roma" {
 			fmt.Printf("%s", aCard.Hira)
 			fmt.Printf("%s", colorCyan)
@@ -52,7 +54,8 @@ func prompt_the_user_for_input() { // ::: - -
 			}
 			fmt.Printf(" Here:> ")
 			fmt.Printf("%s", colorReset)
-			//
+
+			// Kata_Hira
 		} else if actual_prompt_char_type == "kata" && actual_objective_type == "hira" {
 			fmt.Printf("%s", aCard.Kata)
 			fmt.Printf("%s", colorCyan)
@@ -77,17 +80,18 @@ func prompt_the_user_for_input() { // ::: - -
 			}
 			fmt.Printf(" Here:> ")
 			fmt.Printf("%s", colorReset)
-			//
-		} else if actual_prompt_char_type == "kata" && actual_objective_type == "roma" {
+
+			// Kata_Roma
+		} else if actual_prompt_char_type == "kata" && actual_objective_type == "roma" { // this block is Kata_Roma
 			fmt.Printf("%s", aCard.Kata)
 			fmt.Printf("%s", colorCyan)
 
-			if limitedToKataPrompts && limitedToHiraPrompts {
+			if limitedToKataPrompts && limitedToHiraPrompts { // if using a mix of Kata and Hira prompts
 				fmt.Printf(" Romaji?, or 'dir' - Includes Kata&Hira Prompts, in this case kata")
 			} else if limitedToKataPrompts {
 				fmt.Printf(" Romaji?, or 'dir' - Limited To Kata Prompts")
 			} else if kata_roma {
-				fmt.Printf(" Hiragana?, or 'dir' - Limited To Kata Prompts w/roma obj")
+				fmt.Printf(" Romaji input-mode expected, or 'dir' - Limited To Kata Prompts w/roma obj")
 			} else {
 				fmt.Printf(" Romaji?, or 'dir' - standard mix")
 			}
@@ -106,10 +110,12 @@ func prompt_the_user_for_input() { // ::: - -
 		} else {
 			fmt.Printf("Miss-matched elements of prompting style actual_prompt_char_type is %s, and actual_objective_type is %s\n", actual_prompt_char_type, actual_objective_type)
 		}
-		/*
-		   ;
-		*/
+
 		gottenHonestly = true
+		/*
+			;
+		*/
+
 	} else if guessLevelCounter == 2 { // ::: ------------------------------------------ 2 2 2 2 2 2 2 2 2 2 2 -------------------
 		guessLevelCounter++
 		if actual_prompt_char_type == "roma" && actual_objective_type == "hira" {
@@ -168,6 +174,9 @@ func prompt_the_user_for_input() { // ::: - -
 		}
 		//
 		gottenHonestly = false
+		/*
+			;
+		*/
 	} else if guessLevelCounter > 3 { // ::: --------------------------  > 3  > 3  > 3  > 3  > 3  > 3  ---- i.e. 4  --------------------
 		display_failure_of_final_guess_message_etc(usersSubmission)
 		weHadFailed_And_OnlyGotThisRightBecauseOfTheClue = true

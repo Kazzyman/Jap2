@@ -147,7 +147,7 @@ var fileOfCardsMedium = []charSetStruct{
 		" TT: left-ring on the 'S' char, plus a dakuten 濁点 ",
 		" ?:ど:ド  TT: left-ring on the 'S' char, plus a dakuten 濁点   ta-->da  to-->? "},
 	{"ヌ", "ぬ", "nu",
-		" nu:ぬ:ヌ   Compare:  me:メ  &  na:ナ ",
+		" nu:ぬ:ヌ   Compare:  me:メ  &  na:ナ  &  fu:フ",
 		" nu flew ヌ -- till it hit a ceiling ",
 		" TT: R-ring<--- to the '1' char, at least two lines cross, nu flew ヌ -- hit a ceiling ",
 		" ?:ぬ:ヌ   ?-flew ヌ -- till it hit a ceiling  TT: R-ring<--- to the '1' char"},

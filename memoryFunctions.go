@@ -27,13 +27,13 @@ func read_map_of_fineOn() { //     - -
 func read_map_of_needWorkOn() { //     - -
 	if len(frequencyMapOf_need_workOn) == 0 { //
 		fmt.Printf(colorRed)
-		fmt.Printf("\nThe need_workOn map is empty\n")
+		fmt.Printf("The need_workOn map is empty\n")
 		fmt.Printf(colorReset)
 	}
 	// else, there is at least one string stored in the map
 	for s, f := range frequencyMapOf_need_workOn {
 		// print one line for each string stored in the map
-		fmt.Printf("\n --- From frequencyMapOf_need_workOn: string is:")
+		fmt.Printf("%s --- From frequencyMapOf_need_workOn: string is:", colorRed)
 		fmt.Printf(colorCyan)
 		fmt.Printf("%s", s)
 		fmt.Printf(colorReset)

@@ -22,8 +22,10 @@ That is, there are 4 classes plus one special case.
 
 The four classes are:
 1. Hira prompting that requires a Romaji response.
+
 2. Kata prompting that requires a Romaji response.
 3. Kata prompting that requires a Hira response.
+
 4. Romaji prompting that requires a Hira response.
 
 the one special case is:

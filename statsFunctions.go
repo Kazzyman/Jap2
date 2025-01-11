@@ -33,7 +33,9 @@ func recordGuess(kana, users_Guess, Meaning_on_record, second_meaning string) {
 // LOGGERS:
 func log_right_andUpdateGame(prompt_it_was, in string) { // - -
 	recordGuess(prompt_it_was, in, aCard.Kata, aCard.Hira)
-	logSkipThisPrompt_inThe_frequencyMapOf_IsFineOnChars(prompt_it_was)
+	if guessLevelCounter < 3 {
+		logSkipThisPrompt_inThe_frequencyMapOf_IsFineOnChars(prompt_it_was)
+	}
 	logHits_in_cyclicArrayHits("Right", prompt_it_was)
 
 	if theGameIsRunning {

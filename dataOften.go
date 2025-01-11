@@ -42,7 +42,7 @@ var fileOfCardsOften = []charSetStruct{
 		" TT: index<-- to the 'C' char,  so:ソ Looks like: し:シ  & no:ノ but MOSTLY like:  n:ん:ン ",
 		" ?:そ:ソ  ,  Compare:  n:ん:ン     TT: L-index<-- to the 'C' char"},
 	{"ナ", "な", "na",
-		" na:な:ナ  Kata ナ is just like the left side of the Hira な -- な:ナ ",
+		" na:な:ナ  like left side of Hira な:ナ  Compare: me:メ",
 		" na:な:ナ , Compare:  na:ナ  me:メ  nu:ヌ  ( め ぬ )",
 		" TT: index< to the 'U' char,  ナ is very simple ... na-t complex at-all :: な ",
 		" な:ナ  TT: index< to the 'U' char, Hiragana t-ies a knot, see the two chars thar "},

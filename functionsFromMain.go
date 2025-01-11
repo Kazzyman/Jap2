@@ -44,8 +44,10 @@ func logRight_zu(userInput, promptField, actual_objective_type string) { // ::: 
 			fmt.Printf("      　%s %s   - %s\n", aCard.Hira, aCard.Kata, aCard.SansR_Hint)
 		}
 	}
-	fmt.Printf("%s", colorReset)
+	// fmt.Printf("%s", colorReset)
 	fmt.Printf("It could have been either ず or づ as they are the same sound: zu\n")
+	fmt.Printf("%s", colorReset)
+
 }
 
 func logRightZu2(userInput, promptField, actual_objective_type, objective string) { // ::: - -

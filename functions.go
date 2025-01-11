@@ -462,7 +462,11 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 	// Directives follow:
 	// ::: alphabetically (mostly)
 	case "?":
-		fmt.Printf("\n%s\n%s\n%s\n\n", aCard.HiraHint, aCard.KataHint, aCard.TT_Hint)
+		if limitedToDifficultDescriptions {
+			fmt.Printf("\n%s\n\n", aCard.SansR_Hint)
+		} else {
+			fmt.Printf("\n%s\n%s\n%s\n\n", aCard.HiraHint, aCard.KataHint, aCard.TT_Hint)
+		}
 	case "??":
 		// handle_doubleQuestMark_directive(actual_objective_type)
 		handle_doubleQuestMark_directive()
@@ -470,6 +474,7 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 		helpText()
 
 	case "kh":
+		kata_roma = false
 		kata_hira = true
 		limitedToKataPrompts = false
 		limitedToHiraPrompts = false
@@ -477,6 +482,7 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 		limitedToDifficultDescriptions = false
 		fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
 	case "kr":
+		kata_hira = false
 		kata_roma = true
 		limitedToKataPrompts = false
 		limitedToHiraPrompts = false

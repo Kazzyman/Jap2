@@ -269,7 +269,21 @@ func frontEnd_Possible_Recursive_DirHandler() { // ::: - -
 */
 
 func display_failure_of_final_guess_message_etc(userInput string) { // ::: - -
-	log_oops_andUpdateGame(aCard.Hira, aCard.Romaji, userInput)
+	// log_oops_andUpdateGame(aCard.Hira, aCard.Romaji, userInput) // this needs fixing, as the first string is not always a Hira
+	if actual_prompt_char_type == "roma" && actual_objective_type == "hira" {
+		// logReinforceThisPrompt_inThe_frequencyMapOf_need_workOn(aCard.Romaji)
+		log_oops_andUpdateGame(aCard.Romaji, aCard.Romaji, userInput) // ::: this may also need fixing, as the second string may not always be Romaji
+	} else if actual_prompt_char_type == "hira" && actual_objective_type == "roma" {
+		// logReinforceThisPrompt_inThe_frequencyMapOf_need_workOn(aCard.Hira)
+		log_oops_andUpdateGame(aCard.Hira, aCard.Romaji, userInput) // ::: this may also need fixing, as the second string may not always be Romaji
+	} else if actual_prompt_char_type == "kata" && actual_objective_type == "roma" {
+		// logReinforceThisPrompt_inThe_frequencyMapOf_need_workOn(aCard.Kata)
+		log_oops_andUpdateGame(aCard.Kata, aCard.Romaji, userInput) // ::: this may also need fixing, as the second string may not always be Romaji
+	} else if actual_prompt_char_type == "kata" && actual_objective_type == "hira" {
+		// logReinforceThisPrompt_inThe_frequencyMapOf_need_workOn(aCard.Kata)
+		log_oops_andUpdateGame(aCard.Kata, aCard.Romaji, userInput) // ::: this may also need fixing, as the second string may not always be Romaji
+	}
+
 	fmt.Printf("%s", colorRed)
 	fmt.Printf("     ^^Oops! That was your last try looser. Here's a clue, just for you: ...\n %s", colorReset)
 	fmt.Printf("\n%s\n%s\n%s\n\n", aCard.HiraHint, aCard.KataHint, aCard.TT_Hint)
@@ -284,7 +298,7 @@ func log_oops_andUpdateGame(prompt_it_was, field_it_was, guess string) { // - -
 	if theGameIsRunning {
 		failedOnThirdAttemptAccumulator++
 	}
-	logReinforceThisPrompt_inThe_frequencyMapOf_need_workOn(prompt_it_was)
+	logReinforceThisPrompt_inThe_frequencyMapOf_need_workOn(prompt_it_was) // used to be the only instance of this func being called
 	logHits_in_cyclicArrayHits("Oops", prompt_it_was)
 	logJcharsGottenWrong_in_cyclicArrayOfTheJcharsGottenWrong(prompt_it_was +
 		":it was:" + field_it_was + ":but you had guessed:" + guess)

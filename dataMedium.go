@@ -227,7 +227,7 @@ var fileOfCardsMedium = []charSetStruct{
 		" TT: right-pinky way-over to the '}]' chars",
 		" ム:む   TT: right-pinky way-over to the '}]' chars"},
 	{"メ", "め", "me",
-		" me:メ:め   Compare: nu:ヌ",
+		" me:メ:め   Compare: nu:ヌ  na: ナ with proper cross top",
 		" me",
 		" TT: right-pinky-slide down to the '?' char",
 		" メ:め messy-lesser ver of nuddle:ぬ　 TT: R-pinky-slide down to the '?' char"},

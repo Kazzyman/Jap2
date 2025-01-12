@@ -302,7 +302,7 @@ func the_game_ends() { // ::: - -
 func read_pulledButNotUsedMap() { // ::: - -
 	if len(pulledButNotUsedMap) == 0 {
 		fmt.Printf(colorRed)
-		fmt.Printf("\nThe seenMap is empty\n")
+		fmt.Printf("\nThe seenMap (pulledButNotUsedMap) is empty\n")
 		fmt.Printf(colorReset)
 	}
 	for s, f := range pulledButNotUsedMap {
@@ -425,6 +425,7 @@ func notes_on_kana() { // ::: - -
 .
 */
 func detectDirective(in string) { // ::: - -
+	// ::: game was missing from this list
 	if in == "stc" ||
 		in == "stcr" ||
 		in == "?" || // <-- If it IS a directive
@@ -445,6 +446,8 @@ func detectDirective(in string) { // ::: - -
 		in == "hko" ||
 		in == "kh" ||
 		in == "kr" ||
+		in == "game" ||
+		in == "mix" ||
 		in == "help" {
 		// Then:
 		its_a_directive = true
@@ -457,6 +460,7 @@ func detectDirective(in string) { // ::: - -
 */
 
 func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
+	// ::: game was missing
 	guessLevelCounter--
 	switch usersSubmission {
 	// Directives follow:
@@ -551,6 +555,25 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 		reSet_via_a_hira_aCard_andThereBy_reSet_thePromptString()
 	case "stcr":
 		reSet_aCard_via_a_romaji_andThereBy_reSet_thePromptString()
+	case "game":
+		theGameIsRunning = true
+		guessLevelCounter = 1
+		fmt.Println("Welcome to the game. Dir options: off/goff, stc, stcr, q, dirg")
+		fmt.Println("What is your name?")
+		_, _ = fmt.Scan(&nameOfPlayer)
+		fmt.Println("Enter a number for how many prompts there will be in the game")
+		_, _ = fmt.Scan(&game_duration_set_by_user)
+		display_limited_gaming_dir_list()
+
+		now_using_game_duration_set_by_user = true
+		the_game_begins()
+	case "mix":
+		limitedToKataPrompts = false
+		limitedToHiraPrompts = false
+		limitedToRomaPrompts = false
+		limitedToDifficultDescriptions = false
+		kata_roma = false
+		kata_hira = false
 	default:
 		// fmt.Println("Directive not found") // Does not ever happen because only existent cases are passed to the switch.
 	}

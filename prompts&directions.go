@@ -6,10 +6,10 @@ import (
 
 func prompt_the_user_for_input() { // ::: - -
 
-	if guessLevelCounter == 1 { // ::: --------- 1 1 1 1 1 1 ------------------
+	if guessLevelCounter == 1 { // ::: --------- first prompt -------- 1 1 1 1 1 1 ------------------
 		guessLevelCounter++
 
-		// Roma_Hira
+		// Roma_Hira ::: the only way to have Roma prompting is via limitedToRomaPrompts or standard mix
 		if actual_prompt_char_type == "roma" && actual_objective_type == "hira" {
 			fmt.Printf("%s", aCard.Romaji)
 			fmt.Printf("%s", colorCyan)
@@ -36,11 +36,12 @@ func prompt_the_user_for_input() { // ::: - -
 			fmt.Printf("%s", aCard.Hira)
 			fmt.Printf("%s", colorCyan)
 
-			if limitedToKataPrompts && limitedToHiraPrompts { // either
+			if limitedToKataPrompts && limitedToHiraPrompts { // ::: either or
 				fmt.Printf(" Romaji?, or 'dir' - Includes Kata&Hira Prompts, in this case hira")
-			} else if limitedToHiraPrompts {
+			} else if limitedToHiraPrompts { // if we had been limited to Kata prompts only we could not have landed here in this Hira_Roma block
 				fmt.Printf(" Romaji?, or 'dir' - Limited To Hira Prompts")
 			} else {
+				// the only possible scenarios for Hira_Roma were/are mixed prompting or limited to Hira or Kata
 				fmt.Printf(" Romaji?, or 'dir' - standard mix")
 			}
 
@@ -55,7 +56,7 @@ func prompt_the_user_for_input() { // ::: - -
 			fmt.Printf(" Here:> ")
 			fmt.Printf("%s", colorReset)
 
-			// Kata_Hira
+			// Kata_Hira ::: the only way to have Kata prompting is via limitedToKataPrompts or standard mix
 		} else if actual_prompt_char_type == "kata" && actual_objective_type == "hira" {
 			fmt.Printf("%s", aCard.Kata)
 			fmt.Printf("%s", colorCyan)
@@ -116,7 +117,7 @@ func prompt_the_user_for_input() { // ::: - -
 			;
 		*/
 
-	} else if guessLevelCounter == 2 { // ::: ------------------------------------------ 2 2 2 2 2 2 2 2 2 2 2 -------------------
+	} else if guessLevelCounter == 2 { // ::: --------------- Guess again ------------------ 2 2 2 2 2 2 2 2 2 2 2 -------------------
 		guessLevelCounter++
 		if actual_prompt_char_type == "roma" && actual_objective_type == "hira" {
 			fmt.Printf("%s", aCard.Romaji)
@@ -146,7 +147,7 @@ func prompt_the_user_for_input() { // ::: - -
 		.
 
 		*/
-	} else if guessLevelCounter == 3 { // ::: -------------------3 3 3 3 3 3 3 3 3 3 --------------------------------------
+	} else if guessLevelCounter == 3 { // ::: -------------- you must guess, just one more time -----3 3 3 3 3 3 3 3 3 3 --------------------------------------
 
 		guessLevelCounter++
 		if actual_prompt_char_type == "roma" && actual_objective_type == "hira" {
@@ -181,8 +182,8 @@ func prompt_the_user_for_input() { // ::: - -
 		/*
 			;
 		*/
-	} else if guessLevelCounter > 3 { // ::: --------------------------  > 3  > 3  > 3  > 3  > 3  > 3  ---- i.e. 4  --------------------
-		display_failure_of_final_guess_message_etc(usersSubmission)
+	} else if guessLevelCounter > 3 { // ::: ----- ^^Oops! That was your last try looser. Here's a clue, just for you: --------  > 3  > 3  > 3  > 3  > 3  > 3  ---- i.e. 4  ----
+		display_failure_of_final_guess_message_etc(usersSubmission) // ::: ^^^^
 		weHadFailed_And_OnlyGotThisRightBecauseOfTheClue = true
 		guessLevelCounter = 1 // ::: was 1, why 1 ??, prob because it is set to 1 twice in main
 		begin_Kana_practice()
@@ -305,6 +306,10 @@ func List_of_Directives() { // ::: - -
 		"' Use only kata_roma prompt_response")
 
 	fmt.Println("        Enter '" + colorGreen +
+		"mix" + colorReset +
+		"' Revert to using standard mixed prompts")
+
+	fmt.Println("        Enter '" + colorGreen +
 		"help" + colorReset +
 		"' For instructions on how to use this app")
 	fmt.Println("        Enter '" + colorGreen +
@@ -412,25 +417,19 @@ func re_display_List_of_Directives() { // (unique) // ::: - -
 
 	if limitedToKataPrompts && limitedToHiraPrompts {
 		fmt.Printf("Includes Kata&Hira prompts, w/romaji objectives: %t \n\n", limitedToKataPrompts)
-	}
-	if limitedToKataPrompts {
+	} else if limitedToKataPrompts {
 		fmt.Printf("Limited to Kata prompts: %t \n\n", limitedToKataPrompts)
-	}
-
-	if kata_hira {
+	} else if kata_hira {
 		fmt.Printf("Limited to Kata_hira prompt_response: %t \n\n", kata_hira)
-	}
-	if kata_roma {
+	} else if kata_roma {
 		fmt.Printf("Limited to Kata_roma prompt_response: %t \n\n", kata_roma)
-	}
-
-	if limitedToHiraPrompts {
+	} else if limitedToHiraPrompts {
 		fmt.Printf("Limited to Hira prompts: %t \n\n", limitedToHiraPrompts)
-	}
-	if limitedToRomaPrompts {
+	} else if limitedToRomaPrompts {
 		fmt.Printf("Limited to Romaji prompts: %t \n\n", limitedToRomaPrompts)
-	}
-	if limitedToDifficultDescriptions {
+	} else if limitedToDifficultDescriptions {
 		fmt.Printf("Limited to Difficult descriptive prompts only (Romaji as objective): %t \n\n", limitedToDifficultDescriptions)
+	} else {
+		fmt.Printf("Standard Mix, says rix\n\n")
 	}
 }

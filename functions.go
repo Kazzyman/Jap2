@@ -242,7 +242,7 @@ func the_game_ends() { // ::: - -
 	TotalRun := fmt.Sprintf("%02d:%02d", minutes, seconds)
 
 	// ::: ------------------------------------------------------------------- v v v v
-	Process_users_input_as_a_guess() // ::: trying this ---- and these ------- v v v v
+	// Process_users_input_as_a_guess() // ::: trying this ---- and these ------- v v v v
 	if guessLevelCounter == 2 {
 		if gottenHonestly {
 			correctOnFirstAttemptAccumulator++
@@ -277,6 +277,8 @@ func the_game_ends() { // ::: - -
 			"%s%d times. \n\n", TotalRun, colorReset, correctOnFirstAttemptAccumulator, colorRed, colorReset, correctOnSecondAttemptAccumulator,
 			colorRed, colorReset, correctOnThirdAttemptAccumulator, colorRed, colorReset, failedOnThirdAttemptAccumulator)
 	}
+
+	fmt.Printf(" --- View the text log file for further comments re this or previous game stats --- \n\n")
 
 	// End timer and report elapsed time and other stats to a file.
 	_, err1 := fmt.Fprintf(fileHandle,

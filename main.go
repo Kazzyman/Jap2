@@ -14,7 +14,8 @@ var thisIsOurFirstRodeo bool
 
 func main() {
 	rand.Seed(time.Now().UnixNano()) // Seed the random number generator with the current time in nanoseconds.
-	theGameIsRunning = false
+	theGameIsRunning = true
+	kata_roma = true
 	guessLevelCounter = 1
 	// limitedToKataPrompts = true
 	// limitedToHiraPrompts = true
@@ -24,6 +25,18 @@ func main() {
 	gotLastCardRightSoGetFreshOne = true // This will get us an initial card.
 
 	display_start_menu_etc()
+	guessLevelCounter = 1
+	
+	fmt.Println("Welcome to the game. Dir options: off/goff, stc, stcr, q, dirg")
+	fmt.Println("What is your name?")
+	_, _ = fmt.Scan(&nameOfPlayer)
+	fmt.Println("Enter a number for how many prompts there will be in the game")
+	_, _ = fmt.Scan(&game_duration_set_by_user)
+	display_limited_gaming_dir_list()
+
+	now_using_game_duration_set_by_user = true
+	the_game_begins()
+
 	begin_Kana_practice()
 }
 

@@ -419,11 +419,15 @@ func display_List_of_Directives() { // (unique) // ::: - -
 	List_of_Directives()
 	//goland:noinspection ALL
 	fmt.Println("\n")
-	if now_using_game_duration_set_by_user {
-		fmt.Printf("Game counter: %d, Game Duration: %d \n", game_loop_counter, game_duration_set_by_user)
-	} else {
-		fmt.Printf("Game counter: %d, Game Duration: %d \n\n", game_loop_counter, jim)
-	}
+
+	/*
+		if now_using_game_duration_set_by_user {
+			fmt.Printf("Game counter: %d, Game Duration: %d \n", game_loop_counter, game_duration_set_by_user)
+		} else {
+			fmt.Printf("Game counter: %d, Game Duration: %d \n\n", game_loop_counter, jim)
+		}
+	*/
+
 	/*
 		fmt.Printf("Current Prompt Count Total: %d \n\n", total_prompts)
 

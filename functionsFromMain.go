@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 func displayRight_logRight(userInput, promptField, actual_objective_type string) { // ::: - -
-	log_right_andUpdateGame(promptField, userInput)
+	// log_right_andUpdateGame(promptField, userInput)
 	fmt.Printf("%s", colorGreen)
 
 	// if objective was of type hira, the prompt could have been either roma or kata
@@ -30,10 +30,12 @@ func displayRight_logRight(userInput, promptField, actual_objective_type string)
 		}
 	}
 	fmt.Printf("%s", colorReset)
+	log_right_andUpdateGame(promptField, userInput)
+
 }
 
 func logRight_zu(userInput, promptField, actual_objective_type string) { // ::: - -
-	log_right_andUpdateGame(promptField, userInput)
+	// log_right_andUpdateGame(promptField, userInput)
 	fmt.Printf("%s", colorGreen)
 	if actual_objective_type == "hira" {
 		fmt.Printf("      　%s %s   - %s\n", aCard.Romaji, aCard.Kata, aCard.HiraHint)
@@ -47,11 +49,12 @@ func logRight_zu(userInput, promptField, actual_objective_type string) { // ::: 
 	// fmt.Printf("%s", colorReset)
 	fmt.Printf("It could have been either ず or づ as they are the same sound: zu\n")
 	fmt.Printf("%s", colorReset)
+	log_right_andUpdateGame(promptField, userInput)
 
 }
 
 func logRightZu2(userInput, promptField, actual_objective_type, objective string) { // ::: - -
-	log_right_andUpdateGame(promptField, userInput)
+	// log_right_andUpdateGame(promptField, userInput)
 	fmt.Printf("%s", colorGreen)
 	if actual_objective_type == "hira" {
 		fmt.Printf("      　%s %s   - %s\n", aCard.Romaji, aCard.Kata, aCard.HiraHint)
@@ -66,4 +69,6 @@ func logRightZu2(userInput, promptField, actual_objective_type, objective string
 		}
 	}
 	fmt.Printf("%s", colorReset)
+	log_right_andUpdateGame(promptField, userInput)
+
 }

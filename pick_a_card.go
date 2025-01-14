@@ -216,7 +216,8 @@ func pick_RandomCard_Assign_fields() { // ::: - -
 		frequencyMapOf_IsFineOnChars = make(map[string]int)
 		frequencyMapOf_need_workOn = make(map[string]int)
 		pulledButNotUsedMap = make(map[string]int)
-		fmt.Println(colorCyan + "You have finished all the cards; repeats will now ensue ... \n" + colorReset)
+		// fmt.Println(colorReset + "You have finished all the cards; repeats will now ensue ... \n")
+		fmt.Printf("%sYou have finished all the cards; repeats will now ensue ... \n", colorReset)
 	}
 }
 

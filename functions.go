@@ -522,9 +522,11 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 		fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
 	case "donly":
 		limitedToDifficultDescriptions = true
-		limitedToKataPrompts = true
+		limitedToKataPrompts = false
 		limitedToHiraPrompts = false
 		limitedToRomaPrompts = false
+		kata_roma = false
+		kata_hira = false
 		fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
 		/*
 			.

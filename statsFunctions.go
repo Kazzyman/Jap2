@@ -57,7 +57,7 @@ func log_right_andUpdateGame(prompt_it_was, in string) { // - -
 				correctOnSecondAttemptAccumulator++ // ::: 2nd
 			} else {
 				// ... then ... the guessLevelCounter was 4.
-				fmt.Printf("here in log right, guessLevelCounter is:%d, and it should be 4\n", guessLevelCounter)
+				// fmt.Printf("here in log right, guessLevelCounter is:%d, and it should be 4\n", guessLevelCounter)
 				correctOnThirdAttemptAccumulator++ // ::: 3rd
 			}
 			// ::: The other accumulator++  thang : failedOnThirdAttemptAccumulator ]todo[ ... gets handled in log_oops()

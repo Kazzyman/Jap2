@@ -16,6 +16,8 @@ func prompt_the_user_for_input() { // ::: - -
 
 			if limitedToRomaPrompts {
 				fmt.Printf(" Hiragana?, or 'dir' - Limited To Romaji Prompts") // could be, could be
+			} else if limitedToDifficultDescriptions {
+				fmt.Printf(" Meaning?, or 'dir' - Limited to Difficult Descriptions")
 			} else {
 				fmt.Printf(" Hiragana?, or 'dir' - standard mix") // We should print "standard mix" only if we have proved that we are not here by random
 			}
@@ -44,6 +46,8 @@ func prompt_the_user_for_input() { // ::: - -
 				fmt.Printf(" Romaji?, or 'dir' - Includes Kata&Hira Prompts, in this case hira")
 			} else if limitedToHiraPrompts { // if we had been limited to Kata prompts only we could not have landed here in this Hira_Roma block
 				fmt.Printf(" Romaji?, or 'dir' - Limited To Hira Prompts")
+			} else if limitedToDifficultDescriptions {
+				fmt.Printf(" Meaning?, or 'dir' - Limited to Difficult Descriptions")
 			} else {
 				// the only possible scenarios for Hira_Roma were/are mixed prompting or limited to Hira or Kata
 				fmt.Printf(" Romaji?, or 'dir' - standard mix")
@@ -69,12 +73,14 @@ func prompt_the_user_for_input() { // ::: - -
 			fmt.Printf("%s", aCard.Kata)
 			fmt.Printf("%s", colorCyan)
 
-			if limitedToKataPrompts && limitedToHiraPrompts { // limited to kata OR hira prompts
+			if limitedToKataPrompts && limitedToHiraPrompts {
 				fmt.Printf(" Hiragana?, or 'dir' - Includes Kata&Hira Prompts, in this case kata")
 			} else if limitedToKataPrompts {
 				fmt.Printf(" Hiragana?, or 'dir' - Limited To Kata Prompts")
 			} else if kata_hira {
 				fmt.Printf(" Hiragana?, or 'dir' - Limited To Kata Prompts w/hira obj")
+			} else if limitedToDifficultDescriptions {
+				fmt.Printf(" Meaning?, or 'dir' - Limited to Difficult Descriptions")
 			} else {
 				fmt.Printf(" Hiragana?, or 'dir' - standard mix")
 			}
@@ -99,12 +105,14 @@ func prompt_the_user_for_input() { // ::: - -
 			fmt.Printf("%s", aCard.Kata)
 			fmt.Printf("%s", colorCyan)
 
-			if limitedToKataPrompts && limitedToHiraPrompts { // if using a mix of Kata and Hira prompts
+			if limitedToKataPrompts && limitedToHiraPrompts {
 				fmt.Printf(" Romaji?, or 'dir' - Includes Kata&Hira Prompts, in this case kata")
 			} else if limitedToKataPrompts {
 				fmt.Printf(" Romaji?, or 'dir' - Limited To Kata Prompts")
 			} else if kata_roma {
 				fmt.Printf(" Romaji input-mode expected, or 'dir' - Limited To Kata Prompts w/roma obj")
+			} else if limitedToDifficultDescriptions {
+				fmt.Printf(" Meaning?, or 'dir' - Limited to Difficult Descriptions")
 			} else {
 				fmt.Printf(" Romaji?, or 'dir' - standard mix")
 			}

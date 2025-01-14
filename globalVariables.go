@@ -30,6 +30,8 @@ var include_Extended_kata_deck = false
 var limitedToKataPrompts bool // These are used to control (limit) which field of the cards will be used as the prompt char.
 var limitedToHiraPrompts bool
 var limitedToRomaPrompts bool
+var limitedToRomaPromptsAndSimplexHiraObj bool
+var limitedToKataPromptsAndSimplexHiraObj bool
 var limitedToDifficultDescriptions bool
 
 var total_prompts int // Used in various statistical reporting functions.

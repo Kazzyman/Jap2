@@ -376,6 +376,9 @@ func reset_all_data() { // ::: - -
 	limitedToRomaPrompts = false
 	limitedToDifficultDescriptions = false
 	include_Extended_kata_deck = false
+	//
+	kata_roma = true // ::: the "default"
+	//
 	cyclicArrayOfTheJcharsGottenWrong = CyclicArrayOfTheJcharsGottenWrong{}
 	cyclicArrayHits = CyclicArrayHits{}
 	cyclicArrayPulls = CyclicArrayPulls{}
@@ -404,6 +407,7 @@ func reset_all_data() { // ::: - -
 	//goland:noinspection ALL
 	fmt.Println("    frequencyMapOf_need_workOn\n")
 	fmt.Println(colorCyan + "  Limitations re Kata, Hira, and Romaji prompting; as well as all Game values have also been reset\n" + colorReset)
+	fmt.Println("... and will take effect after you dispatch the current card: default kata_roma ...")
 }
 
 /*
@@ -427,7 +431,6 @@ func notes_on_kana() { // ::: - -
 .
 */
 func detectDirective(in string) { // ::: - -
-	// ::: game was missing from this list
 	if in == "stc" ||
 		in == "stcr" ||
 		in == "?" || // <-- If it IS a directive
@@ -444,9 +447,11 @@ func detectDirective(in string) { // ::: - -
 		in == "konly" ||
 		in == "honly" ||
 		in == "ronly" ||
+		in == "rhSimplex" ||
 		in == "donly" ||
 		in == "hko" ||
 		in == "kh" ||
+		in == "khSimplex" ||
 		in == "kr" ||
 		in == "game" ||
 		in == "mix" ||
@@ -462,7 +467,6 @@ func detectDirective(in string) { // ::: - -
 */
 
 func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
-	// ::: game was missing
 	guessLevelCounter--
 	switch usersSubmission {
 	// Directives follow:
@@ -487,6 +491,15 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 		limitedToRomaPrompts = false
 		limitedToDifficultDescriptions = false
 		fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
+	case "khSimplex":
+		kata_roma = false
+		kata_hira = false
+		limitedToKataPromptsAndSimplexHiraObj = true
+		limitedToKataPrompts = true
+		limitedToHiraPrompts = false
+		limitedToRomaPrompts = false
+		limitedToDifficultDescriptions = false
+		fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
 	case "kr":
 		kata_hira = false
 		kata_roma = true
@@ -497,36 +510,53 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 		fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
 
 	case "hko":
+		kata_hira = false
+		kata_roma = false
 		limitedToKataPrompts = true
 		limitedToHiraPrompts = true
 		limitedToRomaPrompts = false
 		limitedToDifficultDescriptions = false
 		fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
 	case "konly":
+		kata_hira = false
+		kata_roma = false
 		limitedToKataPrompts = true
 		limitedToHiraPrompts = false
 		limitedToRomaPrompts = false
 		limitedToDifficultDescriptions = false
 		fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
 	case "honly":
+		kata_hira = false
+		kata_roma = false
 		limitedToHiraPrompts = true
 		limitedToKataPrompts = false
 		limitedToRomaPrompts = false
 		limitedToDifficultDescriptions = false
 		fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
 	case "ronly":
+		kata_hira = false
+		kata_roma = false
+		limitedToRomaPrompts = true
+		limitedToKataPrompts = false
+		limitedToHiraPrompts = false
+		limitedToDifficultDescriptions = false
+		fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
+	case "rhSimplex":
+		kata_hira = false
+		kata_roma = false
+		limitedToRomaPromptsAndSimplexHiraObj = true
 		limitedToRomaPrompts = true
 		limitedToKataPrompts = false
 		limitedToHiraPrompts = false
 		limitedToDifficultDescriptions = false
 		fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
 	case "donly":
+		kata_hira = false
+		kata_roma = false
 		limitedToDifficultDescriptions = true
 		limitedToKataPrompts = false
 		limitedToHiraPrompts = false
-		limitedToRomaPrompts = false
-		kata_roma = false
-		kata_hira = false
+		limitedToRomaPrompts = true
 		fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
 		/*
 			.
@@ -572,6 +602,8 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 		now_using_game_duration_set_by_user = true
 		the_game_begins()
 	case "mix":
+		limitedToRomaPromptsAndSimplexHiraObj = false
+		limitedToKataPromptsAndSimplexHiraObj = false
 		limitedToKataPrompts = false
 		limitedToHiraPrompts = false
 		limitedToRomaPrompts = false
@@ -617,6 +649,7 @@ func helpText() { // ::: - -
 	fmt.Println(colorReset)
 }
 
+// ::: The following two test functions are obsolete due to use of "whichDeck" int
 /*
 // This func, sans "_Extended" at the end of its name, becomes ::: a testing version of pick_RandomCard_Assign_fields()
 // ... for fileOfCardsE : the deck of Extended Kata

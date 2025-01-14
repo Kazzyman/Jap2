@@ -21,7 +21,7 @@ import (
 //   Often drilled (difficult or potentially confusing chars)
 
 // This one is the default func: it randomly "calls" one of the above four functions and also sets whichDeck (abandoned)
-func randomize_over_all_decks() { // ::: - -
+func randomize_over_all_decks() { // ::: 6 - -
 	randIndexRare := rand.Intn(len(fileOfCardsRare))
 	randIndexMedium := rand.Intn(len(fileOfCardsMedium))
 	randIndexOften := rand.Intn(len(fileOfCardsOften))

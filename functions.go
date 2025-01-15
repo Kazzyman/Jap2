@@ -610,6 +610,8 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 		limitedToDifficultDescriptions = false
 		kata_roma = false
 		kata_hira = false
+		fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
+		
 	default:
 		// fmt.Println("Directive not found") // Does not ever happen because only existent cases are passed to the switch.
 	}

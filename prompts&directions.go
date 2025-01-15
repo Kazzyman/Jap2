@@ -36,7 +36,7 @@ func prompt_the_user_for_input() { // ::: - -
 			if theGameIsRunning { // Determine which "prompt" string to deploy
 				fmt.Printf("%s Game:> %s", colorGreen, colorReset)
 			} else {
-				fmt.Printf(" Here:> ")
+				fmt.Printf(" Hira:> ")
 			}
 			fmt.Printf("%s", colorReset)
 
@@ -66,7 +66,7 @@ func prompt_the_user_for_input() { // ::: - -
 			if theGameIsRunning {
 				fmt.Printf("%s Game:> %s", colorGreen, colorReset)
 			} else {
-				fmt.Printf(" Here:> ")
+				fmt.Printf(" Roma:> ")
 			}
 			fmt.Printf("%s", colorReset)
 
@@ -101,7 +101,7 @@ func prompt_the_user_for_input() { // ::: - -
 			if theGameIsRunning {
 				fmt.Printf("%s Game:> %s", colorGreen, colorReset)
 			} else {
-				fmt.Printf(" Here:> ")
+				fmt.Printf(" Hira:> ")
 			}
 			fmt.Printf("%s", colorReset)
 
@@ -134,7 +134,7 @@ func prompt_the_user_for_input() { // ::: - -
 			if theGameIsRunning {
 				fmt.Printf("%s Game:> %s", colorGreen, colorReset)
 			} else {
-				fmt.Printf(" Here:> ")
+				fmt.Printf(" Roma:> ")
 			}
 			fmt.Printf("%s", colorReset)
 			//
@@ -179,22 +179,22 @@ func prompt_the_user_for_input() { // ::: - -
 				fmt.Printf("%s", aCard.Romaji)
 				fmt.Printf("%s", colorCyan)
 				fmt.Printf(" Hiragana input-mode expected," + colorRed +
-					" Guess again," + colorReset + " or '?' for clue\n " + colorYellow + "Here:> " + colorReset)
+					" Guess again," + colorReset + " or '?' for clue\n " + colorYellow + "Hira:> " + colorReset)
 			} else if actual_prompt_char_type == "hira" && actual_objective_type == "roma" {
 				fmt.Printf("%s", aCard.Hira)
 				fmt.Printf("%s", colorCyan)
 				fmt.Printf(" Romaji input-mode expected," + colorRed +
-					" Guess again, " + colorReset + "or '?' for clue\n " + colorYellow + "Here:> " + colorReset)
+					" Guess again, " + colorReset + "or '?' for clue\n " + colorYellow + "Roma:> " + colorReset)
 			} else if actual_prompt_char_type == "kata" && actual_objective_type == "roma" {
 				fmt.Printf("%s", aCard.Kata)
 				fmt.Printf("%s", colorCyan)
 				fmt.Printf(" Romaji input-mode expected," + colorRed +
-					" Guess again, " + colorReset + "or '?' for clue\n " + colorYellow + "Here:> " + colorReset)
+					" Guess again, " + colorReset + "or '?' for clue\n " + colorYellow + "Roma:> " + colorReset)
 			} else if actual_prompt_char_type == "kata" && actual_objective_type == "hira" { // was a bug fix ???
 				fmt.Printf("%s", aCard.Kata)
 				fmt.Printf("%s", colorCyan)
 				fmt.Printf(" Hiragana input-mode expected," + colorRed +
-					" Guess again," + colorReset + " or '?' for clue\n " + colorYellow + "Here:> " + colorReset)
+					" Guess again," + colorReset + " or '?' for clue\n " + colorYellow + "Hira:> " + colorReset)
 			} else {
 				// ::: got this message in error ??
 				fmt.Printf("Miss-matched elements of prompting style actual_prompt_char_type is %s, and actual_objective_type is %s\n", actual_prompt_char_type, actual_objective_type)
@@ -240,25 +240,25 @@ func prompt_the_user_for_input() { // ::: - -
 				fmt.Printf("%s", aCard.Romaji)
 				fmt.Printf("%s", colorCyan)
 				fmt.Printf(" Hiragana input-mode expected," + colorReset +
-					" you must guess, " + colorRed + "just one more time\n Here:> " + colorReset)
+					" you must guess, " + colorRed + "just one more time\n Hira:> " + colorReset)
 				logReinforceThisPrompt_inThe_frequencyMapOf_need_workOn(aCard.Romaji)
 			} else if actual_prompt_char_type == "hira" && actual_objective_type == "roma" {
 				fmt.Printf("%s", aCard.Hira)
 				fmt.Printf("%s", colorCyan)
 				fmt.Printf(" Romaji input-mode expected," + colorReset +
-					" you must guess, " + colorRed + "just one more time\n Here:> " + colorReset)
+					" you must guess, " + colorRed + "just one more time\n Roma:> " + colorReset)
 				logReinforceThisPrompt_inThe_frequencyMapOf_need_workOn(aCard.Hira)
 			} else if actual_prompt_char_type == "kata" && actual_objective_type == "roma" {
 				fmt.Printf("%s", aCard.Kata)
 				fmt.Printf("%s", colorCyan)
 				fmt.Printf(" Romaji input-mode expected," + colorReset +
-					" you must guess, " + colorRed + "just one more time\n Here:> " + colorReset)
+					" you must guess, " + colorRed + "just one more time\n Roma:> " + colorReset)
 				logReinforceThisPrompt_inThe_frequencyMapOf_need_workOn(aCard.Kata)
 			} else if actual_prompt_char_type == "kata" && actual_objective_type == "hira" { // was a bug fix ???
 				fmt.Printf("%s", aCard.Kata)
 				fmt.Printf("%s", colorCyan)
 				fmt.Printf(" Hiragana input-mode expected," + colorReset +
-					" you must guess, " + colorRed + "just one more time\n Here:> " + colorReset)
+					" you must guess, " + colorRed + "just one more time\n Hira:> " + colorReset)
 				logReinforceThisPrompt_inThe_frequencyMapOf_need_workOn(aCard.Kata)
 			} else {
 				fmt.Printf("Miss-matched elements of prompting style actual_prompt_char_type is %s, and actual_objective_type is %s\n", actual_prompt_char_type, actual_objective_type)

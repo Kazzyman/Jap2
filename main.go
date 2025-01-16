@@ -26,11 +26,11 @@ func main() {
 
 	display_start_menu_etc()
 	guessLevelCounter = 1
-	
+
 	fmt.Println("Welcome to the game. Dir options: off/goff, stc, stcr, q, dirg")
-	fmt.Println("What is your name?")
+	fmt.Println("What is your first name? (one word)")
 	_, _ = fmt.Scan(&nameOfPlayer)
-	fmt.Println("Enter a number for how many prompts there will be in the game")
+	fmt.Println("Enter a number (102) for how many prompts there will be in the game")
 	_, _ = fmt.Scan(&game_duration_set_by_user)
 	display_limited_gaming_dir_list()
 
@@ -57,9 +57,9 @@ func begin_Kana_practice() { // ::: - -
 		} else if usersSubmission == "game" {
 			guessLevelCounter = 1
 			fmt.Println("Welcome to the game. Dir options: off/goff, stc, stcr, q, dirg")
-			fmt.Println("What is your name?")
+			fmt.Println("What is your first name? (one word)")
 			_, _ = fmt.Scan(&nameOfPlayer)
-			fmt.Println("Enter a number for how many prompts there will be in the game")
+			fmt.Println("Enter a number (102) for how many prompts there will be in the game")
 			_, _ = fmt.Scan(&game_duration_set_by_user)
 			display_limited_gaming_dir_list()
 

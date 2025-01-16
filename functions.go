@@ -238,6 +238,14 @@ func the_game_ends() { // ::: - -
 	minutes := int(elapsed.Minutes())
 	seconds := int(elapsed.Seconds()) % 60
 
+	total_seconds := (minutes * 60) + (seconds)
+	firstAtemptAcumF := float32(correctOnFirstAttemptAccumulator - 1)
+	secondAtemptAcumF := float32(correctOnSecondAttemptAccumulator)
+	thirdAtemptAcumF := float32(correctOnThirdAttemptAccumulator)
+	failedOnThirdAttF := float32(failedOnThirdAttemptAccumulator)
+	totalSecondsF := float32(total_seconds)
+	points2print = (firstAtemptAcumF - (secondAtemptAcumF / 4) - (thirdAtemptAcumF / 2) - (failedOnThirdAttF * 2)) / totalSecondsF * 100
+
 	// Create the formatted string
 	TotalRun := fmt.Sprintf("%02d:%02d", minutes, seconds)
 
@@ -261,21 +269,33 @@ func the_game_ends() { // ::: - -
 	if correctOnFirstAttemptAccumulator > 0 && correctOnSecondAttemptAccumulator > 0 && correctOnThirdAttemptAccumulator > 0 && failedOnThirdAttemptAccumulator == 0 { // ::: done
 		fmt.Println(colorRed)
 		fmt.Printf("\nYour Game run-time was:%s,  you got %s%d%s correct on your first try,  %s%d%s right on your second try,\n"+
-			"... and you got %s%d right on your third try. \n\n", TotalRun, colorReset, correctOnFirstAttemptAccumulator, colorRed, colorReset, correctOnSecondAttemptAccumulator,
+			"... and you got %s%d right on your third try. \n\n", TotalRun, colorReset, correctOnFirstAttemptAccumulator-1, colorRed, colorReset, correctOnSecondAttemptAccumulator,
 			colorRed, colorReset, correctOnThirdAttemptAccumulator)
+		if game_duration_set_by_user == 102 {
+			fmt.Printf("Points = %f\n", (firstAtemptAcumF-(secondAtemptAcumF/4)-(thirdAtemptAcumF/2)-(failedOnThirdAttF*2))/totalSecondsF*100)
+		}
 	} else if correctOnFirstAttemptAccumulator > 0 && correctOnSecondAttemptAccumulator > 0 && correctOnThirdAttemptAccumulator == 0 && failedOnThirdAttemptAccumulator == 0 { // ::: done
 		fmt.Println(colorRed)
-		fmt.Printf("\nYour Game run-time was:%s,  you got %s%d%s correct on your first try,  %s%d right on your second try. \n\n", TotalRun, colorReset, correctOnFirstAttemptAccumulator,
+		fmt.Printf("\nYour Game run-time was:%s,  you got %s%d%s correct on your first try,  %s%d right on your second try. \n\n", TotalRun, colorReset, correctOnFirstAttemptAccumulator-1,
 			colorRed, colorReset, correctOnSecondAttemptAccumulator)
+		if game_duration_set_by_user == 102 {
+			fmt.Printf("Points = %f\n", (firstAtemptAcumF-(secondAtemptAcumF/4)-(thirdAtemptAcumF/2)-(failedOnThirdAttF*2))/totalSecondsF*100)
+		}
 	} else if correctOnFirstAttemptAccumulator > 0 && correctOnSecondAttemptAccumulator == 0 && correctOnThirdAttemptAccumulator == 0 && failedOnThirdAttemptAccumulator == 0 { // ::: done
 		fmt.Println(colorRed)
-		fmt.Printf("\nYour Game run-time was:%s,  Gongratulations! you got %s%d correct on your first try. \n\n", TotalRun, colorReset, correctOnFirstAttemptAccumulator)
+		fmt.Printf("\nYour Game run-time was:%s,  Gongratulations! you got %s%d correct on your first try. \n\n", TotalRun, colorReset, correctOnFirstAttemptAccumulator-1)
+		if game_duration_set_by_user == 102 {
+			fmt.Printf("Points = %f\n", (firstAtemptAcumF-(secondAtemptAcumF/4)-(thirdAtemptAcumF/2)-(failedOnThirdAttF*2))/totalSecondsF*100)
+		}
 	} else {
 		fmt.Println(colorRed)
 		fmt.Printf("\nYour Game run-time was:%s,  you got %s%d%s correct on your first try,  %s%d%s right on your second try,\n"+
 			"... and you got %s%d%s right on your third try, and were unable to answer correctly without a hint "+
-			"%s%d times. \n\n", TotalRun, colorReset, correctOnFirstAttemptAccumulator, colorRed, colorReset, correctOnSecondAttemptAccumulator,
+			"%s%d times. \n\n", TotalRun, colorReset, correctOnFirstAttemptAccumulator-1, colorRed, colorReset, correctOnSecondAttemptAccumulator,
 			colorRed, colorReset, correctOnThirdAttemptAccumulator, colorRed, colorReset, failedOnThirdAttemptAccumulator)
+		if game_duration_set_by_user == 102 {
+			fmt.Printf("Points = %f\n", (firstAtemptAcumF-(secondAtemptAcumF/4)-(thirdAtemptAcumF/2)-(failedOnThirdAttF*2))/totalSecondsF*100)
+		}
 	}
 
 	fmt.Printf(" --- View the text log file for further comments re this or previous game stats --- \n\n")
@@ -283,19 +303,26 @@ func the_game_ends() { // ::: - -
 	// End timer and report elapsed time and other stats to a file.
 	_, err1 := fmt.Fprintf(fileHandle,
 		"\n-- A game ended at: %s  Total prompts was: %d \n",
-		currentTime.Format("15:04:05 on Monday 01-02-2006"), game_loop_counter)
+		currentTime.Format("15:04:05 on Monday 01-02-2006"), game_loop_counter-1)
 	check_error(err1)
 
 	_, err3 := fmt.Fprintf(fileHandle, "%s's results were as follows: Right on first attempt:%d, on 2nd attempt:%d, 3rd attempt:%d, even a hint was ineffective:%d, %d/%d\n",
-		nameOfPlayer, correctOnFirstAttemptAccumulator,
+		nameOfPlayer, correctOnFirstAttemptAccumulator-1,
 		correctOnSecondAttemptAccumulator, correctOnThirdAttemptAccumulator,
-		failedOnThirdAttemptAccumulator, game_loop_counter, game_duration_set_by_user)
+		failedOnThirdAttemptAccumulator, game_loop_counter-1, game_duration_set_by_user)
 	check_error(err3)
 
 	_, err2 := fmt.Fprintf(fileHandle,
-		"The Elapsed time of the game was: %s \n\n\n",
+		"The Elapsed time of the game was: %s \n",
 		TotalRun)
 	check_error(err2)
+	if game_duration_set_by_user == 102 { // Calculate and print the Point total to the log file only if a full game of 102 had been declared
+		// fmt.Printf("Points: %f", points2print)
+		_, err3 := fmt.Fprintf(fileHandle,
+			"Points: %f \n\n\n",
+			points2print)
+		check_error(err3)
+	}
 }
 
 /*
@@ -593,9 +620,9 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 		theGameIsRunning = true
 		guessLevelCounter = 1
 		fmt.Println("Welcome to the game. Dir options: off/goff, stc, stcr, q, dirg")
-		fmt.Println("What is your name?")
+		fmt.Println("What is your first name? (one word)")
 		_, _ = fmt.Scan(&nameOfPlayer)
-		fmt.Println("Enter a number for how many prompts there will be in the game")
+		fmt.Println("Enter a number (102) for how many prompts there will be in the game")
 		_, _ = fmt.Scan(&game_duration_set_by_user)
 		display_limited_gaming_dir_list()
 
@@ -611,7 +638,7 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 		kata_roma = false
 		kata_hira = false
 		fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
-		
+
 	default:
 		// fmt.Println("Directive not found") // Does not ever happen because only existent cases are passed to the switch.
 	}

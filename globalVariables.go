@@ -34,6 +34,8 @@ var limitedToRomaPromptsAndSimplexHiraObj bool
 var limitedToKataPromptsAndSimplexHiraObj bool
 var limitedToDifficultDescriptions bool
 
+var points2print float32
+
 var total_prompts int // Used in various statistical reporting functions.
 
 // ::: Game-Feature-control-and-tallying-vars-Section: ---------------------------------------

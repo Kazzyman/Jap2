@@ -77,6 +77,8 @@ func pick_RandomCard_Assign_fields() { // ::: - -
 	} else if limitedToDifficultDescriptions {
 		actual_prompt_char_type = "kata"                   // ::: because the prompt description is in the kata field
 		Difficult_descriptive_prompting_romaji_objective() // ::: 5
+	} else if limitedToSpelling {
+		Spelling_prompting_romaji_objective() // ::: 8
 	} else if limitedToKataPrompts {
 		actual_prompt_char_type = "kata"
 		if limitedToKataPromptsAndSimplexHiraObj {
@@ -163,6 +165,10 @@ func pick_RandomCard_Assign_fields() { // ::: - -
 				} else if limitedToDifficultDescriptions {
 					actual_prompt_char_type = "kata"                   // ::: because the prompt description is in the kata field
 					Difficult_descriptive_prompting_romaji_objective() // ::: 5
+
+				} else if limitedToSpelling {
+					actual_prompt_char_type = "kata"      // ::: because the prompt description is in the kata field
+					Spelling_prompting_romaji_objective() // :::
 
 				} else if limitedToKataPrompts {
 					// todo add simplex
@@ -389,8 +395,19 @@ func roma_prompting_hira_objective() { // ::: - -
 
 // ::: 5
 func Difficult_descriptive_prompting_romaji_objective() { // ::: - -
-	randIndexMK := rand.Intn(len(dataMostDiff)) // dataK.go
+	randIndexMK := rand.Intn(len(dataMostDiff)) //
 	aCard = dataMostDiff[randIndexMK]
+	// prompting from a description in the kata field, Romaji objective:
+	actual_prompt_char = aCard.Kata  // ::: because the description being used as prompt is stored in the kata field.
+	actual_prompt_char_type = "kata" // ::: because the description being used as prompt is stored in the kata field.
+	actual_objective = aCard.Romaji
+	actual_objective_type = "roma"
+}
+
+// ::: 8
+func Spelling_prompting_romaji_objective() {
+	randIndexMK := rand.Intn(len(dataSpelling)) //
+	aCard = dataSpelling[randIndexMK]
 	// prompting from a description in the kata field, Romaji objective:
 	actual_prompt_char = aCard.Kata  // ::: because the description being used as prompt is stored in the kata field.
 	actual_prompt_char_type = "kata" // ::: because the description being used as prompt is stored in the kata field.

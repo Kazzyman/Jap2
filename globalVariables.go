@@ -33,6 +33,7 @@ var limitedToRomaPrompts bool
 var limitedToRomaPromptsAndSimplexHiraObj bool
 var limitedToKataPromptsAndSimplexHiraObj bool
 var limitedToDifficultDescriptions bool
+var limitedToSpelling bool
 
 var points2print float32
 

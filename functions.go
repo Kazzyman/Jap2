@@ -490,6 +490,7 @@ func detectDirective(in string) { // ::: - -
 		in == "khSimplex" ||
 		in == "kr" ||
 		in == "game" ||
+		in == "spell" ||
 		in == "mix" ||
 		in == "help" {
 		// Then:
@@ -519,6 +520,15 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 	case "help":
 		helpText()
 
+	case "spell":
+		kata_roma = true // Because, we prompt from the kata field and solicit a Romaji response
+		kata_hira = false
+		limitedToKataPrompts = false
+		limitedToHiraPrompts = false
+		limitedToRomaPrompts = false
+		limitedToDifficultDescriptions = false
+		limitedToSpelling = true
+		fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
 	case "kh":
 		kata_roma = false
 		kata_hira = true
@@ -638,6 +648,15 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 		now_using_game_duration_set_by_user = true
 		the_game_begins()
 	case "mix":
+		/*
+			limitedToKataPrompts bool // These are used to control (limit) which field of the cards will be used as the prompt char.
+			var limitedToHiraPrompts bool
+			var limitedToRomaPrompts bool
+			var limitedToRomaPromptsAndSimplexHiraObj bool
+			var limitedToKataPromptsAndSimplexHiraObj bool
+			var limitedToDifficultDescriptions bool
+			var limitedToSpelling
+		*/
 		limitedToRomaPromptsAndSimplexHiraObj = false
 		limitedToKataPromptsAndSimplexHiraObj = false
 		limitedToKataPrompts = false
@@ -646,6 +665,7 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 		limitedToDifficultDescriptions = false
 		kata_roma = false
 		kata_hira = false
+		limitedToSpelling = false
 		fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
 
 	default:

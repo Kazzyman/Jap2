@@ -214,9 +214,18 @@ func the_game_begins() { // ::: - -
 	fileHandle, err := os.OpenFile("Jap2Log.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
 	check_error(err)
 
+	var kind string
+	kind = "game"
+	if kata_roma {
+		kind = "kata_roma"
+	}
+	if kata_hira {
+		kind = "kata_hira"
+	}
+
 	_, err1 := fmt.Fprintf(fileHandle,
-		"\n\n-- A game began at: %s",
-		currentTime.Format("15:04:05 on Monday 01-02-2006"))
+		"\n\n-- A %s/%s, %s game began at: %s",
+		actual_prompt_char_type, actual_objective_type, kind, currentTime.Format("15:04:05 on Monday 01-02-2006"))
 	check_error(err1)
 }
 func the_game_ends() { // ::: - -

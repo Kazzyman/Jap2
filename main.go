@@ -173,13 +173,13 @@ func Process_users_input_as_a_guess() { // ::: - -
 				fileHandle, err := os.OpenFile("Jap2Log.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
 				check_error(err)
 				_, err1 := fmt.Fprintf(fileHandle,
-					"\nUser may have mistyped==%s:%s:%s", aCard.Romaji, aCard.Hira, aCard.Kata) // mistyped is a word?
+					"\nUser may have mistyped==%s:%s:%s, quarter point deduction", aCard.Romaji, aCard.Hira, aCard.Kata) // mistyped is a word?
 				check_error(err1)
 			} else if guessLevelCounter == 4 {
 				fileHandle, err := os.OpenFile("Jap2Log.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
 				check_error(err)
 				_, err1 := fmt.Fprintf(fileHandle,
-					"\n3 User had a some difficulty with==%s:%s:%s", aCard.Romaji, aCard.Hira, aCard.Kata)
+					"\nUser had a some difficulty with==%s:%s:%s, half point deduction", aCard.Romaji, aCard.Hira, aCard.Kata)
 				check_error(err1)
 			}
 			gotLastCardRightSoGetFreshOne = true
@@ -199,13 +199,13 @@ func Process_users_input_as_a_guess() { // ::: - -
 					fileHandle, err := os.OpenFile("Jap2Log.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
 					check_error(err)
 					_, err1 := fmt.Fprintf(fileHandle,
-						"\nUser may have mistyped==%s:%s:%s", aCard.Romaji, aCard.Hira, aCard.Kata) // mistyped is a word?
+						"\nUser may have mistyped==%s:%s:%s, quarter point deduciton", aCard.Romaji, aCard.Hira, aCard.Kata) // mistyped is a word?
 					check_error(err1)
 				} else if guessLevelCounter == 4 {
 					fileHandle, err := os.OpenFile("Jap2Log.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
 					check_error(err)
 					_, err1 := fmt.Fprintf(fileHandle,
-						"\n3 User had a some difficulty with==%s:%s:%s", aCard.Romaji, aCard.Hira, aCard.Kata)
+						"\nUser had a some difficulty with==%s:%s:%s, half point deduction", aCard.Romaji, aCard.Hira, aCard.Kata)
 					check_error(err1)
 				}
 				gotLastCardRightSoGetFreshOne = true
@@ -232,13 +232,13 @@ func Process_users_input_as_a_guess() { // ::: - -
 				fileHandle, err := os.OpenFile("Jap2Log.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
 				check_error(err)
 				_, err1 := fmt.Fprintf(fileHandle,
-					"\nUser may have mistyped==%s:%s:%s", aCard.Romaji, aCard.Hira, aCard.Kata) // mistyped is a word?
+					"\nUser may have mistyped==%s:%s:%s, quarter point deduction", aCard.Romaji, aCard.Hira, aCard.Kata) // mistyped is a word?
 				check_error(err1)
 			} else if guessLevelCounter == 4 {
 				fileHandle, err := os.OpenFile("Jap2Log.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
 				check_error(err)
 				_, err1 := fmt.Fprintf(fileHandle,
-					"\nUser had a some difficulty with==%s:%s:%s", aCard.Romaji, aCard.Hira, aCard.Kata)
+					"\nUser had a some difficulty with==%s:%s:%s, half point deduction", aCard.Romaji, aCard.Hira, aCard.Kata)
 				check_error(err1)
 			}
 			// These two lines are all we do when a match occurs.
@@ -304,7 +304,7 @@ func display_failure_of_final_guess_message_etc(userInput string) { // ::: - -
 	fileHandle, err := os.OpenFile("Jap2Log.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
 	check_error(err)
 	_, err1 := fmt.Fprintf(fileHandle,
-		"\nUser had a REAL ISSUE with==%s:%s:%s", aCard.Romaji, aCard.Hira, aCard.Kata)
+		"\nUser had a REAL ISSUE with==%s:%s:%s, two point deduction ", aCard.Romaji, aCard.Hira, aCard.Kata)
 	check_error(err1)
 }
 func log_oops_andUpdateGame(prompt_it_was, field_it_was, guess string) { // - -

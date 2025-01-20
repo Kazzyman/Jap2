@@ -197,8 +197,19 @@ func reSet_aCard_via_a_romaji_andThereBy_reSet_thePromptString() { // ::: - -
 */
 
 func the_game_begins() { // ::: - -
-	theGameIsRunning = true // ::: this flag is the only thing that "starts" a game
+	cyclicArrayOfTheJcharsGottenWrong = CyclicArrayOfTheJcharsGottenWrong{}
+	cyclicArrayHits = CyclicArrayHits{}
+	cyclicArrayPulls = CyclicArrayPulls{}
+	// Also, flush (clear) the maps
+	hiraHitMap = make(map[string]CardInfo)
+	frequencyMapOf_IsFineOnChars = make(map[string]int)
+	frequencyMapOf_need_workOn = make(map[string]int)
+	pulledButNotUsedMap = make(map[string]int)
+	total_prompts = 0
+	correctOnThirdAttemptAccumulator = 0
 	game_loop_counter = 0
+	guessLevelCounter = 1
+	theGameIsRunning = true // ::: this flag is the only thing that "starts" a game
 	// correctOnFirstAttemptAccumulator = 1   // ::: here it is/was not able to process the last guess prior to game ending.
 	// correctOnSecondAttemptAccumulator = -1 // ::: kluge !!
 	// ::: if the first query of a game is gotten right on the first attempt, it is logged as a 2nd and not a 1st
@@ -214,6 +225,7 @@ func the_game_begins() { // ::: - -
 	fileHandle, err := os.OpenFile("Jap2Log.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
 	check_error(err)
 
+	// unneeded section
 	var kind string
 	kind = "game"
 	if kata_roma {
@@ -536,6 +548,7 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 		limitedToHiraPrompts = false
 		limitedToRomaPrompts = false
 		limitedToDifficultDescriptions = false
+		limitedToSpelling = false
 		fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
 	case "khSimplex":
 		kata_roma = false
@@ -545,6 +558,7 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 		limitedToHiraPrompts = false
 		limitedToRomaPrompts = false
 		limitedToDifficultDescriptions = false
+		limitedToSpelling = false
 		fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
 	case "kr":
 		kata_hira = false
@@ -553,6 +567,7 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 		limitedToHiraPrompts = false
 		limitedToRomaPrompts = false
 		limitedToDifficultDescriptions = false
+		limitedToSpelling = false
 		fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
 
 	case "hko":
@@ -562,6 +577,7 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 		limitedToHiraPrompts = true
 		limitedToRomaPrompts = false
 		limitedToDifficultDescriptions = false
+		limitedToSpelling = false
 		fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
 	case "konly":
 		kata_hira = false
@@ -570,6 +586,7 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 		limitedToHiraPrompts = false
 		limitedToRomaPrompts = false
 		limitedToDifficultDescriptions = false
+		limitedToSpelling = false
 		fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
 	case "honly":
 		kata_hira = false
@@ -578,6 +595,7 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 		limitedToKataPrompts = false
 		limitedToRomaPrompts = false
 		limitedToDifficultDescriptions = false
+		limitedToSpelling = false
 		fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
 	case "ronly":
 		kata_hira = false
@@ -586,6 +604,7 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 		limitedToKataPrompts = false
 		limitedToHiraPrompts = false
 		limitedToDifficultDescriptions = false
+		limitedToSpelling = false
 		fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
 	case "rhSimplex":
 		kata_hira = false
@@ -595,6 +614,7 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 		limitedToKataPrompts = false
 		limitedToHiraPrompts = false
 		limitedToDifficultDescriptions = false
+		limitedToSpelling = false
 		fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
 	case "donly":
 		kata_hira = false
@@ -603,6 +623,7 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 		limitedToKataPrompts = false
 		limitedToHiraPrompts = false
 		limitedToRomaPrompts = true
+		limitedToSpelling = false
 		fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
 		/*
 			.
@@ -636,8 +657,6 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 	case "stcr":
 		reSet_aCard_via_a_romaji_andThereBy_reSet_thePromptString()
 	case "game":
-		theGameIsRunning = true
-		guessLevelCounter = 1
 		fmt.Println("Welcome to the game. Dir options: off/goff, stc, stcr, q, dirg")
 		fmt.Println("What is your first name? (one word)")
 		_, _ = fmt.Scan(&nameOfPlayer)

@@ -17,7 +17,6 @@ var dataSpelling = []charSetStruct{
 		"... this is the unused KataHint field ...",
 		".... this is the unused TT_Hint field ...",
 		"table and label sound the same but have different spellings"},
-	//
 	{"A sticky decal used to inform or name",
 		"... unused field...",
 		"label",
@@ -25,4 +24,38 @@ var dataSpelling = []charSetStruct{
 		"... this is the unused KataHint field ...",
 		".... this is the unused TT_Hint field ...",
 		"table and label sound the same but have different spellings"},
+	{"without delay",
+		"... unused field...",
+		"immediately",
+		"... this is the unused HiraHint field ...",
+		"... this is the unused KataHint field ...",
+		".... this is the unused TT_Hint field ...",
+		"table and label sound the same but have different spellings"},
+
+	/*
+
+		{"A sticky decal used to inform or name",
+			"... unused field...",
+			"label",
+			"... this is the unused HiraHint field ...",
+			"... this is the unused KataHint field ...",
+			".... this is the unused TT_Hint field ...",
+			"table and label sound the same but have different spellings"},
+		{"A sticky decal used to inform or name",
+			"... unused field...",
+			"label",
+			"... this is the unused HiraHint field ...",
+			"... this is the unused KataHint field ...",
+			".... this is the unused TT_Hint field ...",
+			"table and label sound the same but have different spellings"},
+		{"A sticky decal used to inform or name",
+			"... unused field...",
+			"label",
+			"... this is the unused HiraHint field ...",
+			"... this is the unused KataHint field ...",
+			".... this is the unused TT_Hint field ...",
+			"table and label sound the same but have different spellings"},
+	*/
 }
+
+//

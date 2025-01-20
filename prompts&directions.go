@@ -370,6 +370,9 @@ func List_of_Directives() { // ::: - -
 		"' un-load the Extended Kata deck")
 
 	fmt.Println("        Enter '" + colorGreen +
+		"spell" + colorReset +
+		"' English spelling bee")
+	fmt.Println("        Enter '" + colorGreen +
 		"hko" + colorReset +
 		"' Use BOTH Kata & Hira prompting (no romaji prompting)")
 	fmt.Println("        Enter '" + colorGreen +

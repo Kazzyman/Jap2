@@ -480,12 +480,17 @@ func notes_on_kana() { // ::: - -
 */
 func detectDirective(in string) { // ::: - -
 	if in == "stc" ||
+		in == "STC" ||
 		in == "stcr" ||
+		in == "STCR" ||
 		in == "?" || // <-- If it IS a directive
 		in == "??" ||
 		in == "rs" ||
+		in == "RS" ||
 		in == "st" ||
+		in == "ST" ||
 		in == "dir" ||
+		in == "DIR" ||
 		in == "nts" ||
 		in == "q" ||
 		in == "rm" ||
@@ -632,6 +637,8 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 		about_app()
 
 	case "dir": // reDisplay the DIRECTORY OF DIRECTIVES (and instructions):
+		re_display_List_of_Directives()
+	case "DIR": // reDisplay the DIRECTORY OF DIRECTIVES (and instructions):
 		re_display_List_of_Directives()
 	case "exko":
 		include_Extended_kata_deck = true

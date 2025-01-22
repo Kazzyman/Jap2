@@ -31,7 +31,13 @@ var dataSpelling = []charSetStruct{
 		"... this is the unused KataHint field ...",
 		".... this is the unused TT_Hint field ...",
 		"table and label sound the same but have different spellings"},
-
+	{"A smaller than actual size instantiation ",
+		"... unused field...",
+		"model",
+		"... this is the unused HiraHint field ...",
+		"... this is the unused KataHint field ...",
+		".... this is the unused TT_Hint field ...",
+		"table and label sound the same but have different spellings"},
 	/*
 
 		{"A sticky decal used to inform or name",

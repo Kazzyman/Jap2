@@ -46,6 +46,7 @@ var correctOnThirdAttemptAccumulator int
 var failedOnThirdAttemptAccumulator int
 var gottenHonestly bool
 var nameOfPlayer string
+var type_of_game string
 var weHadFailed_And_OnlyGotThisRightBecauseOfTheClue bool
 
 var guessLevelCounter = 1 // Used to determine the level of (or the format of) prompts.

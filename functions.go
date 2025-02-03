@@ -669,8 +669,96 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 		_, _ = fmt.Scan(&nameOfPlayer)
 		fmt.Println("Enter a number (102) for how many prompts there will be in the game")
 		_, _ = fmt.Scan(&game_duration_set_by_user)
-		display_limited_gaming_dir_list()
+		List_of_game_types() // todo : make a new func to show only the different prompting options / game type
+		fmt.Println(colorRed + "Enter the type of game" + colorReset)
+		_, _ = fmt.Scan(&type_of_game)
+		switch type_of_game {
+		case "kh":
+			kata_roma = false
+			kata_hira = true
+			limitedToKataPrompts = false
+			limitedToHiraPrompts = false
+			limitedToRomaPrompts = false
+			limitedToDifficultDescriptions = false
+			limitedToSpelling = false
+			fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
+		case "khSimplex":
+			kata_roma = false
+			kata_hira = false
+			limitedToKataPromptsAndSimplexHiraObj = true
+			limitedToKataPrompts = true
+			limitedToHiraPrompts = false
+			limitedToRomaPrompts = false
+			limitedToDifficultDescriptions = false
+			limitedToSpelling = false
+			fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
+		case "kr":
+			kata_hira = false
+			kata_roma = true
+			limitedToKataPrompts = false
+			limitedToHiraPrompts = false
+			limitedToRomaPrompts = false
+			limitedToDifficultDescriptions = false
+			limitedToSpelling = false
+			fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
 
+		case "hko":
+			kata_hira = false
+			kata_roma = false
+			limitedToKataPrompts = true
+			limitedToHiraPrompts = true
+			limitedToRomaPrompts = false
+			limitedToDifficultDescriptions = false
+			limitedToSpelling = false
+			fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
+		case "konly":
+			kata_hira = false
+			kata_roma = false
+			limitedToKataPrompts = true
+			limitedToHiraPrompts = false
+			limitedToRomaPrompts = false
+			limitedToDifficultDescriptions = false
+			limitedToSpelling = false
+			fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
+		case "honly":
+			kata_hira = false
+			kata_roma = false
+			limitedToHiraPrompts = true
+			limitedToKataPrompts = false
+			limitedToRomaPrompts = false
+			limitedToDifficultDescriptions = false
+			limitedToSpelling = false
+			fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
+		case "ronly":
+			kata_hira = false
+			kata_roma = false
+			limitedToRomaPrompts = true
+			limitedToKataPrompts = false
+			limitedToHiraPrompts = false
+			limitedToDifficultDescriptions = false
+			limitedToSpelling = false
+			fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
+		case "rhSimplex":
+			kata_hira = false
+			kata_roma = false
+			limitedToRomaPromptsAndSimplexHiraObj = true
+			limitedToRomaPrompts = true
+			limitedToKataPrompts = false
+			limitedToHiraPrompts = false
+			limitedToDifficultDescriptions = false
+			limitedToSpelling = false
+			fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
+		case "donly":
+			kata_hira = false
+			kata_roma = false
+			limitedToDifficultDescriptions = true
+			limitedToKataPrompts = false
+			limitedToHiraPrompts = false
+			limitedToRomaPrompts = true
+			limitedToSpelling = false
+			fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
+		}
+		display_limited_gaming_dir_list()
 		now_using_game_duration_set_by_user = true
 		the_game_begins()
 	case "mix":

@@ -419,6 +419,47 @@ func List_of_Directives() { // ::: - -
 		"', to begin a session and log stats to a file")
 }
 
+func List_of_game_types() { // ::: - -
+	fmt.Println("    Use Alpha-Numeric (US) input-mode on your system to:")
+
+	fmt.Println("        Enter '" + colorGreen +
+		"hko" + colorReset +
+		"' Use BOTH Kata & Hira prompting (no romaji prompting)")
+	fmt.Println("        Enter '" + colorGreen +
+		"konly" + colorReset +
+		"' Use only Kata prompting")
+	fmt.Println("        Enter '" + colorGreen +
+		"honly" + colorReset +
+		"' Use only Hira prompting")
+
+	fmt.Println("        Enter '" + colorGreen +
+		"ronly" + colorReset +
+		"' Use only Romaji prompting")
+	fmt.Println("        Enter '" + colorGreen +
+		"rhSimplex" + colorReset +
+		"' Use Romaji prompting & Simplex Hira obj")
+
+	fmt.Println("        Enter '" + colorGreen +
+		"donly" + colorReset +
+		"' Difficult descriptive prompting")
+
+	fmt.Println("        Enter '" + colorGreen +
+		"kh" + colorReset +
+		"' Use only kata_hira prompt_response")
+	fmt.Println("        Enter '" + colorGreen +
+		"khSimplex" + colorReset +
+		"' Use kata prompts w/Simplex Hira")
+
+	fmt.Println("        Enter '" + colorGreen +
+		"kr" + colorReset +
+		"' Use only kata_roma prompt_response")
+
+	fmt.Println("        Enter '" + colorGreen +
+		"mix" + colorReset +
+		"' Revert to using standard mixed prompts")
+
+}
+
 /*
 .
 

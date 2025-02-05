@@ -52,18 +52,24 @@ func pick_RandomCard_Assign_fields() { // ::: - -
 		for {
 			if count == 1 {
 				actual_prompt_char_type = "kata"
-				for {
-					if hiraOrRomajiObjective == 1 {
-						kata_prompting_romaji_objective() // ::: 2
-					} else {
-						// ::: todo: if prompting with kata we should "randomly" ask for either a hira or a romaji objective
-						kata_prompting_hira_objective() // ::: 3
-						hiraOrRomajiObjective = 1
+
+				/*
+					for {
+						if hiraOrRomajiObjective == 1 {
+							kata_prompting_romaji_objective() // ::: 2
+						} else {
+							// ::: todo: if prompting with kata we should "randomly" ask for either a hira or a romaji objective
+							kata_prompting_hira_objective() // ::: 3
+							hiraOrRomajiObjective = 1
+							break
+						}
+						hiraOrRomajiObjective++
 						break
 					}
-					hiraOrRomajiObjective++
-					break
-				}
+				*/
+
+				kata_prompting_romaji_objective()
+
 				// then fall to count++ and break
 			} else {
 				actual_prompt_char_type = "hira"
@@ -140,18 +146,23 @@ func pick_RandomCard_Assign_fields() { // ::: - -
 					for {
 						if count == 1 {
 							actual_prompt_char_type = "kata"
-							for {
-								if hiraOrRomajiObjective == 1 {
-									kata_prompting_romaji_objective() // ::: 2
-								} else {
-									// ::: todo: if prompting with kata we should "randomly" ask for either a hira or a romaji objective
-									kata_prompting_hira_objective() // ::: 3
-									hiraOrRomajiObjective = 1
+
+							/*
+								for {
+									if hiraOrRomajiObjective == 1 {
+										kata_prompting_romaji_objective() // ::: 2
+									} else {
+										// ::: todo: if prompting with kata we should "randomly" ask for either a hira or a romaji objective
+										kata_prompting_hira_objective() // ::: 3
+										hiraOrRomajiObjective = 1
+										break
+									}
+									hiraOrRomajiObjective++
 									break
 								}
-								hiraOrRomajiObjective++
-								break
-							}
+							*/
+
+							kata_prompting_romaji_objective()
 							// then fall to count++ and break
 						} else {
 							actual_prompt_char_type = "hira"

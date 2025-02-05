@@ -106,7 +106,7 @@ func prompt_the_user_for_input() { // ::: - -
 			fmt.Printf("%s", colorReset)
 
 			// Kata_Roma
-		} else if actual_prompt_char_type == "kata" && actual_objective_type == "roma" { // this block is Kata_Roma
+		} else if actual_prompt_char_type == "kata" && actual_objective_type == "roma" {
 			fmt.Printf("%s", aCard.Kata)
 
 			fmt.Printf("%s", colorCyan)
@@ -374,7 +374,7 @@ func List_of_Directives() { // ::: - -
 		"' English spelling bee")
 	fmt.Println("        Enter '" + colorGreen +
 		"hko" + colorReset +
-		"' Use ONLY Kata & Hira prompting (Hira & Roma objectives)")
+		"' Use ONLY Kata & Hira prompting (all Roma objectives)")
 	fmt.Println("        Enter '" + colorGreen +
 		"konly" + colorReset +
 		"' Use only Kata prompting (mix Hira & Roma objectives)")
@@ -424,7 +424,7 @@ func List_of_game_types() { // ::: - -
 
 	fmt.Println("        Enter '" + colorGreen +
 		"hko" + colorReset +
-		"' Use ONLY Kata & Hira prompting (Hira & Roma objectives)")
+		"' Use ONLY Kata & Hira prompting (all Roma objectives)")
 	fmt.Println("        Enter '" + colorGreen +
 		"konly" + colorReset +
 		"' Use only Kata prompting (mix Hira & Roma objectives)")

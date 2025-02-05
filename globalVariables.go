@@ -9,8 +9,11 @@ var kata_hira bool
 
 var fileExplored int // Used only in countSLOC() and the associated about_app()
 
-var actual_objective string      // aCard.Hira  aCard.Romaji
-var actual_objective_type string // "hira",  "roma"
+// aCard.Hira  aCard.Romaji
+var actual_objective string
+
+// "hira",  "roma"
+var actual_objective_type string
 
 var actual_prompt_char string      //  aCard.Hira  aCard.Romaji  aCard.Kata
 var actual_prompt_char_type string //  "hira",  "roma",  "kata"
@@ -27,7 +30,8 @@ var submission_already_processed_above bool // Used to avoid the Double-processi
 
 var include_Extended_kata_deck = false
 
-var limitedToKataPrompts bool // These are used to control (limit) which field of the cards will be used as the prompt char.
+// These are used to control (limit) which field of the cards will be used as the prompt char.
+var limitedToKataPrompts bool
 var limitedToHiraPrompts bool
 var limitedToRomaPrompts bool
 var limitedToRomaPromptsAndSimplexHiraObj bool

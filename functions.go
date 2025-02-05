@@ -409,7 +409,10 @@ func read_pulledButNotUsedMap() { // ::: - -
 .
 */
 func about_app() { // ::: - -
-	fmt.Printf("\nThis app consists of the following lines of code across %d files:\n\n", fileExplored)
+	fmt.Printf("\nThis app consists of the following lines of code across %d files:\n", fileExplored)
+	fmt.Println("   main.go, constants.go, elementsOfsloc.go, functions.go, globalVariables.go, \n" +
+		"   locateCard.go, memoryFunctions.go, objectsAndMethods.go, pick_a_card.go, \n" +
+		"   pick_a_card_new.go, prompts&directions.go, statsFunctions.go, functionsFromMain.go\n")
 	countSLOC()
 	fmt.Printf("As Calculated in real-time by countSLOC(), a custom internal function.\n\n")
 }

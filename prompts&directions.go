@@ -374,17 +374,17 @@ func List_of_Directives() { // ::: - -
 		"' English spelling bee")
 	fmt.Println("        Enter '" + colorGreen +
 		"hko" + colorReset +
-		"' Use BOTH Kata & Hira prompting (no romaji prompting)")
+		"' Use ONLY Kata & Hira prompting (Hira & Roma objectives)")
 	fmt.Println("        Enter '" + colorGreen +
 		"konly" + colorReset +
-		"' Use only Kata prompting")
+		"' Use only Kata prompting (mix Hira & Roma objectives)")
 	fmt.Println("        Enter '" + colorGreen +
 		"honly" + colorReset +
-		"' Use only Hira prompting")
+		"' Use only Hira prompting (so only Roma responses)")
 
 	fmt.Println("        Enter '" + colorGreen +
 		"ronly" + colorReset +
-		"' Use only Romaji prompting")
+		"' Use only Romaji prompting (so only Hira responses)")
 	fmt.Println("        Enter '" + colorGreen +
 		"rhSimplex" + colorReset +
 		"' Use Romaji prompting & Simplex Hira obj")
@@ -424,17 +424,17 @@ func List_of_game_types() { // ::: - -
 
 	fmt.Println("        Enter '" + colorGreen +
 		"hko" + colorReset +
-		"' Use BOTH Kata & Hira prompting (no romaji prompting)")
+		"' Use ONLY Kata & Hira prompting (Hira & Roma objectives)")
 	fmt.Println("        Enter '" + colorGreen +
 		"konly" + colorReset +
-		"' Use only Kata prompting")
+		"' Use only Kata prompting (mix Hira & Roma objectives)")
 	fmt.Println("        Enter '" + colorGreen +
 		"honly" + colorReset +
-		"' Use only Hira prompting")
+		"' Use only Hira prompting (so only Roma responses)")
 
 	fmt.Println("        Enter '" + colorGreen +
 		"ronly" + colorReset +
-		"' Use only Romaji prompting")
+		"' Use only Romaji prompting (so only Hira responses)")
 	fmt.Println("        Enter '" + colorGreen +
 		"rhSimplex" + colorReset +
 		"' Use Romaji prompting & Simplex Hira obj")

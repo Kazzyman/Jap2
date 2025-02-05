@@ -22,7 +22,7 @@ var dataMostDiff = []charSetStruct{
 		"ma is a stripped and lowered ho: ま vs ほ"},
 	//
 	// ho is a modified ma: ま becomes ほ　ホ　ハ
-	{"as Kata or Hira, it is same as ha but w a cap line",
+	{"as Kata or Hira, it is similar to ha but w a cap line",
 		"ホ　<- ハ , ほ <- は - ",
 		"ho",
 		"... this is the unused HiraHint field ...",
@@ -82,7 +82,7 @@ var dataMostDiff = []charSetStruct{
 	{"This Katakana has a horiz atop a Kata-fu",
 		"ラ vs fu:フ - ",
 		"ra",
-		"... this is the unused HiraHint field ...",
+		"... ra ...",
 		"... this is the unused KataHint field ...",
 		".... this is the unused TT_Hint field ...",
 		"ラ  vs fu:フ  also: ら as Hira;  Compare: u:う　ra:ら"},

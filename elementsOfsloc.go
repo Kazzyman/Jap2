@@ -52,23 +52,32 @@ func countSLOC() { // ::: - -
 	blankLines, singleComments, commentBlock01, commentBlock02, commentBlock03, runes01, runes02, runes03, totalLines16, nonEmptyLines16 := reportSLOCstats(filenameOfThisFile16)
 	numberOfFilesExplored++
 
+	filenameOfThisFile17 := "/Users/quasar/Jap2-main/functionsFromMain.go"
+	blankLines91, singleComments91, commentBlock104, commentBlock205, commentBlock206, runes104, runes205, runes306, totalLines17, nonEmptyLines17 := reportSLOCstats(filenameOfThisFile17)
+	numberOfFilesExplored++
+	
 	fileExplored = numberOfFilesExplored
 
-	totalLines := totalLines1 + totalLines2 + totalLines5 + totalLines6 + totalLines7 + totalLines8 + totalLines9 + totalLines10 + totalLines14 + totalLines15 + totalLines16 + totalLines11
+	totalLines := totalLines1 + totalLines2 + totalLines5 + totalLines6 + totalLines7 + totalLines8 + totalLines9 + totalLines10 + totalLines14 + totalLines15 + totalLines16 + totalLines11 + totalLines17
 
-	nonEmptyLines := nonEmptyLines1 + nonEmptyLines2 + nonEmptyLines5 + nonEmptyLines6 + nonEmptyLines7 + nonEmptyLines8 + nonEmptyLines9 + nonEmptyLines10 + nonEmptyLines14 + nonEmptyLines15 + nonEmptyLines16 + nonEmptyLines11
+	nonEmptyLines := nonEmptyLines1 + nonEmptyLines2 + nonEmptyLines5 + nonEmptyLines6 + nonEmptyLines7 + nonEmptyLines8 + nonEmptyLines9 + nonEmptyLines10 + nonEmptyLines14 + nonEmptyLines15 + nonEmptyLines16 +
+		nonEmptyLines11 + nonEmptyLines17
 
-	blankLinesTotal := blankLines15 + blankLines + blankLines14 + blankLines11 + blankLines10 + blankLines9 + blankLines8 + blankLines7 + blankLines6 + blankLines5 + blankLines2 + blankLines1
+	blankLinesTotal := blankLines15 + blankLines + blankLines14 + blankLines11 + blankLines10 + blankLines9 + blankLines8 + blankLines7 + blankLines6 + blankLines5 + blankLines2 + blankLines1 + blankLines91
 
-	singleCommentsTotal := singleComments15 + singleComments + singleComments14 + singleComments11 + singleComments10 + singleComments9 + singleComments8 + singleComments7 + singleComments6 + singleComments5 + singleComments2 + singleComments1
+	singleCommentsTotal := singleComments15 + singleComments + singleComments14 + singleComments11 + singleComments10 + singleComments9 + singleComments8 + singleComments7 + singleComments6 + singleComments5 +
+		singleComments2 + singleComments1 + singleComments91
 
-	commentBlock1Total := commentBlock01 + commentBlock115 + commentBlock114 + commentBlock111 + commentBlock110 + commentBlock19 + commentBlock18 + commentBlock17 + commentBlock16 + commentBlock15 + commentBlock12 + commentBlock11
-	commentBlock2Total := commentBlock215 + commentBlock02 + commentBlock214 + commentBlock211 + commentBlock210 + commentBlock29 + commentBlock28 + commentBlock27 + commentBlock26 + commentBlock25 + commentBlock22 + commentBlock21
-	commentBlock3Total := commentBlock315 + commentBlock03 + commentBlock314 + commentBlock311 + commentBlock310 + commentBlock39 + commentBlock38 + commentBlock37 + commentBlock36 + commentBlock35 + commentBlock32 + commentBlock31
+	commentBlock1Total := commentBlock01 + commentBlock115 + commentBlock114 + commentBlock111 + commentBlock110 + commentBlock19 + commentBlock18 + commentBlock17 + commentBlock16 + commentBlock15 + commentBlock12 +
+		commentBlock11 + commentBlock104
+	commentBlock2Total := commentBlock215 + commentBlock02 + commentBlock214 + commentBlock211 + commentBlock210 + commentBlock29 + commentBlock28 + commentBlock27 + commentBlock26 + commentBlock25 + commentBlock22 +
+		commentBlock21 + commentBlock205
+	commentBlock3Total := commentBlock315 + commentBlock03 + commentBlock314 + commentBlock311 + commentBlock310 + commentBlock39 + commentBlock38 + commentBlock37 + commentBlock36 + commentBlock35 + commentBlock32 +
+		commentBlock31 + commentBlock206
 
-	runes1Total := runes115 + runes01 + runes114 + runes111 + runes110 + runes19 + runes18 + runes17 + runes16 + runes15 + runes12 + runes11
-	runes2Total := runes215 + runes02 + runes214 + runes211 + runes210 + runes29 + runes28 + runes27 + runes26 + runes25 + runes22 + runes21
-	runes3Total := runes315 + runes03 + runes314 + runes311 + runes310 + runes39 + runes38 + runes37 + runes36 + runes35 + runes32 + runes31
+	runes1Total := runes115 + runes01 + runes114 + runes111 + runes110 + runes19 + runes18 + runes17 + runes16 + runes15 + runes12 + runes11 + runes104
+	runes2Total := runes215 + runes02 + runes214 + runes211 + runes210 + runes29 + runes28 + runes27 + runes26 + runes25 + runes22 + runes21 + runes205
+	runes3Total := runes315 + runes03 + runes314 + runes311 + runes310 + runes39 + runes38 + runes37 + runes36 + runes35 + runes32 + runes31 + runes306
 
 	grandTotal := blankLinesTotal + singleCommentsTotal + commentBlock2Total + runes2Total
 

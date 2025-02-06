@@ -1,11 +1,5 @@
 bugs & todos: 
 
-todo: Feb 5 2005 : during a game, we should be able to invoke a "dir" and get the special "dirg" print. 
-
-todo: game type selected should automatically set the duration (number of prompts) per the type of game selected. 
- -- 206 in the case of hko, perhaps less for other games? 
-
-
 
 todo: add comparisons in data like wa to ne (they are very similar)
 

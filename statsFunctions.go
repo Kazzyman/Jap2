@@ -40,7 +40,7 @@ func log_right_andUpdateGame(prompt_it_was, in string) { // - -
 
 	if theGameIsRunning {
 		game_loop_counter++
-		if game_loop_counter > game_duration_set_by_user {
+		if game_loop_counter > gameDuration {
 			the_game_ends()
 		}
 

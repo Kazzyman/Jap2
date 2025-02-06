@@ -242,8 +242,8 @@ func the_game_begins() { // ::: - -
 }
 func the_game_ends() { // ::: - -
 	theGameIsRunning = false
-	now_using_game_duration_set_by_user = false
-	// game_duration_set_by_user = 0
+	now_using_game_duration_set_by_game_type = false
+	// gameDuration = 0
 	// game_loop_counter = 0
 
 	fileHandle, err := os.OpenFile("Jap2Log.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
@@ -292,20 +292,20 @@ func the_game_ends() { // ::: - -
 		fmt.Printf("\nYour Game run-time was:%s,  you got %s%d%s correct on your first try,  %s%d%s right on your second try,\n"+
 			"... and you got %s%d right on your third try. \n\n", TotalRun, colorReset, correctOnFirstAttemptAccumulator-1, colorRed, colorReset, correctOnSecondAttemptAccumulator,
 			colorRed, colorReset, correctOnThirdAttemptAccumulator)
-		if game_duration_set_by_user == 206 {
+		if gameDuration == 206 {
 			fmt.Printf("Points = %f\n", (firstAtemptAcumF-(secondAtemptAcumF/4)-(thirdAtemptAcumF/2)-(failedOnThirdAttF*2))/totalSecondsF*100)
 		}
 	} else if correctOnFirstAttemptAccumulator > 0 && correctOnSecondAttemptAccumulator > 0 && correctOnThirdAttemptAccumulator == 0 && failedOnThirdAttemptAccumulator == 0 { // ::: done
 		fmt.Println(colorRed)
 		fmt.Printf("\nYour Game run-time was:%s,  you got %s%d%s correct on your first try,  %s%d right on your second try. \n\n", TotalRun, colorReset, correctOnFirstAttemptAccumulator-1,
 			colorRed, colorReset, correctOnSecondAttemptAccumulator)
-		if game_duration_set_by_user == 206 {
+		if gameDuration == 206 {
 			fmt.Printf("Points = %f\n", (firstAtemptAcumF-(secondAtemptAcumF/4)-(thirdAtemptAcumF/2)-(failedOnThirdAttF*2))/totalSecondsF*100)
 		}
 	} else if correctOnFirstAttemptAccumulator > 0 && correctOnSecondAttemptAccumulator == 0 && correctOnThirdAttemptAccumulator == 0 && failedOnThirdAttemptAccumulator == 0 { // ::: done
 		fmt.Println(colorRed)
 		fmt.Printf("\nYour Game run-time was:%s,  Gongratulations! you got %s%d correct on your first try. \n\n", TotalRun, colorReset, correctOnFirstAttemptAccumulator-1)
-		if game_duration_set_by_user == 206 {
+		if gameDuration == 206 {
 			fmt.Printf("Points = %f\n", (firstAtemptAcumF-(secondAtemptAcumF/4)-(thirdAtemptAcumF/2)-(failedOnThirdAttF*2))/totalSecondsF*100)
 		}
 	} else {
@@ -314,7 +314,7 @@ func the_game_ends() { // ::: - -
 			"... and you got %s%d%s right on your third try, and were unable to answer correctly without a hint "+
 			"%s%d times. \n\n", TotalRun, colorReset, correctOnFirstAttemptAccumulator-1, colorRed, colorReset, correctOnSecondAttemptAccumulator,
 			colorRed, colorReset, correctOnThirdAttemptAccumulator, colorRed, colorReset, failedOnThirdAttemptAccumulator)
-		if game_duration_set_by_user == 206 {
+		if gameDuration == 206 {
 			fmt.Printf("Points = %f\n", (firstAtemptAcumF-(secondAtemptAcumF/4)-(thirdAtemptAcumF/2)-(failedOnThirdAttF*2))/totalSecondsF*100)
 		}
 	}
@@ -330,14 +330,14 @@ func the_game_ends() { // ::: - -
 	_, err3 := fmt.Fprintf(fileHandle, "%s's results were as follows: Right on first attempt:%d, on 2nd attempt:%d, 3rd attempt:%d, even a hint was ineffective:%d, %d/%d\n",
 		nameOfPlayer, correctOnFirstAttemptAccumulator-1,
 		correctOnSecondAttemptAccumulator, correctOnThirdAttemptAccumulator,
-		failedOnThirdAttemptAccumulator, game_loop_counter-1, game_duration_set_by_user)
+		failedOnThirdAttemptAccumulator, game_loop_counter-1, gameDuration)
 	check_error(err3)
 
 	_, err2 := fmt.Fprintf(fileHandle,
 		"The Elapsed time of the game was: %s \n",
 		TotalRun)
 	check_error(err2)
-	if game_duration_set_by_user == 206 { // Calculate and print the Point total to the log file only if a full game of 206 had been declared
+	if gameDuration == 206 { // Calculate and print the Point total to the log file only if a full game of 206 had been declared
 		// fmt.Printf("Points: %f", points2print)
 		_, err3 := fmt.Fprintf(fileHandle,
 			"Points: %f \n\n\n",
@@ -679,13 +679,12 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 		fmt.Println("Welcome to the game. Dir options: off/goff, stc, stcr, q, dirg")
 		fmt.Println("What is your first name? (one word)")
 		_, _ = fmt.Scan(&nameOfPlayer)
-		fmt.Println("Enter a number (206) for how many prompts there will be in the game")
-		_, _ = fmt.Scan(&game_duration_set_by_user)
-		List_of_game_types() // todo : make a new func to show only the different prompting options / game type
+		List_of_game_types()
 		fmt.Println(colorRed + "Enter the type of game" + colorReset)
 		_, _ = fmt.Scan(&type_of_game)
 		switch type_of_game {
 		case "kh":
+			gameDuration = 106
 			kata_roma = false
 			kata_hira = true
 			limitedToKataPrompts = false
@@ -695,6 +694,7 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 			limitedToSpelling = false
 			fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
 		case "khSimplex":
+			gameDuration = 55
 			kata_roma = false
 			kata_hira = false
 			limitedToKataPromptsAndSimplexHiraObj = true
@@ -705,6 +705,7 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 			limitedToSpelling = false
 			fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
 		case "kr":
+			gameDuration = 105
 			kata_hira = false
 			kata_roma = true
 			limitedToKataPrompts = false
@@ -715,6 +716,7 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 			fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
 
 		case "hko":
+			gameDuration = 206
 			kata_hira = false
 			kata_roma = false
 			limitedToKataPrompts = true
@@ -724,6 +726,7 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 			limitedToSpelling = false
 			fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
 		case "konly":
+			gameDuration = 105
 			kata_hira = false
 			kata_roma = false
 			limitedToKataPrompts = true
@@ -733,6 +736,7 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 			limitedToSpelling = false
 			fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
 		case "honly":
+			gameDuration = 105
 			kata_hira = false
 			kata_roma = false
 			limitedToHiraPrompts = true
@@ -742,6 +746,7 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 			limitedToSpelling = false
 			fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
 		case "ronly":
+			gameDuration = 105
 			kata_hira = false
 			kata_roma = false
 			limitedToRomaPrompts = true
@@ -751,6 +756,7 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 			limitedToSpelling = false
 			fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
 		case "rhSimplex":
+			gameDuration = 55
 			kata_hira = false
 			kata_roma = false
 			limitedToRomaPromptsAndSimplexHiraObj = true
@@ -761,6 +767,7 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 			limitedToSpelling = false
 			fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
 		case "donly":
+			gameDuration = 20
 			kata_hira = false
 			kata_roma = false
 			limitedToDifficultDescriptions = true
@@ -771,7 +778,7 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 			fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
 		}
 		display_limited_gaming_dir_list()
-		now_using_game_duration_set_by_user = true
+		now_using_game_duration_set_by_game_type = true
 		the_game_begins()
 	case "mix":
 		/*

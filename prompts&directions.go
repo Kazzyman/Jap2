@@ -374,7 +374,7 @@ func List_of_Directives() { // ::: - -
 		"' English spelling bee")
 	fmt.Println("        Enter '" + colorGreen +
 		"hko" + colorReset +
-		"' Use ONLY Kata & Hira prompting (all Roma objectives)")
+		"' Use Kata & Hira prompting (Only Roma objectives)")
 	fmt.Println("        Enter '" + colorGreen +
 		"konly" + colorReset +
 		"' Use only Kata prompting (mix Hira & Roma objectives)")
@@ -406,7 +406,7 @@ func List_of_Directives() { // ::: - -
 
 	fmt.Println("        Enter '" + colorGreen +
 		"mix" + colorReset +
-		"' Revert to using standard mixed prompts")
+		"' Use mixed prompts & objectives")
 
 	fmt.Println("        Enter '" + colorGreen +
 		"help" + colorReset +
@@ -424,7 +424,7 @@ func List_of_game_types() { // ::: - -
 
 	fmt.Println("        Enter '" + colorGreen +
 		"hko" + colorReset +
-		"' Use ONLY Kata & Hira prompting (all Roma objectives)")
+		"' Use Kata & Hira prompting (Roma objectives)")
 	fmt.Println("        Enter '" + colorGreen +
 		"konly" + colorReset +
 		"' Use only Kata prompting (mix Hira & Roma objectives)")
@@ -456,7 +456,7 @@ func List_of_game_types() { // ::: - -
 
 	fmt.Println("        Enter '" + colorGreen +
 		"mix" + colorReset +
-		"' Revert to using standard mixed prompts")
+		"' Use mixed prompts & objectives")
 
 }
 

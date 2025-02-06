@@ -236,7 +236,7 @@ func the_game_begins() { // ::: - -
 	}
 
 	_, err1 := fmt.Fprintf(fileHandle,
-		"\n\n-- A %s/%s, %s game began at: %s",
+		"\n\n-- A %s/%s, %s began at: %s",
 		actual_prompt_char_type, actual_objective_type, kind, currentTime.Format("15:04:05 on Monday 01-02-2006"))
 	check_error(err1)
 }
@@ -292,20 +292,20 @@ func the_game_ends() { // ::: - -
 		fmt.Printf("\nYour Game run-time was:%s,  you got %s%d%s correct on your first try,  %s%d%s right on your second try,\n"+
 			"... and you got %s%d right on your third try. \n\n", TotalRun, colorReset, correctOnFirstAttemptAccumulator-1, colorRed, colorReset, correctOnSecondAttemptAccumulator,
 			colorRed, colorReset, correctOnThirdAttemptAccumulator)
-		if game_duration_set_by_user == 102 {
+		if game_duration_set_by_user == 206 {
 			fmt.Printf("Points = %f\n", (firstAtemptAcumF-(secondAtemptAcumF/4)-(thirdAtemptAcumF/2)-(failedOnThirdAttF*2))/totalSecondsF*100)
 		}
 	} else if correctOnFirstAttemptAccumulator > 0 && correctOnSecondAttemptAccumulator > 0 && correctOnThirdAttemptAccumulator == 0 && failedOnThirdAttemptAccumulator == 0 { // ::: done
 		fmt.Println(colorRed)
 		fmt.Printf("\nYour Game run-time was:%s,  you got %s%d%s correct on your first try,  %s%d right on your second try. \n\n", TotalRun, colorReset, correctOnFirstAttemptAccumulator-1,
 			colorRed, colorReset, correctOnSecondAttemptAccumulator)
-		if game_duration_set_by_user == 102 {
+		if game_duration_set_by_user == 206 {
 			fmt.Printf("Points = %f\n", (firstAtemptAcumF-(secondAtemptAcumF/4)-(thirdAtemptAcumF/2)-(failedOnThirdAttF*2))/totalSecondsF*100)
 		}
 	} else if correctOnFirstAttemptAccumulator > 0 && correctOnSecondAttemptAccumulator == 0 && correctOnThirdAttemptAccumulator == 0 && failedOnThirdAttemptAccumulator == 0 { // ::: done
 		fmt.Println(colorRed)
 		fmt.Printf("\nYour Game run-time was:%s,  Gongratulations! you got %s%d correct on your first try. \n\n", TotalRun, colorReset, correctOnFirstAttemptAccumulator-1)
-		if game_duration_set_by_user == 102 {
+		if game_duration_set_by_user == 206 {
 			fmt.Printf("Points = %f\n", (firstAtemptAcumF-(secondAtemptAcumF/4)-(thirdAtemptAcumF/2)-(failedOnThirdAttF*2))/totalSecondsF*100)
 		}
 	} else {
@@ -314,7 +314,7 @@ func the_game_ends() { // ::: - -
 			"... and you got %s%d%s right on your third try, and were unable to answer correctly without a hint "+
 			"%s%d times. \n\n", TotalRun, colorReset, correctOnFirstAttemptAccumulator-1, colorRed, colorReset, correctOnSecondAttemptAccumulator,
 			colorRed, colorReset, correctOnThirdAttemptAccumulator, colorRed, colorReset, failedOnThirdAttemptAccumulator)
-		if game_duration_set_by_user == 102 {
+		if game_duration_set_by_user == 206 {
 			fmt.Printf("Points = %f\n", (firstAtemptAcumF-(secondAtemptAcumF/4)-(thirdAtemptAcumF/2)-(failedOnThirdAttF*2))/totalSecondsF*100)
 		}
 	}
@@ -337,7 +337,7 @@ func the_game_ends() { // ::: - -
 		"The Elapsed time of the game was: %s \n",
 		TotalRun)
 	check_error(err2)
-	if game_duration_set_by_user == 102 { // Calculate and print the Point total to the log file only if a full game of 102 had been declared
+	if game_duration_set_by_user == 206 { // Calculate and print the Point total to the log file only if a full game of 206 had been declared
 		// fmt.Printf("Points: %f", points2print)
 		_, err3 := fmt.Fprintf(fileHandle,
 			"Points: %f \n\n\n",
@@ -667,10 +667,11 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 	case "stcr":
 		reSet_aCard_via_a_romaji_andThereBy_reSet_thePromptString()
 	case "game":
+		reset_all_data()
 		fmt.Println("Welcome to the game. Dir options: off/goff, stc, stcr, q, dirg")
 		fmt.Println("What is your first name? (one word)")
 		_, _ = fmt.Scan(&nameOfPlayer)
-		fmt.Println("Enter a number (102) for how many prompts there will be in the game")
+		fmt.Println("Enter a number (206) for how many prompts there will be in the game")
 		_, _ = fmt.Scan(&game_duration_set_by_user)
 		List_of_game_types() // todo : make a new func to show only the different prompting options / game type
 		fmt.Println(colorRed + "Enter the type of game" + colorReset)

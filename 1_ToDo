@@ -1,12 +1,19 @@
-bugs:
+bugs & todos: 
+
+todo: Feb 5 2005 : during a game, we should be able to invoke a "dir" and get the special "dirg" print. 
+
+todo: game type selected should automatically set the duration (number of prompts) per the type of game selected. 
+ -- 206 in the case of hko, perhaps less for other games? 
+
+
 
 todo: add comparisons in data like wa to ne (they are very similar)
 
 todo: also tally lines of data in SLOC.
 
-
-
 ::: cheat-sheet :
+
+splat r :: replace 
 
 splat e  :: list of recent files
 shift splat backspace/delete  :: move to where you last made an edit

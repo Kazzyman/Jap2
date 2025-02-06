@@ -30,7 +30,7 @@ func main() {
 	fmt.Println("Welcome to the game. Dir options: off/goff, stc, stcr, q, dirg")
 	fmt.Println("What is your first name? (one word)")
 	_, _ = fmt.Scan(&nameOfPlayer)
-	fmt.Println("Enter a number (102) for how many prompts there will be in the game")
+	fmt.Println("Enter a number (206) for how many prompts there will be in the game")
 	_, _ = fmt.Scan(&game_duration_set_by_user)
 	List_of_game_types()
 	fmt.Println(colorRed + "Enter the type of game" + colorReset)
@@ -142,11 +142,12 @@ func begin_Kana_practice() { // ::: - -
 		if theGameIsRunning == true {
 			// Skip looking to start a game if one is already running.
 		} else if usersSubmission == "game" {
+			reset_all_data()
 			guessLevelCounter = 1
 			fmt.Println("Welcome to the game. Dir options: off/goff, stc, stcr, q, dirg")
 			fmt.Println("What is your first name? (one word)")
 			_, _ = fmt.Scan(&nameOfPlayer)
-			fmt.Println("Enter a number (102) for how many prompts there will be in the game")
+			fmt.Println("Enter a number (206) for how many prompts there will be in the game")
 			_, _ = fmt.Scan(&game_duration_set_by_user)
 			List_of_game_types()
 			fmt.Println(colorRed + "Enter the type of game" + colorReset)

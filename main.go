@@ -244,15 +244,12 @@ func begin_Kana_practice() { // ::: - -
 		}
 
 		if theGameIsRunning != true {
-			// skip looking to dirg since it only makes sense when a game is running.
-		} else if usersSubmission == "dirg" {
-			display_limited_gaming_dir_list()
-		}
-
-		if usersSubmission == "stc" {
-			reSet_via_a_hira_aCard_andThereBy_reSet_thePromptString()
-		} else if usersSubmission == "stcr" {
-			reSet_aCard_via_a_romaji_andThereBy_reSet_thePromptString()
+			// these should run only if a game is NOT running!
+			if usersSubmission == "stc" {
+				reSet_via_a_hira_aCard_andThereBy_reSet_thePromptString()
+			} else if usersSubmission == "stcr" {
+				reSet_aCard_via_a_romaji_andThereBy_reSet_thePromptString()
+			}
 		}
 
 		// During gaming, disallow checking for Directives other than q, and goff.
@@ -263,8 +260,11 @@ func begin_Kana_practice() { // ::: - -
 			if usersSubmission == "off" || usersSubmission == "goff" {
 				the_game_ends()
 			}
+			if usersSubmission == "dir" {
+				display_limited_gaming_dir_list()
+			}
 		} else {
-			// If user's input is a Directive, handle it.
+			// If user's input is a Directive, handle it. ::: ONLY if a game IS NOT running !!!
 			frontEnd_Possible_Recursive_DirHandler() // ::: this contains the only other prompt
 		}
 

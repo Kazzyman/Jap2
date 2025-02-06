@@ -311,17 +311,16 @@ func promptForRomajiE(prompt string) { // ::: - -
 */
 func display_limited_gaming_dir_list() {
 	fmt.Println("        Enter '" + colorGreen +
-		"dirg" + colorReset +
-		"' DirGame, Display this list")
-	fmt.Println("        Enter '" + colorGreen +
 		"off" + colorReset +
 		"' End this game early")
-	fmt.Println("        Enter '" + colorGreen +
-		"stc" + colorReset +
-		"' (Set-Card) force the use of a specific card (Hira input)")
-	fmt.Println("        Enter '" + colorGreen +
-		"stcr" + colorReset +
-		"' (Set-Card) force the use of a specific card (Roma input)")
+	/*
+		fmt.Println("        Enter '" + colorGreen +
+			"stc" + colorReset +
+			"' (Set-Card) force the use of a specific card (Hira input)")
+		fmt.Println("        Enter '" + colorGreen +
+			"stcr" + colorReset +
+			"' (Set-Card) force the use of a specific card (Roma input)")
+	*/
 	fmt.Println("        Enter '" + colorGreen +
 		"q" + colorReset +
 		"', (quit) terminate the app")

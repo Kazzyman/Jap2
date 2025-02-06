@@ -640,9 +640,17 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 		about_app()
 
 	case "dir": // reDisplay the DIRECTORY OF DIRECTIVES (and instructions):
-		re_display_List_of_Directives()
+		if theGameIsRunning {
+			display_limited_gaming_dir_list()
+		} else {
+			re_display_List_of_Directives()
+		}
 	case "DIR": // reDisplay the DIRECTORY OF DIRECTIVES (and instructions):
-		re_display_List_of_Directives()
+		if theGameIsRunning {
+			display_limited_gaming_dir_list()
+		} else {
+			re_display_List_of_Directives()
+		}
 	case "exko":
 		include_Extended_kata_deck = true
 		fmt.Println("Extended Kata deck has been loaded")

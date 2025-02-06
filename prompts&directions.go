@@ -28,7 +28,7 @@ func prompt_the_user_for_input() { // ::: - -
 				fmt.Printf(", %s%s is playing: %s1st:%s%d%s, 2nd:%s%d%s, 3rd:%s%d%s, fails:%s%d, %s%d/%d%s\n",
 					colorReset, nameOfPlayer, colorRed, colorReset, correctOnFirstAttemptAccumulator,
 					colorRed, colorReset, correctOnSecondAttemptAccumulator, colorRed, colorReset, correctOnThirdAttemptAccumulator,
-					colorRed, colorReset, failedOnThirdAttemptAccumulator, colorCyan, game_loop_counter, game_duration_set_by_user, colorReset)
+					colorRed, colorReset, failedOnThirdAttemptAccumulator, colorCyan, game_loop_counter, gameDuration, colorReset)
 			} else {
 				fmt.Println()
 			}
@@ -58,7 +58,7 @@ func prompt_the_user_for_input() { // ::: - -
 				fmt.Printf(", %s%s is playing: %s1st:%s%d%s, 2nd:%s%d%s, 3rd:%s%d%s, fails:%s%d, %s%d/%d%s\n",
 					colorReset, nameOfPlayer, colorRed, colorReset, correctOnFirstAttemptAccumulator,
 					colorRed, colorReset, correctOnSecondAttemptAccumulator, colorRed, colorReset, correctOnThirdAttemptAccumulator,
-					colorRed, colorReset, failedOnThirdAttemptAccumulator, colorCyan, game_loop_counter, game_duration_set_by_user, colorReset)
+					colorRed, colorReset, failedOnThirdAttemptAccumulator, colorCyan, game_loop_counter, gameDuration, colorReset)
 			} else {
 				fmt.Println()
 			}
@@ -93,7 +93,7 @@ func prompt_the_user_for_input() { // ::: - -
 				fmt.Printf(", %s%s is playing: %s1st:%s%d%s, 2nd:%s%d%s, 3rd:%s%d%s, fails:%s%d, %s%d/%d%s\n",
 					colorReset, nameOfPlayer, colorRed, colorReset, correctOnFirstAttemptAccumulator,
 					colorRed, colorReset, correctOnSecondAttemptAccumulator, colorRed, colorReset, correctOnThirdAttemptAccumulator,
-					colorRed, colorReset, failedOnThirdAttemptAccumulator, colorCyan, game_loop_counter, game_duration_set_by_user, colorReset)
+					colorRed, colorReset, failedOnThirdAttemptAccumulator, colorCyan, game_loop_counter, gameDuration, colorReset)
 			} else {
 				fmt.Println()
 			}
@@ -126,7 +126,7 @@ func prompt_the_user_for_input() { // ::: - -
 				fmt.Printf(", %s%s is playing: %s1st:%s%d%s, 2nd:%s%d%s, 3rd:%s%d%s, fails:%s%d, %s%d/%d%s\n",
 					colorReset, nameOfPlayer, colorRed, colorReset, correctOnFirstAttemptAccumulator,
 					colorRed, colorReset, correctOnSecondAttemptAccumulator, colorRed, colorReset, correctOnThirdAttemptAccumulator,
-					colorRed, colorReset, failedOnThirdAttemptAccumulator, colorCyan, game_loop_counter, game_duration_set_by_user, colorReset)
+					colorRed, colorReset, failedOnThirdAttemptAccumulator, colorCyan, game_loop_counter, gameDuration, colorReset)
 			} else {
 				fmt.Println()
 			}
@@ -487,8 +487,8 @@ func display_List_of_Directives() { // (unique) // ::: - -
 	fmt.Println("\n")
 
 	/*
-		if now_using_game_duration_set_by_user {
-			fmt.Printf("Game counter: %d, Game Duration: %d \n", game_loop_counter, game_duration_set_by_user)
+		if now_using_game_duration_set_by_game_type {
+			fmt.Printf("Game counter: %d, Game Duration: %d \n", game_loop_counter, gameDuration)
 		} else {
 			fmt.Printf("Game counter: %d, Game Duration: %d \n\n", game_loop_counter, jim)
 		}
@@ -538,9 +538,9 @@ func re_display_List_of_Directives() { // (unique) // ::: - -
 	List_of_Directives()
 	//goland:noinspection ALL
 	if theGameIsRunning {
-		if now_using_game_duration_set_by_user {
+		if now_using_game_duration_set_by_game_type {
 			fmt.Println(colorRed)
-			fmt.Printf("\nAn active game is in session, the game_loop_counter is:%s%d%s, and the game_duration is set to:%s%d \n\n", colorReset, game_loop_counter, colorRed, colorReset, game_duration_set_by_user)
+			fmt.Printf("\nAn active game is in session, the game_loop_counter is:%s%d%s, and the game_duration is set to:%s%d \n\n", colorReset, game_loop_counter, colorRed, colorReset, gameDuration)
 			fmt.Println(colorReset)
 		} else {
 			fmt.Printf("game_loop_counter:%d, game_duration:%d \n", game_loop_counter, jim)

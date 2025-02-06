@@ -57,8 +57,8 @@ var guessLevelCounter = 1 // Used to determine the level of (or the format of) p
 var game_loop_counter int
 
 const game_duration = 15 // Fun with constants and
-var game_duration_set_by_user int
-var now_using_game_duration_set_by_user bool
+var gameDuration int
+var now_using_game_duration_set_by_game_type bool
 
 var theGameIsRunning bool
 

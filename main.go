@@ -25,24 +25,49 @@ func main() {
 	display_start_menu_etc()
 	guessLevelCounter = 1
 
-	fmt.Println("Welcome to the game. Dir options: off/goff, stc, stcr, q, dirg")
 	fmt.Println("What is your first name? (one word)")
 	_, _ = fmt.Scan(&nameOfPlayer)
 	List_of_game_types()
-	fmt.Println(colorRed + "Enter the type of game" + colorReset)
+	fmt.Println(colorRed + "Select a game" + colorReset)
 	_, _ = fmt.Scan(&type_of_game)
 	switch type_of_game {
-	case "kh":
-		gameDuration = 106
+	case "1": // hko
+		gameDuration = 206
+		kata_hira = false
 		kata_roma = false
-		kata_hira = true
-		limitedToKataPrompts = false
+		limitedToKataPrompts = true
+		limitedToHiraPrompts = true
+		limitedToRomaPrompts = false
+		limitedToDifficultDescriptions = false
+		limitedToSpelling = false
+	case "2": // konly
+		gameDuration = 105
+		kata_hira = false
+		kata_roma = false
+		limitedToKataPrompts = true
 		limitedToHiraPrompts = false
 		limitedToRomaPrompts = false
 		limitedToDifficultDescriptions = false
 		limitedToSpelling = false
-		fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
-	case "khSimplex":
+	case "3": // honly
+		gameDuration = 105
+		kata_hira = false
+		kata_roma = false
+		limitedToHiraPrompts = true
+		limitedToKataPrompts = false
+		limitedToRomaPrompts = false
+		limitedToDifficultDescriptions = false
+		limitedToSpelling = false
+	case "4": // ronly
+		gameDuration = 105
+		kata_hira = false
+		kata_roma = false
+		limitedToRomaPrompts = true
+		limitedToKataPrompts = false
+		limitedToHiraPrompts = false
+		limitedToDifficultDescriptions = false
+		limitedToSpelling = false
+	case "5": // khSimplex
 		gameDuration = 55
 		kata_roma = false
 		kata_hira = false
@@ -52,59 +77,25 @@ func main() {
 		limitedToRomaPrompts = false
 		limitedToDifficultDescriptions = false
 		limitedToSpelling = false
-		fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
-	case "kr":
-		gameDuration = 105
+	case "6": // donly
+		gameDuration = 20
 		kata_hira = false
-		kata_roma = true
+		kata_roma = false
+		limitedToDifficultDescriptions = true
 		limitedToKataPrompts = false
 		limitedToHiraPrompts = false
-		limitedToRomaPrompts = false
-		limitedToDifficultDescriptions = false
-		limitedToSpelling = false
-		fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
-
-	case "hko":
-		gameDuration = 206
-		kata_hira = false
-		kata_roma = false
-		limitedToKataPrompts = true
-		limitedToHiraPrompts = true
-		limitedToRomaPrompts = false
-		limitedToDifficultDescriptions = false
-		limitedToSpelling = false
-		fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
-	case "konly":
-		gameDuration = 105
-		kata_hira = false
-		kata_roma = false
-		limitedToKataPrompts = true
-		limitedToHiraPrompts = false
-		limitedToRomaPrompts = false
-		limitedToDifficultDescriptions = false
-		limitedToSpelling = false
-		fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
-	case "honly":
-		gameDuration = 105
-		kata_hira = false
-		kata_roma = false
-		limitedToHiraPrompts = true
-		limitedToKataPrompts = false
-		limitedToRomaPrompts = false
-		limitedToDifficultDescriptions = false
-		limitedToSpelling = false
-		fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
-	case "ronly":
-		gameDuration = 105
-		kata_hira = false
-		kata_roma = false
 		limitedToRomaPrompts = true
+		limitedToSpelling = false
+	case "7": // kh
+		gameDuration = 106
+		kata_roma = false
+		kata_hira = true
 		limitedToKataPrompts = false
 		limitedToHiraPrompts = false
+		limitedToRomaPrompts = false
 		limitedToDifficultDescriptions = false
 		limitedToSpelling = false
-		fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
-	case "rhSimplex":
+	case "8": // rhSimplex
 		gameDuration = 55
 		kata_hira = false
 		kata_roma = false
@@ -114,17 +105,24 @@ func main() {
 		limitedToHiraPrompts = false
 		limitedToDifficultDescriptions = false
 		limitedToSpelling = false
-		fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
-	case "donly":
-		gameDuration = 20
+	case "9": // kr
+		gameDuration = 105
 		kata_hira = false
-		kata_roma = false
-		limitedToDifficultDescriptions = true
+		kata_roma = true
 		limitedToKataPrompts = false
 		limitedToHiraPrompts = false
-		limitedToRomaPrompts = true
+		limitedToRomaPrompts = false
+		limitedToDifficultDescriptions = false
 		limitedToSpelling = false
-		fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
+	default: // "0" // mix ::: NOT SURE ABOUT ALL THESE FALSE SETTINGS FOR THE MIX CASE ??
+		gameDuration = 206
+		kata_hira = false
+		kata_roma = false
+		limitedToKataPrompts = false
+		limitedToHiraPrompts = false
+		limitedToRomaPrompts = false
+		limitedToDifficultDescriptions = false
+		limitedToSpelling = false
 	}
 	display_limited_gaming_dir_list()
 	now_using_game_duration_set_by_game_type = true
@@ -147,26 +145,51 @@ func begin_Kana_practice() { // ::: - -
 		if theGameIsRunning == true {
 			// Skip looking to start a game if one is already running.
 		} else if usersSubmission == "game" {
-			reset_all_data()
+			reset_all_data(true)
 			guessLevelCounter = 1
-			fmt.Println("Welcome to the game. Dir options: off/goff, stc, stcr, q, dirg")
 			fmt.Println("What is your first name? (one word)")
 			_, _ = fmt.Scan(&nameOfPlayer)
 			List_of_game_types()
-			fmt.Println(colorRed + "Enter the type of game" + colorReset)
+			fmt.Println(colorRed + "Select a game" + colorReset)
 			_, _ = fmt.Scan(&type_of_game)
 			switch type_of_game {
-			case "kh":
-				gameDuration = 105
+			case "1": // hko
+				gameDuration = 206
+				kata_hira = false
 				kata_roma = false
-				kata_hira = true
-				limitedToKataPrompts = false
+				limitedToKataPrompts = true
+				limitedToHiraPrompts = true
+				limitedToRomaPrompts = false
+				limitedToDifficultDescriptions = false
+				limitedToSpelling = false
+			case "2": // konly
+				gameDuration = 105
+				kata_hira = false
+				kata_roma = false
+				limitedToKataPrompts = true
 				limitedToHiraPrompts = false
 				limitedToRomaPrompts = false
 				limitedToDifficultDescriptions = false
 				limitedToSpelling = false
-				fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
-			case "khSimplex":
+			case "3": // honly
+				gameDuration = 105
+				kata_hira = false
+				kata_roma = false
+				limitedToHiraPrompts = true
+				limitedToKataPrompts = false
+				limitedToRomaPrompts = false
+				limitedToDifficultDescriptions = false
+				limitedToSpelling = false
+			case "4": // ronly
+				gameDuration = 105
+				kata_hira = false
+				kata_roma = false
+				limitedToRomaPrompts = true
+				limitedToKataPrompts = false
+				limitedToHiraPrompts = false
+				limitedToDifficultDescriptions = false
+				limitedToSpelling = false
+			case "5": // khSimplex
 				gameDuration = 55
 				kata_roma = false
 				kata_hira = false
@@ -176,59 +199,25 @@ func begin_Kana_practice() { // ::: - -
 				limitedToRomaPrompts = false
 				limitedToDifficultDescriptions = false
 				limitedToSpelling = false
-				fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
-			case "kr":
-				gameDuration = 105
+			case "6": // donly
+				gameDuration = 20
 				kata_hira = false
-				kata_roma = true
+				kata_roma = false
+				limitedToDifficultDescriptions = true
 				limitedToKataPrompts = false
 				limitedToHiraPrompts = false
-				limitedToRomaPrompts = false
-				limitedToDifficultDescriptions = false
-				limitedToSpelling = false
-				fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
-
-			case "hko":
-				gameDuration = 206
-				kata_hira = false
-				kata_roma = false
-				limitedToKataPrompts = true
-				limitedToHiraPrompts = true
-				limitedToRomaPrompts = false
-				limitedToDifficultDescriptions = false
-				limitedToSpelling = false
-				fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
-			case "konly":
-				gameDuration = 105
-				kata_hira = false
-				kata_roma = false
-				limitedToKataPrompts = true
-				limitedToHiraPrompts = false
-				limitedToRomaPrompts = false
-				limitedToDifficultDescriptions = false
-				limitedToSpelling = false
-				fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
-			case "honly":
-				gameDuration = 105
-				kata_hira = false
-				kata_roma = false
-				limitedToHiraPrompts = true
-				limitedToKataPrompts = false
-				limitedToRomaPrompts = false
-				limitedToDifficultDescriptions = false
-				limitedToSpelling = false
-				fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
-			case "ronly":
-				gameDuration = 105
-				kata_hira = false
-				kata_roma = false
 				limitedToRomaPrompts = true
+				limitedToSpelling = false
+			case "7": // kh
+				gameDuration = 106
+				kata_roma = false
+				kata_hira = true
 				limitedToKataPrompts = false
 				limitedToHiraPrompts = false
+				limitedToRomaPrompts = false
 				limitedToDifficultDescriptions = false
 				limitedToSpelling = false
-				fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
-			case "rhSimplex":
+			case "8": // rhSimplex
 				gameDuration = 55
 				kata_hira = false
 				kata_roma = false
@@ -238,17 +227,24 @@ func begin_Kana_practice() { // ::: - -
 				limitedToHiraPrompts = false
 				limitedToDifficultDescriptions = false
 				limitedToSpelling = false
-				fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
-			case "donly":
-				gameDuration = 20
+			case "9": // kr
+				gameDuration = 105
 				kata_hira = false
-				kata_roma = false
-				limitedToDifficultDescriptions = true
+				kata_roma = true
 				limitedToKataPrompts = false
 				limitedToHiraPrompts = false
-				limitedToRomaPrompts = true
+				limitedToRomaPrompts = false
+				limitedToDifficultDescriptions = false
 				limitedToSpelling = false
-				fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
+			default: // "0" // mix ::: NOT SURE ABOUT ALL THESE FALSE SETTINGS FOR THE MIX CASE ??
+				gameDuration = 206
+				kata_hira = false
+				kata_roma = false
+				limitedToKataPrompts = false
+				limitedToHiraPrompts = false
+				limitedToRomaPrompts = false
+				limitedToDifficultDescriptions = false
+				limitedToSpelling = false
 			}
 			display_limited_gaming_dir_list()
 			now_using_game_duration_set_by_game_type = true
@@ -264,19 +260,25 @@ func begin_Kana_practice() { // ::: - -
 			}
 		}
 
-		// During gaming, disallow checking for Directives other than q, and goff.
+		// During gaming, disallow checking for Directives other than q, dir, and off.
 		if theGameIsRunning {
 			if usersSubmission == "q" {
 				os.Exit(1)
 			}
 			if usersSubmission == "off" || usersSubmission == "goff" {
+				// in this case we need to decrement the guess level counter, because this usersSubmission is not to be counted.
+				guessLevelCounter--
 				the_game_ends()
 			}
 			if usersSubmission == "dir" {
 				display_limited_gaming_dir_list()
+				// in this case we need to decrement the guess level counter, because this usersSubmission is not to be counted.
+				guessLevelCounter--
 			}
 		} else {
 			// If user's input is a Directive, handle it. ::: ONLY if a game IS NOT running !!!
+			// todo 1 : if a game is running the following handler need not address the case of a "dir" ???
+			// todo 2 : ... but since this is complex due to potential recursions I will leave it as it is.
 			frontEnd_Possible_Recursive_DirHandler() // ::: this contains the only other prompt
 		}
 

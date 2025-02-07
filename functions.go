@@ -420,7 +420,7 @@ func about_app() { // ::: - -
 /*
 .
 */
-func reset_all_data() { // ::: - -
+func reset_all_data(suppressPrinting bool) { // ::: - -
 	// Flush (clear) the old stats and hits arrays
 	limitedToKataPrompts = false
 	limitedToHiraPrompts = false
@@ -450,15 +450,20 @@ func reset_all_data() { // ::: - -
 	total_prompts = 0
 	//
 	//goland:noinspection ALL
-	fmt.Println("\nArrays and maps flushed:\n")
-	fmt.Println("    cyclicArrayOfTheJcharsGottenWrong")
-	fmt.Println("    cyclicArrayHits")
-	fmt.Println("    cyclicArrayPulls and hiraHitMap and pulledButNotUsedMap")
-	fmt.Println("    frequencyMapOf_IsFineOnChars")
-	//goland:noinspection ALL
-	fmt.Println("    frequencyMapOf_need_workOn\n")
-	fmt.Println(colorCyan + "  Limitations re Kata, Hira, and Romaji prompting; as well as all Game values have also been reset\n" + colorReset)
-	fmt.Println("... and will take effect after you dispatch the current card: default kata_roma ...")
+	if suppressPrinting {
+		// do not print
+	} else {
+		fmt.Println("\nArrays and maps flushed:\n")
+		fmt.Println("    cyclicArrayOfTheJcharsGottenWrong")
+		fmt.Println("    cyclicArrayHits")
+		fmt.Println("    cyclicArrayPulls and hiraHitMap and pulledButNotUsedMap")
+		fmt.Println("    frequencyMapOf_IsFineOnChars")
+		//goland:noinspection ALL
+		fmt.Println("    frequencyMapOf_need_workOn\n")
+		fmt.Println(colorCyan + "  Limitations re Kata, Hira, and Romaji prompting; as well as all Game values have also been reset\n" + colorReset)
+		fmt.Println("... and will take effect after you dispatch the current card: default kata_roma ...")
+
+	}
 }
 
 /*
@@ -548,7 +553,7 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 		limitedToRomaPrompts = false
 		limitedToDifficultDescriptions = false
 		limitedToSpelling = true
-		fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
+		fmt.Printf("-- 	Your settings will go into effect after you dispence with the present card ...\n")
 	case "kh":
 		kata_roma = false
 		kata_hira = true
@@ -667,33 +672,62 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 		read_pulledButNotUsedMap()
 		// read_pulls_not_used_array()
 	case "rs":
-		reset_all_data()
+		reset_all_data(false)
 	case "st":
 		st_stats_function()
 	case "stc":
 		reSet_via_a_hira_aCard_andThereBy_reSet_thePromptString()
 	case "stcr":
 		reSet_aCard_via_a_romaji_andThereBy_reSet_thePromptString()
-	case "game":
-		reset_all_data()
-		fmt.Println("Welcome to the game. Dir options: off/goff, stc, stcr, q, dirg")
+	case "game": // ::: this code reachable only via recursion, e.g., immediately following a "dir" directive command.
+		reset_all_data(true) // I would like to suppress the prints in this func
 		fmt.Println("What is your first name? (one word)")
 		_, _ = fmt.Scan(&nameOfPlayer)
 		List_of_game_types()
 		fmt.Println(colorRed + "Enter the type of game" + colorReset)
 		_, _ = fmt.Scan(&type_of_game)
 		switch type_of_game {
-		case "kh":
-			gameDuration = 106
+		case "1": // hko
+			gameDuration = 206
+			kata_hira = false
 			kata_roma = false
-			kata_hira = true
-			limitedToKataPrompts = false
-			limitedToHiraPrompts = false
+			limitedToKataPrompts = true
+			limitedToHiraPrompts = true
 			limitedToRomaPrompts = false
 			limitedToDifficultDescriptions = false
 			limitedToSpelling = false
 			fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
-		case "khSimplex":
+		case "2": // konly
+			gameDuration = 105
+			kata_hira = false
+			kata_roma = false
+			limitedToKataPrompts = true
+			limitedToHiraPrompts = false
+			limitedToRomaPrompts = false
+			limitedToDifficultDescriptions = false
+			limitedToSpelling = false
+			fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
+		case "3": // honly
+			gameDuration = 105
+			kata_hira = false
+			kata_roma = false
+			limitedToHiraPrompts = true
+			limitedToKataPrompts = false
+			limitedToRomaPrompts = false
+			limitedToDifficultDescriptions = false
+			limitedToSpelling = false
+			fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
+		case "4": // ronly
+			gameDuration = 105
+			kata_hira = false
+			kata_roma = false
+			limitedToRomaPrompts = true
+			limitedToKataPrompts = false
+			limitedToHiraPrompts = false
+			limitedToDifficultDescriptions = false
+			limitedToSpelling = false
+			fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
+		case "5": // khSimplex
 			gameDuration = 55
 			kata_roma = false
 			kata_hira = false
@@ -704,58 +738,27 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 			limitedToDifficultDescriptions = false
 			limitedToSpelling = false
 			fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
-		case "kr":
-			gameDuration = 105
+		case "6": // donly
+			gameDuration = 20
 			kata_hira = false
-			kata_roma = true
+			kata_roma = false
+			limitedToDifficultDescriptions = true
 			limitedToKataPrompts = false
 			limitedToHiraPrompts = false
-			limitedToRomaPrompts = false
-			limitedToDifficultDescriptions = false
-			limitedToSpelling = false
-			fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
-
-		case "hko":
-			gameDuration = 206
-			kata_hira = false
-			kata_roma = false
-			limitedToKataPrompts = true
-			limitedToHiraPrompts = true
-			limitedToRomaPrompts = false
-			limitedToDifficultDescriptions = false
-			limitedToSpelling = false
-			fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
-		case "konly":
-			gameDuration = 105
-			kata_hira = false
-			kata_roma = false
-			limitedToKataPrompts = true
-			limitedToHiraPrompts = false
-			limitedToRomaPrompts = false
-			limitedToDifficultDescriptions = false
-			limitedToSpelling = false
-			fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
-		case "honly":
-			gameDuration = 105
-			kata_hira = false
-			kata_roma = false
-			limitedToHiraPrompts = true
-			limitedToKataPrompts = false
-			limitedToRomaPrompts = false
-			limitedToDifficultDescriptions = false
-			limitedToSpelling = false
-			fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
-		case "ronly":
-			gameDuration = 105
-			kata_hira = false
-			kata_roma = false
 			limitedToRomaPrompts = true
-			limitedToKataPrompts = false
-			limitedToHiraPrompts = false
-			limitedToDifficultDescriptions = false
 			limitedToSpelling = false
 			fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
-		case "rhSimplex":
+		case "7": // kh
+			gameDuration = 106
+			kata_roma = false
+			kata_hira = true
+			limitedToKataPrompts = false
+			limitedToHiraPrompts = false
+			limitedToRomaPrompts = false
+			limitedToDifficultDescriptions = false
+			limitedToSpelling = false
+			fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
+		case "8": // rhSimplex
 			gameDuration = 55
 			kata_hira = false
 			kata_roma = false
@@ -766,16 +769,26 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 			limitedToDifficultDescriptions = false
 			limitedToSpelling = false
 			fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
-		case "donly":
-			gameDuration = 20
+		case "9": // kr
+			gameDuration = 105
 			kata_hira = false
-			kata_roma = false
-			limitedToDifficultDescriptions = true
+			kata_roma = true
 			limitedToKataPrompts = false
 			limitedToHiraPrompts = false
-			limitedToRomaPrompts = true
+			limitedToRomaPrompts = false
+			limitedToDifficultDescriptions = false
 			limitedToSpelling = false
-			fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
+			fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
+		default: // "0" // mix ::: NOT SURE ABOUT ALL THESE FALSE SETTINGS FOR THE MIX CASE ??
+			gameDuration = 206
+			kata_hira = false
+			kata_roma = false
+			limitedToKataPrompts = false
+			limitedToHiraPrompts = false
+			limitedToRomaPrompts = false
+			limitedToDifficultDescriptions = false
+			limitedToSpelling = false
+			fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
 		}
 		display_limited_gaming_dir_list()
 		now_using_game_duration_set_by_game_type = true

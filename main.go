@@ -268,7 +268,7 @@ func begin_Kana_practice() { // ::: - -
 			if usersSubmission == "off" || usersSubmission == "goff" {
 				// in this case we need to decrement the guess level counter, because this usersSubmission is not to be counted.
 				guessLevelCounter--
-				the_game_ends()
+				the_game_ends(true)
 			}
 			if usersSubmission == "dir" {
 				display_limited_gaming_dir_list()

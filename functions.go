@@ -240,7 +240,7 @@ func the_game_begins() { // ::: - -
 		actual_prompt_char_type, actual_objective_type, kind, currentTime.Format("15:04:05 on Monday 01-02-2006"))
 	check_error(err1)
 }
-func the_game_ends() { // ::: - -
+func the_game_ends(suppressPointsReporting bool) { // ::: - -
 	theGameIsRunning = false
 	now_using_game_duration_set_by_game_type = false
 	// gameDuration = 0
@@ -281,7 +281,7 @@ func the_game_ends() { // ::: - -
 		correctOnSecondAttemptAccumulator++
 	} else { // :::  this else never runs, so guessLevelCounter is either 2 or 3, but never 1 or 4 ? ---------------------------
 		// correctOnThirdAttemptAccumulator++ // ::: why had I commented-out this line ??? if the else never is done, it could not have mattered
-		fmt.Printf("guessLevelCounter is:%d, where it maybe-should-be-4-? \n", guessLevelCounter) // ::: never executes ????
+		// fmt.Printf("guessLevelCounter is:%d, where it maybe-should-be-4-? \n", guessLevelCounter) // ::: never/rarely executes ????
 		// ... then ... the guessLevelCounter was 4?.
 		// correctOnThirdAttemptAccumulator++ // ::: why had I commented-out this line ???
 		// ::: fail/error accumulator gets incremented (or at least it gets displayed [below]) during the oops message
@@ -292,20 +292,23 @@ func the_game_ends() { // ::: - -
 		fmt.Printf("\nYour Game run-time was:%s,  you got %s%d%s correct on your first try,  %s%d%s right on your second try,\n"+
 			"... and you got %s%d right on your third try. \n\n", TotalRun, colorReset, correctOnFirstAttemptAccumulator-1, colorRed, colorReset, correctOnSecondAttemptAccumulator,
 			colorRed, colorReset, correctOnThirdAttemptAccumulator)
-		if gameDuration == 206 {
+		if gameDuration == 206 && !suppressPointsReporting {
+			// todo : also calculate game scores for games of other lengths
 			fmt.Printf("Points = %f\n", (firstAtemptAcumF-(secondAtemptAcumF/4)-(thirdAtemptAcumF/2)-(failedOnThirdAttF*2))/totalSecondsF*100)
 		}
 	} else if correctOnFirstAttemptAccumulator > 0 && correctOnSecondAttemptAccumulator > 0 && correctOnThirdAttemptAccumulator == 0 && failedOnThirdAttemptAccumulator == 0 { // ::: done
 		fmt.Println(colorRed)
 		fmt.Printf("\nYour Game run-time was:%s,  you got %s%d%s correct on your first try,  %s%d right on your second try. \n\n", TotalRun, colorReset, correctOnFirstAttemptAccumulator-1,
 			colorRed, colorReset, correctOnSecondAttemptAccumulator)
-		if gameDuration == 206 {
+		if gameDuration == 206 && !suppressPointsReporting {
+			// todo : also calculate game scores for games of other lengths
 			fmt.Printf("Points = %f\n", (firstAtemptAcumF-(secondAtemptAcumF/4)-(thirdAtemptAcumF/2)-(failedOnThirdAttF*2))/totalSecondsF*100)
 		}
 	} else if correctOnFirstAttemptAccumulator > 0 && correctOnSecondAttemptAccumulator == 0 && correctOnThirdAttemptAccumulator == 0 && failedOnThirdAttemptAccumulator == 0 { // ::: done
 		fmt.Println(colorRed)
 		fmt.Printf("\nYour Game run-time was:%s,  Gongratulations! you got %s%d correct on your first try. \n\n", TotalRun, colorReset, correctOnFirstAttemptAccumulator-1)
-		if gameDuration == 206 {
+		if gameDuration == 206 && !suppressPointsReporting {
+			// todo : also calculate game scores for games of other lengths
 			fmt.Printf("Points = %f\n", (firstAtemptAcumF-(secondAtemptAcumF/4)-(thirdAtemptAcumF/2)-(failedOnThirdAttF*2))/totalSecondsF*100)
 		}
 	} else {
@@ -314,7 +317,8 @@ func the_game_ends() { // ::: - -
 			"... and you got %s%d%s right on your third try, and were unable to answer correctly without a hint "+
 			"%s%d times. \n\n", TotalRun, colorReset, correctOnFirstAttemptAccumulator-1, colorRed, colorReset, correctOnSecondAttemptAccumulator,
 			colorRed, colorReset, correctOnThirdAttemptAccumulator, colorRed, colorReset, failedOnThirdAttemptAccumulator)
-		if gameDuration == 206 {
+		if gameDuration == 206 && !suppressPointsReporting {
+			// todo : also calculate game scores for games of other lengths
 			fmt.Printf("Points = %f\n", (firstAtemptAcumF-(secondAtemptAcumF/4)-(thirdAtemptAcumF/2)-(failedOnThirdAttF*2))/totalSecondsF*100)
 		}
 	}
@@ -337,7 +341,8 @@ func the_game_ends() { // ::: - -
 		"The Elapsed time of the game was: %s \n",
 		TotalRun)
 	check_error(err2)
-	if gameDuration == 206 { // Calculate and print the Point total to the log file only if a full game of 206 had been declared
+	// todo : also calculate game scores for games of other lengths
+	if gameDuration == 206 && !suppressPointsReporting { // Calculate and print the Point total to the log file only if a full game of 206 had been declared
 		// fmt.Printf("Points: %f", points2print)
 		_, err3 := fmt.Fprintf(fileHandle,
 			"Points: %f \n\n\n",

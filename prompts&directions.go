@@ -26,9 +26,9 @@ func prompt_the_user_for_input() { // ::: - -
 
 			if theGameIsRunning { // more shit is appended when a game is running
 				fmt.Printf(", %s%s is playing: %s1st:%s%d%s, 2nd:%s%d%s, 3rd:%s%d%s, fails:%s%d, %s%d/%d%s\n",
-					colorReset, nameOfPlayer, colorRed, colorReset, correctOnFirstAttemptAccumulator,
-					colorRed, colorReset, correctOnSecondAttemptAccumulator, colorRed, colorReset, correctOnThirdAttemptAccumulator,
-					colorRed, colorReset, failedOnThirdAttemptAccumulator, colorCyan, game_loop_counter, gameDuration, colorReset)
+					colorReset, nameOfPlayer, colorRed, colorReset, gameCorrectOnFirstAttemptAccumulator,
+					colorRed, colorReset, gameCorrectOnSecondAttemptAccumulator, colorRed, colorReset, gameCorrectOnThirdAttemptAccumulator,
+					colorRed, colorReset, gameFailedOnThirdAttemptAccumulator, colorCyan, game_loop_counter, gameDuration, colorReset)
 			} else {
 				fmt.Println()
 			}
@@ -56,9 +56,9 @@ func prompt_the_user_for_input() { // ::: - -
 
 			if theGameIsRunning {
 				fmt.Printf(", %s%s is playing: %s1st:%s%d%s, 2nd:%s%d%s, 3rd:%s%d%s, fails:%s%d, %s%d/%d%s\n",
-					colorReset, nameOfPlayer, colorRed, colorReset, correctOnFirstAttemptAccumulator,
-					colorRed, colorReset, correctOnSecondAttemptAccumulator, colorRed, colorReset, correctOnThirdAttemptAccumulator,
-					colorRed, colorReset, failedOnThirdAttemptAccumulator, colorCyan, game_loop_counter, gameDuration, colorReset)
+					colorReset, nameOfPlayer, colorRed, colorReset, gameCorrectOnFirstAttemptAccumulator,
+					colorRed, colorReset, gameCorrectOnSecondAttemptAccumulator, colorRed, colorReset, gameCorrectOnThirdAttemptAccumulator,
+					colorRed, colorReset, gameFailedOnThirdAttemptAccumulator, colorCyan, game_loop_counter, gameDuration, colorReset)
 			} else {
 				fmt.Println()
 			}
@@ -91,9 +91,9 @@ func prompt_the_user_for_input() { // ::: - -
 
 			if theGameIsRunning {
 				fmt.Printf(", %s%s is playing: %s1st:%s%d%s, 2nd:%s%d%s, 3rd:%s%d%s, fails:%s%d, %s%d/%d%s\n",
-					colorReset, nameOfPlayer, colorRed, colorReset, correctOnFirstAttemptAccumulator,
-					colorRed, colorReset, correctOnSecondAttemptAccumulator, colorRed, colorReset, correctOnThirdAttemptAccumulator,
-					colorRed, colorReset, failedOnThirdAttemptAccumulator, colorCyan, game_loop_counter, gameDuration, colorReset)
+					colorReset, nameOfPlayer, colorRed, colorReset, gameCorrectOnFirstAttemptAccumulator,
+					colorRed, colorReset, gameCorrectOnSecondAttemptAccumulator, colorRed, colorReset, gameCorrectOnThirdAttemptAccumulator,
+					colorRed, colorReset, gameFailedOnThirdAttemptAccumulator, colorCyan, game_loop_counter, gameDuration, colorReset)
 			} else {
 				fmt.Println()
 			}
@@ -124,9 +124,9 @@ func prompt_the_user_for_input() { // ::: - -
 
 			if theGameIsRunning {
 				fmt.Printf(", %s%s is playing: %s1st:%s%d%s, 2nd:%s%d%s, 3rd:%s%d%s, fails:%s%d, %s%d/%d%s\n",
-					colorReset, nameOfPlayer, colorRed, colorReset, correctOnFirstAttemptAccumulator,
-					colorRed, colorReset, correctOnSecondAttemptAccumulator, colorRed, colorReset, correctOnThirdAttemptAccumulator,
-					colorRed, colorReset, failedOnThirdAttemptAccumulator, colorCyan, game_loop_counter, gameDuration, colorReset)
+					colorReset, nameOfPlayer, colorRed, colorReset, gameCorrectOnFirstAttemptAccumulator,
+					colorRed, colorReset, gameCorrectOnSecondAttemptAccumulator, colorRed, colorReset, gameCorrectOnThirdAttemptAccumulator,
+					colorRed, colorReset, gameFailedOnThirdAttemptAccumulator, colorCyan, game_loop_counter, gameDuration, colorReset)
 			} else {
 				fmt.Println()
 			}

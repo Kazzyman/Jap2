@@ -75,7 +75,7 @@ func find_this_card_to_practice(promptField_found_in_map, currently_known_typeOf
 		}
 	} else if whichDeck == 2 {
 		if currently_known_typeOf_objective == "Hira" {
-			for _, card := range fileOfCardsS {
+			for _, card := range fileOfCardsAllSequential {
 				if card.Hira == promptField_found_in_map {
 					foundElement = &card  // foundElement is a global var and contains all the fields of a card
 					aCard = *foundElement // aCard is also a global var
@@ -83,10 +83,10 @@ func find_this_card_to_practice(promptField_found_in_map, currently_known_typeOf
 				}
 			}
 			if foundElement == nil {
-				fmt.Println("Hira type card not found in: fileOfCardsS")
+				fmt.Println("Hira type card not found in: fileOfCardsAllSequential")
 			}
 		} else if currently_known_typeOf_objective == "Romaji" {
-			for _, card := range fileOfCardsS {
+			for _, card := range fileOfCardsAllSequential {
 				if card.Hira == promptField_found_in_map {
 					foundElement = &card  // foundElement is a global var and contains all the fields of a card
 					aCard = *foundElement // aCard is also a global var
@@ -94,7 +94,7 @@ func find_this_card_to_practice(promptField_found_in_map, currently_known_typeOf
 				}
 			}
 			if foundElement == nil {
-				fmt.Println("Romaji type card not found in: fileOfCardsS")
+				fmt.Println("Romaji type card not found in: fileOfCardsAllSequential")
 			}
 		}
 	} else if whichDeck == 3 {

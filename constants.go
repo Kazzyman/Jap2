@@ -5,7 +5,7 @@ package main
 /*
 There are four files (or decks) of cards:
 	fileOfCardsE extended
-	fileOfCardsS
+	fileOfCardsAllSequential
 	fileOfCardsMostDifficult
 	fileOfCards
 */

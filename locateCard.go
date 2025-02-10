@@ -22,7 +22,7 @@ func locateCardAndDisplayHelpFieldsContainedInIt_deprecated(Hira_or_Romaji_input
 	// Help for a Romaji prompt, should give only the SansR_Hint if actual_objective_type == "Romaji" ****
 	if isAlphanumeric { // We probably have a Romaji string to locate help on
 		// Iterate through the array to find the element with the desired Romaji
-		for _, card := range fileOfCardsS {
+		for _, card := range fileOfCardsAllSequential {
 			if card.Romaji == Hira_or_Romaji_input_sameAsPrompt_toFindHelpOn { // It is a Romaji
 				foundElement = &card // foundElement is a global
 				break
@@ -44,7 +44,7 @@ func locateCardAndDisplayHelpFieldsContainedInIt_deprecated(Hira_or_Romaji_input
 		// Help for a Hiragana prompt, should give only the SansR_Hint if actual_objective_type == "Romaji" ****
 	} else { // We probably have a Hiragana string to locate help on
 		// Iterate through array to find element w the desired Hiragana
-		for _, card := range fileOfCardsS {
+		for _, card := range fileOfCardsAllSequential {
 			if card.Hira == Hira_or_Romaji_input_sameAsPrompt_toFindHelpOn { // It is a Hira
 				foundElement = &card
 				break
@@ -85,7 +85,7 @@ func locateCardAndDisplayHelpFieldsContainedInIt(Hira_or_Romaji_input_sameAsProm
 	// Help for a Romaji prompt
 	if isAlphanumeric { // We probably have a Romaji string to locate help on
 		// Iterate through the array to find the element with the desired Romaji
-		for _, card := range fileOfCardsS {
+		for _, card := range fileOfCardsAllSequential {
 			if card.Romaji == Hira_or_Romaji_input_sameAsPrompt_toFindHelpOn { // It is a Romaji
 				foundElement = &card // foundElement is a global
 				break
@@ -103,7 +103,7 @@ func locateCardAndDisplayHelpFieldsContainedInIt(Hira_or_Romaji_input_sameAsProm
 		// Help for a Hiragana prompt
 	} else { // We probably have a Hiragana string to locate help on
 		// Iterate through array to find element w the desired Hiragana
-		for _, card := range fileOfCardsS {
+		for _, card := range fileOfCardsAllSequential {
 			if card.Hira == Hira_or_Romaji_input_sameAsPrompt_toFindHelpOn { // It is a Hira
 				foundElement = &card
 				break
@@ -136,7 +136,7 @@ func silentlyLocateCard(setKeyRequest string) { //  - -
 		}
 
 		if isAlphanumeric == true { // ... then we should be safe to proceed with what will be a romaji char
-			for _, card := range fileOfCardsS {
+			for _, card := range fileOfCardsAllSequential {
 				if card.Romaji == setKeyRequest {
 					// v v v if we find a 'card' in the range of 'fileOfCards',
 					// ... we set the foundElement global var, which is used in reSet_aCard_andThereBy_reSet_thePromptString()
@@ -166,7 +166,7 @@ func silentlyLocateCard(setKeyRequest string) { //  - -
 		}
 
 		if isAlphanumeric == false { // ... then we should be safe to proceed with what will be a Hiragana char
-			for _, card := range fileOfCardsS {
+			for _, card := range fileOfCardsAllSequential {
 				if card.Hira == setKeyRequest {
 					// v v v if we find a 'card' in the range of 'fileOfCards',
 					// ... we set the foundElement global var, which is used in reSet_aCard_andThereBy_reSet_thePromptString()
@@ -204,7 +204,7 @@ func silentlyLocateCardr(setKeyRequest string) { //  - -
 
 		if isAlphanumeric != true { // ... then we should be safe to proceed with what will be a romaji char
 
-			for _, card := range fileOfCardsS {
+			for _, card := range fileOfCardsAllSequential {
 
 				if card.Romaji == setKeyRequest {
 					// v v v if we find a 'card' in the range of 'fileOfCards',
@@ -238,7 +238,7 @@ func silentlyLocateCardr(setKeyRequest string) { //  - -
 
 		if isAlphanumeric == false { // ... then we should be safe to proceed with what will be a Hiragana char
 
-			for _, card := range fileOfCardsS {
+			for _, card := range fileOfCardsAllSequential {
 				if card.Romaji == setKeyRequest {
 					// v v v if we find a 'card' in the range of 'fileOfCards',
 					// ... we set the foundElement global var, which is used in reSet_aCard_andThereBy_reSet_thePromptString()

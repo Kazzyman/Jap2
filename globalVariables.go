@@ -24,7 +24,7 @@ var its_a_directive = false // A flag used to record the fact that we determined
 
 var non_standard_origin_stcR bool // Used in silentlyLocateCard to signal that we've come by-way-of the strc Directive.
 
-var gotLastCardRightSoGetFreshOne bool
+var guessedLastCardCorrectlySoGetFreshOne bool
 
 var submission_already_processed_above bool // Used to avoid the Double-processing of usersSubmission s.
 
@@ -44,10 +44,10 @@ var points2print float32
 var total_prompts int // Used in various statistical reporting functions.
 
 // ::: Game-Feature-control-and-tallying-vars-Section: ---------------------------------------
-var correctOnFirstAttemptAccumulator int
-var correctOnSecondAttemptAccumulator int
-var correctOnThirdAttemptAccumulator int
-var failedOnThirdAttemptAccumulator int
+var gameCorrectOnFirstAttemptAccumulator int
+var gameCorrectOnSecondAttemptAccumulator int
+var gameCorrectOnThirdAttemptAccumulator int
+var gameFailedOnThirdAttemptAccumulator int
 var gottenHonestly bool
 var nameOfPlayer string
 var type_of_game string

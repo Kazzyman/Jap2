@@ -206,16 +206,16 @@ func the_game_begins() { // ::: - -
 	frequencyMapOf_need_workOn = make(map[string]int)
 	pulledButNotUsedMap = make(map[string]int)
 	total_prompts = 0
-	correctOnThirdAttemptAccumulator = 0
+	gameCorrectOnThirdAttemptAccumulator = 0
 	game_loop_counter = 0
 	guessLevelCounter = 1
 	theGameIsRunning = true // ::: this flag is the only thing that "starts" a game
-	// correctOnFirstAttemptAccumulator = 1   // ::: here it is/was not able to process the last guess prior to game ending.
-	// correctOnSecondAttemptAccumulator = -1 // ::: kluge !!
+	// gameCorrectOnFirstAttemptAccumulator = 1   // ::: here it is/was not able to process the last guess prior to game ending.
+	// gameCorrectOnSecondAttemptAccumulator = -1 // ::: kluge !!
 	// ::: if the first query of a game is gotten right on the first attempt, it is logged as a 2nd and not a 1st
-	correctOnFirstAttemptAccumulator = 0
-	correctOnSecondAttemptAccumulator = 0
-	failedOnThirdAttemptAccumulator = 0
+	gameCorrectOnFirstAttemptAccumulator = 0
+	gameCorrectOnSecondAttemptAccumulator = 0
+	gameFailedOnThirdAttemptAccumulator = 0
 
 	//
 	// ::: file-writing and time-stamping is all that follows ==========================================
@@ -260,12 +260,13 @@ func the_game_ends(suppressPointsReporting bool) { // ::: - -
 	seconds := int(elapsed.Seconds()) % 60
 
 	total_seconds := (minutes * 60) + (seconds)
-	firstAtemptAcumF := float32(correctOnFirstAttemptAccumulator - 1)
-	secondAtemptAcumF := float32(correctOnSecondAttemptAccumulator)
-	thirdAtemptAcumF := float32(correctOnThirdAttemptAccumulator)
-	failedOnThirdAttF := float32(failedOnThirdAttemptAccumulator)
+	firstAtemptAcumF := float32(gameCorrectOnFirstAttemptAccumulator - 1)
+	secondAtemptAcumF := float32(gameCorrectOnSecondAttemptAccumulator)
+	thirdAtemptAcumF := float32(gameCorrectOnThirdAttemptAccumulator)
+	failedOnThirdAttF := float32(gameFailedOnThirdAttemptAccumulator)
 	totalSecondsF := float32(total_seconds)
-	points2print = (firstAtemptAcumF - (secondAtemptAcumF / 4) - (thirdAtemptAcumF / 2) - (failedOnThirdAttF * 2)) / totalSecondsF * 100
+	points2print = (firstAtemptAcumF - (secondAtemptAcumF / 4) - (thirdAtemptAcumF / 2) -
+		(failedOnThirdAttF * 2)) / totalSecondsF * 100
 
 	// Create the formatted string
 	TotalRun := fmt.Sprintf("%02d:%02d", minutes, seconds)
@@ -274,40 +275,40 @@ func the_game_ends(suppressPointsReporting bool) { // ::: - -
 	// Process_users_input_as_a_guess() // ::: trying this ---- and these ------- v v v v
 	if guessLevelCounter == 2 {
 		if gottenHonestly {
-			correctOnFirstAttemptAccumulator++
+			gameCorrectOnFirstAttemptAccumulator++
 			gottenHonestly = false
 		}
 	} else if guessLevelCounter == 3 {
-		correctOnSecondAttemptAccumulator++
-	} else { // :::  this else never runs, so guessLevelCounter is either 2 or 3, but never 1 or 4 ? ---------------------------
-		// correctOnThirdAttemptAccumulator++ // ::: why had I commented-out this line ??? if the else never is done, it could not have mattered
-		// fmt.Printf("guessLevelCounter is:%d, where it maybe-should-be-4-? \n", guessLevelCounter) // ::: never/rarely executes ????
+		gameCorrectOnSecondAttemptAccumulator++
+	} else { // ::: never/rarely executes ????
+		// gameCorrectOnThirdAttemptAccumulator++
+		// fmt.Printf("guessLevelCounter is:%d, where it maybe-should-be-4-? \n", guessLevelCounter)
 		// ... then ... the guessLevelCounter was 4?.
-		// correctOnThirdAttemptAccumulator++ // ::: why had I commented-out this line ???
+		// gameCorrectOnThirdAttemptAccumulator++
 		// ::: fail/error accumulator gets incremented (or at least it gets displayed [below]) during the oops message
 	} // - - - - - - - - - - - - - - - - - - - - - - - - - ::: -----------------------------------------------------------------
 
-	if correctOnFirstAttemptAccumulator > 0 && correctOnSecondAttemptAccumulator > 0 && correctOnThirdAttemptAccumulator > 0 && failedOnThirdAttemptAccumulator == 0 { // ::: done
+	if gameCorrectOnFirstAttemptAccumulator > 0 && gameCorrectOnSecondAttemptAccumulator > 0 && gameCorrectOnThirdAttemptAccumulator > 0 && gameFailedOnThirdAttemptAccumulator == 0 { // ::: done
 		fmt.Println(colorRed)
 		fmt.Printf("\nYour Game run-time was:%s,  you got %s%d%s correct on your first try,  %s%d%s right on your second try,\n"+
-			"... and you got %s%d right on your third try. \n\n", TotalRun, colorReset, correctOnFirstAttemptAccumulator-1, colorRed, colorReset, correctOnSecondAttemptAccumulator,
-			colorRed, colorReset, correctOnThirdAttemptAccumulator)
-		if gameDuration == 206 && !suppressPointsReporting {
+			"... and you got %s%d right on your third try. \n\n", TotalRun, colorReset, gameCorrectOnFirstAttemptAccumulator-1, colorRed, colorReset, gameCorrectOnSecondAttemptAccumulator,
+			colorRed, colorReset, gameCorrectOnThirdAttemptAccumulator)
+		if gameDuration == 2*len(fileOfCardsHiraKata)+len(fileOfCardsEasyKanji) && !suppressPointsReporting {
 			// todo : also calculate game scores for games of other lengths
 			fmt.Printf("Points = %f\n", (firstAtemptAcumF-(secondAtemptAcumF/4)-(thirdAtemptAcumF/2)-(failedOnThirdAttF*2))/totalSecondsF*100)
 		}
-	} else if correctOnFirstAttemptAccumulator > 0 && correctOnSecondAttemptAccumulator > 0 && correctOnThirdAttemptAccumulator == 0 && failedOnThirdAttemptAccumulator == 0 { // ::: done
+	} else if gameCorrectOnFirstAttemptAccumulator > 0 && gameCorrectOnSecondAttemptAccumulator > 0 && gameCorrectOnThirdAttemptAccumulator == 0 && gameFailedOnThirdAttemptAccumulator == 0 { // ::: done
 		fmt.Println(colorRed)
-		fmt.Printf("\nYour Game run-time was:%s,  you got %s%d%s correct on your first try,  %s%d right on your second try. \n\n", TotalRun, colorReset, correctOnFirstAttemptAccumulator-1,
-			colorRed, colorReset, correctOnSecondAttemptAccumulator)
-		if gameDuration == 206 && !suppressPointsReporting {
+		fmt.Printf("\nYour Game run-time was:%s,  you got %s%d%s correct on your first try,  %s%d right on your second try. \n\n", TotalRun, colorReset, gameCorrectOnFirstAttemptAccumulator-1,
+			colorRed, colorReset, gameCorrectOnSecondAttemptAccumulator)
+		if gameDuration == 2*len(fileOfCardsHiraKata)+len(fileOfCardsEasyKanji) && !suppressPointsReporting {
 			// todo : also calculate game scores for games of other lengths
 			fmt.Printf("Points = %f\n", (firstAtemptAcumF-(secondAtemptAcumF/4)-(thirdAtemptAcumF/2)-(failedOnThirdAttF*2))/totalSecondsF*100)
 		}
-	} else if correctOnFirstAttemptAccumulator > 0 && correctOnSecondAttemptAccumulator == 0 && correctOnThirdAttemptAccumulator == 0 && failedOnThirdAttemptAccumulator == 0 { // ::: done
+	} else if gameCorrectOnFirstAttemptAccumulator > 0 && gameCorrectOnSecondAttemptAccumulator == 0 && gameCorrectOnThirdAttemptAccumulator == 0 && gameFailedOnThirdAttemptAccumulator == 0 { // ::: done
 		fmt.Println(colorRed)
-		fmt.Printf("\nYour Game run-time was:%s,  Gongratulations! you got %s%d correct on your first try. \n\n", TotalRun, colorReset, correctOnFirstAttemptAccumulator-1)
-		if gameDuration == 206 && !suppressPointsReporting {
+		fmt.Printf("\nYour Game run-time was:%s,  Gongratulations! you got %s%d correct on your first try. \n\n", TotalRun, colorReset, gameCorrectOnFirstAttemptAccumulator-1)
+		if gameDuration == 2*len(fileOfCardsHiraKata)+len(fileOfCardsEasyKanji) && !suppressPointsReporting {
 			// todo : also calculate game scores for games of other lengths
 			fmt.Printf("Points = %f\n", (firstAtemptAcumF-(secondAtemptAcumF/4)-(thirdAtemptAcumF/2)-(failedOnThirdAttF*2))/totalSecondsF*100)
 		}
@@ -315,9 +316,9 @@ func the_game_ends(suppressPointsReporting bool) { // ::: - -
 		fmt.Println(colorRed)
 		fmt.Printf("\nYour Game run-time was:%s,  you got %s%d%s correct on your first try,  %s%d%s right on your second try,\n"+
 			"... and you got %s%d%s right on your third try, and were unable to answer correctly without a hint "+
-			"%s%d times. \n\n", TotalRun, colorReset, correctOnFirstAttemptAccumulator-1, colorRed, colorReset, correctOnSecondAttemptAccumulator,
-			colorRed, colorReset, correctOnThirdAttemptAccumulator, colorRed, colorReset, failedOnThirdAttemptAccumulator)
-		if gameDuration == 206 && !suppressPointsReporting {
+			"%s%d times. \n\n", TotalRun, colorReset, gameCorrectOnFirstAttemptAccumulator-1, colorRed, colorReset, gameCorrectOnSecondAttemptAccumulator,
+			colorRed, colorReset, gameCorrectOnThirdAttemptAccumulator, colorRed, colorReset, gameFailedOnThirdAttemptAccumulator)
+		if gameDuration == 2*len(fileOfCardsHiraKata)+len(fileOfCardsEasyKanji) && !suppressPointsReporting {
 			// todo : also calculate game scores for games of other lengths
 			fmt.Printf("Points = %f\n", (firstAtemptAcumF-(secondAtemptAcumF/4)-(thirdAtemptAcumF/2)-(failedOnThirdAttF*2))/totalSecondsF*100)
 		}
@@ -332,9 +333,9 @@ func the_game_ends(suppressPointsReporting bool) { // ::: - -
 	check_error(err1)
 
 	_, err3 := fmt.Fprintf(fileHandle, "%s's results were as follows: Right on first attempt:%d, on 2nd attempt:%d, 3rd attempt:%d, even a hint was ineffective:%d, %d/%d\n",
-		nameOfPlayer, correctOnFirstAttemptAccumulator-1,
-		correctOnSecondAttemptAccumulator, correctOnThirdAttemptAccumulator,
-		failedOnThirdAttemptAccumulator, game_loop_counter-1, gameDuration)
+		nameOfPlayer, gameCorrectOnFirstAttemptAccumulator-1,
+		gameCorrectOnSecondAttemptAccumulator, gameCorrectOnThirdAttemptAccumulator,
+		gameFailedOnThirdAttemptAccumulator, game_loop_counter-1, gameDuration)
 	check_error(err3)
 
 	_, err2 := fmt.Fprintf(fileHandle,
@@ -342,7 +343,7 @@ func the_game_ends(suppressPointsReporting bool) { // ::: - -
 		TotalRun)
 	check_error(err2)
 	// todo : also calculate game scores for games of other lengths
-	if gameDuration == 206 && !suppressPointsReporting { // Calculate and print the Point total to the log file only if a full game of 206 had been declared
+	if gameDuration == 2*len(fileOfCardsHiraKata)+len(fileOfCardsEasyKanji) && !suppressPointsReporting { // Calculate and print the Point total to the log file only if a full game of 206 had been declared
 		// fmt.Printf("Points: %f", points2print)
 		_, err3 := fmt.Fprintf(fileHandle,
 			"Points: %f \n\n\n",
@@ -444,10 +445,10 @@ func reset_all_data(suppressPrinting bool) { // ::: - -
 	frequencyMapOf_need_workOn = make(map[string]int)
 	pulledButNotUsedMap = make(map[string]int)
 	total_prompts = 0
-	correctOnFirstAttemptAccumulator = 0
-	correctOnSecondAttemptAccumulator = 0
-	correctOnThirdAttemptAccumulator = 0
-	failedOnThirdAttemptAccumulator = 0
+	gameCorrectOnFirstAttemptAccumulator = 0
+	gameCorrectOnSecondAttemptAccumulator = 0
+	gameCorrectOnThirdAttemptAccumulator = 0
+	gameFailedOnThirdAttemptAccumulator = 0
 	game_loop_counter = 0
 	// jim = 15
 	theGameIsRunning = false
@@ -589,6 +590,7 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 		fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
 
 	case "hko":
+		gameDuration = 2*len(fileOfCardsHiraKata) + len(fileOfCardsEasyKanji)
 		kata_hira = false
 		kata_roma = false
 		limitedToKataPrompts = true

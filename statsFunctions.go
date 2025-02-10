@@ -47,25 +47,30 @@ func log_right_andUpdateGame(prompt_it_was, in string) { // - -
 		if weHadFailed_And_OnlyGotThisRightBecauseOfTheClue {
 			// Then that fail has already been logged and we need to skip all logging.
 			weHadFailed_And_OnlyGotThisRightBecauseOfTheClue = false
-		} else {
-			if guessLevelCounter == 2 {
-				if gottenHonestly { // todo] do not accumulate if after an "error" or hint
-					correctOnFirstAttemptAccumulator++ // ::: 1st
-					gottenHonestly = false
-				}
+		} else { // we got it right without a clue, now determine how many tries were used
+			/*
+				if guessLevelCounter == 2 {
+						if gottenHonestly { // todo] do not accumulate if after an "error" or hint
+							gameCorrectOnFirstAttemptAccumulator++ // ::: 1st
+							gottenHonestly = false //
+						}
+			*/
+			if guessLevelCounter == 2 && gottenHonestly { // combined because the only statement was another if
+				gameCorrectOnFirstAttemptAccumulator++ // ::: 1st
+				gottenHonestly = false                 // todo: not sure why or if this flag needs to be used and/or reset at this point ???
 			} else if guessLevelCounter == 3 {
-				correctOnSecondAttemptAccumulator++ // ::: 2nd
+				gameCorrectOnSecondAttemptAccumulator++ // ::: 2nd
 			} else {
 				// ... then ... the guessLevelCounter was 4.
 				// fmt.Printf("here in log right, guessLevelCounter is:%d, and it should be 4\n", guessLevelCounter)
-				correctOnThirdAttemptAccumulator++ // ::: 3rd
+				gameCorrectOnThirdAttemptAccumulator++ // ::: 3rd
 			}
-			// ::: The other accumulator++  thang : failedOnThirdAttemptAccumulator ]todo[ ... gets handled in log_oops()
+			// ::: The other accumulator++  thang : gameFailedOnThirdAttemptAccumulator ]todo[ ... gets handled in log_oops()
 		}
 	}
 
 	// Only get a fresh card if been here.
-	gotLastCardRightSoGetFreshOne = true
+	guessedLastCardCorrectlySoGetFreshOne = true
 
 }
 

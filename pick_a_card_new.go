@@ -15,16 +15,16 @@ import (
 //
 // 3 frequency categories (or decks) : rare, medium, often ::: 4 sets meaning 12 decks in all (plus 2) , so 14 instances
 //
-//    1. fileOfCardsRare, 2. fileOfCardsMedium, and 3. fileOfCardsOften
+//    1. fileOfCardsKanjiHard, 2. fileOfCardsHiraKata, and 3. fileOfCardsEasyKanji
 //   Rarely drilled (e.g., ya, yu, and yo constructs)
 //   Moderate in frequency (chars of average difficulty)
 //   Often drilled (difficult or potentially confusing chars)
 
 // This one is the default func: it randomly "calls" one of the above four functions and also sets whichDeck (abandoned)
 func randomize_over_all_decks() { // ::: 6 - -
-	randIndexRare := rand.Intn(len(fileOfCardsRare))
-	randIndexMedium := rand.Intn(len(fileOfCardsMedium))
-	randIndexOften := rand.Intn(len(fileOfCardsOften))
+	randIndexRare := rand.Intn(len(fileOfCardsKanjiHard))
+	randIndexMedium := rand.Intn(len(fileOfCardsHiraKata))
+	randIndexOften := rand.Intn(len(fileOfCardsEasyKanji))
 	randIndexExtendedKata := rand.Intn(len(fileOfCardsE))
 
 	var randomized_selector = 0
@@ -37,21 +37,21 @@ func randomize_over_all_decks() { // ::: 6 - -
 	// 2,3,4 = 9
 	// ::: Hira prompting, Romaji objective: 1
 	if randomized_selector == 0 || randomized_selector == 13 {
-		aCard = fileOfCardsRare[randIndexRare]
+		aCard = fileOfCardsKanjiHard[randIndexRare]
 		actual_prompt_char = aCard.Hira
 		actual_prompt_char_type = "hira"
 		actual_objective = aCard.Romaji
 		actual_objective_type = "roma"
 	}
 	if randomized_selector == 1 || randomized_selector == 2 || randomized_selector == 16 {
-		aCard = fileOfCardsMedium[randIndexMedium]
+		aCard = fileOfCardsHiraKata[randIndexMedium]
 		actual_prompt_char = aCard.Hira
 		actual_prompt_char_type = "hira"
 		actual_objective = aCard.Romaji
 		actual_objective_type = "roma"
 	}
 	if randomized_selector == 3 || randomized_selector == 4 || randomized_selector == 5 || randomized_selector == 17 {
-		aCard = fileOfCardsOften[randIndexOften]
+		aCard = fileOfCardsEasyKanji[randIndexOften]
 		actual_prompt_char = aCard.Hira
 		actual_prompt_char_type = "hira"
 		actual_objective = aCard.Romaji
@@ -62,21 +62,21 @@ func randomize_over_all_decks() { // ::: 6 - -
 	//
 	// ::: Kata prompting, Romaji objective: (plus an option for including Extended Kata): 2
 	if randomized_selector == 6 { // 13
-		aCard = fileOfCardsRare[randIndexRare]
+		aCard = fileOfCardsKanjiHard[randIndexRare]
 		actual_prompt_char = aCard.Kata
 		actual_prompt_char_type = "kata"
 		actual_objective = aCard.Romaji
 		actual_objective_type = "roma"
 	}
 	if randomized_selector == 7 || randomized_selector == 8 || randomized_selector == 14 {
-		aCard = fileOfCardsMedium[randIndexMedium]
+		aCard = fileOfCardsHiraKata[randIndexMedium]
 		actual_prompt_char = aCard.Kata
 		actual_prompt_char_type = "kata"
 		actual_objective = aCard.Romaji
 		actual_objective_type = "roma"
 	}
 	if randomized_selector == 9 || randomized_selector == 10 || randomized_selector == 11 || randomized_selector == 15 {
-		aCard = fileOfCardsOften[randIndexOften]
+		aCard = fileOfCardsEasyKanji[randIndexOften]
 		actual_prompt_char = aCard.Kata
 		actual_prompt_char_type = "kata"
 		actual_objective = aCard.Romaji
@@ -95,21 +95,21 @@ func randomize_over_all_decks() { // ::: 6 - -
 	//
 	// ::: Kata prompting, Hira objective: 3
 	if randomized_selector == 24 {
-		aCard = fileOfCardsRare[randIndexRare]
+		aCard = fileOfCardsKanjiHard[randIndexRare]
 		actual_prompt_char = aCard.Kata
 		actual_prompt_char_type = "kata"
 		actual_objective = aCard.Hira
 		actual_objective_type = "hira"
 	}
 	if randomized_selector == 25 || randomized_selector == 26 {
-		aCard = fileOfCardsMedium[randIndexMedium]
+		aCard = fileOfCardsHiraKata[randIndexMedium]
 		actual_prompt_char = aCard.Kata
 		actual_prompt_char_type = "kata"
 		actual_objective = aCard.Hira
 		actual_objective_type = "hira"
 	}
 	if randomized_selector == 27 || randomized_selector == 28 || randomized_selector == 29 {
-		aCard = fileOfCardsOften[randIndexOften]
+		aCard = fileOfCardsEasyKanji[randIndexOften]
 		actual_prompt_char = aCard.Kata
 		actual_prompt_char_type = "kata"
 		actual_objective = aCard.Hira
@@ -128,21 +128,21 @@ func randomize_over_all_decks() { // ::: 6 - -
 	//
 	// ::: Romaji prompting, Hira objective: 4
 	if randomized_selector == 18 || randomized_selector == 12 {
-		aCard = fileOfCardsRare[randIndexRare]
+		aCard = fileOfCardsKanjiHard[randIndexRare]
 		actual_prompt_char = aCard.Romaji
 		actual_prompt_char_type = "roma"
 		actual_objective = aCard.Hira
 		actual_objective_type = "hira"
 	}
 	if randomized_selector == 19 || randomized_selector == 20 {
-		aCard = fileOfCardsMedium[randIndexMedium]
+		aCard = fileOfCardsHiraKata[randIndexMedium]
 		actual_prompt_char = aCard.Romaji
 		actual_prompt_char_type = "roma"
 		actual_objective = aCard.Hira
 		actual_objective_type = "hira"
 	}
 	if randomized_selector == 21 || randomized_selector == 22 || randomized_selector == 23 {
-		aCard = fileOfCardsOften[randIndexOften]
+		aCard = fileOfCardsEasyKanji[randIndexOften]
 		actual_prompt_char = aCard.Romaji
 		actual_prompt_char_type = "roma"
 		actual_objective = aCard.Hira

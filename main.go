@@ -8,22 +8,22 @@ import (
 	"time"
 )
 
-// todo Bug::: stcr still has an issue. Though it does not crash the app if it us run immediately after an stc ...
+// todo Bug::: stcr still has an issue. Though it does not crash the app if it is run immediately after an stc ...
 // ... it is actually recoverable if it is run after an stc.
 var thisIsOurFirstRodeo bool
 
 func main() {
 	rand.Seed(time.Now().UnixNano()) // Seed the random number generator with the current time in nanoseconds.
-	theGameIsRunning = true
 	kata_roma = true
+	gottenHonestly = true // default is to assume honesty, I guess
+	// theGameIsRunning = true
+	guessedLastCardCorrectlySoGetFreshOne = true // This will get us an initial card.
 	guessLevelCounter = 1
-	gottenHonestly = true
+
 	fmt.Println()
-	countSLOC()                          // Determine and display Source Lines Of Code.
-	gotLastCardRightSoGetFreshOne = true // This will get us an initial card.
+	countSLOC() // Determine and display Source Lines Of Code.
 
 	display_start_menu_etc()
-	guessLevelCounter = 1
 
 	fmt.Println("What is your first name? (one word)")
 	_, _ = fmt.Scan(&nameOfPlayer)
@@ -32,7 +32,7 @@ func main() {
 	_, _ = fmt.Scan(&type_of_game)
 	switch type_of_game {
 	case "1": // hko
-		gameDuration = 206
+		gameDuration = 2*len(fileOfCardsHiraKata) + len(fileOfCardsEasyKanji)
 		kata_hira = false
 		kata_roma = false
 		limitedToKataPrompts = true
@@ -132,7 +132,7 @@ func main() {
 
 func begin_Kana_practice() { // ::: - -
 	for {
-		if gotLastCardRightSoGetFreshOne {
+		if guessedLastCardCorrectlySoGetFreshOne {
 			pick_RandomCard_Assign_fields() // This has within it lots of code to assure novel and fresh cards.
 			guessLevelCounter = 1
 		}
@@ -154,7 +154,7 @@ func begin_Kana_practice() { // ::: - -
 			_, _ = fmt.Scan(&type_of_game)
 			switch type_of_game {
 			case "1": // hko
-				gameDuration = 206
+				gameDuration = 2*len(fileOfCardsHiraKata) + len(fileOfCardsEasyKanji)
 				kata_hira = false
 				kata_roma = false
 				limitedToKataPrompts = true
@@ -249,15 +249,6 @@ func begin_Kana_practice() { // ::: - -
 			display_limited_gaming_dir_list()
 			now_using_game_duration_set_by_game_type = true
 			the_game_begins()
-		}
-
-		if theGameIsRunning != true {
-			// these should run only if a game is NOT running!
-			if usersSubmission == "stc" {
-				reSet_via_a_hira_aCard_andThereBy_reSet_thePromptString()
-			} else if usersSubmission == "stcr" {
-				reSet_aCard_via_a_romaji_andThereBy_reSet_thePromptString()
-			}
 		}
 
 		// During gaming, disallow checking for Directives other than q, dir, and off.
@@ -372,12 +363,12 @@ func Process_users_input_as_a_guess() { // ::: - -
 					"\nUser had a some difficulty with==%s:%s:%s, half point deduction", aCard.Romaji, aCard.Hira, aCard.Kata)
 				check_error(err1)
 			}
-			gotLastCardRightSoGetFreshOne = true
+			guessedLastCardCorrectlySoGetFreshOne = true
 			submission_already_processed_above = true // ::: because we are doing it now.
 
 			logRight_zu(usersSubmission, actual_prompt_char, actual_objective_type)
 		} else {
-			gotLastCardRightSoGetFreshOne = false
+			guessedLastCardCorrectlySoGetFreshOne = false
 			// logging etc. of Oops is being done in log_oops() by way of prompt_the_user_for_input()
 		}
 		// ... and Then the hira: (and in the case of zu, there are two hira forms of zu)
@@ -398,12 +389,12 @@ func Process_users_input_as_a_guess() { // ::: - -
 						"\nUser had a some difficulty with==%s:%s:%s, half point deduction", aCard.Romaji, aCard.Hira, aCard.Kata)
 					check_error(err1)
 				}
-				gotLastCardRightSoGetFreshOne = true
+				guessedLastCardCorrectlySoGetFreshOne = true
 				submission_already_processed_above = true // ::: because we are doing it now.
 
 				logRightZu2(usersSubmission, actual_prompt_char, actual_objective_type, actual_objective)
 			} else {
-				gotLastCardRightSoGetFreshOne = false
+				guessedLastCardCorrectlySoGetFreshOne = false
 				// logging etc. of Oops is being done in log_oops() by way of prompt_the_user_for_input()
 			}
 		}
@@ -432,10 +423,10 @@ func Process_users_input_as_a_guess() { // ::: - -
 				check_error(err1)
 			}
 			// These two lines are all we do when a match occurs.
-			gotLastCardRightSoGetFreshOne = true
+			guessedLastCardCorrectlySoGetFreshOne = true
 			displayRight_logRight(usersSubmission, actual_prompt_char, actual_objective_type)
 		} else {
-			gotLastCardRightSoGetFreshOne = false
+			guessedLastCardCorrectlySoGetFreshOne = false
 			// logging etc. of Oops is being done in log_oops() by way of prompt_the_user_for_input()
 		}
 	}
@@ -499,7 +490,7 @@ func display_failure_of_final_guess_message_etc(userInput string) { // ::: - -
 }
 func log_oops_andUpdateGame(prompt_it_was, field_it_was, guess string) { // - -
 	if theGameIsRunning {
-		failedOnThirdAttemptAccumulator++
+		gameFailedOnThirdAttemptAccumulator++
 	}
 	logReinforceThisPrompt_inThe_frequencyMapOf_need_workOn(prompt_it_was) // used to be the only instance of this func being called
 	logHits_in_cyclicArrayHits("Oops", prompt_it_was)

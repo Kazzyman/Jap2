@@ -1,6 +1,6 @@
 package main
 
-var fileOfCardsSimplex = []charSetStruct{
+var fileOfCards_nonCompound = []charSetStruct{
 	// ::: Every key on the keyboard, from left to right
 	{"ヌ", "ぬ", "nu",
 		" nu:ぬ:ヌ   Compare:  me:メ  &  na:ナ  &  fu:フ",

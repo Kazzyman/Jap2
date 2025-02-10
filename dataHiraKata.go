@@ -1,7 +1,9 @@
 package main
 
 var fileOfCardsHiraKata = []charSetStruct{
-	// First row 13
+
+	// First row 13 syllables, 26 game characters
+
 	{"ヌ", "ぬ", "nu",
 		" nu:ぬ:ヌ   Compare:  me:メ  &  na:ナ  &  fu:フ",
 		" nu flew ヌ -- till it hit a ceiling ",
@@ -71,8 +73,10 @@ var fileOfCardsHiraKata = []charSetStruct{
 		" he",
 		" TT: left-pinky way-up to the '^' char",
 		" ヘ:へ   TT: left-pinky way-up to the '^' char, clearly stacks of feed"},
+	// 26 game characters so far
 
-	// Second row 10 (13 + 10 = 23)
+	// Second row 10 syllables, (13 + 10 = 23), or 46 game characters
+
 	{"タ", "た", "ta",
 		" ta:た:タ  ... it's a ku:くク with a drool クタ... and that's くool I guess ",
 		" ta:た:タ ,  Compare:  ku:ク  &  ke:ケ ",
@@ -124,7 +128,9 @@ var fileOfCardsHiraKata = []charSetStruct{
 		" TT: right-pinky to the 'P' char",
 		" ?:せ:セ  TT: R-pinky to the 'P' char,  セ is more angular, as with most Katakana"},
 
-	// third row: 12 (23 + 12 = 35)
+	// 46 game characters so far
+
+	// third row: 12 syllables or 24 game characters (23 + 12 = 35) = 70 game characters
 
 	{"チ", "ち", "chi",
 		" chi:ち:チ ,   ち チ ",
@@ -187,7 +193,9 @@ var fileOfCardsHiraKata = []charSetStruct{
 		" TT: right-pinky way-over to the '}]' chars",
 		" ム:む   TT: right-pinky way-over to the '}]' chars"},
 
-	// fourth row: 11 (35 + 11 = 46)
+	// 70 game characters so far
+
+	// fourth row: 11 syllables or 22 game characters (35 + 11 = 46); 92 game characters
 
 	{"ツ", "つ", "tsu",
 		" tsu:つ:ツ  see water crashing on the she shore",
@@ -246,6 +254,7 @@ var fileOfCardsHiraKata = []charSetStruct{
 		" Looks like a square O,  TT: right-pinky slide down --> right of the '?' char"},
 
 	// so that is 46 syllables (cards), or 2*46=92 naked kata-hira game characters (1. Kata&Hira prompts; Romaji objective)
+	// 92 game characters so far
 
 	// first row of dakuten & handakuten, 6 syllables, or 12 game characters (12+92=104 game characters in all)
 
@@ -280,6 +289,8 @@ var fileOfCardsHiraKata = []charSetStruct{
 		" TT: left-pinky way-up to the '^' char, plus handakuten゜半濁点",
 		" ペ:ぺ   TT: left-pinky way-up to the '^' char, stack of feed, handakuten゜半濁点"},
 
+	// 104 so far
+
 	// second row of dakuten & handakuten, 5 syllables, or 10 game characters (10+104=114 game characters in all)
 
 	{"ダ", "だ", "da",
@@ -307,6 +318,8 @@ var fileOfCardsHiraKata = []charSetStruct{
 		" ze:ゼ:ぜ",
 		" TT: pinky to the 'P' char, plus a dakuten 濁点   ze:ゼ:ぜ",
 		" ?:ゼ:ぜ   TT: pinky to the 'P' char, plus a dakuten 濁点   sa-->za  se:? "},
+
+	// 114 so far
 
 	// third row of dakuten & handakuten, 7 syllables, or 14 game characters (14+114=128 game characters in all)
 
@@ -346,6 +359,8 @@ var fileOfCardsHiraKata = []charSetStruct{
 		" TT: ':*' chars, 濁点    げ:ゲ  ダグゲ    ka,ki,ku,ke,ko-->ga,gi,gu,?,go  濁点",
 		" げ:ゲ   TT: L-pinky> to ':*' chars   げ Compare to ku:gu:グ, and ta:da:ダ "},
 
+	// 128 so far
+
 	// fourth row of dakuten & handakuten, 6 syllables, or 12 game characters (12+128=140 game characters in all)
 
 	{"ヅ", "づ", "zu",
@@ -378,6 +393,8 @@ var fileOfCardsHiraKata = []charSetStruct{
 		" go:ご:ゴ    ご:ゴ makes sense, 'cause angles'",
 		" TT: index <--- to the 'B' char, plus a dakuten 濁点  ご",
 		" ご:ゴ  TT: index <--- to the 'B' char, plus a dakuten 濁点 ka,ki,ku,ke,ko-->ga,gi,gu,ge,?"},
+
+	// 140 so far
 
 	// now comes 33 complex syllable forms, or 66 complex game characters (66+140=206 game characters in all)
 
@@ -472,7 +489,6 @@ var fileOfCardsHiraKata = []charSetStruct{
 		" TT: 'G' char, ぎ:ギ, then ょ:ョ:middle to the '9' char, triple yo:ょ ヨ      Compare: ざ",
 		" It's sound is always from き ,and NEVER from し or ち   ka,ki,ku,ke,ko--> ga,?,gu,ge,go"},
 	//
-
 	// ya, yu, yo's of shi:し:シ ------------------------------------------------------------------------
 	//
 	{"シャ", "しゃ", "sha",
@@ -580,5 +596,6 @@ var fileOfCardsHiraKata = []charSetStruct{
 		" ryo",
 		" TT: left-ring-finger on it's 'L' char",
 		" リ:り very similar   TT: left-ring-finger on it's 'L' char"},
-	//
+
+	// 206 in all.
 }

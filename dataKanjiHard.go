@@ -2,7 +2,7 @@ package main
 
 var fileOfCardsKanjiHard = []charSetStruct{
 	//
-	// ya, yu, yo's of hi:ひ:ヒ -------------------------------------------------------------------------
+	// place holder  -------------------------------------------------------------------------
 	//
 	{"ヒャ", "ひゃ", "hya",
 		" hya:ひ:ヒ  hi->bi->pi hya from hi which looks like a smiling hi-hi ひひ",

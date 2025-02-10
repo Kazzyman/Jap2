@@ -2,7 +2,6 @@ package main
 
 var fileOfCardsEasyKanji = []charSetStruct{
 
-	// todo: listed here several times just for testing
 	{"安", "安", "cheap",
 		"anあん", "yasuやす(iい)",
 		"安い (cheap)",

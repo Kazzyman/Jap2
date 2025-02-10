@@ -6,7 +6,7 @@ type CyclicArrayPulls struct {
 	pulls [280]string // Depth of memory for already seen chars
 	index int
 }
- 
+
 func (ca *CyclicArrayPulls) InsertKChar(pulls string) { // Please refer also to the lengthy discussion below: // - -
 	ca.pulls[ca.index] = pulls                // Assign the passed string 'value' to the 'data' array at position 'ca.index'
 	ca.index = (ca.index + 1) % len(ca.pulls) // Increment 'index' (an integer indexing element) such that it loops-back to ...
@@ -24,9 +24,9 @@ not initialized: it will initially have the zero-value of/for the CyclicArrayHit
 i.e., it creates a memory allocation for a future instance of CyclicArrayHits to be called cyclicArrayHits without yet
 initializing cyclicArrayHits as an actual instance, yet.
 
-var cyclicArrayHits CyclicArrayHits // An empty, uninitialized, var of the CyclicArrayHits type.
+var cyclicArrayHits CyclicArrayHits // An empty, uninitialized, var of the CyclicArrayHits type (i.e., has default zero value).
 ... is, therefore, equivalent to:
-cyclicArrayHits := CyclicArrayHits{} // Explicitly, an empty, uninitialized, var of the CyclicArrayHits type.
+cyclicArrayHits := CyclicArrayHits{} // Explicitly, an empty, uninitialized, var of the CyclicArrayHits type (value = 0).
 .
 .
 */
@@ -142,4 +142,5 @@ to modify the state of the CyclicArrayOfTheJcharsGottenWrong struct, and it can 
 
 The *CyclicArray is created implicitly by the compiler. The compiler knows that the method needs to be able to modify the
 state of the struct, so it creates a pointer to the struct and passes that pointer to the method.
+
 */

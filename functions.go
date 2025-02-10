@@ -293,7 +293,7 @@ func the_game_ends(suppressPointsReporting bool) { // ::: - -
 		fmt.Printf("\nYour Game run-time was:%s,  you got %s%d%s correct on your first try,  %s%d%s right on your second try,\n"+
 			"... and you got %s%d right on your third try. \n\n", TotalRun, colorReset, gameCorrectOnFirstAttemptAccumulator-1, colorRed, colorReset, gameCorrectOnSecondAttemptAccumulator,
 			colorRed, colorReset, gameCorrectOnThirdAttemptAccumulator)
-		if gameDuration == 2*len(fileOfCardsHiraKata)+len(fileOfCardsEasyKanji) && !suppressPointsReporting {
+		if gameDuration == 2*len(fileOfCardsHiraKata)+(2*len(fileOfCardsEasyKanji)) && !suppressPointsReporting {
 			// todo : also calculate game scores for games of other lengths
 			fmt.Printf("Points = %f\n", (firstAtemptAcumF-(secondAtemptAcumF/4)-(thirdAtemptAcumF/2)-(failedOnThirdAttF*2))/totalSecondsF*100)
 		}
@@ -301,14 +301,14 @@ func the_game_ends(suppressPointsReporting bool) { // ::: - -
 		fmt.Println(colorRed)
 		fmt.Printf("\nYour Game run-time was:%s,  you got %s%d%s correct on your first try,  %s%d right on your second try. \n\n", TotalRun, colorReset, gameCorrectOnFirstAttemptAccumulator-1,
 			colorRed, colorReset, gameCorrectOnSecondAttemptAccumulator)
-		if gameDuration == 2*len(fileOfCardsHiraKata)+len(fileOfCardsEasyKanji) && !suppressPointsReporting {
+		if gameDuration == 2*len(fileOfCardsHiraKata)+(2*len(fileOfCardsEasyKanji)) && !suppressPointsReporting {
 			// todo : also calculate game scores for games of other lengths
 			fmt.Printf("Points = %f\n", (firstAtemptAcumF-(secondAtemptAcumF/4)-(thirdAtemptAcumF/2)-(failedOnThirdAttF*2))/totalSecondsF*100)
 		}
 	} else if gameCorrectOnFirstAttemptAccumulator > 0 && gameCorrectOnSecondAttemptAccumulator == 0 && gameCorrectOnThirdAttemptAccumulator == 0 && gameFailedOnThirdAttemptAccumulator == 0 { // ::: done
 		fmt.Println(colorRed)
 		fmt.Printf("\nYour Game run-time was:%s,  Gongratulations! you got %s%d correct on your first try. \n\n", TotalRun, colorReset, gameCorrectOnFirstAttemptAccumulator-1)
-		if gameDuration == 2*len(fileOfCardsHiraKata)+len(fileOfCardsEasyKanji) && !suppressPointsReporting {
+		if gameDuration == 2*len(fileOfCardsHiraKata)+(2*len(fileOfCardsEasyKanji)) && !suppressPointsReporting {
 			// todo : also calculate game scores for games of other lengths
 			fmt.Printf("Points = %f\n", (firstAtemptAcumF-(secondAtemptAcumF/4)-(thirdAtemptAcumF/2)-(failedOnThirdAttF*2))/totalSecondsF*100)
 		}
@@ -318,7 +318,7 @@ func the_game_ends(suppressPointsReporting bool) { // ::: - -
 			"... and you got %s%d%s right on your third try, and were unable to answer correctly without a hint "+
 			"%s%d times. \n\n", TotalRun, colorReset, gameCorrectOnFirstAttemptAccumulator-1, colorRed, colorReset, gameCorrectOnSecondAttemptAccumulator,
 			colorRed, colorReset, gameCorrectOnThirdAttemptAccumulator, colorRed, colorReset, gameFailedOnThirdAttemptAccumulator)
-		if gameDuration == 2*len(fileOfCardsHiraKata)+len(fileOfCardsEasyKanji) && !suppressPointsReporting {
+		if gameDuration == 2*len(fileOfCardsHiraKata)+(2*len(fileOfCardsEasyKanji)) && !suppressPointsReporting {
 			// todo : also calculate game scores for games of other lengths
 			fmt.Printf("Points = %f\n", (firstAtemptAcumF-(secondAtemptAcumF/4)-(thirdAtemptAcumF/2)-(failedOnThirdAttF*2))/totalSecondsF*100)
 		}
@@ -343,7 +343,7 @@ func the_game_ends(suppressPointsReporting bool) { // ::: - -
 		TotalRun)
 	check_error(err2)
 	// todo : also calculate game scores for games of other lengths
-	if gameDuration == 2*len(fileOfCardsHiraKata)+len(fileOfCardsEasyKanji) && !suppressPointsReporting { // Calculate and print the Point total to the log file only if a full game of 206 had been declared
+	if gameDuration == 2*len(fileOfCardsHiraKata)+(2*len(fileOfCardsEasyKanji)) && !suppressPointsReporting { // Calculate and print the Point total to the log file only if a full game has been played
 		// fmt.Printf("Points: %f", points2print)
 		_, err3 := fmt.Fprintf(fileHandle,
 			"Points: %f \n\n\n",
@@ -417,8 +417,8 @@ func read_pulledButNotUsedMap() { // ::: - -
 func about_app() { // ::: - -
 	fmt.Printf("\nThis app consists of the following lines of code across %d files:\n", fileExplored)
 	fmt.Println("   main.go, constants.go, elementsOfsloc.go, functions.go, globalVariables.go, \n" +
-		"   locateCard.go, memoryFunctions.go, objectsAndMethods.go, pick_a_card.go, \n" +
-		"   pick_a_card_new.go, prompts&directions.go, statsFunctions.go, functionsFromMain.go\n")
+		"   locateCard.go, memoryFunctions.go, objectsAndMethods.go, pick_a_card_functions.go, \n" +
+		"   pick_a_card_random_all.go, prompts&directions.go, statsFunctions.go, functionsFromMain.go\n")
 	countSLOC()
 	fmt.Printf("As Calculated in real-time by countSLOC(), a custom internal function.\n\n")
 }
@@ -590,7 +590,7 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 		fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
 
 	case "hko":
-		gameDuration = 2*len(fileOfCardsHiraKata) + len(fileOfCardsEasyKanji)
+		gameDuration = 2*len(fileOfCardsHiraKata) + (2 * len(fileOfCardsEasyKanji))
 		kata_hira = false
 		kata_roma = false
 		limitedToKataPrompts = true

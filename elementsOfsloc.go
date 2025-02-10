@@ -39,10 +39,10 @@ func countSLOC() { // ::: - -
 	filenameOfThisFile10 := "/Users/quasar/Jap2-main/objectsAndMethods.go"
 	blankLines10, singleComments10, commentBlock110, commentBlock210, commentBlock310, runes110, runes210, runes310, totalLines10, nonEmptyLines10 := reportSLOCstats(filenameOfThisFile10)
 	numberOfFilesExplored++
-	filenameOfThisFile11 := "/Users/quasar/Jap2-main/pick_a_card.go"
+	filenameOfThisFile11 := "/Users/quasar/Jap2-main/pick_a_card_functions.go"
 	blankLines11, singleComments11, commentBlock111, commentBlock211, commentBlock311, runes111, runes211, runes311, totalLines11, nonEmptyLines11 := reportSLOCstats(filenameOfThisFile11)
 	numberOfFilesExplored++
-	filenameOfThisFile14 := "/Users/quasar/Jap2-main/pick_a_card_new.go"
+	filenameOfThisFile14 := "/Users/quasar/Jap2-main/pick_a_card_random_all.go"
 	blankLines14, singleComments14, commentBlock114, commentBlock214, commentBlock314, runes114, runes214, runes314, totalLines14, nonEmptyLines14 := reportSLOCstats(filenameOfThisFile14)
 	numberOfFilesExplored++
 	filenameOfThisFile15 := "/Users/quasar/Jap2-main/prompts&directions.go"
@@ -55,8 +55,8 @@ func countSLOC() { // ::: - -
 	filenameOfThisFile17 := "/Users/quasar/Jap2-main/functionsFromMain.go"
 	blankLines91, singleComments91, commentBlock104, commentBlock205, commentBlock206, runes104, runes205, runes306, totalLines17, nonEmptyLines17 := reportSLOCstats(filenameOfThisFile17)
 	numberOfFilesExplored++
-	
-	fileExplored = numberOfFilesExplored
+
+	fileExplored = numberOfFilesExplored // Used only in countSLOC() and the associated about_app()
 
 	totalLines := totalLines1 + totalLines2 + totalLines5 + totalLines6 + totalLines7 + totalLines8 + totalLines9 + totalLines10 + totalLines14 + totalLines15 + totalLines16 + totalLines11 + totalLines17
 

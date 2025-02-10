@@ -47,7 +47,7 @@ func logRight_zu(userInput, promptField, actual_objective_type string) { // ::: 
 		}
 	}
 	// fmt.Printf("%s", colorReset)
-	fmt.Printf("It could have been either ず or づ as they are the same sound: zu\n")
+	fmt.Printf("         ... it could have been either ず or づ as they are the same sound: zu\n")
 	fmt.Printf("%s", colorReset)
 	log_right_andUpdateGame(promptField, userInput)
 
@@ -58,14 +58,14 @@ func logRightZu2(userInput, promptField, actual_objective_type, objective string
 	fmt.Printf("%s", colorGreen)
 	if actual_objective_type == "hira" {
 		fmt.Printf("      　%s %s   - %s\n", aCard.Romaji, aCard.Kata, aCard.HiraHint)
-		fmt.Printf("... it could have been either ず or %s since they have the same sound!\n", objective)
+		fmt.Printf("         ... it could have been either ず or %s since they have the same sound!\n", objective)
 	} else { // it can be assumed to have been of roma type
 		if limitedToDifficultDescriptions == true {
 			fmt.Printf("      　%s %s   - \n", aCard.Hira, aCard.SansR_Hint)
-			fmt.Printf("... it could have been either ず or %s since they have the same sound!\n", objective)
+			fmt.Printf("         ... it could have been either ず or %s since they have the same sound!\n", objective)
 		} else {
 			fmt.Printf("      　%s %s   - %s\n", aCard.Hira, aCard.Kata, aCard.SansR_Hint)
-			fmt.Printf("... it could have been either ず or %s since they have the same sound!\n", objective)
+			fmt.Printf("         ... it could have been either ず or %s since they have the same sound!\n", objective)
 		}
 	}
 	fmt.Printf("%s", colorReset)

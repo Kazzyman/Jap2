@@ -32,7 +32,7 @@ func main() {
 	_, _ = fmt.Scan(&type_of_game)
 	switch type_of_game {
 	case "1": // hko
-		gameDuration = 2*len(fileOfCardsHiraKata) + len(fileOfCardsEasyKanji)
+		gameDuration = 2*len(fileOfCardsHiraKata) + (2 * len(fileOfCardsEasyKanji)) + len(fileOfCardsKanjiHard)
 		kata_hira = false
 		kata_roma = false
 		limitedToKataPrompts = true
@@ -154,7 +154,7 @@ func begin_Kana_practice() { // ::: - -
 			_, _ = fmt.Scan(&type_of_game)
 			switch type_of_game {
 			case "1": // hko
-				gameDuration = 2*len(fileOfCardsHiraKata) + len(fileOfCardsEasyKanji)
+				gameDuration = 2*len(fileOfCardsHiraKata) + (2 * len(fileOfCardsEasyKanji)) + len(fileOfCardsKanjiHard)
 				kata_hira = false
 				kata_roma = false
 				limitedToKataPrompts = true

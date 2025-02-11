@@ -590,7 +590,7 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 		fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
 
 	case "hko":
-		gameDuration = 2*len(fileOfCardsHiraKata) + (2 * len(fileOfCardsEasyKanji))
+		gameDuration = 2*len(fileOfCardsHiraKata) + (2 * len(fileOfCardsEasyKanji)) + len(fileOfCardsKanjiHard)
 		kata_hira = false
 		kata_roma = false
 		limitedToKataPrompts = true

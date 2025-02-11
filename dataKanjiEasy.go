@@ -1,7 +1,7 @@
 package main
 
 var fileOfCardsEasyKanji = []charSetStruct{
-	// duplex cards (kata != hira)
+	// duplex cards (kata != hira), so two characters per card, just as in the HiraKata deck
 	{"安", "安い", "cheap",
 		"cheap, 安, yasuやす(iい), anあん",
 		"yasuやす(iい), anあん",

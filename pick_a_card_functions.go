@@ -268,28 +268,29 @@ func pick_RandomCard_Assign_fields() { // ::: - -
 
 // ::: 1
 func hira_prompting_romaji_objective() { // ::: - -
-	randIndexRare := rand.Intn(len(fileOfCardsKanjiHard))
-	randIndexMedium := rand.Intn(len(fileOfCardsHiraKata))
-	randIndexOften := rand.Intn(len(fileOfCardsEasyKanji))
+	// pull from the three decks unevenly (3%, 8%, and 89%)
+	randIndex3 := rand.Intn(len(fileOfCardsKanjiHard))
+	randIndex8 := rand.Intn(len(fileOfCardsEasyKanji))
+	randIndex89 := rand.Intn(len(fileOfCardsHiraKata))
 
-	randomized_selector := rand.Intn(6) // 6 random numbers, 0->5
+	randomized_selector := rand.Intn(99) // ::: 6 random numbers, 0->98
 
-	if randomized_selector == 0 {
-		aCard = fileOfCardsKanjiHard[randIndexRare]
+	if randomized_selector > -1 && randomized_selector < 4 { // 0, 1, 3 (3%)
+		aCard = fileOfCardsKanjiHard[randIndex3]
 		actual_prompt_char = aCard.Hira
 		actual_prompt_char_type = "hira"
 		actual_objective = aCard.Romaji
 		actual_objective_type = "roma"
 	}
-	if randomized_selector == 1 || randomized_selector == 2 {
-		aCard = fileOfCardsEasyKanji[randIndexOften]
+	if randomized_selector > 3 && randomized_selector < 12 { // 4, 5, 6, 7, 8, 9, 10, 11 (8%)
+		aCard = fileOfCardsEasyKanji[randIndex8]
 		actual_prompt_char = aCard.Hira
 		actual_prompt_char_type = "hira"
 		actual_objective = aCard.Romaji
 		actual_objective_type = "roma"
 	}
-	if randomized_selector == 3 || randomized_selector == 4 || randomized_selector == 5 {
-		aCard = fileOfCardsHiraKata[randIndexMedium]
+	if randomized_selector > 11 && randomized_selector < 100 { // about 89%
+		aCard = fileOfCardsHiraKata[randIndex89]
 		actual_prompt_char = aCard.Hira
 		actual_prompt_char_type = "hira"
 		actual_objective = aCard.Romaji
@@ -299,28 +300,29 @@ func hira_prompting_romaji_objective() { // ::: - -
 
 // ::: 2
 func kata_prompting_romaji_objective() { // ::: - -
-	randIndexRare := rand.Intn(len(fileOfCardsKanjiHard))
-	randIndexMedium := rand.Intn(len(fileOfCardsHiraKata))
-	randIndexOften := rand.Intn(len(fileOfCardsEasyKanji))
+	// pull from the three decks unevenly (3%, 8%, and 89%)
+	randIndex3 := rand.Intn(len(fileOfCardsKanjiHard))
+	randIndex8 := rand.Intn(len(fileOfCardsEasyKanji))
+	randIndex89 := rand.Intn(len(fileOfCardsHiraKata))
 
-	randomized_selector := rand.Intn(6) // 6 random numbers, 0->5
+	randomized_selector := rand.Intn(99) // ::: 6 random numbers, 0->98
 
-	if randomized_selector == 0 {
-		aCard = fileOfCardsKanjiHard[randIndexRare]
+	if randomized_selector > -1 && randomized_selector < 4 { // 0, 1, 3 (3%)
+		aCard = fileOfCardsKanjiHard[randIndex3]
 		actual_prompt_char = aCard.Kata
 		actual_prompt_char_type = "kata"
 		actual_objective = aCard.Romaji
 		actual_objective_type = "roma"
 	}
-	if randomized_selector == 1 || randomized_selector == 2 {
-		aCard = fileOfCardsEasyKanji[randIndexOften]
+	if randomized_selector > 3 && randomized_selector < 12 { // 4, 5, 6, 7, 8, 9, 10, 11 (8%)
+		aCard = fileOfCardsEasyKanji[randIndex8]
 		actual_prompt_char = aCard.Kata
 		actual_prompt_char_type = "kata"
 		actual_objective = aCard.Romaji
 		actual_objective_type = "roma"
 	}
-	if randomized_selector == 3 || randomized_selector == 4 || randomized_selector == 5 {
-		aCard = fileOfCardsHiraKata[randIndexMedium]
+	if randomized_selector > 11 && randomized_selector < 100 { // about 89%
+		aCard = fileOfCardsHiraKata[randIndex89]
 		actual_prompt_char = aCard.Kata
 		actual_prompt_char_type = "kata"
 		actual_objective = aCard.Romaji

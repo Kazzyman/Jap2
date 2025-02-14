@@ -345,6 +345,7 @@ func priorToProcessingUsersSubmission_check_IfTypeEnteredRightly() { // ::: - -
 		}
 
 	} else if actual_objective_type == "hira" {
+		// todo: add code to deal with ? or ?? during game play (as was done above) for the "roma" instance
 		// ::: Determine if the user has entered a valid Hiragana char instead of, accidentally, an alpha char or string. If so, advise user.
 		var isAlphanumeric bool
 		findAlphasIn := regexp.MustCompile(`[a-zA-Z]`)

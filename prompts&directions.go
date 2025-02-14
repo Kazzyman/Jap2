@@ -154,22 +154,22 @@ func prompt_the_user_for_input() { // ::: - -
 				fmt.Printf("%s", aCard.Romaji)
 				fmt.Printf("%s", colorCyan)
 				fmt.Printf(" Hiragana input-mode expected," + colorRed +
-					" Guess again," + colorReset + " or '?' for clue\n " + colorYellow + "Game:> " + colorReset)
+					" Guess again\n " + colorYellow + "Game:> " + colorReset)
 			} else if actual_prompt_char_type == "hira" && actual_objective_type == "roma" {
 				fmt.Printf("%s", aCard.Hira)
 				fmt.Printf("%s", colorCyan)
 				fmt.Printf(" Romaji input-mode expected," + colorRed +
-					" Guess again, " + colorReset + "or '?' for clue\n " + colorYellow + "Game:> " + colorReset)
+					" Guess again\n " + colorYellow + "Game:> " + colorReset)
 			} else if actual_prompt_char_type == "kata" && actual_objective_type == "roma" {
 				fmt.Printf("%s", aCard.Kata)
 				fmt.Printf("%s", colorCyan)
 				fmt.Printf(" Romaji input-mode expected," + colorRed +
-					" Guess again, " + colorReset + "or '?' for clue\n " + colorYellow + "Game:> " + colorReset)
+					" Guess again\n " + colorYellow + "Game:> " + colorReset)
 			} else if actual_prompt_char_type == "kata" && actual_objective_type == "hira" { // was a bug fix ???
 				fmt.Printf("%s", aCard.Kata)
 				fmt.Printf("%s", colorCyan)
 				fmt.Printf(" Hiragana input-mode expected," + colorRed +
-					" Guess again," + colorReset + " or '?' for clue\n " + colorYellow + "Game:> " + colorReset)
+					" Guess again\n " + colorYellow + "Game:> " + colorReset)
 			} else {
 				// ::: got this message in error ??
 				fmt.Printf("Miss-matched elements of prompting style actual_prompt_char_type is %s, and actual_objective_type is %s\n", actual_prompt_char_type, actual_objective_type)
@@ -311,19 +311,23 @@ func promptForRomajiE(prompt string) { // ::: - -
 */
 func display_limited_gaming_dir_list() {
 	fmt.Println("        Enter '" + colorGreen +
-		"off" + colorReset +
-		"' End this game early")
-	/*
-		fmt.Println("        Enter '" + colorGreen +
-			"stc" + colorReset +
-			"' (Set-Card) force the use of a specific card (Hira input)")
-		fmt.Println("        Enter '" + colorGreen +
-			"stcr" + colorReset +
-			"' (Set-Card) force the use of a specific card (Roma input)")
-	*/
-	fmt.Println("        Enter '" + colorGreen +
 		"q" + colorReset +
-		"', (quit) terminate the app")
+		"' End this game early")
+	fmt.Printf("        Enter '" + colorGreen +
+		"game" + colorReset +
+		"' display the list of game types & the current game\n")
+	fmt.Printf("        Enter '" + colorGreen +
+		"nts" + colorReset +
+		"' display some notes on Kana\n")
+	fmt.Printf("        Enter '" + colorGreen +
+		"abt" + colorReset +
+		"' display facts about the code\n")
+	fmt.Printf("        Enter '" + colorGreen +
+		"rm" + colorReset +
+		"' perform a read of the maps\n")
+	fmt.Printf("        Enter '" + colorGreen +
+		"st" + colorReset +
+		"' show the stats\n")
 }
 
 // List_of_Directives ::: is in use, a few steps removed.

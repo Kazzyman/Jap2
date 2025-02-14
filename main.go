@@ -142,8 +142,33 @@ func begin_Kana_practice() { // ::: - -
 		// Obtain users input.
 		_, _ = fmt.Scan(&usersSubmission)
 
-		if theGameIsRunning == true {
-			// Skip looking to start a game if one is already running.
+		if theGameIsRunning {
+			// Skip looking to start a game if one is already running
+			// During gaming, disallow checking for irrelevant Directives, and substitute game versions of certain directives
+			// During gameplay, directive handling must not be counted as guesses, hence the decrementing of guessLevelCounter
+			guessLevelCounter--
+
+			switch usersSubmission {
+			case "abt":
+				about_app()
+			case "nts":
+				notes_on_kana()
+			case "q":
+				the_game_ends(true)
+			case "rm":
+				read_map_of_fineOn()
+				read_map_of_needWorkOn()
+				read_pulledButNotUsedMap()
+				// read_pulls_not_used_array()
+			case "st":
+				st_stats_function()
+			case "game":
+				List_of_game_types()
+				fmt.Printf("You are currently playing game number %s\n", type_of_game)
+			case "dir":
+				display_limited_gaming_dir_list()
+			}
+
 		} else if usersSubmission == "game" {
 			reset_all_data(true)
 			guessLevelCounter = 1
@@ -249,30 +274,13 @@ func begin_Kana_practice() { // ::: - -
 			display_limited_gaming_dir_list()
 			now_using_game_duration_set_by_game_type = true
 			the_game_begins()
-		}
 
-		// During gaming, disallow checking for Directives other than q, dir, and off.
-		if theGameIsRunning {
-			if usersSubmission == "q" {
-				os.Exit(1)
-			}
-			if usersSubmission == "off" || usersSubmission == "goff" {
-				// in this case we need to decrement the guess level counter, because this usersSubmission is not to be counted.
-				guessLevelCounter--
-				the_game_ends(true)
-			}
-			if usersSubmission == "dir" {
-				display_limited_gaming_dir_list()
-				// in this case we need to decrement the guess level counter, because this usersSubmission is not to be counted.
-				guessLevelCounter--
-			}
 		} else {
 			// If user's input is a Directive, handle it. ::: ONLY if a game IS NOT running !!!
 			// todo 1 : if a game is running the following handler need not address the case of a "dir" ???
 			// todo 2 : ... but since this is complex due to potential recursions I will leave it as it is.
 			frontEnd_Possible_Recursive_DirHandler() // ::: this contains the only other prompt
 		}
-
 		// Process what can now be assumed to be an actual guess.
 		priorToProcessingUsersSubmission_check_IfTypeEnteredRightly()
 	}

@@ -426,8 +426,8 @@ func about_app() { // ::: - -
 /*
 .
 */
+// Flush (clear) the old stats and hits arrays
 func reset_all_data(suppressPrinting bool) { // ::: - -
-	// Flush (clear) the old stats and hits arrays
 	limitedToKataPrompts = false
 	limitedToHiraPrompts = false
 	limitedToRomaPrompts = false
@@ -476,7 +476,6 @@ func reset_all_data(suppressPrinting bool) { // ::: - -
 .
 */
 func notes_on_kana() { // ::: - -
-	//goland:noinspection ALL  **do-this**
 	fmt.Println("\nIn the traditional Hepburn romanization system, the sound じ in hiragana is romanized as \"ji\" \n" +
 		"and the katakana ジ is also romanized as \"ji\" \n\n" +
 		"However, in some other romanization systems like the Nihon-shiki and Kunrei-shiki, the sound じ is romanized as\n" +

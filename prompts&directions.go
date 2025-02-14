@@ -7,6 +7,7 @@ import (
 func prompt_the_user_for_input() { // ::: - -
 
 	if guessLevelCounter == 1 { // ::: --------- first prompt -------- 1 1 1 1 1 1 ------------------
+		// fmt.Printf("\nGuess level counter is : %d\n", guessLevelCounter)
 		guessLevelCounter++
 
 		// Roma_Hira ::: the only way to have Roma prompting is via limitedToRomaPrompts or standard mix - ?

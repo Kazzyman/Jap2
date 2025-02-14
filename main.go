@@ -145,28 +145,40 @@ func begin_Kana_practice() { // ::: - -
 		if theGameIsRunning {
 			// Skip looking to start a game if one is already running
 			// During gaming, disallow checking for irrelevant Directives, and substitute game versions of certain directives
-			// During gameplay, directive handling must not be counted as guesses, hence the decrementing of guessLevelCounter
-			guessLevelCounter--
 
 			switch usersSubmission {
 			case "abt":
 				about_app()
+				// During gameplay, directive handling must not be counted as guesses, hence the decrementing of guessLevelCounter
+				guessLevelCounter--
 			case "nts":
 				notes_on_kana()
+				// During gameplay, directive handling must not be counted as guesses, hence the decrementing of guessLevelCounter
+				guessLevelCounter--
 			case "q":
 				the_game_ends(true)
+				// During gameplay, directive handling must not be counted as guesses, hence the decrementing of guessLevelCounter
+				guessLevelCounter--
 			case "rm":
 				read_map_of_fineOn()
 				read_map_of_needWorkOn()
 				read_pulledButNotUsedMap()
 				// read_pulls_not_used_array()
+				// During gameplay, directive handling must not be counted as guesses, hence the decrementing of guessLevelCounter
+				guessLevelCounter--
 			case "st":
 				st_stats_function()
+				// During gameplay, directive handling must not be counted as guesses, hence the decrementing of guessLevelCounter
+				guessLevelCounter--
 			case "game":
 				List_of_game_types()
 				fmt.Printf("You are currently playing game number %s\n", type_of_game)
+				// During gameplay, directive handling must not be counted as guesses, hence the decrementing of guessLevelCounter
+				guessLevelCounter--
 			case "dir":
 				display_limited_gaming_dir_list()
+				// During gameplay, directive handling must not be counted as guesses, hence the decrementing of guessLevelCounter
+				guessLevelCounter--
 			}
 
 		} else if usersSubmission == "game" {
@@ -307,16 +319,29 @@ func priorToProcessingUsersSubmission_check_IfTypeEnteredRightly() { // ::: - -
 		if isAlphanumeric {
 			Process_users_input_as_a_guess()
 		} else {
-			// Display a message informing the user that he should change his input method.
-			fmt.Println(colorRed)
-			fmt.Println("Please change your input method to match the char type that was requested:)")
-			fmt.Printf("Requested type being: %s\n", actual_objective_type)
-			fmt.Println(colorReset)
-			// RE-Prompt according to guessLevelCounter, type of displayed prompt, and type of requested response.
-			prompt_the_user_for_input() // Each time we do this we increment the guessLevelCounter.
-			// Obtain users input.
-			_, _ = fmt.Scan(&usersSubmission)
-			priorToProcessingUsersSubmission_check_IfTypeEnteredRightly()
+			if theGameIsRunning && usersSubmission == "?" || theGameIsRunning && usersSubmission == "??" {
+				fmt.Println("Sorry, but not help is allowed during game play")
+
+				// RE-Prompt according to guessLevelCounter, type of displayed prompt, and type of requested response.
+				guessLevelCounter--
+				prompt_the_user_for_input() // Each time we do this we increment the guessLevelCounter.
+				// Obtain users input.
+				_, _ = fmt.Scan(&usersSubmission)
+				priorToProcessingUsersSubmission_check_IfTypeEnteredRightly()
+			} else {
+				// Display a message informing the user that he should change his input method.
+				fmt.Println(colorRed)
+				fmt.Println("Please change your input method to match the char type that was requested:)")
+				fmt.Printf("Requested type being: %s\n", actual_objective_type)
+				fmt.Println(colorReset)
+
+				// RE-Prompt according to guessLevelCounter, type of displayed prompt, and type of requested response.
+				prompt_the_user_for_input() // Each time we do this we increment the guessLevelCounter.
+				// Obtain users input.
+				_, _ = fmt.Scan(&usersSubmission)
+				priorToProcessingUsersSubmission_check_IfTypeEnteredRightly()
+			}
+
 		}
 
 	} else if actual_objective_type == "hira" {

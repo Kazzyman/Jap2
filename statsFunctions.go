@@ -48,17 +48,12 @@ func log_right_andUpdateGame(prompt_it_was, in string) { // - -
 			// Then that fail has already been logged and we need to skip all logging.
 			weHadFailed_And_OnlyGotThisRightBecauseOfTheClue = false
 		} else { // we got it right without a clue, now determine how many tries were used
-			/*
-				if guessLevelCounter == 2 {
-						if gottenHonestly { // todo] do not accumulate if after an "error" or hint
-							gameCorrectOnFirstAttemptAccumulator++ // ::: 1st
-							gottenHonestly = false //
-						}
-			*/
 			if guessLevelCounter == 2 && gottenHonestly { // combined because the only statement was another if
+				// fmt.Printf("\nGuess level counter is (2): %d AND gottenHonestly is (true): %t\n", guessLevelCounter, gottenHonestly)
 				gameCorrectOnFirstAttemptAccumulator++ // ::: 1st
 				gottenHonestly = false                 // todo: not sure why or if this flag needs to be used and/or reset at this point ???
 			} else if guessLevelCounter == 3 {
+				// fmt.Printf("\nGuess level counter is (3): %d, or maybe not?, increment gameCorrectOnSecondAttemptAccumulator\n", guessLevelCounter)
 				gameCorrectOnSecondAttemptAccumulator++ // ::: 2nd
 			} else {
 				// ... then ... the guessLevelCounter was 4.

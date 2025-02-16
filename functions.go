@@ -240,8 +240,12 @@ func the_game_begins() { // ::: - -
 		actual_prompt_char_type, actual_objective_type, kind, currentTime.Format("15:04:05 on Monday 01-02-2006"))
 	check_error(err1)
 }
-func the_game_ends(suppressPointsReporting bool) { // ::: - -
-	theGameIsRunning = false
+func the_game_ends(suppressAllMessages, do_not_reset_gaming_flag, suppressPointsReporting bool) { // ::: - -
+	if do_not_reset_gaming_flag {
+		// do nada
+	} else {
+		theGameIsRunning = false
+	}
 	now_using_game_duration_set_by_game_type = false
 	// gameDuration = 0
 	// game_loop_counter = 0
@@ -287,44 +291,48 @@ func the_game_ends(suppressPointsReporting bool) { // ::: - -
 		// gameCorrectOnThirdAttemptAccumulator++
 		// ::: fail/error accumulator gets incremented (or at least it gets displayed [below]) during the oops message
 	} // - - - - - - - - - - - - - - - - - - - - - - - - - ::: -----------------------------------------------------------------
-
-	if gameCorrectOnFirstAttemptAccumulator > 0 && gameCorrectOnSecondAttemptAccumulator > 0 && gameCorrectOnThirdAttemptAccumulator > 0 && gameFailedOnThirdAttemptAccumulator == 0 { // ::: done
-		fmt.Println(colorRed)
-		fmt.Printf("\nYour Game run-time was:%s,  you got %s%d%s correct on your first try,  %s%d%s right on your second try,\n"+
-			"... and you got %s%d right on your third try. \n\n", TotalRun, colorReset, gameCorrectOnFirstAttemptAccumulator-1, colorRed, colorReset, gameCorrectOnSecondAttemptAccumulator,
-			colorRed, colorReset, gameCorrectOnThirdAttemptAccumulator)
-		if gameDuration == 2*len(fileOfCardsHiraKata)+(2*len(fileOfCardsEasyKanji)) && !suppressPointsReporting {
-			// todo : also calculate game scores for games of other lengths
-			fmt.Printf("Points = %f\n", (firstAtemptAcumF-(secondAtemptAcumF/4)-(thirdAtemptAcumF/2)-(failedOnThirdAttF*2))/totalSecondsF*100)
-		}
-	} else if gameCorrectOnFirstAttemptAccumulator > 0 && gameCorrectOnSecondAttemptAccumulator > 0 && gameCorrectOnThirdAttemptAccumulator == 0 && gameFailedOnThirdAttemptAccumulator == 0 { // ::: done
-		fmt.Println(colorRed)
-		fmt.Printf("\nYour Game run-time was:%s,  you got %s%d%s correct on your first try,  %s%d right on your second try. \n\n", TotalRun, colorReset, gameCorrectOnFirstAttemptAccumulator-1,
-			colorRed, colorReset, gameCorrectOnSecondAttemptAccumulator)
-		if gameDuration == 2*len(fileOfCardsHiraKata)+(2*len(fileOfCardsEasyKanji)) && !suppressPointsReporting {
-			// todo : also calculate game scores for games of other lengths
-			fmt.Printf("Points = %f\n", (firstAtemptAcumF-(secondAtemptAcumF/4)-(thirdAtemptAcumF/2)-(failedOnThirdAttF*2))/totalSecondsF*100)
-		}
-	} else if gameCorrectOnFirstAttemptAccumulator > 0 && gameCorrectOnSecondAttemptAccumulator == 0 && gameCorrectOnThirdAttemptAccumulator == 0 && gameFailedOnThirdAttemptAccumulator == 0 { // ::: done
-		fmt.Println(colorRed)
-		fmt.Printf("\nYour Game run-time was:%s,  Gongratulations! you got %s%d correct on your first try. \n\n", TotalRun, colorReset, gameCorrectOnFirstAttemptAccumulator-1)
-		if gameDuration == 2*len(fileOfCardsHiraKata)+(2*len(fileOfCardsEasyKanji)) && !suppressPointsReporting {
-			// todo : also calculate game scores for games of other lengths
-			fmt.Printf("Points = %f\n", (firstAtemptAcumF-(secondAtemptAcumF/4)-(thirdAtemptAcumF/2)-(failedOnThirdAttF*2))/totalSecondsF*100)
-		}
+	if suppressAllMessages {
+		// do dada
 	} else {
-		fmt.Println(colorRed)
-		fmt.Printf("\nYour Game run-time was:%s,  you got %s%d%s correct on your first try,  %s%d%s right on your second try,\n"+
-			"... and you got %s%d%s right on your third try, and were unable to answer correctly without a hint "+
-			"%s%d times. \n\n", TotalRun, colorReset, gameCorrectOnFirstAttemptAccumulator-1, colorRed, colorReset, gameCorrectOnSecondAttemptAccumulator,
-			colorRed, colorReset, gameCorrectOnThirdAttemptAccumulator, colorRed, colorReset, gameFailedOnThirdAttemptAccumulator)
-		if gameDuration == 2*len(fileOfCardsHiraKata)+(2*len(fileOfCardsEasyKanji)) && !suppressPointsReporting {
-			// todo : also calculate game scores for games of other lengths
-			fmt.Printf("Points = %f\n", (firstAtemptAcumF-(secondAtemptAcumF/4)-(thirdAtemptAcumF/2)-(failedOnThirdAttF*2))/totalSecondsF*100)
+		if gameCorrectOnFirstAttemptAccumulator > 0 && gameCorrectOnSecondAttemptAccumulator > 0 && gameCorrectOnThirdAttemptAccumulator > 0 && gameFailedOnThirdAttemptAccumulator == 0 { // ::: done
+			fmt.Println(colorRed)
+			fmt.Printf("\nYour Game run-time was:%s,  you got %s%d%s correct on your first try,  %s%d%s right on your second try,\n"+
+				"... and you got %s%d right on your third try. \n\n", TotalRun, colorReset, gameCorrectOnFirstAttemptAccumulator-1, colorRed, colorReset, gameCorrectOnSecondAttemptAccumulator,
+				colorRed, colorReset, gameCorrectOnThirdAttemptAccumulator)
+			if gameDuration == 2*len(fileOfCardsHiraKata)+(2*len(fileOfCardsEasyKanji)) && !suppressPointsReporting {
+				// todo : also calculate game scores for games of other lengths
+				fmt.Printf("Points = %f\n", (firstAtemptAcumF-(secondAtemptAcumF/4)-(thirdAtemptAcumF/2)-(failedOnThirdAttF*2))/totalSecondsF*100)
+			}
+		} else if gameCorrectOnFirstAttemptAccumulator > 0 && gameCorrectOnSecondAttemptAccumulator > 0 && gameCorrectOnThirdAttemptAccumulator == 0 && gameFailedOnThirdAttemptAccumulator == 0 { // ::: done
+			fmt.Println(colorRed)
+			fmt.Printf("\nYour Game run-time was:%s,  you got %s%d%s correct on your first try,  %s%d right on your second try. \n\n", TotalRun, colorReset, gameCorrectOnFirstAttemptAccumulator-1,
+				colorRed, colorReset, gameCorrectOnSecondAttemptAccumulator)
+			if gameDuration == 2*len(fileOfCardsHiraKata)+(2*len(fileOfCardsEasyKanji)) && !suppressPointsReporting {
+				// todo : also calculate game scores for games of other lengths
+				fmt.Printf("Points = %f\n", (firstAtemptAcumF-(secondAtemptAcumF/4)-(thirdAtemptAcumF/2)-(failedOnThirdAttF*2))/totalSecondsF*100)
+			}
+		} else if gameCorrectOnFirstAttemptAccumulator > 0 && gameCorrectOnSecondAttemptAccumulator == 0 && gameCorrectOnThirdAttemptAccumulator == 0 && gameFailedOnThirdAttemptAccumulator == 0 { // ::: done
+			fmt.Println(colorRed)
+			fmt.Printf("\nYour Game run-time was:%s,  Gongratulations! you got %s%d correct on your first try. \n\n", TotalRun, colorReset, gameCorrectOnFirstAttemptAccumulator-1)
+			if gameDuration == 2*len(fileOfCardsHiraKata)+(2*len(fileOfCardsEasyKanji)) && !suppressPointsReporting {
+				// todo : also calculate game scores for games of other lengths
+				fmt.Printf("Points = %f\n", (firstAtemptAcumF-(secondAtemptAcumF/4)-(thirdAtemptAcumF/2)-(failedOnThirdAttF*2))/totalSecondsF*100)
+			}
+		} else {
+			fmt.Println(colorRed)
+			fmt.Printf("\nYour Game run-time was:%s,  you got %s%d%s correct on your first try,  %s%d%s right on your second try,\n"+
+				"... and you got %s%d%s right on your third try, and were unable to answer correctly without a hint "+
+				"%s%d times. \n\n", TotalRun, colorReset, gameCorrectOnFirstAttemptAccumulator-1, colorRed, colorReset, gameCorrectOnSecondAttemptAccumulator,
+				colorRed, colorReset, gameCorrectOnThirdAttemptAccumulator, colorRed, colorReset, gameFailedOnThirdAttemptAccumulator)
+			if gameDuration == 2*len(fileOfCardsHiraKata)+(2*len(fileOfCardsEasyKanji)) && !suppressPointsReporting {
+				// todo : also calculate game scores for games of other lengths
+				fmt.Printf("Points = %f\n", (firstAtemptAcumF-(secondAtemptAcumF/4)-(thirdAtemptAcumF/2)-(failedOnThirdAttF*2))/totalSecondsF*100)
+			}
 		}
-	}
 
-	fmt.Printf(" --- View the text log file for further comments re this or previous game stats --- \n\n")
+		fmt.Printf(" --- View the text log file for further comments re this or previous game stats --- \n\n")
+
+	}
 
 	// End timer and report elapsed time and other stats to a file.
 	_, err1 := fmt.Fprintf(fileHandle,
@@ -427,7 +435,7 @@ func about_app() { // ::: - -
 .
 */
 // Flush (clear) the old stats and hits arrays
-func reset_all_data(suppressPrinting bool) { // ::: - -
+func reset_all_data(do_not_reset_gaming_flag, suppressPrinting bool) { // ::: - -
 	limitedToKataPrompts = false
 	limitedToHiraPrompts = false
 	limitedToRomaPrompts = false
@@ -451,7 +459,11 @@ func reset_all_data(suppressPrinting bool) { // ::: - -
 	gameFailedOnThirdAttemptAccumulator = 0
 	game_loop_counter = 0
 	// jim = 15
-	theGameIsRunning = false
+	if do_not_reset_gaming_flag {
+		// do nada
+	} else {
+		theGameIsRunning = false
+	}
 
 	total_prompts = 0
 	//
@@ -678,7 +690,7 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 		read_pulledButNotUsedMap()
 		// read_pulls_not_used_array()
 	case "rs":
-		reset_all_data(false)
+		reset_all_data(false, false)
 	case "st":
 		st_stats_function()
 	case "stc":
@@ -686,15 +698,15 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 	case "stcr":
 		reSet_aCard_via_a_romaji_andThereBy_reSet_thePromptString()
 	case "game": // ::: this code reachable only via recursion, e.g., immediately following a "dir" directive command.
-		reset_all_data(true) // I would like to suppress the prints in this func
+		reset_all_data(true, true) // I would like to suppress the prints in this func
 		fmt.Println("What is your first name? (one word)")
 		_, _ = fmt.Scan(&nameOfPlayer)
 		List_of_game_types()
 		fmt.Println(colorRed + "Enter the type of game" + colorReset)
 		_, _ = fmt.Scan(&type_of_game)
 		switch type_of_game {
-		case "1": // hko
-			gameDuration = 206
+		case "1": // hko Use Kata & Hira prompting (Roma objectives)
+			gameDuration = 2*len(fileOfCardsHiraKata) + (2 * len(fileOfCardsEasyKanji)) + len(fileOfCardsKanjiHard)
 			kata_hira = false
 			kata_roma = false
 			limitedToKataPrompts = true
@@ -703,8 +715,8 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 			limitedToDifficultDescriptions = false
 			limitedToSpelling = false
 			fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
-		case "2": // konly
-			gameDuration = 105
+		case "2": // konly Use only Kata prompting (mix Hira & Roma objectives)
+			gameDuration = 2 * len(fileOfCardsHiraKata)
 			kata_hira = false
 			kata_roma = false
 			limitedToKataPrompts = true
@@ -713,8 +725,8 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 			limitedToDifficultDescriptions = false
 			limitedToSpelling = false
 			fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
-		case "3": // honly
-			gameDuration = 105
+		case "3": // honly Use only Hira prompting (so only Roma responses)
+			gameDuration = len(fileOfCardsHiraKata)
 			kata_hira = false
 			kata_roma = false
 			limitedToHiraPrompts = true
@@ -723,8 +735,8 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 			limitedToDifficultDescriptions = false
 			limitedToSpelling = false
 			fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
-		case "4": // ronly
-			gameDuration = 105
+		case "4": // ronly Use only Romaji prompting (so only Hira responses)
+			gameDuration = len(fileOfCardsHiraKata)
 			kata_hira = false
 			kata_roma = false
 			limitedToRomaPrompts = true
@@ -733,8 +745,8 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 			limitedToDifficultDescriptions = false
 			limitedToSpelling = false
 			fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
-		case "5": // khSimplex
-			gameDuration = 55
+		case "5": // khSimplex : Use Kata prompting & Simplex Hira obj
+			gameDuration = len(fileOfCards_nonCompound)
 			kata_roma = false
 			kata_hira = false
 			limitedToKataPromptsAndSimplexHiraObj = true
@@ -744,8 +756,8 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 			limitedToDifficultDescriptions = false
 			limitedToSpelling = false
 			fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
-		case "6": // donly
-			gameDuration = 20
+		case "6": // donly : Difficult descriptive prompting
+			gameDuration = len(dataMostDiff)
 			kata_hira = false
 			kata_roma = false
 			limitedToDifficultDescriptions = true
@@ -754,8 +766,8 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 			limitedToRomaPrompts = true
 			limitedToSpelling = false
 			fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
-		case "7": // kh
-			gameDuration = 106
+		case "7": // kh : Use only kata_hira prompt_response
+			gameDuration = 2 * len(fileOfCardsHiraKata)
 			kata_roma = false
 			kata_hira = true
 			limitedToKataPrompts = false
@@ -764,8 +776,8 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 			limitedToDifficultDescriptions = false
 			limitedToSpelling = false
 			fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
-		case "8": // rhSimplex
-			gameDuration = 55
+		case "8": // rhSimplex : Use kata prompts w/Simplex Hira
+			gameDuration = len(fileOfCards_nonCompound)
 			kata_hira = false
 			kata_roma = false
 			limitedToRomaPromptsAndSimplexHiraObj = true
@@ -775,8 +787,8 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 			limitedToDifficultDescriptions = false
 			limitedToSpelling = false
 			fmt.Printf("-- Your setting will go into effect after you dispence with the present card ...\n")
-		case "9": // kr
-			gameDuration = 105
+		case "9": // kr : Use only kata_roma prompt_response
+			gameDuration = len(fileOfCardsHiraKata)
 			kata_hira = false
 			kata_roma = true
 			limitedToKataPrompts = false
@@ -786,7 +798,7 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 			limitedToSpelling = false
 			fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
 		default: // "0" // mix ::: NOT SURE ABOUT ALL THESE FALSE SETTINGS FOR THE MIX CASE ??
-			gameDuration = 206
+			gameDuration = 3*len(fileOfCardsHiraKata) + (2 * len(fileOfCardsEasyKanji)) + len(fileOfCardsKanjiHard) // ::: 3 *
 			kata_hira = false
 			kata_roma = false
 			limitedToKataPrompts = false
@@ -794,6 +806,7 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 			limitedToRomaPrompts = false
 			limitedToDifficultDescriptions = false
 			limitedToSpelling = false
+			// ::: nothing limited means prompt with a mix of all three
 			fmt.Printf("-- Your settings will go into effect after you dispence with the present card ...\n")
 		}
 		display_limited_gaming_dir_list()

@@ -31,7 +31,7 @@ func main() {
 	fmt.Println(colorRed + "Select a game" + colorReset)
 	_, _ = fmt.Scan(&type_of_game)
 	switch type_of_game {
-	case "1": // hko
+	case "1": // hko Use Kata & Hira prompting (Roma objectives)
 		gameDuration = 2*len(fileOfCardsHiraKata) + (2 * len(fileOfCardsEasyKanji)) + len(fileOfCardsKanjiHard)
 		kata_hira = false
 		kata_roma = false
@@ -40,8 +40,8 @@ func main() {
 		limitedToRomaPrompts = false
 		limitedToDifficultDescriptions = false
 		limitedToSpelling = false
-	case "2": // konly
-		gameDuration = 105
+	case "2": // konly Use only Kata prompting (mix Hira & Roma objectives)
+		gameDuration = len(fileOfCardsHiraKata)
 		kata_hira = false
 		kata_roma = false
 		limitedToKataPrompts = true
@@ -49,8 +49,8 @@ func main() {
 		limitedToRomaPrompts = false
 		limitedToDifficultDescriptions = false
 		limitedToSpelling = false
-	case "3": // honly
-		gameDuration = 105
+	case "3": // honly Use only Hira prompting (so only Roma responses)
+		gameDuration = len(fileOfCardsHiraKata)
 		kata_hira = false
 		kata_roma = false
 		limitedToHiraPrompts = true
@@ -58,8 +58,8 @@ func main() {
 		limitedToRomaPrompts = false
 		limitedToDifficultDescriptions = false
 		limitedToSpelling = false
-	case "4": // ronly
-		gameDuration = 105
+	case "4": // ronly Use only Romaji prompting (so only Hira responses)
+		gameDuration = len(fileOfCardsHiraKata)
 		kata_hira = false
 		kata_roma = false
 		limitedToRomaPrompts = true
@@ -67,8 +67,8 @@ func main() {
 		limitedToHiraPrompts = false
 		limitedToDifficultDescriptions = false
 		limitedToSpelling = false
-	case "5": // khSimplex
-		gameDuration = 55
+	case "5": // khSimplex : Use Kata prompting & Simplex Hira obj
+		gameDuration = len(fileOfCards_nonCompound)
 		kata_roma = false
 		kata_hira = false
 		limitedToKataPromptsAndSimplexHiraObj = true
@@ -77,8 +77,8 @@ func main() {
 		limitedToRomaPrompts = false
 		limitedToDifficultDescriptions = false
 		limitedToSpelling = false
-	case "6": // donly
-		gameDuration = 20
+	case "6": // donly : Difficult descriptive prompting
+		gameDuration = len(dataMostDiff)
 		kata_hira = false
 		kata_roma = false
 		limitedToDifficultDescriptions = true
@@ -86,8 +86,8 @@ func main() {
 		limitedToHiraPrompts = false
 		limitedToRomaPrompts = true
 		limitedToSpelling = false
-	case "7": // kh
-		gameDuration = 106
+	case "7": // kh : Use only kata_hira prompt_response
+		gameDuration = 2 * len(fileOfCardsHiraKata)
 		kata_roma = false
 		kata_hira = true
 		limitedToKataPrompts = false
@@ -95,18 +95,18 @@ func main() {
 		limitedToRomaPrompts = false
 		limitedToDifficultDescriptions = false
 		limitedToSpelling = false
-	case "8": // rhSimplex
-		gameDuration = 55
-		kata_hira = false
+	case "8": // rhSimplex : Use kata prompts w/Simplex Hira
+		gameDuration = len(fileOfCards_nonCompound)
+		kata_hira = false // ::: should be true ??
 		kata_roma = false
-		limitedToRomaPromptsAndSimplexHiraObj = true
+		limitedToRomaPromptsAndSimplexHiraObj = true // ::: ?
 		limitedToRomaPrompts = true
 		limitedToKataPrompts = false
 		limitedToHiraPrompts = false
 		limitedToDifficultDescriptions = false
 		limitedToSpelling = false
-	case "9": // kr
-		gameDuration = 105
+	case "9": // kr : Use only kata_roma prompt_response
+		gameDuration = len(fileOfCardsHiraKata)
 		kata_hira = false
 		kata_roma = true
 		limitedToKataPrompts = false
@@ -115,7 +115,7 @@ func main() {
 		limitedToDifficultDescriptions = false
 		limitedToSpelling = false
 	default: // "0" // mix ::: NOT SURE ABOUT ALL THESE FALSE SETTINGS FOR THE MIX CASE ??
-		gameDuration = 206
+		gameDuration = 3*len(fileOfCardsHiraKata) + (2 * len(fileOfCardsEasyKanji)) + len(fileOfCardsKanjiHard) // ::: 3 *
 		kata_hira = false
 		kata_roma = false
 		limitedToKataPrompts = false
@@ -123,6 +123,7 @@ func main() {
 		limitedToRomaPrompts = false
 		limitedToDifficultDescriptions = false
 		limitedToSpelling = false
+		// ::: nothing limited means prompt with a mix of all three
 	}
 	display_limited_gaming_dir_list()
 	now_using_game_duration_set_by_game_type = true
@@ -156,7 +157,9 @@ func begin_Kana_practice() { // ::: - -
 				// During gameplay, directive handling must not be counted as guesses, hence the decrementing of guessLevelCounter
 				guessLevelCounter--
 			case "q":
-				the_game_ends(true)
+				fmt.Println("here at line 160 in main")
+				allReadyQuitGame = true
+				the_game_ends(false, false, true)
 				// During gameplay, directive handling must not be counted as guesses, hence the decrementing of guessLevelCounter
 				guessLevelCounter--
 			case "rm":
@@ -182,7 +185,7 @@ func begin_Kana_practice() { // ::: - -
 			}
 
 		} else if usersSubmission == "game" {
-			reset_all_data(true)
+			reset_all_data(true, true)
 			guessLevelCounter = 1
 			fmt.Println("What is your first name? (one word)")
 			_, _ = fmt.Scan(&nameOfPlayer)
@@ -199,8 +202,8 @@ func begin_Kana_practice() { // ::: - -
 				limitedToRomaPrompts = false
 				limitedToDifficultDescriptions = false
 				limitedToSpelling = false
-			case "2": // konly
-				gameDuration = 105
+			case "2": // konly Use only Kata prompting (mix Hira & Roma objectives)
+				gameDuration = 2 * len(fileOfCardsHiraKata)
 				kata_hira = false
 				kata_roma = false
 				limitedToKataPrompts = true
@@ -208,8 +211,8 @@ func begin_Kana_practice() { // ::: - -
 				limitedToRomaPrompts = false
 				limitedToDifficultDescriptions = false
 				limitedToSpelling = false
-			case "3": // honly
-				gameDuration = 105
+			case "3": // honly Use only Hira prompting (so only Roma responses)
+				gameDuration = len(fileOfCardsHiraKata)
 				kata_hira = false
 				kata_roma = false
 				limitedToHiraPrompts = true
@@ -217,8 +220,8 @@ func begin_Kana_practice() { // ::: - -
 				limitedToRomaPrompts = false
 				limitedToDifficultDescriptions = false
 				limitedToSpelling = false
-			case "4": // ronly
-				gameDuration = 105
+			case "4": // ronly Use only Romaji prompting (so only Hira responses)
+				gameDuration = len(fileOfCardsHiraKata)
 				kata_hira = false
 				kata_roma = false
 				limitedToRomaPrompts = true
@@ -226,8 +229,8 @@ func begin_Kana_practice() { // ::: - -
 				limitedToHiraPrompts = false
 				limitedToDifficultDescriptions = false
 				limitedToSpelling = false
-			case "5": // khSimplex
-				gameDuration = 55
+			case "5": // khSimplex : Use Kata prompting & Simplex Hira obj
+				gameDuration = len(fileOfCards_nonCompound)
 				kata_roma = false
 				kata_hira = false
 				limitedToKataPromptsAndSimplexHiraObj = true
@@ -236,8 +239,8 @@ func begin_Kana_practice() { // ::: - -
 				limitedToRomaPrompts = false
 				limitedToDifficultDescriptions = false
 				limitedToSpelling = false
-			case "6": // donly
-				gameDuration = 20
+			case "6": // donly : Difficult descriptive prompting
+				gameDuration = len(dataMostDiff)
 				kata_hira = false
 				kata_roma = false
 				limitedToDifficultDescriptions = true
@@ -245,8 +248,8 @@ func begin_Kana_practice() { // ::: - -
 				limitedToHiraPrompts = false
 				limitedToRomaPrompts = true
 				limitedToSpelling = false
-			case "7": // kh
-				gameDuration = 106
+			case "7": // kh : Use only kata_hira prompt_response
+				gameDuration = 2 * len(fileOfCardsHiraKata)
 				kata_roma = false
 				kata_hira = true
 				limitedToKataPrompts = false
@@ -254,18 +257,18 @@ func begin_Kana_practice() { // ::: - -
 				limitedToRomaPrompts = false
 				limitedToDifficultDescriptions = false
 				limitedToSpelling = false
-			case "8": // rhSimplex
-				gameDuration = 55
-				kata_hira = false
+			case "8": // rhSimplex : Use kata prompts w/Simplex Hira
+				gameDuration = len(fileOfCards_nonCompound)
+				kata_hira = false // ::: should be true ??
 				kata_roma = false
-				limitedToRomaPromptsAndSimplexHiraObj = true
+				limitedToRomaPromptsAndSimplexHiraObj = true // ::: ?
 				limitedToRomaPrompts = true
 				limitedToKataPrompts = false
 				limitedToHiraPrompts = false
 				limitedToDifficultDescriptions = false
 				limitedToSpelling = false
-			case "9": // kr
-				gameDuration = 105
+			case "9": // kr : Use only kata_roma prompt_response
+				gameDuration = len(fileOfCardsHiraKata)
 				kata_hira = false
 				kata_roma = true
 				limitedToKataPrompts = false
@@ -274,7 +277,7 @@ func begin_Kana_practice() { // ::: - -
 				limitedToDifficultDescriptions = false
 				limitedToSpelling = false
 			default: // "0" // mix ::: NOT SURE ABOUT ALL THESE FALSE SETTINGS FOR THE MIX CASE ??
-				gameDuration = 206
+				gameDuration = 3*len(fileOfCardsHiraKata) + (2 * len(fileOfCardsEasyKanji)) + len(fileOfCardsKanjiHard) // ::: 3 *
 				kata_hira = false
 				kata_roma = false
 				limitedToKataPrompts = false
@@ -282,6 +285,7 @@ func begin_Kana_practice() { // ::: - -
 				limitedToRomaPrompts = false
 				limitedToDifficultDescriptions = false
 				limitedToSpelling = false
+				// ::: nothing limited means prompt with a mix of all three
 			}
 			display_limited_gaming_dir_list()
 			now_using_game_duration_set_by_game_type = true
@@ -302,6 +306,7 @@ func begin_Kana_practice() { // ::: - -
 .
 .
 */
+var allReadyQuitGame bool
 
 func priorToProcessingUsersSubmission_check_IfTypeEnteredRightly() { // ::: - -
 	if actual_objective_type == "roma" {
@@ -329,6 +334,7 @@ func priorToProcessingUsersSubmission_check_IfTypeEnteredRightly() { // ::: - -
 				_, _ = fmt.Scan(&usersSubmission)
 				priorToProcessingUsersSubmission_check_IfTypeEnteredRightly()
 			} else {
+				guessLevelCounter--
 				// Display a message informing the user that he should change his input method.
 				fmt.Println(colorRed)
 				fmt.Println("Please change your input method to match the char type that was requested:)")
@@ -344,8 +350,21 @@ func priorToProcessingUsersSubmission_check_IfTypeEnteredRightly() { // ::: - -
 
 		}
 
+	} else if actual_objective_type == "hira" && usersSubmission == "q" {
+		if allReadyQuitGame {
+			// fmt.Println("here at 354 in main")
+			allReadyQuitGame = false
+			the_game_ends(true, false, true)
+			// During gameplay, directive handling must not be counted as guesses, hence the decrementing of guessLevelCounter
+			guessLevelCounter--
+		} else {
+			// fmt.Printf("value of theGameIsRunning is:%t\n", theGameIsRunning)
+			// fmt.Println("here at 362 in main")
+			os.Exit(1)
+		}
+
 	} else if actual_objective_type == "hira" {
-		// todo: add code to deal with ? or ?? during game play (as was done above) for the "roma" instance
+		// fmt.Printf("here at 366 in main, usersSubm: %s\n", usersSubmission)
 		// ::: Determine if the user has entered a valid Hiragana char instead of, accidentally, an alpha char or string. If so, advise user.
 		var isAlphanumeric bool
 		findAlphasIn := regexp.MustCompile(`[a-zA-Z]`)
@@ -357,19 +376,32 @@ func priorToProcessingUsersSubmission_check_IfTypeEnteredRightly() { // ::: - -
 			isAlphanumeric = false
 		}
 
-		if isAlphanumeric == false { // as will be the case with a Hiragana char. :: if type_of_usersSubmission == actual_objective_type ...
+		if isAlphanumeric == false && usersSubmission != "?" && usersSubmission != "??" { // as will be the case with a Hiragana char. :: if type_of_usersSubmission == actual_objective_type ...
+			// fmt.Printf("here at 379 in main, isAlphanumeric: %t, usersSubmission: %s\n", isAlphanumeric, usersSubmission)
 			Process_users_input_as_a_guess()
 		} else {
-			// Display a message informing the user that he should change his input method.
-			fmt.Println(colorRed)
-			fmt.Println("Please change your input method to match the char type that was requested:)")
-			fmt.Printf("Requested type being: %s\n", actual_objective_type)
-			fmt.Println(colorReset)
-			// RE-Prompt according to guessLevelCounter, type of displayed prompt, and type of requested response.
-			prompt_the_user_for_input() // Each time we do this we increment the guessLevelCounter.
-			// Obtain users input.
-			_, _ = fmt.Scan(&usersSubmission)
-			priorToProcessingUsersSubmission_check_IfTypeEnteredRightly()
+			if theGameIsRunning && usersSubmission == "?" || theGameIsRunning && usersSubmission == "??" {
+				fmt.Println("Sorry, but not help is allowed during game play")
+
+				// RE-Prompt according to guessLevelCounter, type of displayed prompt, and type of requested response.
+				guessLevelCounter--
+				prompt_the_user_for_input() // Each time we do this we increment the guessLevelCounter.
+				// Obtain users input.
+				_, _ = fmt.Scan(&usersSubmission)
+				priorToProcessingUsersSubmission_check_IfTypeEnteredRightly()
+			} else {
+				guessLevelCounter--
+				// Display a message informing the user that he should change his input method.
+				fmt.Println(colorRed)
+				fmt.Println("Please change your input method to match the char type that was requested:)")
+				fmt.Printf("Requested type being: %s\n", actual_objective_type)
+				fmt.Println(colorReset)
+				// RE-Prompt according to guessLevelCounter, type of displayed prompt, and type of requested response.
+				prompt_the_user_for_input() // Each time we do this we increment the guessLevelCounter.
+				// Obtain users input.
+				_, _ = fmt.Scan(&usersSubmission)
+				priorToProcessingUsersSubmission_check_IfTypeEnteredRightly()
+			}
 		}
 	}
 }

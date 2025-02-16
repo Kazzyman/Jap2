@@ -391,7 +391,7 @@ func List_of_Directives() { // ::: - -
 		"' Use only Romaji prompting (so only Hira responses)")
 	fmt.Println("        Enter '" + colorGreen +
 		"rhSimplex" + colorReset +
-		"' Use Romaji prompting & Simplex Hira obj")
+		"' Use Romaji (fix to kata_hira?) prompting & Simplex Hira obj")
 
 	fmt.Println("        Enter '" + colorGreen +
 		"donly" + colorReset +
@@ -472,7 +472,7 @@ func List_of_game_types() { // ::: - -
 		"' Use only Romaji prompting (so only Hira responses)")
 	fmt.Println("        Enter '" + colorGreen +
 		"5" + colorReset +
-		"' Use Romaji prompting & Simplex Hira obj")
+		"' Use Kata prompting & Simplex Hira obj")
 
 	fmt.Println("        Enter '" + colorGreen +
 		"6" + colorReset +

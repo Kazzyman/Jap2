@@ -36,10 +36,16 @@ func main() {
 		kata_hira = false
 		kata_roma = false
 		limitedToKataPrompts = true
+		actual_prompt_char_type = "kata or hira"
+		actual_objective_type = "Romaji"
 		limitedToHiraPrompts = true
 		limitedToRomaPrompts = false
 		limitedToDifficultDescriptions = false
 		limitedToSpelling = false
+		/*
+			adding these two above to fix the print to log file at game inception
+			actual_prompt_char_type, actual_objective_type
+		*/
 	case "2": // konly Use only Kata prompting (mix Hira & Roma objectives)
 		gameDuration = len(fileOfCardsHiraKata)
 		kata_hira = false

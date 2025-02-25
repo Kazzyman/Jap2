@@ -437,8 +437,8 @@ var fileOfCardsAllSequential = []charSetStruct{
 		" プ:ぷ   TT: left-ring to the '2' char,  it is the big mountain in Japan"},
 
 	{"コ", "こ", "ko",
-		" ko:こ:コ ... it makes sense, 'cause angles:  ko:コ ,  Compare:  ni:に:ニ ",
+		" ko:こ:コ ... it makes sense, 'cause angles:  ko:コ ,  Compare: yu:ユ ni:に:ニ ",
 		" ... see the two Koy fish?   'ko'oy fish? ",
 		" TT: index <--- to the 'B' char,  ko way-down below  こ ",
-		" こ:コ   TT: index <--- to the 'B' char    Compare:  ni:に:ニ"},
+		" こ:コ   TT: index <--- to the 'B' char    Compare: yu:ユ  ni:に:ニ"},
 }

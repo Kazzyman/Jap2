@@ -255,8 +255,11 @@ func pick_RandomCard_Assign_fields() { // ::: - -
 		frequencyMapOf_IsFineOnChars = make(map[string]int)
 		frequencyMapOf_need_workOn = make(map[string]int)
 		pulledButNotUsedMap = make(map[string]int)
-		// fmt.Println(colorReset + "You have finished all the cards; repeats will now ensue ... \n")
-		fmt.Printf("%sYou have finished all the cards in your chosen deck; repeats will now ensue ... \n", colorReset)
+		if theGameIsRunning {
+			fmt.Printf("%sYour game is ending, all the cards in your chosen deck have been used; repeats will now ensue ... \n", colorReset)
+		} else {
+			fmt.Printf("%sYou have finished all the cards in your chosen deck; repeats will now ensue ... \n", colorReset)
+		}
 	}
 }
 

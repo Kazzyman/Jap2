@@ -294,6 +294,7 @@ func the_game_ends(suppressAllMessages, do_not_reset_gaming_flag, suppressPoints
 	if suppressAllMessages {
 		// do dada
 	} else {
+		// suppressPointsReporting = true // this is not actually set as true anywhere in the project // todo: fix that
 		fmt.Printf("\nThe status of suppressPointsReporting is %t", suppressPointsReporting)
 		if gameCorrectOnFirstAttemptAccumulator > 0 && gameCorrectOnSecondAttemptAccumulator > 0 && gameCorrectOnThirdAttemptAccumulator > 0 && gameFailedOnThirdAttemptAccumulator == 0 { // ::: done
 			fmt.Println(colorRed)
@@ -352,7 +353,9 @@ func the_game_ends(suppressAllMessages, do_not_reset_gaming_flag, suppressPoints
 		TotalRun)
 	check_error(err2)
 	// todo : also calculate game scores for games of other lengths
-	if gameDuration == 2*len(fileOfCardsHiraKata)+(2*len(fileOfCardsEasyKanji)) && !suppressPointsReporting { // Calculate and print the Point total to the log file only if a full game has been played
+	//	if gameDuration == 2*len(fileOfCardsHiraKata)+(2*len(fileOfCardsEasyKanji)) && !suppressPointsReporting { // Calculate and print the Point total to the log file only if a full game has been played
+	// If it was a full length game, |or| if we are overriding that test:
+	if gameDuration == 2*len(fileOfCardsHiraKata)+(2*len(fileOfCardsEasyKanji))+len(fileOfCardsKanjiHard) || !suppressPointsReporting {
 		// fmt.Printf("Points: %f", points2print)
 		_, err3 := fmt.Fprintf(fileHandle,
 			"Points: %f \n\n\n",

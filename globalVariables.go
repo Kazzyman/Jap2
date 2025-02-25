@@ -17,6 +17,7 @@ var actual_objective_type string
 
 var actual_prompt_char string      //  aCard.Hira  aCard.Romaji  aCard.Kata
 var actual_prompt_char_type string //  "hira",  "roma",  "kata"
+var len_of_game string
 
 var usersSubmission string
 

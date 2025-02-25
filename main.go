@@ -30,9 +30,23 @@ func main() {
 	List_of_game_types()
 	fmt.Println(colorRed + "Select a game" + colorReset)
 	_, _ = fmt.Scan(&type_of_game)
+	if type_of_game != "1" && type_of_game != "2" {
+		fmt.Printf("\n%s is not a valid entry\n", type_of_game)
+		fmt.Println(colorRed + "Select a game from the list (1-9)" + colorReset)
+		_, _ = fmt.Scan(&type_of_game)
+	}
+	fmt.Println(colorRed + "Enter proposed game duration, or 0 for a complete game" + colorReset)
+	_, _ = fmt.Scan(&gameDuration)
+	if gameDuration > 1 && gameDuration < 214 {
+		// gameDuration will be set (below) to the combined length of the decks involved
+	} else {
+		if type_of_game == "1" {
+			gameDuration = 2*len(fileOfCardsHiraKata) + (2 * len(fileOfCardsEasyKanji)) + len(fileOfCardsKanjiHard)
+		}
+	}
 	switch type_of_game {
 	case "1": // hko Use Kata & Hira prompting (Roma objectives)
-		gameDuration = 2*len(fileOfCardsHiraKata) + (2 * len(fileOfCardsEasyKanji)) + len(fileOfCardsKanjiHard)
+		// gameDuration = 2*len(fileOfCardsHiraKata) + (2 * len(fileOfCardsEasyKanji)) + len(fileOfCardsKanjiHard)
 		kata_hira = false
 		kata_roma = false
 		limitedToKataPrompts = true

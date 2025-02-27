@@ -1,9 +1,10 @@
+It is always listing points to the log file, should it do that?
 
 todo: add comparisons in data like wa to ne (they are very similar)
 
 todo: also tally lines of data in SLOC.
 
-::: cheat-sheet :
+::: cheat-sheet : Goland
 
 splat r :: replace 
 
@@ -21,4 +22,7 @@ splat b  :: go to declaration
 
 Ctrl-k  :: kill to end of line. 
 
-::: end cheat-sheet.
+::: end cheat-sheet Goland.
+
+option + return usually inserts a newline.
+shift + return inserts a newline in Grok-3 "ask anything" text box.

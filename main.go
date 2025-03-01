@@ -8,26 +8,20 @@ import (
 	"time"
 )
 
-// todo Bug::: stcr still has an issue. Though it does not crash the app if it is run immediately after an stc ...
-// ... it is actually recoverable if it is run after an stc.
-var thisIsOurFirstRodeo bool
-
 func main() {
 	rand.Seed(time.Now().UnixNano()) // Seed the random number generator with the current time in nanoseconds.
 	kata_roma = true
-	gottenHonestly = true // default is to assume honesty, I guess
-	// theGameIsRunning = true
+	gottenHonestly = true                        // default is to assume honesty, I guess
 	guessedLastCardCorrectlySoGetFreshOne = true // This will get us an initial card.
 	guessLevelCounter = 1
+	we_have_just_met = true
 
 	fmt.Println()
 	countSLOC() // Determine and display Source Lines Of Code.
 
 	display_start_menu_etc()
 
-	//		actual_prompt_char_type = "kata or hira" // adding these two above to fix the print to log file at game inception
-	//		actual_objective_type = "Romaji"
-	beginGame()
+	beginGame() // merely offer to play a game, no pressure
 	begin_Kana_practice()
 }
 
@@ -44,8 +38,8 @@ func begin_Kana_practice() { // ::: - -
 		_, _ = fmt.Scan(&usersSubmission)
 
 		if theGameIsRunning {
-			// Skip looking to start a game if one is already running
-			// During gaming, disallow checking for irrelevant Directives, and substitute game versions of certain directives
+			// Skip looking to start a game if one is already running; check instead for allowed in-game directives.
+			// ... during gaming, disallow checking for irrelevant Directives, and substitute game versions of certain directives
 
 			switch usersSubmission {
 			case "abt":
@@ -74,7 +68,7 @@ func begin_Kana_practice() { // ::: - -
 				// During gameplay, directive handling must not be counted as guesses, hence the decrementing of guessLevelCounter
 				guessLevelCounter--
 			case "game":
-				List_of_game_types()
+				Display_the_menu_of_game_types()
 				fmt.Printf("You are currently playing game number %s\n", type_of_game)
 				// During gameplay, directive handling must not be counted as guesses, hence the decrementing of guessLevelCounter
 				guessLevelCounter--
@@ -84,20 +78,18 @@ func begin_Kana_practice() { // ::: - -
 				guessLevelCounter--
 			}
 
-		} else if usersSubmission == "game" {
+		} else if usersSubmission == "game" { // If no game is currently running, begin a game if the game directive is given.
 			reset_all_data(true, true)
 			guessLevelCounter = 1
 
 			beginGame()
 
 		} else {
-			// If user's input is a Directive, handle it. ::: ONLY if a game IS NOT running !!!
-			// todo 1 : if a game is running the following handler need not address the case of a "dir" ???
-			// todo 2 : ... but since this is complex due to potential recursions I will leave it as it is.
+			// If user's input is a Directive other than game, handle it. ::: ONLY if a game IS NOT running !!!
 			frontEnd_Possible_Recursive_DirHandler() // ::: this contains the only other prompt
 		}
 		// Process what can now be assumed to be an actual guess.
-		priorToProcessingUsersSubmission_check_IfTypeEnteredRightly()
+		priorToProcessingUsersSubmission_check_IfTypeEnteredRightly() // romaji vs (hira or kata) character input mode
 	}
 }
 
@@ -326,42 +318,6 @@ func frontEnd_Possible_Recursive_DirHandler() { // ::: - -
 /*
 .
 */
-
-func display_failure_of_final_guess_message_etc(userInput string) { // ::: - -
-	// log_oops_andUpdateGame(aCard.Hira, aCard.Romaji, userInput) // this needs fixing, as the first string is not always a Hira
-	if actual_prompt_char_type == "roma" && actual_objective_type == "hira" {
-		// logReinforceThisPrompt_inThe_frequencyMapOf_need_workOn(aCard.Romaji)
-		log_oops_andUpdateGame(aCard.Romaji, aCard.Romaji, userInput) // ::: this may also need fixing, as the second string may not always be Romaji
-	} else if actual_prompt_char_type == "hira" && actual_objective_type == "roma" {
-		// logReinforceThisPrompt_inThe_frequencyMapOf_need_workOn(aCard.Hira)
-		log_oops_andUpdateGame(aCard.Hira, aCard.Romaji, userInput) // ::: this may also need fixing, as the second string may not always be Romaji
-	} else if actual_prompt_char_type == "kata" && actual_objective_type == "roma" {
-		// logReinforceThisPrompt_inThe_frequencyMapOf_need_workOn(aCard.Kata)
-		log_oops_andUpdateGame(aCard.Kata, aCard.Romaji, userInput) // ::: this may also need fixing, as the second string may not always be Romaji
-	} else if actual_prompt_char_type == "kata" && actual_objective_type == "hira" {
-		// logReinforceThisPrompt_inThe_frequencyMapOf_need_workOn(aCard.Kata)
-		log_oops_andUpdateGame(aCard.Kata, aCard.Romaji, userInput) // ::: this may also need fixing, as the second string may not always be Romaji
-	}
-
-	fmt.Printf("%s", colorRed)
-	fmt.Printf("     ^^Oops! That was your last try looser. Here's a clue, just for you: ...\n %s", colorReset)
-	fmt.Printf("\n%s\n%s\n%s\n\n", aCard.HiraHint, aCard.KataHint, aCard.TT_Hint)
-
-	fileHandle, err := os.OpenFile("Jap2Log.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
-	check_error(err)
-	_, err1 := fmt.Fprintf(fileHandle,
-		"\nUser had a REAL ISSUE with==%s:%s:%s, two point deduction ", aCard.Romaji, aCard.Hira, aCard.Kata)
-	check_error(err1)
-}
-func log_oops_andUpdateGame(prompt_it_was, field_it_was, guess string) { // - -
-	if theGameIsRunning {
-		gameFailedOnThirdAttemptAccumulator++
-	}
-	logReinforceThisPrompt_inThe_frequencyMapOf_need_workOn(prompt_it_was) // used to be the only instance of this func being called
-	logHits_in_cyclicArrayHits("Oops", prompt_it_was)
-	logJcharsGottenWrong_in_cyclicArrayOfTheJcharsGottenWrong(prompt_it_was +
-		":it was:" + field_it_was + ":but you had guessed:" + guess)
-}
 
 func display_start_menu_etc() { // ::: - -
 	display_List_of_Directives()

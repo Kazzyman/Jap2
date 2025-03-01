@@ -6,6 +6,7 @@ import (
 	"os"
 	"regexp"
 	"strings"
+	"time"
 )
 
 func countSLOC() { // ::: - -
@@ -82,6 +83,18 @@ func countSLOC() { // ::: - -
 	grandTotal := blankLinesTotal + singleCommentsTotal + commentBlock2Total + runes2Total
 
 	sumOfCodePlusNon := grandTotal + nonEmptyLines
+
+	fileHandle, err := os.OpenFile("Jap2Log.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
+	check_error(err)
+
+	currentTime := time.Now()
+
+	_, err29 := fmt.Fprintf(fileHandle, "\nWhen the App began at: %s", currentTime.Format("15:04:05 on Monday 01-02-2006"))
+	check_error(err29)
+	_, err1 := fmt.Fprintf(fileHandle, "\nThe Total lines of Code (exclusive of data) = %d t-SLOC\n", totalLines)
+	check_error(err1)
+	_, err19 := fmt.Fprintf(fileHandle, "and, the Total lines of executable Code = %d e-SLOC\n\n", nonEmptyLines)
+	check_error(err19)
 
 	fmt.Printf("Total lines of Code (exclusive of data) = %d t-SLOC\n\n", totalLines)
 

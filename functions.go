@@ -292,10 +292,10 @@ func the_game_ends(suppressAllMessages, do_not_reset_gaming_flag, suppressPoints
 		// ::: fail/error accumulator gets incremented (or at least it gets displayed [below]) during the oops message
 	} // - - - - - - - - - - - - - - - - - - - - - - - - - ::: -----------------------------------------------------------------
 	if suppressAllMessages {
-		// do dada
+		// do nothing
 	} else {
 		// suppressPointsReporting = true // this is not actually set as true anywhere in the project // todo: fix that
-		fmt.Printf("\nThe status of suppressPointsReporting is %t", suppressPointsReporting)
+		// fmt.Printf("\nThe status of suppressPointsReporting is %t", suppressPointsReporting)
 		if gameCorrectOnFirstAttemptAccumulator > 0 && gameCorrectOnSecondAttemptAccumulator > 0 && gameCorrectOnThirdAttemptAccumulator > 0 && gameFailedOnThirdAttemptAccumulator == 0 { // ::: done
 			fmt.Println(colorRed)
 			fmt.Printf("\nYour Game run-time was:%s,  you got %s%d%s correct on your first try,  %s%d%s right on your second try,\n"+
@@ -705,7 +705,7 @@ func respond_to_UserSupplied_Directive(usersSubmission string) { // ::: - -
 		reset_all_data(true, true) // I would like to suppress the prints in this func
 		fmt.Println("What is your first name? (one word)")
 		_, _ = fmt.Scan(&nameOfPlayer)
-		List_of_game_types()
+		Display_the_menu_of_game_types()
 		fmt.Println(colorRed + "Enter the type of game" + colorReset)
 		_, _ = fmt.Scan(&type_of_game)
 		switch type_of_game {

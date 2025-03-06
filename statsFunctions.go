@@ -47,7 +47,7 @@ func log_right_andUpdateGame(prompt_it_was, in string) { // - -
 		if weHadFailed_And_OnlyGotThisRightBecauseOfTheClue {
 			// Then that fail has already been logged and we need to skip all logging.
 			weHadFailed_And_OnlyGotThisRightBecauseOfTheClue = false
-		} else { // we got it right without a clue, now determine how many tries were used
+		} else {                                          // we got it right without a clue, now determine how many tries were used
 			if guessLevelCounter == 2 && gottenHonestly { // combined because the only statement was another if
 				// fmt.Printf("\nGuess level counter is (2): %d AND gottenHonestly is (true): %t\n", guessLevelCounter, gottenHonestly)
 				gameCorrectOnFirstAttemptAccumulator++ // ::: 1st
@@ -248,8 +248,13 @@ func newHits() {
 		fmt.Printf(colorCyan)
 		fmt.Printf("Freq:")
 		fmt.Printf(colorReset)
-		fmt.Printf(" %d\n", cardInfoData.CorrectGuessCount)
-		// }
+		if cardInfoData.CorrectGuessCount > 1 {
+			fmt.Printf(colorRed)
+			fmt.Printf(" %d\n", cardInfoData.CorrectGuessCount)
+			fmt.Printf(colorReset)
+		} else {
+			fmt.Printf(" %d\n", cardInfoData.CorrectGuessCount)
+		}
 	}
 	fmt.Printf("Number of unique chars: ")
 	fmt.Printf(colorPurple)

@@ -3,23 +3,23 @@ package main
 // ::: var fileOfCardsKanjiHard = []charSetStruct{ // no specified length makes it a slice vs ...
 var fileOfCardsKanjiHard = [2]charSetStruct{ // array (a array is of fixed size, a slice is more flexible).
 
-	// ::: cards where kata = hira
+	// ::: cards where kata = hira; moreover, neither is as implied, rather both are Kanji
 
 	//
 	{"歌手", "歌手", "singer",
-		"singer, 歌手 , hiraMissing",
-		"KataHint",
-		"TT_Hint",
-		"SansR_Hint"},
+		"vocal entertainer",
+		"vocal entertainer",
+		"vocal entertainer",
+		"vocal entertainer"},
 
 	{"教師", "教師", "teacherAcademic",
-		"teacherAcademic, 教師 , きょうし",
-		"KataHint",
-		"TT_Hint",
-		"SansR_Hint"},
+		"T A",
+		"T A",
+		"T A",
+		"T A"},
 	//
 	/*
-		// cards where kata and hira fields differ
+		// cards where kata and hira fields differ (each contains what it is supposed to contain)
 			{"僕", "ぼく", "male-I",
 				"僕",
 				"male-I",

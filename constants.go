@@ -1,28 +1,25 @@
 package main
 
-// update
-// const aCard = charSetStruct{} // did not work
 /*
-There are four files (or decks) of cards:
-	fileOfCardsE extended
-	fileOfCardsAllSequential
-	fileOfCardsMostDifficult
-	fileOfCards
+There are several files (or decks) of cards:
+	They are each contained in files named:
+	data_____.go
 */
-// All decks will draw cards per this aCard var
-var aCard = charSetStruct{}
 
-// The structure of a single 'card' (aCard.) from fileOfCards
+// The structure of a single 'card' (aCard.) ; mostly from fileOfCards____ ; mostly. :)
 type charSetStruct struct {
-	Kata   string
-	Hira   string
-	Romaji string
+	Kata   string // Typically katakana, but kanji in special cases like fileOfCardsKanjiHard
+	Hira   string // Typically hiragana, but kanji in special cases like fileOfCardsKanjiHard
+	Romaji string // sometimes Meaning; ::: but normally roma notation
 
 	HiraHint   string
 	KataHint   string
 	TT_Hint    string
 	SansR_Hint string
 }
+
+// All decks will draw cards per this aCard var
+var aCard = charSetStruct{}
 
 /*
  We instantiate a series of struct objects as slices of instances of the charSetStruct type

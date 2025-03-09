@@ -1,3 +1,5 @@
+Find Action... and 3 more shortcut conflict with macOS shortcuts. Modify these shortcuts or change macOS system settings.
+
 It is always listing points to the log file, should it do that?
 
 todo: add comparisons in data like wa to ne (they are very similar)
@@ -16,7 +18,9 @@ splat ]  :: steps forward after you have stepped back.
 option-return  :: spell correction 
 double-tap shift  :: key to search everywhere
 
+shift F6  :: rename func via refactor
 splat F6  :: change/refactor signature (:::SUPER COOL!!!) 
+
 Shift splat U  :: toggle case
 splat b  :: go to declaration 
 
@@ -26,3 +30,6 @@ Ctrl-k  :: kill to end of line.
 
 option + return usually inserts a newline.
 shift + return inserts a newline in Grok-3 "ask anything" text box.
+
+
+

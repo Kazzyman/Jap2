@@ -6,14 +6,14 @@ var fileOfCardsKanjiHard = [2]charSetStruct{ // array (a array is of fixed size,
 	// ::: cards where kata = hira; moreover, neither is as implied, rather both are Kanji
 
 	//
-	{"歌手", "歌手", "singer",
-		"vocal entertainer",
+	{"歌手", "歌手", "singer", // for the relevant quiz, only the roma field is used as meaning
+		"vocal entertainer", // for the relevant quiz, only one hint is available
 		"vocal entertainer",
 		"vocal entertainer",
 		"vocal entertainer"},
 
-	{"教師", "教師", "teacherAcademic",
-		"T A",
+	{"教師", "教師", "teacherAcademic", // for the relevant quiz, only the roma field is used as meaning
+		"T A", // for the relevant quiz, only one hint is available
 		"T A",
 		"T A",
 		"T A"},
